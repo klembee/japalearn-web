@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window._ = require('lodash');
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -23,6 +25,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('student-invitation-dialog', require('./components/teachers/StudentInvitationDialog').default);
 Vue.component('flash', require('./components/FlashSnackBar').default);
+Vue.component('dictionary', require('./components/dictionary/Dictionary.vue').default);
 
 /**
  * Material Design Components
@@ -42,7 +45,9 @@ import {MdApp,
     MdField,
     MdDialog,
     MdProgress,
-    MdSnackbar
+    MdSnackbar,
+    MdAutocomplete,
+    MdSpeedDial,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -61,6 +66,8 @@ Vue.use(MdField);
 Vue.use(MdDialog);
 Vue.use(MdProgress);
 Vue.use(MdSnackbar);
+Vue.use(MdAutocomplete);
+Vue.use(MdSpeedDial);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

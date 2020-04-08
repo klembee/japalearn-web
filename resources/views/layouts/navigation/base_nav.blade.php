@@ -3,6 +3,10 @@
     <md-icon>dashboard</md-icon>
     <span class="md-list-item-text">{{__('Dashboard')}}</span>
 </md-list-item>
+<md-list-item href="{{route('dictionary.index')}}" exact>
+    <md-icon>menu_book</md-icon>
+    <span class="md-list-item-text">{{__('Dictionary')}}</span>
+</md-list-item>
 @yield('top')
 
 <md-divider class="md-inset"></md-divider>

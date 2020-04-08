@@ -35,3 +35,6 @@ Route::get('/students', 'StudentsController@index')->name('students.index');
 // Teachers
 Route::get('/teachers', 'TeachersController@index')->name('teachers.index');
 Route::get('/join-teacher', 'StudentInvitationController@joinTeacher')->name('join-teacher');
+
+// Dictionary
+Route::get('dictionary', 'DictionaryController@index')->name('dictionary.index');

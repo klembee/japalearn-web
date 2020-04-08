@@ -19,7 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->name('api.')->group(function(){
-    Route::name('teachers.')->group(function(){
+    Route::name('teachers.')->prefix('teacher')->group(function(){
         Route::get('/generate_invite_code', "Api\TeacherController@generate_invite_code")->name('generate_invite_code');
+    });
+
+    Route::name('dictionary.')->prefix('dictionary')->group(function(){
+        Route::post('/query', "Api\DictionaryController@query")->name('query');
+    });
+
+    Route::name('vocabulary.')->prefix('vocabulary')->group(function(){
+        Route::post('/add', 'Api\VocabularyController@add')->name('add');
     });
 });

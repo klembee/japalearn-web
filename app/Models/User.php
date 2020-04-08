@@ -74,6 +74,19 @@ class User extends Authenticatable
         return $this->role_id === Role::moderator()->id;
     }
 
+    public function vocabulary(){
+        if(!$this->isStudent()){
+            error_log("Only students can have vocabulary list");
+            return $this->newQuery();
+        }
+
+        return $this->belongsToMany(
+            Vocabulary::class,
+            'student_vocabulary',
+            'student_id',
+            'vocabulary_id');
+    }
+
     /**
      * Get the users of this user
      * ** Note: If the user is not a student, this returns a new query !
