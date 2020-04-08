@@ -22,6 +22,16 @@ Auth::routes();
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 // Users
-Route::get('/users', 'UsersController@index')->name('users.index');
-Route::get('/users/create', 'UsersController@create')->name('users.create');
-Route::post('/users/create', 'UsersController@store')->name('users.store');
+Route::prefix('users/')->group(function(){
+    Route::get('/', 'UsersController@index')->name('users.index');
+    Route::get('/create', 'UsersController@create')->name('users.create');
+    Route::post('/create', 'UsersController@store')->name('users.store');
+});
+
+
+// Students
+Route::get('/students', 'StudentsController@index')->name('students.index');
+
+// Teachers
+Route::get('/teachers', 'TeachersController@index')->name('teachers.index');
+Route::get('/join-teacher', 'StudentInvitationController@joinTeacher')->name('join-teacher');

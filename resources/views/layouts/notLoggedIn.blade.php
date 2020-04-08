@@ -38,6 +38,11 @@
                 @yield('content')
             </md-app-content>
         </md-app>
+
+        <!-- Snack Bar flash messages -->
+        @if(Session::has('message'))
+            <flash message="{{Session::get('message')}}"></flash>
+        @endif
     </div>
 </body>
 </html>

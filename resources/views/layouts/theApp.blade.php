@@ -49,6 +49,11 @@
                 @yield('content')
             </template>
         </dashboard>
+
+        <!-- Snack Bar flash messages -->
+        @if(Session::has('message'))
+            <flash message="{{Session::get('message')}}"></flash>
+        @endif
     </div>
 
 

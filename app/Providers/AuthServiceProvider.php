@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\StudentInvitation;
 use App\Models\User;
+use App\Policies\StudentInvitationPolicy;
 use App\Policies\UsersPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        User::class => UsersPolicy::class
+        User::class => UsersPolicy::class,
+        StudentInvitation::class => StudentInvitationPolicy::class,
     ];
 
     /**
@@ -27,6 +31,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Passport::routes();
     }
 }

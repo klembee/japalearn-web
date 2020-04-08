@@ -21,6 +21,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('student-invitation-dialog', require('./components/teachers/StudentInvitationDialog').default);
+Vue.component('flash', require('./components/FlashSnackBar').default);
 
 /**
  * Material Design Components
@@ -38,6 +40,9 @@ import {MdApp,
     MdDivider,
     MdTable,
     MdField,
+    MdDialog,
+    MdProgress,
+    MdSnackbar
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -53,6 +58,9 @@ Vue.use(MdAvatar);
 Vue.use(MdDivider);
 Vue.use(MdTable);
 Vue.use(MdField);
+Vue.use(MdDialog);
+Vue.use(MdProgress);
+Vue.use(MdSnackbar);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

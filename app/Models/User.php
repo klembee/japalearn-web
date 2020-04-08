@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -71,6 +72,44 @@ class User extends Authenticatable
      */
     public function isModerator(){
         return $this->role_id === Role::moderator()->id;
+    }
+
+    /**
+     * Get the users of this user
+     * ** Note: If the user is not a student, this returns a new query !
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function teachers(){
+        if(!$this->isStudent()){
+            error_log("Trying to access teachers of non student");
+            return $this->newQuery();
+        }
+
+        return $this->belongsToMany(
+            User::class,
+            'student_teacher',
+            "student_id",
+            "teacher_id"
+        );
+    }
+
+    /**
+     * Get the students of this user
+     * ** Note: If the user is not a teacher, this returns a new query !
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function students(){
+        if(!$this->isTeacher()){
+            error_log("Trying to access students of non teacher");
+            return $this->newQuery();
+        }
+
+        return $this->belongsToMany(
+            User::class,
+            'student_teacher',
+            "teacher_id",
+            "student_id"
+        );
     }
 
 
