@@ -62,6 +62,10 @@ class StudentInvitationController extends Controller
         $teacher = $invitation->teacher;
         $teacher->students()->attach($request->user()->id);
 
+        // Make them both friends
+        $teacher->friends()->attach($request->user()->id);
+        $loggedin_user->friends()->attach($teacher->id);
+
         return redirect('dashboard');
     }
 }

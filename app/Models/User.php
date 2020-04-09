@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email_verified_at', 'created_at', 'modified_at', 'role_id',
     ];
 
     /**
@@ -72,6 +72,30 @@ class User extends Authenticatable
      */
     public function isModerator(){
         return $this->role_id === Role::moderator()->id;
+    }
+
+    public function messages(){
+        return Message::query()->whereHas('to', function($query){
+            $query->where('id', $this->id);
+        })->orWhereHas('from', function($query){
+            $query->where('id', $this->id);
+        })->get();
+    }
+
+    /**
+     * Get the list of messages sent from this user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messagesSent(){
+        return $this->hasMany(Message::class, 'from_id');
+    }
+
+    /**
+     * Get the list of messages received to this user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messagesReceived(){
+        return $this->hasMany(Message::class, 'to_id');
     }
 
     public function vocabulary(){
@@ -123,6 +147,17 @@ class User extends Authenticatable
             "teacher_id",
             "student_id"
         );
+    }
+
+    /**
+     * Get the list of friends of this user
+     */
+    public function friends(){
+        return $this->belongsToMany(
+            User::class,
+            'user_friend',
+            'user_id',
+            'friend_id');
     }
 
 

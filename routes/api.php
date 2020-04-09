@@ -30,4 +30,10 @@ Route::middleware('auth:api')->name('api.')->group(function(){
     Route::name('vocabulary.')->prefix('vocabulary')->group(function(){
         Route::post('/add', 'Api\VocabularyController@add')->name('add');
     });
+
+    Route::name('chat.')->prefix('chat')->group(function(){
+        Route::get('conversations', "Api\ChatController@getConversations")->name('get_conversations');
+        Route::get('fetch', 'Api\ChatController@fetchMessages')->name('fetch');
+        Route::post('send', 'Api\ChatController@sendMessage')->name('send');
+    });
 });
