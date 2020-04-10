@@ -27,6 +27,7 @@ Vue.component('student-invitation-dialog', require('./components/teachers/Studen
 Vue.component('flash', require('./components/FlashSnackBar').default);
 Vue.component('dictionary', require('./components/dictionary/Dictionary.vue').default);
 Vue.component('chat', require('./components/messages/Chat.vue').default);
+Vue.component('study-page', require('./components/study/StudyPage.vue').default);
 
 /**
  * Material Design Components
@@ -50,6 +51,7 @@ import {MdApp,
     MdAutocomplete,
     MdSpeedDial,
     MdMenu,
+    MdSwitch,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -71,6 +73,7 @@ Vue.use(MdSnackbar);
 Vue.use(MdAutocomplete);
 Vue.use(MdSpeedDial);
 Vue.use(MdMenu);
+Vue.use(MdSwitch);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

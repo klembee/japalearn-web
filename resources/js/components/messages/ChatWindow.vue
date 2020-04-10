@@ -1,7 +1,7 @@
 <template>
     <div class="chat-window">
         <div class="chat-flex" v-if="conversation">
-            <div class="conversation-header">
+            <div @click="minimized = !minimized" class="conversation-header">
                 <md-avatar>
                     <img src="https://randomuser.me/api/portraits/men/22.jpg"/>
                 </md-avatar>
@@ -10,29 +10,32 @@
                     <md-icon>clear</md-icon>
                 </md-button>
             </div>
-            <div class="conversation" id="the_conversation">
-                <md-list>
-                    <md-list-item v-for="message in conversation.messages" :key="message.id">
-                        <div class="single-message" :class="{'reverse': message.from_id !== conversation.with_user.id}">
-                            <md-avatar class="message-avatar mr-2 ml-0">
-                                <img src="https://randomuser.me/api/portraits/men/22.jpg"/>
-                            </md-avatar>
-                            <div class="text">
-                                <p>{{message.message}}</p>
+            <div v-show="!minimized">
+                <div class="conversation" id="the_conversation">
+                    <md-list>
+                        <md-list-item v-for="message in conversation.messages" :key="message.id">
+                            <div class="single-message" :class="{'reverse': message.from_id !== conversation.with_user.id}">
+                                <md-avatar class="message-avatar mr-2 ml-0">
+                                    <img src="https://randomuser.me/api/portraits/men/22.jpg"/>
+                                </md-avatar>
+                                <div class="text">
+                                    <p>{{message.message}}</p>
+                                </div>
                             </div>
-                        </div>
-                    </md-list-item>
-                </md-list>
+                        </md-list-item>
+                    </md-list>
+                </div>
+                <div class="response-form d-flex">
+                    <md-field>
+                        <label>Your message</label>
+                        <md-input @keyup.enter.native="sendMessage" v-model="messageToSend"></md-input>
+                    </md-field>
+                    <md-button @click="sendMessage" class="md-icon-button">
+                        <md-icon>send</md-icon>
+                    </md-button>
+                </div>
             </div>
-            <div class="response-form d-flex">
-                <md-field>
-                    <label>Your message</label>
-                    <md-input @keyup.enter.native="sendMessage" v-model="messageToSend"></md-input>
-                </md-field>
-                <md-button @click="sendMessage" class="md-icon-button">
-                    <md-icon>send</md-icon>
-                </md-button>
-            </div>
+
         </div>
 
     </div>
@@ -52,7 +55,8 @@
         },
         data: function(){
             return {
-                messageToSend: ""
+                messageToSend: "",
+                minimized: false
             }
         },
         methods: {
@@ -122,6 +126,7 @@
     .chat-window{
         width: 20rem;
         background-color: #f1f1f1;
+        display:inline-block;
     }
     .chat-flex{
         display: flex;
@@ -132,6 +137,7 @@
         padding: 20px 20px 10px 20px;
         border-bottom: 1px solid #dadada;
         flex: 0 1 auto;
+        cursor: pointer;
     }
     .conversation-name{
         vertical-align: middle;
@@ -142,6 +148,7 @@
         flex:1 1 auto;
         border-bottom: 1px solid #dadada;
         overflow-y: scroll;
+        max-height:17rem;
     }
     .response-form{
         padding-left: 10px;

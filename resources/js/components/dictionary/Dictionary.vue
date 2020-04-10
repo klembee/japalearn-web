@@ -6,15 +6,27 @@
                     <h3 class="md-title">Search for a word</h3>
                 </div>
                 <div class="md-toolbar-section-end">
-                    <md-field>
+                    <md-field class="mr-2">
                         <label>Search...</label>
                         <md-input @input="search()" v-model="searchQuery"></md-input>
                     </md-field>
                 </div>
             </div>
+            <div class="md-toolbar-row">
+                <md-switch @change="search()" v-model="convertToHiragana">Convert to hiragana</md-switch>
+                <md-field>
+                    <label for="searchIn">Search in</label>
+                    <md-select @md-selected="search()" v-model="searchIn" id="searchIn">
+                        <md-option value="all">All fields</md-option>
+                        <md-option value="reading">Readings</md-option>
+                        <md-option value="meaning">Meanings</md-option>
+                    </md-select>
+                </md-field>
+            </div>
         </md-toolbar>
 
         <!-- Result -->
+        <p v-if="lastQuery" class="result_for_indication">Results for: {{lastQuery}}</p>
         <md-table class="dictionary mt-2">
             <md-table-row v-for="result in results" :key="result.id">
                 <md-table-cell>
@@ -74,7 +86,10 @@
                 prevPageUrl: "",
                 total: 0,
                 results: [],
-                userVocabulary: []
+                userVocabulary: [],
+                convertToHiragana: false,
+                searchIn: 'all',
+                lastQuery: null
             }
         },
         methods: {
@@ -82,8 +97,14 @@
                 return this.userVocabulary.map(voc => voc.id).includes(vocabulary.id);
             },
             search: _.debounce(function(){
+                if(!this.searchQuery || this.searchQuery == ''){
+                    return
+                }
+
                 let data = {
-                    query: this.searchQuery
+                    query: this.searchQuery,
+                    convertToHiragana: this.convertToHiragana,
+                    field: this.searchIn
                 };
 
                 let self = this;
@@ -99,7 +120,9 @@
                             self.prevPageUrl = response.data.prev_page_url;
                         }
 
-                        self.results = response.data.data;
+                        console.log(response)
+                        self.lastQuery = response.data.query;
+                        self.results = response.data.response;
                         self.total = response.data.total;
                     })
                     .catch(function(error){
@@ -134,5 +157,13 @@
         font-size:2.5em;
         margin-right:2rem;
         margin-bottom:0;
+    }
+    .result_for_indication{
+        font-size: 1.3em;
+        margin-top: 20px;
+    }
+
+    /deep/ .md-table-content table{
+        table-layout: fixed;
     }
 </style>

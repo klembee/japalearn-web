@@ -1,5 +1,5 @@
 <template>
-    <div class="chat d-flex">
+    <div class="chat">
         <chat-window
             ref="chatWindow"
             v-if="currentConversation"
@@ -81,6 +81,6 @@
         position:fixed;
         right:0;
         bottom:0;
-        height:25rem;
+        /*height:25rem;*/
     }
 </style>

@@ -98,17 +98,29 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'to_id');
     }
 
-    public function vocabulary(){
-        if(!$this->isStudent()){
-            error_log("Only students can have vocabulary list");
-            return $this->newQuery();
+    public function userInfo(){
+        if($this->isStudent()){
+            return $this->hasOne(StudentInfo::class);
+        }else{
+            //todo:
         }
+    }
 
+
+    public function vocabulary(){
         return $this->belongsToMany(
             Vocabulary::class,
             'student_vocabulary',
             'student_id',
-            'vocabulary_id');
+            'vocabulary_id')->withPivot('level', 'last_studied');;
+    }
+
+    public function scopeVocabulary($query){
+        if($this->isStudent()){
+            return $query->with('vocabulary');
+        }else{
+            return $query;
+        }
     }
 
     /**
@@ -129,6 +141,8 @@ class User extends Authenticatable
             "teacher_id"
         );
     }
+
+    //todo: Do scope teachers and scope students
 
     /**
      * Get the students of this user

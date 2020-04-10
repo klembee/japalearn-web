@@ -38,3 +38,15 @@ Route::get('/join-teacher', 'StudentInvitationController@joinTeacher')->name('jo
 
 // Dictionary
 Route::get('dictionary', 'DictionaryController@index')->name('dictionary.index');
+
+// Vocabulary
+Route::get('vocabulary', 'VocabularyController@index')->name('vocabulary.index');
+
+// Study section
+Route::prefix('study/')->name('study.')->group(function(){
+    Route::get('vocabulary_review', "StudyController@vocabularyReview")->name('vocab');
+});
+
+Route::prefix('learning_path')->name('learningpath.')->group(function(){
+    Route::get('vocab', 'LearningPathController@index')->name('vocab.index');
+});

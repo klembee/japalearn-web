@@ -1,14 +1,18 @@
 <template>
     <div>
         <md-button @click="openDialog()">Invite students</md-button>
-        <md-dialog :md-active.sync="showDialog">
+        <md-dialog class="invitation-dialog" :md-active.sync="showDialog">
             <md-dialog-title>Invite your students</md-dialog-title>
+            <p>Send this link to your students !</p>
             <md-content>
                 <md-progress-spinner md-mode="indeterminate" v-if="loading"></md-progress-spinner>
 
-                <div>
-                    <p>{{codeLink}}</p>
-                    <md-button @click="copyLink()">
+                <div class="invitation-content">
+                    <md-field>
+                        <md-input :value="codeLink" readonly>{{}}</md-input>
+                    </md-field>
+
+                    <md-button class="md-icon-button" @click="copyLink()">
                         <md-icon>file_copy</md-icon>
                     </md-button>
                 </div>
@@ -66,6 +70,7 @@
             },
             copyLink(){
                 navigator.clipboard.writeText(this.codeLink).then(function() {
+                    //todo: Show copied notification
                     console.log("Copied !")
                 })
             }
@@ -77,5 +82,13 @@
 </script>
 
 <style scoped>
-
+    .invitation-content{
+        display:flex;
+        align-items: center;
+    }
+    .invitation-dialog{
+        width: 40rem;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 </style>
