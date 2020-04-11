@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\Request;
+
 class LearningPathController extends Controller
 {
     public function __construct()
@@ -12,7 +14,11 @@ class LearningPathController extends Controller
         $this->middleware('isRole:admin');
     }
 
-    public function index(){
+    public function index(Request $request){
         return view('app.learningpath.index');
+    }
+
+    public function newLevel(Request $request){
+        return redirect()->route("learningpath.vocab.index");
     }
 }

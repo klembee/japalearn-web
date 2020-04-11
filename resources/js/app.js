@@ -28,6 +28,7 @@ Vue.component('flash', require('./components/FlashSnackBar').default);
 Vue.component('dictionary', require('./components/dictionary/Dictionary.vue').default);
 Vue.component('chat', require('./components/messages/Chat.vue').default);
 Vue.component('study-page', require('./components/study/StudyPage.vue').default);
+Vue.component('new-learningpath-item-modal', require('./components/learning_paths/NewLearningPathItemModal.vue').default);
 
 /**
  * Material Design Components

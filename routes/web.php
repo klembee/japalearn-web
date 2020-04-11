@@ -49,4 +49,7 @@ Route::prefix('study/')->name('study.')->group(function(){
 
 Route::prefix('learning_path')->name('learningpath.')->group(function(){
     Route::get('vocab', 'LearningPathController@index')->name('vocab.index');
+    Route::prefix('items')->name('items.')->group(function(){
+        Route::post('create', 'LearningPathController@newLevel')->name('store');
+    });
 });
