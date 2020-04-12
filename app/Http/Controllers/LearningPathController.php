@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\VocabLearningPath;
+use App\Models\WordType;
 use Illuminate\Http\Request;
 
 class LearningPathController extends Controller
@@ -15,10 +17,20 @@ class LearningPathController extends Controller
     }
 
     public function index(Request $request){
-        return view('app.learningpath.index');
+
+        $itemsByLevel = VocabLearningPath::query()->with('vocabulary')->get()->groupBy('level');
+
+        return view('app.learningpath.index', compact('itemsByLevel'));
     }
 
-    public function newLevel(Request $request){
-        return redirect()->route("learningpath.vocab.index");
+    public function editLevel(Request $request, int $level){
+
+        $radicals = VocabLearningPath::query()->where('word_type_id', WordType::radical()->id)->get();
+
+        $kanjis = VocabLearningPath::query()->where('word_type_id', WordType::kanji()->id)->get();
+
+        $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->get();
+
+        return view('app.learningpath.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
     }
 }

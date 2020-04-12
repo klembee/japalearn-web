@@ -36,4 +36,10 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::get('fetch', 'Api\ChatController@fetchMessages')->name('fetch');
         Route::post('send', 'Api\ChatController@sendMessage')->name('send');
     });
+
+    Route::name('learningpath.')->prefix('learning_path')->group(function(){
+        Route::prefix('items')->name('items.')->group(function(){
+            Route::post('create', 'Api\LearningPathController@newItem')->name('store');
+        });
+    });
 });

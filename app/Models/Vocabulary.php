@@ -26,7 +26,8 @@ class Vocabulary extends Model
             // Remove words in parentisis
             'meanings' => $this->meanings->pluck(['meaning'])->toArray(),
             'writings' => $this->writings->pluck('writing')->toArray(),
-            'pos' => $this->pos()->pluck('pos')->toArray()
+            'pos' => $this->pos()->pluck('pos')->toArray(),
+            'number_of_save' => $this->usersThatSaved()->count()
             ];//$this->newQuery()->with('meanings', 'writings')->get()->toArray();
     }
     // levels    = [1, 2, 3,  4,  5,   6,   7,   8]
@@ -39,6 +40,14 @@ class Vocabulary extends Model
 //        if ($this->level <= 7) return 'Enlightened';
 //        return 'Burned';
 //    }
+
+    public function usersThatSaved(){
+        return $this->belongsToMany(
+            User::class,
+            'student_vocabulary',
+            'vocabulary_id',
+            'student_id');
+    }
 
     /**
      * Get the meanings of this word

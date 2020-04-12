@@ -22,6 +22,9 @@ class VocabularyController extends Controller
 
         try{
             $student->vocabulary()->attach([$vocab->id]);
+
+            # Update on Algolia
+            $vocab->save();
         }catch (QueryException $e){
             if($e->errorInfo[1] == 1062){
                 return response()->json([

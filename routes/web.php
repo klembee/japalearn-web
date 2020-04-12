@@ -47,9 +47,9 @@ Route::prefix('study/')->name('study.')->group(function(){
     Route::get('vocabulary_review', "StudyController@vocabularyReview")->name('vocab');
 });
 
-Route::prefix('learning_path')->name('learningpath.')->group(function(){
-    Route::get('vocab', 'LearningPathController@index')->name('vocab.index');
-    Route::prefix('items')->name('items.')->group(function(){
-        Route::post('create', 'LearningPathController@newLevel')->name('store');
+Route::prefix('learning_path/')->name('learningpath.')->group(function(){
+    Route::prefix('vocab/')->name('vocab.')->group(function(){
+        Route::get('', 'LearningPathController@index')->name('index');
+        Route::get('/{level}/edit', 'LearningPathController@editLevel')->name('edit');
     });
 });

@@ -13,8 +13,7 @@ class DictionaryController extends Controller
     public function query(Request $request){
         $this->validate($request, [
             'query' => 'present',
-            'convertToHiragana' => 'boolean',
-            'field' => 'in:all,meaning,writing'
+            'convertToHiragana' => 'boolean'
         ]);
 
         $searchQuery = $request->input('query');
@@ -24,8 +23,6 @@ class DictionaryController extends Controller
         if($request->input('convertToHiragana')){
             $searchQuery = $hiraganaSearchQuery;
         }
-
-        error_log("Field: " . $searchField);
 
         try{
             $response = Vocabulary::search($searchQuery)->paginate(10)->load(['writings', 'meanings', 'pos']);

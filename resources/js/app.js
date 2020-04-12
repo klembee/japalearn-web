@@ -53,6 +53,7 @@ import {MdApp,
     MdSpeedDial,
     MdMenu,
     MdSwitch,
+    MdRipple,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -75,6 +76,7 @@ Vue.use(MdAutocomplete);
 Vue.use(MdSpeedDial);
 Vue.use(MdMenu);
 Vue.use(MdSwitch);
+Vue.use(MdRipple);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

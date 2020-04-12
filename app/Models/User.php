@@ -112,7 +112,7 @@ class User extends Authenticatable
             Vocabulary::class,
             'student_vocabulary',
             'student_id',
-            'vocabulary_id')->withPivot('level', 'last_studied');;
+            'vocabulary_id')->withPivot('level', 'last_studied');
     }
 
     public function scopeVocabulary($query){
