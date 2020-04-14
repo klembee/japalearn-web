@@ -40,6 +40,9 @@ Route::middleware('auth:api')->name('api.')->group(function(){
     Route::name('learningpath.')->prefix('learning_path')->group(function(){
         Route::prefix('items')->name('items.')->group(function(){
             Route::post('create', 'Api\LearningPathController@newItem')->name('store');
+            Route::name('review.')->prefix('review')->group(function(){
+                Route::post('update_level', 'Api\LearningPathController@updateLevel')->name('update_level');
+            });
         });
     });
 });

@@ -44,7 +44,8 @@ Route::get('vocabulary', 'VocabularyController@index')->name('vocabulary.index')
 
 // Study section
 Route::prefix('study/')->name('study.')->group(function(){
-    Route::get('vocabulary_review', "StudyController@vocabularyReview")->name('vocab');
+    Route::get('vocabulary_lesson', "StudyController@vocabularyLesson")->name('lesson');
+    Route::get('vocabulary_review', 'StudyController@vocabularyReview')->name('review');
 });
 
 Route::prefix('learning_path/')->name('learningpath.')->group(function(){

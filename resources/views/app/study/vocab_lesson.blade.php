@@ -9,11 +9,10 @@
 
 @section('content')
 
-    <vocab-review-window
+    <vocab-lesson-window
         update-levels-endpoint="{{route('api.learningpath.items.review.update_level')}}"
         dashboard-url="{{route('dashboard')}}"
+        :items="{{$items}}"
         :reviews="{{$reviews}}"
-    >
-
-    </vocab-review-window>
+    ></vocab-lesson-window>
 @endsection

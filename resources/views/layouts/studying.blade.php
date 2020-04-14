@@ -29,6 +29,10 @@
             @yield('title')
         </template>
 
+        <template v-slot:toolbar_right>
+            @yield('toolbar_right')
+        </template>
+
         <!-- Page Content -->
         <template v-slot:content>
             @yield('content')

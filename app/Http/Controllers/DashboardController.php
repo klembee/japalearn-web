@@ -27,6 +27,6 @@ class DashboardController extends Controller
         $user = $request->user();
         $role = $user->role->name;
 
-        return view("app.dashboard_$role");
+        return view("app.dashboard_$role", compact('user'));
     }
 }

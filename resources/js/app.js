@@ -29,6 +29,8 @@ Vue.component('dictionary', require('./components/dictionary/Dictionary.vue').de
 Vue.component('chat', require('./components/messages/Chat.vue').default);
 Vue.component('study-page', require('./components/study/StudyPage.vue').default);
 Vue.component('new-learningpath-item-modal', require('./components/learning_paths/NewLearningPathItemModal.vue').default);
+Vue.component('vocab-lesson-window', require('./components/learning_paths/VocabLessonWindow.vue').default);
+Vue.component('vocab-review-window', require('./components/learning_paths/VocabReviewWindow.vue').default);
 
 /**
  * Material Design Components
@@ -77,6 +79,9 @@ Vue.use(MdSpeedDial);
 Vue.use(MdMenu);
 Vue.use(MdSwitch);
 Vue.use(MdRipple);
+
+import { BootstrapVue } from 'bootstrap-vue'
+Vue.use(BootstrapVue)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

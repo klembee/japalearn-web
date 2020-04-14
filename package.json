@@ -20,10 +20,12 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
-        "vue": "^2.5.17",
+        "vue": "^2.6.11",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.11.0",
+        "chart.js": "^2.9.3",
         "laravel-echo": "^1.7.0",
         "pusher-js": "^5.1.1",
         "vue-material": "^1.0.0-beta-11",

@@ -33,6 +33,8 @@ import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 window.newMessageSound = new Audio('/sound/message-notification.wav');
+window.Chart = require('chart.js');
+
 
 window.Echo = new Echo({
     broadcaster: 'pusher',

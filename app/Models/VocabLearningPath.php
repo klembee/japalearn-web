@@ -14,4 +14,12 @@ class VocabLearningPath extends Model
     public function vocabulary(){
         return $this->belongsTo(Vocabulary::class);
     }
+
+    public function readings(){
+        return $this->hasMany(VocabLearningPathReadings::class, 'vocab_learning_path_item_id');
+    }
+
+    public function meanings(){
+        return $this->hasMany(VocabLearningPathMeanings::class, 'vocab_learning_path_item_id');
+    }
 }

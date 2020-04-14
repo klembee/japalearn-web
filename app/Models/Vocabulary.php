@@ -30,16 +30,6 @@ class Vocabulary extends Model
             'number_of_save' => $this->usersThatSaved()->count()
             ];//$this->newQuery()->with('meanings', 'writings')->get()->toArray();
     }
-    // levels    = [1, 2, 3,  4,  5,   6,   7,   8]
-    // intervals = [4, 8, 24, 72, 168, 336, 720, 2880]
-//    public function get_human_level() {
-//        if ($this->level < 0) return 'Inactive';
-//        if ($this->level <= 3) return 'Apprentice';
-//        if ($this->level <= 5) return 'Guru';
-//        if ($this->level <= 6) return 'Master';
-//        if ($this->level <= 7) return 'Enlightened';
-//        return 'Burned';
-//    }
 
     public function usersThatSaved(){
         return $this->belongsToMany(
