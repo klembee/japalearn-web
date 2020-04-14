@@ -108,10 +108,11 @@
                 this.currentItemIndex += 1;
 
                 if(this.currentItemIndex >= this.items.length){
+                    this.saveResults();
                     this.readyForLearn = true;
                 }
             },
-            stopReview(goHome = false){
+            saveResults(){
                 let data = {
                     good: this.good,
                     wrong: this.wrong
@@ -121,16 +122,17 @@
                 axios.post(this.updateLevelsEndpoint, data)
                     .then(function(response){
                         console.log(response)
-                        if(goHome){
-                            self.$emit('go-home')
-                        }else{
-                            self.$emit('review-end')
-                        }
-
                     })
                     .catch(function(error){
                         console.log("Error while saving level")
                     })
+            },
+            stopReview(goHome = false){
+                if(goHome){
+                    this.$emit('go-home')
+                }else{
+                    this.$emit('review-end')
+                }
             },
         },
         mounted() {

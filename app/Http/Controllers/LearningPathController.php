@@ -25,11 +25,11 @@ class LearningPathController extends Controller
 
     public function editLevel(Request $request, int $level){
 
-        $radicals = VocabLearningPath::query()->where('word_type_id', WordType::radical()->id)->get();
+        $radicals = VocabLearningPath::query()->where('word_type_id', WordType::radical()->id)->with('meanings', 'readings')->get();
 
-        $kanjis = VocabLearningPath::query()->where('word_type_id', WordType::kanji()->id)->get();
+        $kanjis = VocabLearningPath::query()->where('word_type_id', WordType::kanji()->id)->with('meanings', 'readings')->get();
 
-        $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->get();
+        $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->with('meanings', 'readings')->get();
 
         return view('app.learningpath.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
     }

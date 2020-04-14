@@ -97,8 +97,6 @@ class LearningPathController extends Controller
             try {
                 $item = VocabLearningPath::query()->where('word', $word)->firstOrFail();
 
-                error_log($itemStats->count());
-
                 if ($itemStats->count() > 0) {
                     // Edit
                     $stat = VocabLearningPathItemStats::query()
@@ -147,14 +145,8 @@ class LearningPathController extends Controller
                 ->where('student_info_id', $user->userInfo->id)->firstOrFail();
 
             if ($wrong['type'] == "meaning") {
-                if($stat->meaning_right > 1) {
-                    $stat->meaning_right -= 1;
-                    $stat->meaning_last_right_date = now();
-                }
+                $stat->meaning_last_right_date = now();
             } else if ($wrong['type'] == "reading") {
-                if($stat->reading_right > 1) {
-                    $stat->reading_right -= 1;
-                }
                 $stat->reading_last_right_date = now();
             }
 

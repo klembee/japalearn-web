@@ -31,9 +31,22 @@
                     </md-card-actions>
                 </md-card>
             </div>
-            <div class="col-12">
-                <h3>Number of level up per day this month</h3>
-            </div>
+
+        </div>
+        <div class="row mb-4">
+            @foreach($user->userInfo->itemsPerHumanLevel() as $humanLevel => $nbItems)
+                <md-card class="md-2">
+                    <md-card-header>
+                        <h3>{{$humanLevel}}</h3>
+                        <p>{{$nbItems}}</p>
+                    </md-card-header>
+                </md-card>
+            @endforeach
+        </div>
+        <div>
+            <vocab-size-per-day-graph
+                data-endpoint="{{route('api.dashboard.vocab_size')}}"
+            ></vocab-size-per-day-graph>
         </div>
     </div>
 @endsection

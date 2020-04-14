@@ -37,6 +37,10 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::post('send', 'Api\ChatController@sendMessage')->name('send');
     });
 
+    Route::name('dashboard.')->prefix('dashboard')->group(function(){
+        Route::get('vocabSizePerDayThisMonth', 'Api\DashboardController@vocabSizePerDayThisMonth')->name('vocab_size');
+    });
+
     Route::name('learningpath.')->prefix('learning_path')->group(function(){
         Route::prefix('items')->name('items.')->group(function(){
             Route::post('create', 'Api\LearningPathController@newItem')->name('store');

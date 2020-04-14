@@ -26,6 +26,18 @@ class StudentInfo extends Model
         return count($vocabToLearn['radicals']) + count($vocabToLearn['kanjis']) + count($vocabToLearn['vocabulary']);
     }
 
+    public function itemsPerHumanLevel(){
+        $items = $this->vocabLearningPathStats;
+
+        return [
+            'Apprentice' => $items->where('human_level', 'Apprentice')->count(),
+            'Guru' => $items->where('human_level', 'Guru')->count(),
+            'Master' => $items->where('human_level', 'Master')->count(),
+            'Enlightened' => $items->where('human_level', 'Enlightened')->count(),
+            'Burned' => $items->where('human_level', 'Burned')->count()
+        ];
+    }
+
     public function getNumberReviewsAttribute(){
         $vocabToLearn = $this->getVocabReviewItems();
         return $vocabToLearn['count'];
@@ -55,7 +67,7 @@ class StudentInfo extends Model
             }
 
             $timeDiffMeaning = $now->copy()->diffInHours($meaningLastDate);
-            error_log($timeDiffMeaning);
+
             if($writingLastDate) {
                 $timeDiffWriting = $now->copy()->diffInHours($writingLastDate);
 
@@ -89,7 +101,6 @@ class StudentInfo extends Model
             return $query->where('level', $this->level);
         })->with('vocabLearningPathItem')->get()->pluck('vocabLearningPathItem.id');
 
-        error_log("Already learned: " . json_encode($allItemsAlreadyLearnedThisLevel));
 
         # The radicals have to be learned first
         if($toLearn > 0) {

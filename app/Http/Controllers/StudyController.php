@@ -75,16 +75,11 @@ class StudyController extends Controller
         $writingReviews = $vocabs['review']['writing'];
         $meaningReviews = $vocabs['review']['meaning'];
 
-//        $items = array_merge($writingReviews, $meaningReviews);
-
-//        error_log(json_encode($items));
-
         $reviews = [];
 
 
 
         foreach($writingReviews as $review){
-            error_log($review['vocab_learning_path_item']['word']);
             array_push($reviews, [
                 'question' => $review['vocab_learning_path_item']['word'],
                 'answers' => array_map(function($item){
@@ -95,7 +90,6 @@ class StudyController extends Controller
         }
 
         foreach($meaningReviews as $review){
-            error_log(json_encode($review));
             array_push($reviews, [
                 'question' => $review['vocab_learning_path_item']['word'],
                 'answers' => array_map(function($item){

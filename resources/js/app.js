@@ -31,6 +31,8 @@ Vue.component('study-page', require('./components/study/StudyPage.vue').default)
 Vue.component('new-learningpath-item-modal', require('./components/learning_paths/NewLearningPathItemModal.vue').default);
 Vue.component('vocab-lesson-window', require('./components/learning_paths/VocabLessonWindow.vue').default);
 Vue.component('vocab-review-window', require('./components/learning_paths/VocabReviewWindow.vue').default);
+Vue.component('vocab-size-per-day-graph', require('./components/dashboard/VocabSizePerDayGraph.vue').default);
+Vue.component('learning-path-item-card', require('./components/learning_paths/LearningPathItemCard.vue').default);
 
 /**
  * Material Design Components
