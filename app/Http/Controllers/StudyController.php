@@ -8,8 +8,23 @@ use App\Models\WordType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
+
+/**
+ * Class that controls all the study related stuff
+ *
+ * Class StudyController
+ * @package App\Http\Controllers
+ */
 class StudyController extends Controller
 {
+
+    /**
+     * Get the vocabulary (radical, kanji, vocab) that the logged in
+     * user can learn now.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function vocabularyLesson(Request $request){
         $user = $request->user();
         $vocabs = $user->userInfo->getVocabLessonItems();
@@ -68,6 +83,14 @@ class StudyController extends Controller
         ]);
     }
 
+    /**
+     * Get the items (radical, kanjis, vocab) that the logged in user
+     * can review. After each review, the user have to wait a certain time
+     * before reviewing again. This is the principle of spaced repetition
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function vocabularyReview(Request $request){
         $user = $request->user();
         $vocabs = $user->userInfo->getVocabReviewItems();
@@ -76,8 +99,6 @@ class StudyController extends Controller
         $meaningReviews = $vocabs['review']['meaning'];
 
         $reviews = [];
-
-
 
         foreach($writingReviews as $review){
             array_push($reviews, [

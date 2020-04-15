@@ -8,12 +8,19 @@ use App\Http\Controllers\Controller;
 use App\Models\StudentInvitation;
 use Illuminate\Http\Request;
 
+/**
+ * Api Controller class controlling stuff relating teachers
+ *
+ * Class TeacherController
+ * @package App\Http\Controllers\Api
+ */
 class TeacherController extends Controller
 {
     /**
-     * Generate a unique invitation code and store it in the database
+     * Generate a unique invitation code and store it in the database.
      * @param Request $request
      * @return string the random code
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function generate_invite_code(Request $request){
         $this->authorize('generate', StudentInvitation::class);

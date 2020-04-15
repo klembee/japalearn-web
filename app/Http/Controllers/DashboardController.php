@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * This is the controller class for tasks relating the Dashboard
+ * Class DashboardController
+ * @package App\Http\Controllers
+ */
 class DashboardController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
+     * Checks that the user is authenticated before accessing this page
      * @return void
      */
     public function __construct()
@@ -18,7 +22,8 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Shows the application dashboard.
+     * The view that is showing depends on the role of the logged in user.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */

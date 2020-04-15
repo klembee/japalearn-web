@@ -14,8 +14,24 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 
+/**
+ * Api controller that controls learning path controller related stuff.
+ * Like creating a new item or leveling up the item attached to a user
+ *
+ * Class LearningPathController
+ * @package App\Http\Controllers\Api
+ */
 class LearningPathController extends Controller
 {
+
+    /**
+     * Allow an admin to create a new learning path item.
+     * The item can be of type 'radical', 'kanji' or 'vocabulary'
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function newItem(Request $request){
         $this->validate($request, [
             "word" => "required",
@@ -24,6 +40,8 @@ class LearningPathController extends Controller
             "meanings" => "required|array",
             "readings" => "present|array",
         ]);
+
+        //todo: Verify that the user is an admin
 
         $word = $request->input('word');
         $wordType = $request->input('type');
@@ -69,7 +87,10 @@ class LearningPathController extends Controller
     }
 
     /**
-     * Updates the level of the items after reviewing them
+     * Updates the level of the items after a user
+     * reviewed them. If the user got it wrong, it stays at the
+     * same level and the user have to wait the same time. If the user
+     * got it right, it increases the level by one and the user have to wait longer
      *
      * @param Request $request
      * @return string
@@ -78,6 +99,7 @@ class LearningPathController extends Controller
     public function updateLevel(Request $request){
         $user = $request->user();
         //todo: check that user is a student
+
         $this->validate($request, [
             'good' => "present|array",
             'wrong' => 'present|array'
@@ -86,9 +108,9 @@ class LearningPathController extends Controller
         $goodItems = $request->input('good');
         $wrongItems = $request->input('wrong');
 
+        // Go through each items that the user got right and increase the level
         foreach($goodItems as $good){
             $word = $good['question'];
-            error_log($word);
 
             $itemStats = $user->userInfo->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
                 return $query->where('word', $word);
@@ -133,7 +155,8 @@ class LearningPathController extends Controller
             }
 
         }
-        print("WRONG:");
+
+        // Go Through each items that the user got wrong and update the study date to now
         foreach($wrongItems as $wrong) {
             $word = $wrong['question'];
             $itemStats = $user->userInfo->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
@@ -154,6 +177,8 @@ class LearningPathController extends Controller
 
         }
 
-        return "ASDF";
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

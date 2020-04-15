@@ -12,8 +12,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
+/**
+ * This class controls the student invitations actions.
+ * The teachers can invite a student to join its class
+ *
+ * Class StudentInvitationController
+ * @package App\Http\Controllers
+ */
 class StudentInvitationController extends Controller
 {
+
+    /**
+     * Allow a student with a given invitation code to connect with the
+     * teacher that gave him the code
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function joinTeacher(Request $request){
         $this->validate($request, [
             'code' => 'present'

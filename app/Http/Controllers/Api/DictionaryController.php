@@ -6,10 +6,28 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vocabulary;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
+/**
+ * Api controller that controls dictionary related stuff
+ *
+ * Class DictionaryController
+ * @package App\Http\Controllers\Api
+ */
 class DictionaryController extends Controller
 {
+    /**
+     * Allow the user to query the dictionary
+     * if accepts a "query" parameter that correspond to the word to search and
+     * the 'convertToHiragana' parameter. The last one, if set to true will transform
+     * the query to hiragana before querying the database.
+     * Example: akai -> あかい (Please refer to the method toHiragana() bellow)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function query(Request $request){
         $this->validate($request, [
             'query' => 'present',
@@ -17,24 +35,58 @@ class DictionaryController extends Controller
         ]);
 
         $searchQuery = $request->input('query');
-        $searchField = $request->input('field');
         $hiraganaSearchQuery = DictionaryController::toHiragana($searchQuery);
 
         if($request->input('convertToHiragana')){
             $searchQuery = $hiraganaSearchQuery;
         }
 
+        $response = Vocabulary::search($searchQuery)->paginate(10)->load(['writings', 'meanings', 'pos']);
+
+        return response()->json([
+            'query' => $searchQuery,
+            'response' => $response
+        ]);
+    }
+
+    /**
+     * Allows a user to save a word he/she finds
+     * in the dictionary. The number of time the word is saved is
+     * used by Algolia to sort the dictionary results so we have to update Algolia
+     * with the new number
+     *
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function addToVocabulary(Request $request){
+        $this->authorize('add', Vocabulary::class);
+        $this->validate($request, [
+            'vocabulary_id' => 'required'
+        ]);
+
+        $vocab = Vocabulary::query()->where('id', $request->input('vocabulary_id'))->firstOrFail();
+        $student = $request->user();
+
         try{
-            $response = Vocabulary::search($searchQuery)->paginate(10)->load(['writings', 'meanings', 'pos']);
+            $student->vocabulary()->attach([$vocab->id]);
 
-            return response()->json([
-                'query' => $searchQuery,
-                'response' => $response
-            ]);
-
-        }catch (\Exception $e){
-            error_log($e->getMessage());
+            # Update on Algolia
+            $vocab->save();
+        }catch (QueryException $e){
+            if($e->errorInfo[1] == 1062){
+                return response()->json([
+                    'error' => __("This word is already in your vocabulary")
+                ]);
+            }else{
+                return response()->json([
+                    'error' => __("Error while adding to vocabulary")
+                ]);
+            }
         }
+
+        return $vocab;
     }
 
     /**

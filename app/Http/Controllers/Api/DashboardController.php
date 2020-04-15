@@ -8,9 +8,23 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+/**
+ * Api class that controls the modules that are showing on
+ * the dashboards.
+ *
+ * Class DashboardController
+ * @package App\Http\Controllers\Api
+ */
 class DashboardController extends Controller
 {
 
+    /**
+     * Get data about the vocab size of the logged in user
+     * every day for the past month. This is used to create a graph
+     *
+     * @param Request $request
+     * @return array
+     */
     public function vocabSizePerDayThisMonth(Request $request){
         $user = $request->user();
         $now = Carbon::now();
