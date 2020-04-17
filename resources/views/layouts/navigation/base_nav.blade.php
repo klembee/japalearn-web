@@ -11,6 +11,13 @@
 
 <md-divider class="md-inset"></md-divider>
 @yield('bottom')
+
+<!-- Account button -->
+<md-list-item href="{{route('account.profile.index')}}">
+    <md-icon>account_box</md-icon>
+    <span class="md-list-item-text">{{__('Your account')}}</span>
+</md-list-item>
+
 <!-- Log Out link -->
 <md-list-item href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
     <md-icon>exit_to_app</md-icon>

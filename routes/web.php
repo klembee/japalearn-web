@@ -54,3 +54,11 @@ Route::prefix('learning_path/')->name('learningpath.')->group(function(){
         Route::get('/{level}/edit', 'LearningPathController@viewLevel')->name('edit');
     });
 });
+
+Route::prefix('account/')->name('account.')->group(function(){
+    Route::get('profile/', 'AccountController@profile')->name('profile.index');
+    Route::post('profile/', 'AccountController@updateProfile')->name('profile.update');
+
+    Route::get('learning/', 'AccountController@learning')->name('learning.index');
+    Route::get('payment/', 'AccountController@payment')->name('payment.index');
+});

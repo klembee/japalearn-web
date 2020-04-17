@@ -58,7 +58,6 @@ class StudentInfo extends Model
             $level = $review->level;
             $timeToWait = VocabLearningPathItemStats::$levels_interval[$level - 1];
 
-
             if(!$meaningLastDate){
                 array_push($reviewsToDo['meaning'], $review->toArray());
             }
