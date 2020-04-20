@@ -23,6 +23,7 @@ Here are the steps to start working on this project
 1. Populate the database by running `php artisan db:seed` - This will create the default users, roles, etc...
 1. Configure Passport by running `php artisan passport:install` - Passport is a package allowing to authenticate users when they query APIs endpoints.
 1. Generate the Passport keys by running `php artisan passport:keys`
+1. Create storage symbolic link: `php artisan storage:link`
 
 ## How to test localy
 1. Run `php artisan serve` to launch the web app

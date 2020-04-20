@@ -58,6 +58,7 @@ import {MdApp,
     MdMenu,
     MdSwitch,
     MdRipple,
+    MdSubheader,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -81,6 +82,7 @@ Vue.use(MdSpeedDial);
 Vue.use(MdMenu);
 Vue.use(MdSwitch);
 Vue.use(MdRipple);
+Vue.use(MdSubheader);
 
 import { BootstrapVue } from 'bootstrap-vue'
 Vue.use(BootstrapVue)

@@ -9,6 +9,6 @@
 @section('content')
     @include('app.account.settings.part.nav')
     <md-content>
-        <h1>Profile</h1>
+        @include('app.account.settings.profile.form')
     </md-content>
 @endsection

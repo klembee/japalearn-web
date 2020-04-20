@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
@@ -72,6 +73,21 @@ class User extends Authenticatable
      */
     public function isModerator(){
         return $this->role_id === Role::moderator()->id;
+    }
+
+    /**
+     * Function that makes it easier to upload a profile picture
+     * for the current user
+     * @param $image
+     */
+    public function setProfileImage(UploadedFile $image){
+        $savedFile = $image->store('public/avatars');
+
+        // Remove the "/public/" part before save in database
+        $path = substr($savedFile, strpos($savedFile, "/") + 1);
+
+        $this->picture_path = $path;
+        $this->save();
     }
 
     public function messages(){
