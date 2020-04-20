@@ -56,14 +56,15 @@ class AccountController extends Controller
         }
 
         // If the user have uploaded a profile picture
-        error_log(print_r($request->all(), true));
+//        error_log(print_r($request->all(), true));
 
         if($request->hasFile('picture')){
+            error_log("Has picture");
             $picture = $request->file('picture');
             $user->setProfileImage($picture);
         }
 
-        return redirect()->route('account.profile.index');
+//        return redirect()->route('account.profile.index');
     }
 
     public function learning(Request $request){

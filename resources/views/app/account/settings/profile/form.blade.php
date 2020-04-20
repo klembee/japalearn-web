@@ -26,11 +26,11 @@
                 <md-input readonly onclick="this.removeAttribute('readonly')" name="password_conf" type="password" id="password_conf"/>
             </md-field>
 
-            <md-subheader>Profile picture</md-subheader>
-            <md-field>
-                <label>Upload a new picture</label>
-                <md-file name="picture"></md-file>
-            </md-field>
+            <image-selector
+                title="Profile picture"
+                label="Upload a new picture"
+                input-name="picture"
+            ></image-selector>
 
             <md-button type="submit">{{__('Save profile')}}</md-button>
 
