@@ -83,6 +83,8 @@ class User extends Authenticatable
     public function setProfileImage(UploadedFile $image){
         $savedFile = $image->store('public/avatars');
 
+        //todo: Resize to a specific size to reduce file space
+
         // Remove the "/public/" part before save in database
         $path = substr($savedFile, strpos($savedFile, "/") + 1);
 
@@ -117,8 +119,11 @@ class User extends Authenticatable
     public function userInfo(){
         if($this->isStudent()){
             return $this->hasOne(StudentInfo::class);
+        }else if($this->isTeacher()){
+            return $this->hasOne(TeacherInfo::class, 'teacher_id');
         }else{
-            //todo:
+            error_log("The role of the current user does not have information table");
+            return $this->newQuery();
         }
     }
 

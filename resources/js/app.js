@@ -34,6 +34,7 @@ Vue.component('vocab-review-window', require('./components/learning_paths/VocabR
 Vue.component('vocab-size-per-day-graph', require('./components/dashboard/VocabSizePerDayGraph.vue').default);
 Vue.component('learning-path-item-card', require('./components/learning_paths/LearningPathItemCard.vue').default);
 Vue.component('image-selector', require('./components/ImageSelector.vue').default);
+Vue.component('availability_selector', require('./components/video_lesson/availability_selector.vue').default);
 
 /**
  * Material Design Components

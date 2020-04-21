@@ -32,6 +32,15 @@
                 input-name="picture"
             ></image-selector>
 
+            @if(Auth::user()->picture_path)
+                <div>
+                    <p>{{__('Current profile Image')}}:</p>
+                    <img style="width:100px;" src="/storage/{{Auth::user()->picture_path}}"/>
+                </div>
+            @endif
+
+
+
             <md-button type="submit">{{__('Save profile')}}</md-button>
 
         </md-card-content>

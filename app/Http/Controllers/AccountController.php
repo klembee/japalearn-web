@@ -4,8 +4,12 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * Controller for the tasks relating the account like settings.
@@ -44,27 +48,41 @@ class AccountController extends Controller
         $user->save();
 
         // If the user wants to change its password
-        if($request->has('password')){
+        if($request->has('password') and strlen($request->input('password')) > 0){
             // Check that the password and password confirmation are the same
             $password = $request->input('password');
             $password_conf = $request->input('password_conf');
 
             if($password == $password_conf){
-                $user->password = Crypt::encrypt($password);
+                $user->password = Hash::make($password);
                 $user->save();
             }
         }
 
         // If the user have uploaded a profile picture
-//        error_log(print_r($request->all(), true));
+        if($request->has('picture')){
+            $picture_base64 = $request->input('picture');
 
-        if($request->hasFile('picture')){
-            error_log("Has picture");
-            $picture = $request->file('picture');
-            $user->setProfileImage($picture);
+            //Convert to file
+            //todo: Make this into a helper function if used a lot
+            $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $picture_base64));
+
+            $tmpFilePath = sys_get_temp_dir() . "/" . Str::uuid()->toString();
+            file_put_contents($tmpFilePath, $fileData);
+
+            $tmpFile = new File($tmpFilePath);
+            $file = new UploadedFile(
+                $tmpFile->getPathname(),
+                $tmpFile->getFilename(),
+                $tmpFile->getMimeType(),
+                0,
+                true
+            );
+
+            $user->setProfileImage($file);
         }
 
-//        return redirect()->route('account.profile.index');
+        return redirect()->route('account.profile.index');
     }
 
     public function learning(Request $request){

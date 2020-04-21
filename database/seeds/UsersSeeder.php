@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Support\Str;
  */
 class UsersSeeder extends \Illuminate\Database\Seeder
 {
+
     public function run(){
         // Create an admin user
         try {

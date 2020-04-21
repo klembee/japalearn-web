@@ -48,4 +48,9 @@ Route::middleware('auth:api')->name('api.')->group(function(){
             });
         });
     });
+
+    Route::name('video_lesson.')->prefix('video_lesson')->group(function(){
+        Route::post('update_availability', 'Api\VideoLessonController@updateAvailability')->name('updateAvailability');
+        Route::get('fetch_availability', 'Api\VideoLessonController@fetchAvailabilities')->name('fetchAvailability');
+    });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\StudentInfo;
+use App\Models\TeacherInfo;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -71,12 +72,18 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        // Create the student info if user is student
         if($user->isStudent()){
+            // Create the student info if user is student
+
             $studentInfo = new StudentInfo();
             $studentInfo->user_id = $user->id;
             $studentInfo->level = 1;
             $studentInfo->save();
+        }else if($user->isTeacher()){
+            // Create teacher info
+
+            $teacherInfo = new TeacherInfo();
+            $teacherInfo->save();
         }
 
         return $user;

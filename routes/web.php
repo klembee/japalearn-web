@@ -62,3 +62,7 @@ Route::prefix('account/')->name('account.')->group(function(){
     Route::get('learning/', 'AccountController@learning')->name('learning.index');
     Route::get('payment/', 'AccountController@payment')->name('payment.index');
 });
+
+Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){
+    Route::get("/", "VideoLessonController@index")->name('index');
+});
