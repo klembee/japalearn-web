@@ -112,7 +112,7 @@ class LearningPathController extends Controller
         foreach($goodItems as $good){
             $word = $good['question'];
 
-            $itemStats = $user->userInfo->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
+            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
                 return $query->where('word', $word);
             })->get();
 
@@ -123,7 +123,7 @@ class LearningPathController extends Controller
                     // Edit
                     $stat = VocabLearningPathItemStats::query()
                         ->where('learning_path_item_id', $item->id)
-                        ->where('student_info_id', $user->userInfo->id)->firstOrFail();
+                        ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
                     if ($good['type'] == "meaning") {
                         $stat->meaning_right += 1;
@@ -138,7 +138,7 @@ class LearningPathController extends Controller
                     // Create new item stat
                     $stat = new VocabLearningPathItemStats;
                     $stat->learning_path_item_id = $item->id;
-                    $stat->student_info_id = $user->userInfo->id;
+                    $stat->student_info_id = $user->info->information->id;
 
                     if ($good['type'] == "meaning") {
                         $stat->meaning_right = 1;
@@ -159,13 +159,13 @@ class LearningPathController extends Controller
         // Go Through each items that the user got wrong and update the study date to now
         foreach($wrongItems as $wrong) {
             $word = $wrong['question'];
-            $itemStats = $user->userInfo->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
+            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
                 return $query->where('word', $word);
             })->get();
 
             $stat = VocabLearningPathItemStats::query()
                 ->where('learning_path_item_id', $item->id)
-                ->where('student_info_id', $user->userInfo->id)->firstOrFail();
+                ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
             if ($wrong['type'] == "meaning") {
                 $stat->meaning_last_right_date = now();

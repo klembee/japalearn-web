@@ -27,7 +27,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'created_at', 'modified_at', 'role_id',
+        'password',
+        'remember_token',
+        'email_verified_at',
+        'created_at',
+        'modified_at',
     ];
 
     /**
@@ -116,15 +120,8 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'to_id');
     }
 
-    public function userInfo(){
-        if($this->isStudent()){
-            return $this->hasOne(StudentInfo::class);
-        }else if($this->isTeacher()){
-            return $this->hasOne(TeacherInfo::class, 'teacher_id');
-        }else{
-            error_log("The role of the current user does not have information table");
-            return $this->newQuery();
-        }
+    public function info(){
+        return $this->hasOne(UserInformation::class);
     }
 
 

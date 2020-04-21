@@ -43,7 +43,7 @@
                 <form method="post" action="#"> <!-- Todo: Save -->
                     <md-field>
                         <label>{{__('Pricing per hour of lesson')}}</label>
-                        <md-input type="number" step="0.01" min="0" :value="{{Auth::user()->userInfo->video_lesson_price_hour / 100}}"></md-input>
+                        <md-input type="number" step="0.01" min="0" :value="{{Auth::user()->studentInfo->video_lesson_price_hour / 100}}"></md-input>
                     </md-field>
 
                     <md-button type="submit" class="md-raised md-primary">{{__("Save")}}</md-button>

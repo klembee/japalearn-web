@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\StudentInfo;
 use App\Models\TeacherInfo;
 use App\Models\User;
+use App\Models\UserInformation;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -76,14 +77,25 @@ class RegisterController extends Controller
             // Create the student info if user is student
 
             $studentInfo = new StudentInfo();
-            $studentInfo->user_id = $user->id;
             $studentInfo->level = 1;
             $studentInfo->save();
+
+            $informationUser = new UserInformation();
+            $informationUser->user_id = $user->id;
+            $informationUser->information_id = $studentInfo->id;
+            $informationUser->information_type = StudentInfo::class;
+            $informationUser->save();
+
         }else if($user->isTeacher()){
             // Create teacher info
-
             $teacherInfo = new TeacherInfo();
             $teacherInfo->save();
+
+            $informationUser = new UserInformation();
+            $informationUser->user_id = $user->id;
+            $informationUser->information_id = $teacherInfo->id;
+            $informationUser->information_type = TeacherInfo::class;
+            $informationUser->save();
         }
 
         return $user;

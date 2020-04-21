@@ -40,7 +40,7 @@ class DashboardController extends Controller
                 $vocabSizePerDay[$dateFormated] = 0;
             }
 
-            $vocabSizePerDay[$dateFormated] = $user->userInfo->vocabLearningPathStats->where('created_at', '<=', $date)->count();
+            $vocabSizePerDay[$dateFormated] = $user->info->information->vocabLearningPathStats->where('created_at', '<=', $date)->count();
             $date->addDay();
         }
 

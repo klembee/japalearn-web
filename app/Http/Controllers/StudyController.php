@@ -27,7 +27,7 @@ class StudyController extends Controller
      */
     public function vocabularyLesson(Request $request){
         $user = $request->user();
-        $vocabs = $user->userInfo->getVocabLessonItems();
+        $vocabs = $user->info->information->getVocabLessonItems();
         $radicals = $vocabs['radicals'];
         $kanjis = $vocabs['kanjis'];
         $vocabulary = $vocabs['vocabulary'];
@@ -93,7 +93,7 @@ class StudyController extends Controller
      */
     public function vocabularyReview(Request $request){
         $user = $request->user();
-        $vocabs = $user->userInfo->getVocabReviewItems();
+        $vocabs = $user->info->information->getVocabReviewItems();
 
         $writingReviews = $vocabs['review']['writing'];
         $meaningReviews = $vocabs['review']['meaning'];

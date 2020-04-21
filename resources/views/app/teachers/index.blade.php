@@ -15,7 +15,7 @@
                 <md-table-cell>{{$teacher->name}}</md-table-cell>
                 <md-table-cell>{{$teacher->email}}</md-table-cell>
                 <md-table-cell>
-                    <md-button>{{__('Send message')}}</md-button>
+                    <md-button href="{{route('video_lesson.schedule.index', ['teacher' => $teacher->id])}}" class="md-raised md-primary">{{__('Schedule lesson')}}</md-button>
                 </md-table-cell>
             </md-table-row>
         @endforeach

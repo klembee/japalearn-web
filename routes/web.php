@@ -64,5 +64,7 @@ Route::prefix('account/')->name('account.')->group(function(){
 });
 
 Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){
-    Route::get("/", "VideoLessonController@index")->name('index');
+    Route::get("/", "VideoLessonController@index")->middleware('isRole:teacher')->name('index');
+    Route::get('/schedule', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
+    Route::post('/schedule', "VideoLessonController@scheduleLessonSave")->middleware('isRole:student')->name('schedule.save');
 });
