@@ -8,7 +8,41 @@
 
 @section('content')
     @include('app.account.settings.part.nav')
+
     <md-content>
-        <h1>Payment</h1>
+        @if(count($paymentMethods) > 0)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Card</td>
+                        <td>Expiration</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($paymentMethods as $paymentMethod)
+
+                        <tr>
+                            <td>**** **** **** {{$paymentMethod->card->last4}}</td>
+                            <td>{{$paymentMethod->card->exp_month}}/{{$paymentMethod->card->exp_year}}</td>
+                            <td>
+                                <delete-payment-method-button
+                                    delete-endpoint="{{route('api.payment.delete-payment-method')}}"
+                                    payment-id="{{$paymentMethod->id}}"
+                                ></delete-payment-method-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+
+        <!-- New Payment Method form -->
+        <h3>New payment method</h3>
+        <new-payment-method-form
+            save-method-endpoint="{{route('api.payment.add-payment-method')}}"
+            stripe-key="{{env('STRIPE_KEY')}}"
+            client-secret="{{$stripeIntent}}"
+        ></new-payment-method-form>
     </md-content>
 @endsection

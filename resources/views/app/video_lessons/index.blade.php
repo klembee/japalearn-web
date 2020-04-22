@@ -40,10 +40,11 @@
 
             <div>
                 <h2>{{__('Configuration')}}</h2>
-                <form method="post" action="#"> <!-- Todo: Save -->
+                <form method="post" action="{{route('video_lesson.updateInfo')}}"> <!-- Todo: Save -->
+                    @csrf
                     <md-field>
                         <label>{{__('Pricing per hour of lesson')}}</label>
-                        <md-input type="number" step="0.01" min="0" :value="{{Auth::user()->studentInfo->video_lesson_price_hour / 100}}"></md-input>
+                        <md-input type="number" step="0.01" min="0" name="pricing_hour" :value="{{Auth::user()->info->information->video_lesson_price_hour / 100}}"></md-input>
                     </md-field>
 
                     <md-button type="submit" class="md-raised md-primary">{{__("Save")}}</md-button>

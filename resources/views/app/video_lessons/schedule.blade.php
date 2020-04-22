@@ -8,7 +8,8 @@
 @endsection
 
 @section('content')
-    <form>
-
-    </form>
+    <schedule_form
+        :teacher="{{json_encode($teacher)}}"
+        available-times-endpoint="{{route('api.video_lesson.fetchAvailabilityDate')}}"
+    ></schedule_form>
 @endsection

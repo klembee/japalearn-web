@@ -35,6 +35,9 @@ Vue.component('vocab-size-per-day-graph', require('./components/dashboard/VocabS
 Vue.component('learning-path-item-card', require('./components/learning_paths/LearningPathItemCard.vue').default);
 Vue.component('image-selector', require('./components/ImageSelector.vue').default);
 Vue.component('availability_selector', require('./components/video_lesson/availability_selector.vue').default);
+Vue.component("schedule_form", require('./components/video_lesson/ScheduleForm.vue').default);
+Vue.component("new-payment-method-form", require('./components/stripe/NewPaymentMethodForm.vue').default);
+Vue.component('delete-payment-method-button', require('./components/stripe/DeletePaymentMethodButton.vue').default);
 
 /**
  * Material Design Components

@@ -52,5 +52,11 @@ Route::middleware('auth:api')->name('api.')->group(function(){
     Route::name('video_lesson.')->prefix('video_lesson')->group(function(){
         Route::post('update_availability', 'Api\VideoLessonController@updateAvailability')->name('updateAvailability');
         Route::get('fetch_availability', 'Api\VideoLessonController@fetchAvailabilities')->name('fetchAvailability');
+        Route::post('fetch_availability_for_date', 'Api\VideoLessonController@fetchAvailabilitiesForDate')->name('fetchAvailabilityDate');
+    });
+
+    Route::name('payment.')->prefix('payment')->middleware('isRole:student')->group(function(){
+        Route::post('add-payment-method', 'Api\PaymentController@addPaymentMethod')->name('add-payment-method');
+        Route::post('delete-payment-method', 'Api\PaymentController@deletePaymentMethod')->name('delete-payment-method');
     });
 });

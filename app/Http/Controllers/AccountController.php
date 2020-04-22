@@ -90,6 +90,10 @@ class AccountController extends Controller
     }
 
     public function payment(Request $request){
-        return view('app.account.settings.payment');
+        $user = $request->user();
+        $paymentMethods = $user->paymentMethods()->toarray();
+
+        $stripeIntent = $request->user()->createSetupIntent()->client_secret;
+        return view('app.account.settings.payment', compact('paymentMethods', 'stripeIntent'));
     }
 }

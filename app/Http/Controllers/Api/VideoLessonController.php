@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\TeacherAvailability;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -51,6 +53,40 @@ class VideoLessonController extends Controller
         return response()->json([
             'count' => $availabilities->count(),
             'data' => $availabilities->groupBy('week_day'),
+        ]);
+    }
+
+    public function fetchAvailabilitiesForDate(Request $request){
+        $this->validate($request, [
+            'date' => "required|date",
+            'teacher_id' => "required"
+        ]);
+
+        $teacher = User::query()
+            ->where('role_id', Role::teacher()->id)
+            ->where('id', $request->input('teacher_id'))->firstOrFail();
+
+        //todo: Check that the user have access to this teacher's availabilities
+
+        $date = Carbon::createFromFormat("Y-m-d", $request->input('date'));
+
+        if($date->isBefore(Carbon::now()->addWeek()->startOfDay())){
+            return response()->json([
+                'success' => false,
+                'message' => "You can only schedule a lesson one week in advance !"
+            ]);
+        }
+        $scheduleDayOfWeek = strtolower($date->dayName);
+
+        $times = TeacherAvailability::query()
+            ->where('teacher_id', $teacher->id)
+            ->where('week_day', $scheduleDayOfWeek)->get()->pluck('hour');
+
+        //todo: Remove the hours that already have a scheduled lesson
+
+        return response()->json([
+            'success' => true,
+            'times' => $times
         ]);
     }
 

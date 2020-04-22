@@ -60,11 +60,12 @@ Route::prefix('account/')->name('account.')->group(function(){
     Route::post('profile/', 'AccountController@updateProfile')->name('profile.update');
 
     Route::get('learning/', 'AccountController@learning')->name('learning.index');
-    Route::get('payment/', 'AccountController@payment')->name('payment.index');
+    Route::get('payment/', 'AccountController@payment')->middleware('isRole:student')->name('payment.index');
 });
 
 Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){
     Route::get("/", "VideoLessonController@index")->middleware('isRole:teacher')->name('index');
+    Route::post("/update-info", "VideoLessonController@updateInformation")->middleware("isRole:teacher")->name('updateInfo');
     Route::get('/schedule', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
     Route::post('/schedule', "VideoLessonController@scheduleLessonSave")->middleware('isRole:student')->name('schedule.save');
 });

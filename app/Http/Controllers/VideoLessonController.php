@@ -48,15 +48,27 @@ class VideoLessonController extends Controller
         ]);
 
 
-        $teacher = User::query()->with('info')
+        $teacher = User::query()->with('info', 'info.information')
             ->where('role_id', Role::teacher()->id)
             ->where('id', $request->query('teacher'))->firstOrFail();
-
-        error_log(print_r($teacher->info->information, true));
 
         //todo: Validate that the user can schedule lesson with this teacher.
 
         return view('app.video_lessons.schedule', compact('teacher'));
+    }
+
+    public function updateInformation(Request $request){
+        $this->validate($request, [
+            'pricing_hour' => "required"
+        ]);
+
+        $teacher = $request->user();
+
+        $info = $teacher->info->information;
+        $info->video_lesson_price_hour = $request->input('pricing_hour') * 100;
+        $info->save();
+
+        return redirect()->back();
     }
 
     /**
