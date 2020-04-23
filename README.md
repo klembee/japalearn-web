@@ -16,8 +16,10 @@ Here are the steps to start working on this project
 1. Start by cloning this repository on your computer
 1. Create a new database: `CREATE DATABASE japalearn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
 1. Copy the file .env.example to .env
+1. run: `php artisan key:generate`
 1. Edit the file and change the fields `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` to allow the app to connect to the created database
 1. Run `npm install` to install the node.js dependencies
+1. Run `npm run dev` to generate the css and js files
 1. Run `composer install` to install the PHP dependencies
 1. Create the database tables by running `php artisan migrate`
 1. Populate the database by running `php artisan db:seed` - This will create the default users, roles, etc...

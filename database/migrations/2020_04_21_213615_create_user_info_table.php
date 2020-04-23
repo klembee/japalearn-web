@@ -27,10 +27,12 @@ class CreateUserInfoTable extends Migration
         });
 
         Schema::table('student_info', function(Blueprint $table){
+            $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
         });
 
         Schema::table('teacher_info', function(Blueprint $table){
+            $table->dropForeign(['teacher_id']);
             $table->dropColumn('teacher_id');
         });
     }
