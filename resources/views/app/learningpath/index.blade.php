@@ -8,6 +8,14 @@
         create-api-endpoint="{{route('api.learningpath.items.store')}}"
         word-search-api-endpoint="{{route('api.dictionary.query')}}"
     ></new-learningpath-item-modal>
+
+    <md-button href="{{route('learningpath.vocab.export')}}">
+        {{__('Export')}}
+    </md-button>
+
+    <md-button>
+        {{__('Import')}}
+    </md-button>
 @endsection
 
 @section('content')

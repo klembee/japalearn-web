@@ -6,12 +6,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\VocabLearningPath;
+use App\Models\VocabLearningPathExample;
 use App\Models\VocabLearningPathItemStats;
+use App\Models\VocabLearningPathMeanings;
 use App\Models\Vocabulary;
 use App\Models\WordType;
 use http\Client\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -83,6 +86,98 @@ class LearningPathController extends Controller
 
         return \response()->json([
             'success' => true,
+        ]);
+    }
+
+
+    /**
+     * Update an existing vocab learning path item
+     * @param Request $request
+     * @param VocabLearningPath $item
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateItem(Request $request, VocabLearningPath $item){
+
+        $this->validate($request, [
+            'word' => "required",
+            'word_type_id' => "required",
+        ]);
+
+        $word = $request->input('word');
+        $wordTypeId = $request->input('word_type_id');
+        $mnemonic = $request->input('mnemonic');
+        $examples = $request->input('examples');
+        $meanings = $request->input('meanings');
+        $readings = $request->input('readings');
+
+
+        try {
+            DB::transaction(function() use(&$item, $word, $wordTypeId, $mnemonic, $meanings, $readings, $examples){
+                $item->word = $word;
+                $item->word_type_id = $wordTypeId;
+                $item->mnemonic = $mnemonic;
+
+                $item->examples()->delete();
+                foreach($examples as $example){
+                    $exampleModel = new VocabLearningPathExample();
+
+                    $exampleModel->vocab_learning_path_item_id = $item->id;
+                    $exampleModel->example = $example['example'];
+                    $exampleModel->translation = $example['translation'];
+                    $exampleModel->type = $example['type'];
+                    $exampleModel->save();
+                }
+
+                $item->meanings()->delete();
+                foreach($meanings as $meaning){
+                    // If the id is not present, it means its a new meaning
+                    $item->meanings()->create([
+                        'meaning' => $meaning['meaning']
+                    ]);
+                }
+
+                $item->readings()->delete();
+                foreach($readings as $reading){
+                    $item->readings()->create([
+                        'reading' => $reading['reading']
+                    ]);
+                }
+
+                $item->save();
+            });
+
+        }catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => ""
+        ]);
+    }
+
+    /**
+     * Delete a specific vocab learning path item
+     * @param Request $request
+     * @param VocabLearningPath $item
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteItem(Request $request, VocabLearningPath $item){
+        try {
+            $item->delete();
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => ""
         ]);
     }
 

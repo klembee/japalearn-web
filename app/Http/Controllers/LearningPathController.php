@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\VocabLearningPath;
+use App\Models\VocabLearningPathMeanings;
 use App\Models\WordType;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,59 @@ class LearningPathController extends Controller
         return view('app.learningpath.index', compact('itemsByLevel'));
     }
 
+    /**
+     * @param Request $request
+     */
+    public function export(Request $request){
+        return VocabLearningPath::query()->with('readings', 'meanings', 'examples')->get()->toJson();
+    }
+
+    public function import(Request $request){
+        $this->validate($request, [
+            'json_content' => 'required|file'
+        ]);
+
+        $json_file = $request->file('json_content');
+        $items = json_decode($json_file->get(), true);
+
+        foreach($items as $item){
+            $meanings = $item->meanings;
+            $readings = $item->readings;
+            $examples = $item->examples;
+
+            // Try to find existing data
+            $itemModel = VocabLearningPath::query()
+                ->where('word', $item->word)
+                ->where('level', $item->level)
+                ->where('word_type_id', $item->word_type_id)->first();
+
+            if(!$itemModel){
+                $itemModel = new VocabLearningPath();
+                $itemModel->word = $item->word;
+                $itemModel->level = $item->level;
+                $itemModel->word_type_id = $item->word_type_id;
+            }
+
+            $itemModel->mnemonic = $item->mnemonic;
+            $itemModel->save();
+
+            foreach($meanings as $meaning){
+                $meaningModel = VocabLearningPathMeanings::query()
+                    ->where("vocab_learning_path_item_id", $itemModel->id)
+                    ->where('meaning');
+            }
+
+            foreach ($readings as $reading){
+
+            }
+
+            foreach ($examples as $example){
+
+            }
+
+        }
+    }
+
 
     /**
      * View a specific learning path of a certain level.
@@ -56,11 +110,11 @@ class LearningPathController extends Controller
      */
     public function viewLevel(Request $request, int $level){
 
-        $radicals = VocabLearningPath::query()->where('word_type_id', WordType::radical()->id)->with('meanings', 'readings')->get();
+        $radicals = VocabLearningPath::query()->where('word_type_id', WordType::radical()->id)->with('meanings', 'readings', 'examples')->get();
 
-        $kanjis = VocabLearningPath::query()->where('word_type_id', WordType::kanji()->id)->with('meanings', 'readings')->get();
+        $kanjis = VocabLearningPath::query()->where('word_type_id', WordType::kanji()->id)->with('meanings', 'readings', 'examples')->get();
 
-        $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->with('meanings', 'readings')->get();
+        $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->with('meanings', 'readings', 'examples')->get();
 
         return view('app.learningpath.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
     }

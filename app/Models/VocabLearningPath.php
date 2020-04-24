@@ -22,4 +22,8 @@ class VocabLearningPath extends Model
     public function meanings(){
         return $this->hasMany(VocabLearningPathMeanings::class, 'vocab_learning_path_item_id');
     }
+
+    public function examples(){
+        return $this->hasMany(VocabLearningPathExample::class, "vocab_learning_path_item_id");
+    }
 }

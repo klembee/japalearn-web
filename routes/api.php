@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('email-list/add', 'Api\EmailListController@add')->name('email-list.add');
+
 Route::middleware('auth:api')->name('api.')->group(function(){
     Route::name('teachers.')->prefix('teacher')->group(function(){
         Route::get('/generate_invite_code', "Api\TeacherController@generate_invite_code")->name('generate_invite_code');
@@ -42,7 +44,10 @@ Route::middleware('auth:api')->name('api.')->group(function(){
 
     Route::name('learningpath.')->prefix('learning_path')->group(function(){
         Route::prefix('items')->name('items.')->group(function(){
-            Route::post('create', 'Api\LearningPathController@newItem')->name('store');
+            Route::post('create', 'Api\LearningPathController@newItem')->middleware('isRole:admin')->name('store');
+            Route::post('{item}/delete', 'Api\LearningPathController@deleteItem')->middleware('isRole:admin')->name('delete');
+            Route::post('{item}/update', 'Api\LearningPathController@updateItem')->middleware('isRole:admin')->name('update');
+
             Route::name('review.')->prefix('review')->group(function(){
                 Route::post('update_level', 'Api\LearningPathController@updateLevel')->name('update_level');
             });
