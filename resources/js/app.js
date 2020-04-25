@@ -38,6 +38,8 @@ Vue.component('availability_selector', require('./components/video_lesson/availa
 Vue.component("schedule_form", require('./components/video_lesson/ScheduleForm.vue').default);
 Vue.component("new-payment-method-form", require('./components/stripe/NewPaymentMethodForm.vue').default);
 Vue.component('delete-payment-method-button', require('./components/stripe/DeletePaymentMethodButton.vue').default);
+Vue.component('HiraganaTable', require('./components/kanas/HiraganaTable.vue').default);
+Vue.component('KatakanaTable', require('./components/kanas/KatakanaTable.vue').default);
 
 /**
  * Material Design Components
@@ -90,7 +92,7 @@ Vue.use(MdRipple);
 Vue.use(MdSubheader);
 
 import { BootstrapVue } from 'bootstrap-vue'
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -1,10 +1,8 @@
 @extends('layouts.theApp')
 @section('title')
-    {{__('Your Dashboard')}}
+    {{__('Learn grammar')}}
 @endsection
 
 @section('content')
-    <div>
-        Welcome to your dashboard !
-    </div>
+    Hello
 @endsection

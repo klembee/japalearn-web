@@ -58,6 +58,9 @@ Route::prefix('learning_path/')->name('learningpath.')->group(function(){
 });
 
 Route::prefix('account/')->name('account.')->group(function(){
+    Route::get('preferences/', 'AccountController@preferences')->name('preferences.index');
+    Route::post('preferences/', 'AccountController@updatePreferences')->name('preferences.update');
+
     Route::get('profile/', 'AccountController@profile')->name('profile.index');
     Route::post('profile/', 'AccountController@updateProfile')->name('profile.update');
 
@@ -70,4 +73,29 @@ Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){
     Route::post("/update-info", "VideoLessonController@updateInformation")->middleware("isRole:teacher")->name('updateInfo');
     Route::get('/schedule', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
     Route::post('/schedule', "VideoLessonController@scheduleLessonSave")->middleware('isRole:student')->name('schedule.save');
+});
+
+// Kanas
+Route::prefix('kanas/')->name('kanas.')->group(function(){
+    Route::get('/', 'KanaController@index')->name('index');
+});
+
+// Kanji and vocabulary
+Route::prefix('kanji_vocabulary/')->name('kanji_vocabulary.')->group(function(){
+    Route::get('/', "KanjiVocabularyController@index")->name('index');
+});
+
+// Grammar
+Route::prefix('grammar/')->name('grammar.')->group(function(){
+    Route::get('/', 'GrammarController@index')->name('index');
+});
+
+// Reading
+Route::prefix('reading/')->name('reading.')->group(function(){
+    Route::get('/', 'ReadingController@index')->name('index');
+});
+
+// listening
+Route::prefix('listening/')->name('listening.')->group(function(){
+    Route::get('/', 'ListeningController@index')->name('index');
 });

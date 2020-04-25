@@ -1,10 +1,8 @@
 @extends('layouts.theApp')
 @section('title')
-    {{__('Your Dashboard')}}
+    {{__('Learn reading Japanese')}}
 @endsection
 
 @section('content')
-    <div>
-        Welcome to your dashboard !
-    </div>
+    Hello
 @endsection

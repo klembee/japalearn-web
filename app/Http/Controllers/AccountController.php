@@ -20,6 +20,36 @@ class AccountController extends Controller
 {
 
     /**
+     * Shows a form allowing a user to update its preferences
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function preferences(Request $request){
+        return view('app.account.settings.preferences');
+    }
+
+    /**
+     * Update the preferences of the user
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updatePreferences(Request $request){
+        $this->validate($request, [
+            'locale' => 'required'
+        ]);
+
+        error_log(print_r($request->all(), true));
+
+        $user = $request->user();
+        $user->locale = $request->input('locale');
+        $user->save();
+
+
+        return redirect()->back();
+    }
+
+    /**
      * Show a form allowing the user to modify its profile information
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
