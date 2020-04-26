@@ -8,6 +8,15 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
 
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme("default", (
+    primary: #d3cfa5, // The primary color of your brand
+    accent: #cc9933 // The secondary color of your brand
+));
+
+@import "~vue-material/dist/theme/all"; // Apply the theme
+
 @import "components/learning_paths";
 
 .clickable{

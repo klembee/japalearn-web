@@ -42,7 +42,7 @@ class LearningPathController extends Controller
 
         $itemsByLevel = VocabLearningPath::query()->with('vocabulary')->get()->groupBy('level');
 
-        return view('app.learningpath.index', compact('itemsByLevel'));
+        return view('app.kanji_learning_path.index', compact('itemsByLevel'));
     }
 
     /**
@@ -116,6 +116,6 @@ class LearningPathController extends Controller
 
         $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->with('meanings', 'readings', 'examples')->get();
 
-        return view('app.learningpath.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
+        return view('app.kanji_learning_path.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
     }
 }

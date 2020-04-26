@@ -42,7 +42,7 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::get('vocabSizePerDayThisMonth', 'Api\DashboardController@vocabSizePerDayThisMonth')->name('vocab_size');
     });
 
-    Route::name('learningpath.')->prefix('learning_path')->group(function(){
+    Route::name('kanji_learning_path.')->prefix('learning_path')->group(function(){
         Route::prefix('items')->name('items.')->group(function(){
             Route::post('create', 'Api\LearningPathController@newItem')->middleware('isRole:admin')->name('store');
             Route::post('{item}/delete', 'Api\LearningPathController@deleteItem')->middleware('isRole:admin')->name('delete');

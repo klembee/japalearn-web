@@ -48,12 +48,16 @@ Route::prefix('study/')->name('study.')->group(function(){
     Route::get('vocabulary_review', 'StudyController@vocabularyReview')->name('review');
 });
 
-Route::prefix('learning_path/')->name('learningpath.')->group(function(){
+Route::prefix('learning_path/')->name('kanji_learning_path.')->middleware('isRole:admin')->group(function(){
     Route::prefix('vocab/')->name('vocab.')->group(function(){
         Route::get('', 'LearningPathController@index')->name('index');
         Route::get('/{level}/edit', 'LearningPathController@viewLevel')->name('edit');
 
         Route::get('export', "LearningPathController@export")->name('export');
+    });
+
+    Route::prefix('grammar/')->name('grammar.')->group(function(){
+        Route::get('', 'GrammarLearningPathController@index')->name('index');
     });
 });
 

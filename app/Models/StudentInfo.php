@@ -86,8 +86,6 @@ class StudentInfo extends Model
         ];
     }
 
-
-
     public function getVocabLessonItems(){
         $currentVocabItemsUnderLevel3 = $this->vocabLearningPathStats()->get()->filter(function($value, $key){
             return $value->level <= 3;
@@ -95,9 +93,9 @@ class StudentInfo extends Model
 
         $toLearn = 20 - $currentVocabItemsUnderLevel3->count();
 
-        $allItemsCurrentLevel = VocabLearningPath::query()->where('level', $this->level)->with('readings', 'meanings');
+        $allItemsCurrentLevel = VocabLearningPath::query()->where('level', $this->kanji_level)->with('readings', 'meanings');
         $allItemsAlreadyLearnedThisLevel = $this->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query){
-            return $query->where('level', $this->level);
+            return $query->where('level', $this->kanji_level);
         })->with('vocabLearningPathItem')->get()->pluck('vocabLearningPathItem.id');
 
 

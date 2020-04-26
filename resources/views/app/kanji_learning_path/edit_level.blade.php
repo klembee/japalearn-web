@@ -4,7 +4,7 @@
 @endsection
 
 @section('toolbar_right')
-    <md-button href="{{route('learningpath.vocab.index')}}">{{__('Back')}}</md-button>
+    <md-button href="{{route('kanji_learning_path.vocab.index')}}">{{__('Back')}}</md-button>
 @endsection
 
 @section('content')
@@ -12,8 +12,8 @@
     <div class="row mb-3">
         @foreach($radicals as $radical)
             <learning-path-item-card
-                update-endpoint="{{route('api.learningpath.items.update', ['item' => $radical->id])}}"
-                delete-endpoint="{{route('api.learningpath.items.delete', ['item' => $radical->id])}}"
+                update-endpoint="{{route('api.kanji_learning_path.items.update', ['item' => $radical->id])}}"
+                delete-endpoint="{{route('api.kanji_learning_path.items.delete', ['item' => $radical->id])}}"
                 :item-prop="{{json_encode($radical)}}"
             ></learning-path-item-card>
         @endforeach
@@ -23,8 +23,8 @@
     <div class="row mb-3">
         @foreach($kanjis as $kanji)
             <learning-path-item-card
-                update-endpoint="{{route('api.learningpath.items.update', ['item' => $kanji->id])}}"
-                delete-endpoint="{{route('api.learningpath.items.delete', ['item' => $kanji->id])}}"
+                update-endpoint="{{route('api.kanji_learning_path.items.update', ['item' => $kanji->id])}}"
+                delete-endpoint="{{route('api.kanji_learning_path.items.delete', ['item' => $kanji->id])}}"
                 :item-prop="{{json_encode($kanji)}}"
             ></learning-path-item-card>
         @endforeach
@@ -34,8 +34,8 @@
     <div class="row mb-3">
         @foreach($vocabulary as $vocab)
             <learning-path-item-card
-                update-endpoint="{{route('api.learningpath.items.update', ['item' => $vocab->id])}}"
-                delete-endpoint="{{route('api.learningpath.items.delete', ['item' => $vocab->id])}}"
+                update-endpoint="{{route('api.kanji_learning_path.items.update', ['item' => $vocab->id])}}"
+                delete-endpoint="{{route('api.kanji_learning_path.items.delete', ['item' => $vocab->id])}}"
                 :item-prop="{{json_encode($vocab)}}"
             ></learning-path-item-card>
         @endforeach

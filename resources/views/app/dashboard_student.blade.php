@@ -6,5 +6,6 @@
 @section('content')
     <div>
         Welcome to your dashboard !
+        <learning-journey></learning-journey>
     </div>
 @endsection

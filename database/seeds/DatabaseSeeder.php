@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
          $this->call(RoleSeeder::class);
          $this->call(UsersSeeder::class);
          $this->call(WordTypeSeeder::class);
+         $this->call(KanaSeeder::class);
     }
 }

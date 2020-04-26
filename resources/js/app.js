@@ -40,6 +40,7 @@ Vue.component("new-payment-method-form", require('./components/stripe/NewPayment
 Vue.component('delete-payment-method-button', require('./components/stripe/DeletePaymentMethodButton.vue').default);
 Vue.component('HiraganaTable', require('./components/kanas/HiraganaTable.vue').default);
 Vue.component('KatakanaTable', require('./components/kanas/KatakanaTable.vue').default);
+Vue.component('LearningJourney', require('./components/dashboard/LearningJourney.vue').default);
 
 /**
  * Material Design Components

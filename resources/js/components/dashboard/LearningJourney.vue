@@ -1,0 +1,114 @@
+<template>
+    <div>
+        <h2>Your learning journey</h2>
+        <div class="d-flex align-items-center">
+            <!-- Kanas -->
+            <div class="learning-journey-item">
+                <div v-if="doneBasicKanas">
+                    <p>Kanas</p>
+                    <md-icon>check_circle</md-icon>
+                </div>
+                <div v-else-if="currentlyLearningKanas" class="currently_learning">
+                    <p>Learn the kanas</p>
+                    <md-icon>check_circle_outline</md-icon>
+                </div>
+            </div>
+
+            <div class="learning-journey-item-divisor">
+
+            </div>
+
+            <!-- Grammar -->
+            <div class="learning-journey-item">
+                <div v-if="doneBasicGrammar">
+                    <p>Basic grammar</p>
+                    <md-icon>check_circle</md-icon>
+                </div>
+                <div v-else-if="currentlyLearningGrammar" class="currently_learning">
+                    <p>Learn basic grammar</p>
+                    <md-icon>check_circle_outline</md-icon>
+                </div>
+                <div v-else>
+                    <p>Basic grammar</p>
+                    <md-icon>check_circle_outline</md-icon>
+                </div>
+            </div>
+
+            <div class="learning-journey-item-divisor">
+
+            </div>
+
+            <!-- Kanji and Voc lvl 3 -->
+            <div class="learning-journey-item">
+                <div v-if="doneBasicKanjis">
+                    <p>Kanjis (level 3)</p>
+                    <md-icon>check_circle</md-icon>
+                </div>
+                <div v-else-if="currentlyLearningKanjis" class="currently_learning">
+                    <p>Learn kanjis to level 3</p>
+                    <md-icon>check_circle_outline</md-icon>
+                </div>
+                <div v-else>
+                    <p>Kanjis (level 3)</p>
+                    <md-icon>check_circle_outline</md-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "LearningJourney",
+        props: {
+            doneBasicKanas: {
+                type: Boolean,
+                default: false
+            },
+            doneBasicGrammar: {
+                type: Boolean,
+                default: false
+            },
+            doneBasicKanjis: {
+                type: Boolean,
+                default: false
+            },
+        },
+        computed: {
+            currentlyLearningKanas() {
+                return !this.doneBasicKanas;
+            },
+            currentlyLearningGrammar(){
+                return this.doneBasicKanas && !this.doneBasicGrammar;
+            },
+            currentlyLearningKanjis(){
+                return this.doneBasicKanas && this.doneBasicGrammar && !this.doneBasicKanjis;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    .learning-journey-item{
+        text-align:center;
+    }
+    .learning-journey-item > div{
+        padding:1rem;
+    }
+    .learning-journey-item p{
+        margin-bottom:0;
+    }
+    .learning-journey-item-divisor{
+        flex-grow: 1;
+        height: 2px;
+        border: 1px solid #151515;
+    }
+    .currently_learning{
+        border:1px solid #151515;
+        border-radius: 5px;
+        background-color:#d3cfa5;
+    }
+    .currently_learning > p{
+        display:inline;
+    }
+</style>

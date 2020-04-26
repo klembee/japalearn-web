@@ -13,7 +13,9 @@
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="showNavigation" md-swipeable md-permanent="full">
             <md-toolbar class="md-transparent" md-elevation="0">
-                <span class="md-title">JapaLearn</span>
+                <div class="logo-container">
+                    <img src="/images/logo/logo_web_small.png" alt="Logo of JapaLearn with Pochi in the center"/>
+                </div>
             </md-toolbar>
 
             <md-list>
@@ -40,5 +42,7 @@
 </script>
 
 <style scoped>
-
+    .logo-container{
+        min-height:113.34px;
+    }
 </style>
