@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class GrammarLearningPathItem extends Model
 {
     protected $table = "grammar_learning_path";
+    protected $fillable = [
+        'title',
+        'content',
+        'category_id'
+    ];
 
     /**
      * The category of this learning path item

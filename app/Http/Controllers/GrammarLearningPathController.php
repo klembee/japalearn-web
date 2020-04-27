@@ -15,4 +15,10 @@ class GrammarLearningPathController extends Controller
 
         return view('app.grammar_learning_path.index', compact('categories'));
     }
+
+    public function viewCategory(Request $request, GrammarLearningPathCategory $category){
+        $items = $category->items;
+
+        return view('app.grammar_learning_path.view_category', compact('items', 'category'));
+    }
 }

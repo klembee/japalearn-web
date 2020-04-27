@@ -10,7 +10,7 @@
 @section('content')
 
     <vocab-lesson-window
-        update-levels-endpoint="{{route('api.kanji_learning_path.items.review.update_level')}}"
+        update-levels-endpoint="{{route('api.learning_path.kanji.items.review.update_level')}}"
         dashboard-url="{{route('dashboard')}}"
         :items="{{$items}}"
         :reviews="{{$reviews}}"

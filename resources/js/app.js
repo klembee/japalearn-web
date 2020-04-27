@@ -41,6 +41,8 @@ Vue.component('delete-payment-method-button', require('./components/stripe/Delet
 Vue.component('HiraganaTable', require('./components/kanas/HiraganaTable.vue').default);
 Vue.component('KatakanaTable', require('./components/kanas/KatakanaTable.vue').default);
 Vue.component('LearningJourney', require('./components/dashboard/LearningJourney.vue').default);
+Vue.component('AddGrammarItemModal', require('./components/grammar/AddGrammarItemModal.vue').default);
+
 
 /**
  * Material Design Components

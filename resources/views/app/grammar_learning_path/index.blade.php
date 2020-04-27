@@ -19,7 +19,7 @@
                         <p>{{$category->number_items}} items</p>
                     </md-card-content>
                     <md-card-actions>
-                        <md-button class="md-primary md-raised">Add or edit items</md-button>
+                        <md-button href="{{route('learning_path.grammar.view_category', $category->id)}}" class="md-primary md-raised">Add or edit items</md-button>
                     </md-card-actions>
 
                 </md-card>

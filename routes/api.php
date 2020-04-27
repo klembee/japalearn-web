@@ -42,16 +42,23 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::get('vocabSizePerDayThisMonth', 'Api\DashboardController@vocabSizePerDayThisMonth')->name('vocab_size');
     });
 
-    Route::name('kanji_learning_path.')->prefix('learning_path')->group(function(){
-        Route::prefix('items')->name('items.')->group(function(){
-            Route::post('create', 'Api\LearningPathController@newItem')->middleware('isRole:admin')->name('store');
-            Route::post('{item}/delete', 'Api\LearningPathController@deleteItem')->middleware('isRole:admin')->name('delete');
-            Route::post('{item}/update', 'Api\LearningPathController@updateItem')->middleware('isRole:admin')->name('update');
+    Route::name('learning_path.')->prefix('learning_path')->group(function(){
+        Route::prefix('kanji')->name('kanji.')->group(function(){
+            Route::prefix('items')->name('items.')->group(function(){
+                Route::post('create', 'Api\LearningPathController@newItem')->middleware('isRole:admin')->name('store');
+                Route::post('{item}/delete', 'Api\LearningPathController@deleteItem')->middleware('isRole:admin')->name('delete');
+                Route::post('{item}/update', 'Api\LearningPathController@updateItem')->middleware('isRole:admin')->name('update');
 
-            Route::name('review.')->prefix('review')->group(function(){
-                Route::post('update_level', 'Api\LearningPathController@updateLevel')->name('update_level');
+                Route::name('review.')->prefix('review')->group(function(){
+                    Route::post('update_level', 'Api\LearningPathController@updateLevel')->name('update_level');
+                });
             });
         });
+
+        Route::prefix('grammar')->name('grammar.')->group(function(){
+            Route::post('create', 'Api\GrammarLearningPathController@addGrammarLesson')->middleware('isRole:admin')->name('store');
+        });
+
     });
 
     Route::name('video_lesson.')->prefix('video_lesson')->group(function(){

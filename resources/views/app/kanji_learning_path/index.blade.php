@@ -5,11 +5,11 @@
 
 @section('toolbar_right')
     <new-learningpath-item-modal
-        create-api-endpoint="{{route('api.kanji_learning_path.items.store')}}"
+        create-api-endpoint="{{route('api.learning_path.kanji.items.store')}}"
         word-search-api-endpoint="{{route('api.dictionary.query')}}"
     ></new-learningpath-item-modal>
 
-    <md-button href="{{route('kanji_learning_path.vocab.export')}}">
+    <md-button href="{{route('learning_path.vocab.export')}}">
         {{__('Export')}}
     </md-button>
 
@@ -34,7 +34,7 @@
                     <p>Vocabulary: {{$items->filter(function($item, $key){return $item->word_type_id == \App\Models\WordType::vocabulary()->id;})->count()}}</p>
                 </md-card-content>
                 <md-card-actions>
-                    <md-button href="{{route('kanji_learning_path.vocab.edit', ['level' => $level])}}">{{__("Edit")}}</md-button>
+                    <md-button href="{{route('learning_path.vocab.edit', ['level' => $level])}}">{{__("Edit")}}</md-button>
                 </md-card-actions>
             </md-card>
         </div>
