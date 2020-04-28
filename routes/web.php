@@ -58,6 +58,8 @@ Route::prefix('learning_path/')->name('learning_path.')->middleware('isRole:admi
 
     Route::prefix('grammar/')->name('grammar.')->group(function(){
         Route::get('', 'GrammarLearningPathController@index')->name('index');
+        Route::get('/lesson/{item}', 'GrammarLearningPathController@edit')->name('edit');
+        Route::post('/lesson/{item}', 'GrammarLearningPathController@update')->name('update');
         Route::get('/category/{category}', 'GrammarLearningPathController@viewCategory')->name('view_category');
     });
 });
@@ -93,6 +95,7 @@ Route::prefix('kanji_vocabulary/')->name('kanji_vocabulary.')->group(function(){
 // Grammar
 Route::prefix('grammar/')->name('grammar.')->group(function(){
     Route::get('/', 'GrammarController@index')->name('index');
+    Route::get('/learn/{item}', 'GrammarController@learn')->name('learn');
 });
 
 // Reading

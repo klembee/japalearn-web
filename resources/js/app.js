@@ -42,7 +42,7 @@ Vue.component('HiraganaTable', require('./components/kanas/HiraganaTable.vue').d
 Vue.component('KatakanaTable', require('./components/kanas/KatakanaTable.vue').default);
 Vue.component('LearningJourney', require('./components/dashboard/LearningJourney.vue').default);
 Vue.component('AddGrammarItemModal', require('./components/grammar/AddGrammarItemModal.vue').default);
-
+Vue.component('EditGrammarItem', require('./components/grammar/EditGrammarItem.vue').default);
 
 /**
  * Material Design Components

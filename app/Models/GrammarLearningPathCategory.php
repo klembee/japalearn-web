@@ -5,14 +5,26 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class GrammarLearningPathCategory extends Model
 {
     protected $table = "grammar_learning_path_categories";
-    protected $appends = ['number_items'];
+    protected $appends = ['number_items', 'number_items_done'];
 
     public function getNumberItemsAttribute(){
         return $this->items()->count();
+    }
+
+    public function getNumberItemsDoneAttribute(){
+        $user = Auth::user();
+        if(!$user->isStudent()){
+            return 0;
+        }
+
+        return $user->info->information->grammarItemsDone()->whereHas('category', function($query){
+            $query->where('id', $this->id);
+        })->count();
     }
 
     public function items(){

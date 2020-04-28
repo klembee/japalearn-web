@@ -54,7 +54,8 @@
                 axios.post(this.saveApiEndpoint, payload)
                     .then(function(response){
                         if(response.data.success){
-                            console.log("Success !")
+                            console.log("Success !");
+                            location.reload()
                         }else{
                             console.log("Error: " + response.data.message)
                             //todo (Jonathan): Show message to user

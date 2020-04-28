@@ -32,4 +32,27 @@ class GrammarLearningPathController extends Controller
             'message' => ""
         ]);
     }
+
+    public function updateGrammarLesson(Request $request, GrammarLearningPathItem $item){
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        try {
+            $item->title = $request->input('title');
+            $item->content = $request->input('content');
+            $item->save();
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => "Failed to update grammar lesson"
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => ""
+        ]);
+    }
 }

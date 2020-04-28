@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\GrammarLearningPathCategory;
+use App\Models\GrammarLearningPathItem;
 use Illuminate\Http\Request;
 
 class GrammarLearningPathController extends Controller
@@ -14,6 +15,24 @@ class GrammarLearningPathController extends Controller
 
 
         return view('app.grammar_learning_path.index', compact('categories'));
+    }
+
+    /**
+     * Allows an admin to edit the grammar learning path item
+     * @param Request $request
+     * @param GrammarLearningPathItem $item
+     */
+    public function edit(Request $request, GrammarLearningPathItem $item){
+        return view('app.grammar_learning_path.edit', compact('item'));
+    }
+
+    /**
+     * Apply the changes from the edit method
+     * @param Request $request
+     * @param GrammarLearningPathItem $item
+     */
+    public function update(Request $request, GrammarLearningPathItem $item){
+
     }
 
     public function viewCategory(Request $request, GrammarLearningPathCategory $category){

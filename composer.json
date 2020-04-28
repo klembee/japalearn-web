@@ -12,6 +12,7 @@
         "ext-json": "*",
         "algolia/algoliasearch-client-php": "2.2",
         "doctrine/dbal": "^2.10",
+        "erusev/parsedown": "^1.7",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
