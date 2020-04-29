@@ -29,6 +29,10 @@ class GrammarLearningPathItem extends Model
         return $this->belongsToMany(StudentInfo::class, "grammar_lesson_student", "student_info_id", "grammar_item_id");
     }
 
+    public function questions(){
+        return $this->hasMany(GrammarLearningPathQuestion::class, 'grammar_item_id');
+    }
+
     public function scopeNotDone(Builder $query){
         $user = Auth::user();
         $itemsDone = $user->info->information->grammarItemsDone->pluck('id');
