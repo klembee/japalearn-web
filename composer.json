@@ -11,6 +11,7 @@
         "php": "^7.2.5",
         "ext-json": "*",
         "algolia/algoliasearch-client-php": "2.2",
+        "aws/aws-sdk-php": "^3.137",
         "doctrine/dbal": "^2.10",
         "erusev/parsedown": "^1.7",
         "fideloper/proxy": "^4.2",
@@ -22,7 +23,8 @@
         "laravel/scout": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "pusher/pusher-php-server": "^4.1"
+        "pusher/pusher-php-server": "^4.1",
+        "ramsey/uuid": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

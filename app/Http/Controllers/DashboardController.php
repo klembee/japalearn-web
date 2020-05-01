@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\VideoConferenceHelper;
+use Aws\Chime\ChimeClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 
 /**
  * This is the controller class for tasks relating the Dashboard
