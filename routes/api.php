@@ -58,6 +58,8 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::prefix('grammar')->name('grammar.')->middleware('isRole:admin')->group(function(){
             Route::post('create', 'Api\GrammarLearningPathController@addGrammarLesson')->name('store');
             Route::post('update/{item}', 'Api\GrammarLearningPathController@updateGrammarLesson')->name('update');
+
+            Route::post('question/delete', 'Api\GrammarLearningPathController@deleteQuestion')->name('question.delete');
         });
 
     });

@@ -17,6 +17,7 @@ class CreateGrammarLearningPathQuestionsTable extends Migration
             $table->id();
             $table->foreignId('grammar_item_id');
             $table->text("question");
+            $table->text('indication')->nullable();
             $table->timestamps();
 
             $table->foreign('grammar_item_id')
@@ -30,7 +31,6 @@ class CreateGrammarLearningPathQuestionsTable extends Migration
             $table->foreignId('question_id');
             $table->string('answer');
             $table->boolean('accept_typo')->default(true);
-            $table->text('indication')->nullable();
             $table->timestamps();
 
             $table->foreign('question_id')

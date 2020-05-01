@@ -113,6 +113,10 @@
             saveEndpoint: {
                 type: String,
                 required: true
+            },
+            deleteQuestionEndpoint: {
+                type: String,
+                required: true
             }
         },
         data: function(){
@@ -140,7 +144,8 @@
             save(){
                 let payload = {
                     title: this.item.title,
-                    content: this.markdownEditor.value()
+                    content: this.markdownEditor.value(),
+                    questions: this.item.questions
                 };
 
                 axios.post(this.saveEndpoint, payload)
@@ -161,6 +166,18 @@
                 this.$delete(this.newQuestion.answers, index)
             },
             deleteQuestion(index){
+                let payload = {
+                    question_id: this.item.questions[index].id
+                };
+
+                axios.post(this.deleteQuestionEndpoint, payload)
+                    .then(function(response){
+
+                    })
+                    .catch(function(error){
+
+                    });
+
                 this.$delete(this.item.questions, index)
             },
             saveQuestion(){

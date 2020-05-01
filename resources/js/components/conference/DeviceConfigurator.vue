@@ -1,36 +1,37 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-md-3 col-12">
-                <h2>Select your devices</h2>
-                <md-field>
-                    <label>Audio input device</label>
-                    <md-select @md-selected="audioInputSelected" v-model="selectedAudioInput">
-                        <md-option v-for="audioInput in audioInputDevices" :key="audioInput.deviceId" :value="audioInput.deviceId">{{audioInput.label}}</md-option>
-                    </md-select>
-                </md-field>
+        <h2>Select your devices</h2>
+        <md-field>
+            <label>Audio input device</label>
+            <md-select @md-selected="audioInputSelected" v-model="selectedAudioInput">
+                <md-option v-for="audioInput in audioInputDevices" :key="audioInput.deviceId" :value="audioInput.deviceId">{{audioInput.label}}</md-option>
+            </md-select>
+        </md-field>
 
-                <md-field>
-                    <label>Audio output device</label>
-                    <md-select @md-selected="audioOutputSelected" v-model="selectedAudioOutput">
-                        <md-option v-for="audioOutput in audioOutputDevices" :key="audioOutput.deviceId" :value="audioOutput.deviceId">{{audioOutput.label}}</md-option>
-                    </md-select>
-                </md-field>
+        <md-field>
+            <label>Audio output device</label>
+            <md-select @md-selected="audioOutputSelected" v-model="selectedAudioOutput">
+                <md-option v-for="audioOutput in audioOutputDevices" :key="audioOutput.deviceId" :value="audioOutput.deviceId">{{audioOutput.label}}</md-option>
+            </md-select>
+        </md-field>
 
-                <md-field>
-                    <label>Video device</label>
-                    <md-select @md-selected="videoSelected" v-model="selectedVideoInput">
-                        <md-option v-for="videoInput in videoInputDevices" :key="videoInput.deviceId" :value="videoInput.deviceId">{{videoInput.label}}</md-option>
-                    </md-select>
-                </md-field>
-            </div>
-            <div class="col-md-9 col-12">
-                <button @click="startSession">Start session</button>
-                <button @click="stopSession">Stop session</button>
-                <audio id="audioElement"></audio>
-                <video id="videoElement"></video>
-            </div>
-        </div>
+        <md-field>
+            <label>Video device</label>
+            <md-select @md-selected="videoSelected" v-model="selectedVideoInput">
+                <md-option v-for="videoInput in videoInputDevices" :key="videoInput.deviceId" :value="videoInput.deviceId">{{videoInput.label}}</md-option>
+            </md-select>
+        </md-field>
+
+        <hr />
+        <md-field>
+            <label>Video quality</label>
+            <md-select @md-selected="videoQualitySelected" v-model="videoQuality">
+                <md-option value="360p">360p</md-option>
+                <md-option value="540p">540p</md-option>
+                <md-option value="720p">720p</md-option>
+                <md-option value="1080p">1080p</md-option>
+            </md-select>
+        </md-field>
     </div>
 </template>
 
@@ -50,7 +51,8 @@
                 videoInputDevices: [],
                 selectedAudioInput: "",
                 selectedAudioOutput: "",
-                selectedVideoInput: ""
+                selectedVideoInput: "",
+                videoQuality: "720p"
             }
         },
         methods: {
@@ -81,22 +83,6 @@
                         console.log("Error while retrieving video input devices: " + error);
                     });
             },
-            startSession(){
-                const audioElement = document.getElementById('audioElement');
-                this.meetingSession.audioVideo.bindAudioElement(audioElement);
-
-                const observer = {
-                    audioVideoDidStart() {
-                        console.log("STARTED !!");
-                    }
-                };
-
-                this.meetingSession.audioVideo.addObserver(observer);
-                this.meetingSession.audioVideo.start();
-            },
-            stopSession(){
-                this.meetingSession.audioVideo.stop();
-            },
             audioInputSelected(deviceId){
                 this.meetingSession.audioVideo.chooseAudioInputDevice(deviceId)
                     .then(function(result){
@@ -116,14 +102,34 @@
                     });
             },
             videoSelected(deviceId){
+                let self = this;
                 this.meetingSession.audioVideo.chooseVideoInputDevice(deviceId)
                     .then(function(result){
-                        console.log("Video source selected")
+                        console.log("Video source selected");
                     })
                     .catch(function(error){
                         console.log("Failed to select video source")
                     });
+            },
+            videoQualitySelected(quality){
+                switch (quality) {
+                    case '360p':
+                        this.meetingSession.audioVideo.chooseVideoInputQuality(640, 360, 15, 600);
+                        break;
+                    case '540p':
+                        this.meetingSession.audioVideo.chooseVideoInputQuality(960, 540, 15, 1400);
+                        break;
+                    case '720p':
+                        this.meetingSession.audioVideo.chooseVideoInputQuality(1280, 720, 15, 1400);
+                        break;
+                    case '1080p':
+                        this.meetingSession.audioVideo.chooseVideoInputQuality(1920, 1080, 15, 1400);
+                        break;
+                }
+
+                this.videoSelected(this.selectedVideoInput);
             }
+
         },
         mounted() {
             this.getDevices();
