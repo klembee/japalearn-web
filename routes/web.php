@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post("/get-notified", "EmailListController@add");
+
+
 Auth::routes();
 
 Route::middleware('auth')->group(function(){
