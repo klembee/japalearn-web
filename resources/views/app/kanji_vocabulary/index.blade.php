@@ -12,7 +12,7 @@
                         <h3>{{__('Lessons')}}</h3>
                     </md-card-header>
                     <md-card-content>
-                        <p>{{$user->info->information->number_lessons}}</p>
+                        <p>{{count($itemsToLearn)}}</p>
                     </md-card-content>
                     <md-card-actions>
                         <md-button href="{{route('study.lesson')}}">{{__('Learn')}}</md-button>
@@ -24,7 +24,7 @@
                         <h3>{{__('Reviews')}}</h3>
                     </md-card-header>
                     <md-card-content>
-                        <p>{{$user->info->information->number_reviews}}</p>
+                        <p>{{count($itemsToReview)}}</p>
                     </md-card-content>
                     <md-card-actions>
                         <md-button href="{{route('study.review')}}">{{__('Study')}}</md-button>
@@ -33,16 +33,16 @@
             </div>
 
         </div>
-        <div class="row mb-4">
-            @foreach($user->info->information->itemsPerHumanLevel() as $humanLevel => $nbItems)
-                <md-card class="md-2">
-                    <md-card-header>
-                        <h3>{{$humanLevel}}</h3>
-                        <p>{{$nbItems}}</p>
-                    </md-card-header>
-                </md-card>
-            @endforeach
-        </div>
+{{--        <div class="row mb-4">--}}
+{{--            @foreach($user->info->information->itemsPerHumanLevel() as $humanLevel => $nbItems)--}}
+{{--                <md-card class="md-2">--}}
+{{--                    <md-card-header>--}}
+{{--                        <h3>{{$humanLevel}}</h3>--}}
+{{--                        <p>{{$nbItems}}</p>--}}
+{{--                    </md-card-header>--}}
+{{--                </md-card>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
         <div>
             <vocab-size-per-day-graph
                 data-endpoint="{{route('api.dashboard.vocab_size')}}"

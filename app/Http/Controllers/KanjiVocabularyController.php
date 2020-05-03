@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\SRSHelper;
+use App\Models\VocabLearningPath;
+use App\Models\VocabLearningPathItemStats;
 use Illuminate\Http\Request;
 
 class KanjiVocabularyController extends Controller
@@ -17,7 +20,16 @@ class KanjiVocabularyController extends Controller
     public function index(Request $request){
         $user = $request->user();
 
-        return view('app.kanji_vocabulary.index', compact('user'));
+        $allVocabItems = VocabLearningPath::all()->toArray();
+        $vocabUser = $user->info->information->vocabLearningPathStats->toArray();
+
+        $helper = new SRSHelper($allVocabItems, $vocabUser);
+        $itemsToLearn = $helper->toLearnAvailable();
+        $itemsToReview = $helper->reviewsAvailable();
+
+        error_log(print_r($itemsToLearn, true));
+
+        return view('app.kanji_vocabulary.index', compact('user', 'itemsToLearn', 'itemsToReview', 'vocabUser'));
     }
 
 }

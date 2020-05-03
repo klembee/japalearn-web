@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\SRSHelper;
+use App\Models\VocabLearningPath;
 use App\Models\WordType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -27,58 +29,36 @@ class StudyController extends Controller
      */
     public function vocabularyLesson(Request $request){
         $user = $request->user();
-        $vocabs = $user->info->information->getVocabLessonItems();
-        $radicals = $vocabs['radicals'];
-        $kanjis = $vocabs['kanjis'];
-        $vocabulary = $vocabs['vocabulary'];
+
+        $allVocabItems = VocabLearningPath::all()->toArray();
+        $vocabUser = $user->info->information->vocabLearningPathStats->toArray();
+
+        $helper = new SRSHelper($allVocabItems, $vocabUser);
+        $itemsToLearn = $helper->toLearnAvailable();
 
         $itemsBeforeReviews = 5;
 
-        $items = $radicals->concat($kanjis);
-        $items = $items->concat($vocabulary);
-
-        if(count($items) == 0){
+        if(count($itemsToLearn) == 0){
+            // No items to learn
             return redirect()->route('dashboard');
         }
 
-        $items = array_chunk($items->toArray(), $itemsBeforeReviews, false);
+        $items_chunk = array_chunk($itemsToLearn, $itemsBeforeReviews, false);
 
         $reviews = [];
         $i = 0;
-        foreach($items as $chunk){
+        foreach($items_chunk as $chunk){
             array_push($reviews, []);
             foreach($chunk as $item){
-                if($item['word_type_id'] == WordType::radical()->id) {
-                    array_push($reviews[$i], [
-                        'question' => $item['word'],
-                        'answers' => array_map(function($meaning){
-                            return strtolower($meaning['meaning']);
-                        }, $item['meanings']),
-                        'type' => 'meaning'
-                    ]);
-                }else {
-                    array_push($reviews[$i], [
-                        'question' => $item['word'],
-                        'answers' => array_map(function($meaning){
-                            return strtolower($meaning['reading']);
-                        }, $item['readings']),
-                        'type' => 'reading'
-                    ]);
-                    array_push($reviews[$i], [
-                        'question' => $item['word'],
-                        'answers' => array_map(function($meaning){
-                            return strtolower($meaning['meaning']);
-                        }, $item['meanings']),
-                        'type' => 'meaning'
-                    ]);
-                }
+
+
             }
 
             $i++;
         }
 
         return view("app.study.vocab_lesson", [
-            'items' => json_encode($items),
+            'items' => json_encode($items_chunk),
             'reviews' => json_encode($reviews),
         ]);
     }
@@ -93,6 +73,7 @@ class StudyController extends Controller
      */
     public function vocabularyReview(Request $request){
         $user = $request->user();
+
         $vocabs = $user->info->information->getVocabReviewItems();
 
         $writingReviews = $vocabs['review']['writing'];
