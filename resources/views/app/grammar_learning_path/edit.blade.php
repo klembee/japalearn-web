@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
     <div>
         <edit-grammar-item
             :item-prop="{{json_encode($item)}}"

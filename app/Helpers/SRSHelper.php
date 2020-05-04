@@ -51,10 +51,7 @@ class SRSHelper
             $answers[] = $item['answers'];
         }
 
-        return [
-            'objects' => $toReview,
-            'answers'
-        ];
+        return $toReview;
     }
 
     /**

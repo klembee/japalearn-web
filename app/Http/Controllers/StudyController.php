@@ -37,29 +37,15 @@ class StudyController extends Controller
         $itemsToLearn = $helper->toLearnAvailable();
 
         $itemsBeforeReviews = 5;
-
         if(count($itemsToLearn) == 0){
-            // No items to learn
+            // No items to learn, redirect to dashboard
             return redirect()->route('dashboard');
         }
 
         $items_chunk = array_chunk($itemsToLearn, $itemsBeforeReviews, false);
 
-        $reviews = [];
-        $i = 0;
-        foreach($items_chunk as $chunk){
-            array_push($reviews, []);
-            foreach($chunk as $item){
-
-
-            }
-
-            $i++;
-        }
-
         return view("app.study.vocab_lesson", [
             'items' => json_encode($items_chunk),
-            'reviews' => json_encode($reviews),
         ]);
     }
 

@@ -12,7 +12,7 @@
             <review-panel
                 :update-levels-endpoint="updateLevelsEndpoint"
                 :remove-wrong="true"
-                :items-to-review="reviews[chunkToReview]"
+                :items-to-review="nextReviewItems"
                 :has-items-after-review="chunkToReview + 1 >= items.length"
                 @review-end="stopReview"
                 @go-home="goHome"
@@ -45,15 +45,17 @@
                     return []
                 }
             },
-            reviews: {
-                type: Array,
-                required: true
-            }
         },
         data: function(){
             return {
                 isDoingReview: false,
                 chunkToReview: 0
+            }
+        },
+        computed:{
+            nextReviewItems(){
+                //todo here
+                return [1, 2, 3, 4, 5]
             }
         },
         methods: {
@@ -62,7 +64,7 @@
                 this.chunkToReview = chunkIndex
             },
             stopReview(){
-                this.isDoingReview = false
+                this.isDoingReview = false;
                 this.items = this.items.slice(1)
             },
             goHome(){

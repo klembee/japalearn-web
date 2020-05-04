@@ -19,7 +19,6 @@ class GrammarLearningPathController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function addGrammarLesson(Request $request){
-        error_log(print_r($request->all(), true));
 
         $this->validate($request, [
             'title' => 'required',

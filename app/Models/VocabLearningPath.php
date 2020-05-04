@@ -35,7 +35,10 @@ class VocabLearningPath extends Model
         if($this->word_type_id == WordType::radical()->id){
             return $this->meanings->pluck('meaning');
         }else{
-            return $this->readings->pluck('reading');
+            return [
+                'meanings' => $this->meanings->pluck('meaning'),
+                'readings' => $this->readings->pluck('reading')
+            ];
         }
     }
 
