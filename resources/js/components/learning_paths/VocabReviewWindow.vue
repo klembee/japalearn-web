@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import ReviewPanel from "./ReviewPanel";
+    import ReviewPanel from "./learn/VocabReviewPanel";
     export default {
         name: "VocabReviewWindow",
         components: {ReviewPanel},

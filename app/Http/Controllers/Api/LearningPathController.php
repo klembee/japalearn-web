@@ -194,6 +194,7 @@ class LearningPathController extends Controller
     public function updateLevel(Request $request){
         $user = $request->user();
         //todo: check that user is a student
+        //todo: Verify that the user waited ennough time to update this level
 
         $this->validate($request, [
             'good' => "present|array",
@@ -206,13 +207,14 @@ class LearningPathController extends Controller
         // Go through each items that the user got right and increase the level
         foreach($goodItems as $good){
             $word = $good['question'];
+            $type = WordType::query()->where('name', $good['type'])->firstOrFail();
 
-            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
-                return $query->where('word', $word);
+            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word, $type){
+                return $query->where('word', $word)->where('word_type_id', $type->id);
             })->get();
 
             try {
-                $item = VocabLearningPath::query()->where('word', $word)->firstOrFail();
+                $item = VocabLearningPath::query()->where('word', $word)->where('word_type_id', $type->id)->firstOrFail();
 
                 if ($itemStats->count() > 0) {
                     // Edit
@@ -220,12 +222,12 @@ class LearningPathController extends Controller
                         ->where('learning_path_item_id', $item->id)
                         ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
-                    if ($good['type'] == "meaning") {
+                    if ($good['answer_type'] == "meaning") {
                         $stat->meaning_right += 1;
                         $stat->meaning_last_right_date = now();
-                    } else if ($good['type'] == "reading") {
-                        $stat->reading_right += 1;
-                        $stat->reading_last_right_date = now();
+                    } else if ($good['answer_type'] == "reading") {
+                        $stat->writing_right += 1;
+                        $stat->writing_last_right_date = now();
                     }
 
                     $stat->save();
@@ -235,12 +237,12 @@ class LearningPathController extends Controller
                     $stat->learning_path_item_id = $item->id;
                     $stat->student_info_id = $user->info->information->id;
 
-                    if ($good['type'] == "meaning") {
+                    if ($good['answer_type'] == "meaning") {
                         $stat->meaning_right = 1;
                         $stat->meaning_last_right_date = now();
-                    } else if ($good['type'] == "reading") {
-                        $stat->reading_right = 1;
-                        $stat->reading_last_right_date = now();
+                    } else if ($good['answer_type'] == "reading") {
+                        $stat->writing_right = 1;
+                        $stat->writing_last_right_date = now();
                     }
 
                     $stat->save();
@@ -262,10 +264,10 @@ class LearningPathController extends Controller
                 ->where('learning_path_item_id', $item->id)
                 ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
-            if ($wrong['type'] == "meaning") {
+            if ($wrong['answer_type'] == "meaning") {
                 $stat->meaning_last_right_date = now();
-            } else if ($wrong['type'] == "reading") {
-                $stat->reading_last_right_date = now();
+            } else if ($wrong['answer_type'] == "reading") {
+                $stat->writing_last_right_date = now();
             }
 
             $stat->save();

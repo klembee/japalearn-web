@@ -55,6 +55,12 @@ Route::middleware('auth:api')->name('api.')->group(function(){
             });
         });
 
+        Route::prefix('kana')->name('kana.')->group(function(){
+            Route::name('review.')->prefix('review')->group(function(){
+                Route::post('update_level', 'Api\KanaLearningPathController@updateLevel')->name('update_level');
+            }) ;
+        });
+
         Route::prefix('grammar')->name('grammar.')->middleware('isRole:admin')->group(function(){
             Route::post('create', 'Api\GrammarLearningPathController@addGrammarLesson')->name('store');
             Route::post('update/{item}', 'Api\GrammarLearningPathController@updateGrammarLesson')->name('update');

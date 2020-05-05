@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\File;
 
 class Kana extends Model
 {
@@ -14,4 +15,14 @@ class Kana extends Model
         'romaji',
         'mnemonic'
     ];
+
+    protected $appends = [
+        'answers'
+    ];
+
+    public function getAnswersAttribute(){
+        return [
+            'readings' => [$this->kana],
+        ];
+    }
 }

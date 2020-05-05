@@ -15,7 +15,6 @@ class VocabLearningPathItemStats extends Model implements Learnable
         'level',
         'last_review_date',
         'human_level',
-        'answers'
     ];
 
     protected $dates = [
@@ -56,17 +55,17 @@ class VocabLearningPathItemStats extends Model implements Learnable
         return 'Burned';
     }
 
-    public function getAnswersAttribute()
-    {
-        if($this->vocabLearningPathItem->word_type_id == WordType::radical()->id) {
-            return array_map(function($meaning){
-                return strtolower($meaning['meaning']);
-            }, $this->vocabLearningPathItem->meanings->toArray());
-
-        }else {
-            return array_map(function($meaning){
-                return strtolower($meaning['reading']);
-            }, $this->vocabLearningPathItem->readings->toArray());
-        }
-    }
+//    public function getAnswersAttribute()
+//    {
+//        if($this->vocabLearningPathItem->word_type_id == WordType::radical()->id) {
+//            return array_map(function($meaning){
+//                return strtolower($meaning['meaning']);
+//            }, $this->vocabLearningPathItem->meanings->toArray());
+//
+//        }else {
+//            return array_map(function($meaning){
+//                return strtolower($meaning['reading']);
+//            }, $this->vocabLearningPathItem->readings->toArray());
+//        }
+//    }
 }

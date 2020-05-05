@@ -46,12 +46,6 @@ Route::middleware('auth')->group(function(){
 // Vocabulary
     Route::get('vocabulary', 'VocabularyController@index')->name('vocabulary.index');
 
-// Study section
-    Route::prefix('study/')->name('study.')->group(function(){
-        Route::get('vocabulary_lesson', "StudyController@vocabularyLesson")->name('lesson');
-        Route::get('vocabulary_review', 'StudyController@vocabularyReview')->name('review');
-    });
-
     Route::prefix('learning_path/')->name('learning_path.')->middleware('isRole:admin')->group(function(){
         Route::prefix('vocab/')->name('vocab.')->group(function(){
             Route::get('', 'LearningPathController@index')->name('index');
@@ -115,5 +109,17 @@ Route::middleware('auth')->group(function(){
     Route::prefix("conference/")->name('conference.')->group(function(){
         Route::get('/', 'ConferenceController@index')->name('index');
         Route::get('/{meetingId}', 'ConferenceController@join')->name('join');
+    });
+
+    // Study section
+    Route::prefix('study/')->name('study.')->group(function(){
+        // Kana
+        Route::get('kana_lesson', 'KanaStudyController@lesson')->name('kana.lesson');
+        Route::get('kana_review', 'KanaStudyController@review')->name('kana.review');
+
+        // Vocab
+        Route::get('vocabulary_lesson', "VocabularyStudyController@vocabularyLesson")->name('vocab.lesson');
+        Route::get('vocabulary_review', 'VocabularyStudyController@vocabularyReview')->name('vocab.review');
+
     });
 });

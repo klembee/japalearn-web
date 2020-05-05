@@ -4,7 +4,7 @@
 @endsection
 
 @section('toolbar_right')
-    <md-button>{{__('Start learning !')}}</md-button>
+    <md-button href="{{route('study.kana.lesson')}}">{{__('Start learning !')}}</md-button>
 @endsection
 
 @section('content')

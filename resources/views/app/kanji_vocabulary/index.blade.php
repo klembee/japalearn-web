@@ -15,7 +15,7 @@
                         <p>{{count($itemsToLearn)}}</p>
                     </md-card-content>
                     <md-card-actions>
-                        <md-button href="{{route('study.lesson')}}">{{__('Learn')}}</md-button>
+                        <md-button href="{{route('study.vocab.lesson')}}">{{__('Learn')}}</md-button>
                     </md-card-actions>
                 </md-card>
 
@@ -27,7 +27,7 @@
                         <p>{{count($itemsToReview)}}</p>
                     </md-card-content>
                     <md-card-actions>
-                        <md-button href="{{route('study.review')}}">{{__('Study')}}</md-button>
+                        <md-button href="{{route('study.vocab.review')}}">{{__('Study')}}</md-button>
                     </md-card-actions>
                 </md-card>
             </div>

@@ -3,7 +3,7 @@
         <div class="row">
             <md-content class="col-md-10">
                 <div class="item-word">
-                    <p>{{currentItem.word}}</p>
+                    <p>{{this.currentItem[itemTextProperty]}}</p>
                 </div>
                 <div class="item-content">
                     <div :class="{invisible: !canGoLeft}" class="prev-button">
@@ -11,31 +11,12 @@
                             <md-icon class="md-size-4x">keyboard_arrow_left</md-icon>
                         </md-button>
                     </div>
-                    <b-tabs class="tabs" v-model="activeTab" align="center">
-                        <!-- Tab only used for kanjis -->
-                        <b-tab v-if="currentItem.word_type_id == 2" id="tab-radicals" title="Radicals">
-                            <!-- Radicals in the kanji -->
 
-                        </b-tab>
+                    <!-- ICI -->
+                    <component :item="currentItem" :is="itemContentComponent" style="width:100%;">
 
-                        <b-tab id="tab-meaning" title="Meaning">
-                            <p v-for="meaning in currentItem.meanings" :key="meaning.id">
-                                {{meaning.meaning}}
-                            </p>
+                    </component>
 
-                        </b-tab>
-
-                        <!-- Not used for radicals -->
-                        <b-tab v-if="currentItem.word_type_id != 1" id="tab-readings" title="Readings">
-                            <p v-for="reading in currentItem.readings" :key="reading.id">
-                                {{reading.reading}}
-                            </p>
-                        </b-tab>
-
-                        <b-tab id="tab-examples" title="Examples">
-                            <p>Examples</p>
-                        </b-tab>
-                    </b-tabs>
                     <div class="next-button">
                         <md-button @click="nextItem()" class="md-icon-button">
                             <md-icon class="md-size-4x">keyboard_arrow_right</md-icon>
@@ -43,11 +24,12 @@
                     </div>
                 </div>
             </md-content>
+
             <!-- Map -->
             <md-content class="col-md-2">
                 <md-card  v-for="item in itemsBeforeReview" :key="item.id">
                     <md-card-content class="map-item" :class="{active: item.id === currentItem.id}">
-                        <p class="map-item-word">{{item.word}}</p>
+                        <p class="map-item-word">{{item[itemTextProperty]}}</p>
                     </md-card-content>
                 </md-card>
                 <md-card>
@@ -57,7 +39,7 @@
                 </md-card>
                 <md-card  v-for="item in itemsAfterReview" :key="item.id">
                     <md-card-content class="map-item">
-                        <p class="map-item-word">{{item.word}}</p>
+                        <p class="map-item-word">{{item[itemTextProperty]}}</p>
                     </md-card-content>
                 </md-card>
             </md-content>
@@ -65,9 +47,9 @@
 
         <back-drop
             v-show="readyForReview"
-            title="Move to review ?"
-        >
-            <p>asdfasdf</p>
+            title="Move to review ?">
+
+            <p>Are you ready to review the items you just learned ?</p>
             <template v-slot:actions>
                 <md-button @click="readyForReview = false" class="md-raised">wait</md-button>
                 <md-button @click="startReview()" class="md-raised">Go to review</md-button>
@@ -78,19 +60,25 @@
 
 <script>
 
-    import BackDrop from "../BackDrop";
+    import BackDrop from "../../BackDrop";
+    import VocabItemContent from "./item_content/VocabItemContent";
+    import KanaItemContent from "./item_content/KanaItemContent";
+
     export default {
         name: "LearningPanel",
-        components: {BackDrop},
+        components: {VocabItemContent, KanaItemContent, BackDrop},
         props:{
             items: {
                 type: Array,
                 required: true
+            },
+            type: {
+                type: String,
+                default: "vocab"
             }
         },
         data: function(){
             return {
-                activeTab: 0,
                 currentItemIndex: 0,
                 currentChunk: 0,
                 numberItemsDone: 0,
@@ -99,6 +87,20 @@
             }
         },
         computed: {
+            itemTextProperty(){
+                if(this.type === 'vocab'){
+                    return 'word';
+                }else if(this.type === 'kana'){
+                    return 'kana';
+                }
+            },
+            itemContentComponent(){
+                if(this.type === 'vocab'){
+                    return 'VocabItemContent';
+                }else if(this.type === 'kana'){
+                    return 'KanaItemContent';
+                }
+            },
             currentItem(){
                 return this.items[this.currentChunk][this.currentItemIndex];
             },

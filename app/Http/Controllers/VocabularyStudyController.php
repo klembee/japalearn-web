@@ -14,15 +14,15 @@ use Illuminate\Http\Request;
 /**
  * Class that controls all the study related stuff
  *
- * Class StudyController
+ * Class VocabularyStudyController
  * @package App\Http\Controllers
  */
-class StudyController extends Controller
+class VocabularyStudyController extends Controller
 {
 
     /**
      * Get the vocabulary (radical, kanji, vocab) that the logged in
-     * user can learn now.
+     * user can learn now. Redirect to learning view where user can learn the new items
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
@@ -46,6 +46,7 @@ class StudyController extends Controller
 
         return view("app.study.vocab_lesson", [
             'items' => json_encode($items_chunk),
+            'mode' => 'learn'
         ]);
     }
 
@@ -55,40 +56,27 @@ class StudyController extends Controller
      * before reviewing again. This is the principle of spaced repetition
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function vocabularyReview(Request $request){
         $user = $request->user();
 
-        $vocabs = $user->info->information->getVocabReviewItems();
+        $allVocabItems = VocabLearningPath::all()->toArray();
+        $vocabUser = $user->info->information->vocabLearningPathStats->toArray();
 
-        $writingReviews = $vocabs['review']['writing'];
-        $meaningReviews = $vocabs['review']['meaning'];
+        $helper = new SRSHelper($allVocabItems, $vocabUser);
+        $itemsToLearn = $helper->reviewsAvailable();
 
-        $reviews = [];
-
-        foreach($writingReviews as $review){
-            array_push($reviews, [
-                'question' => $review['vocab_learning_path_item']['word'],
-                'answers' => array_map(function($item){
-                        return strtolower($item['reading']);
-                    }, $review['vocab_learning_path_item']['readings']),
-                'type' => 'reading'
-            ]);
+        $itemsBeforeReviews = 5;
+        if(count($itemsToLearn) == 0){
+            // No items to learn, redirect to dashboard
+            return redirect()->route('dashboard');
         }
 
-        foreach($meaningReviews as $review){
-            array_push($reviews, [
-                'question' => $review['vocab_learning_path_item']['word'],
-                'answers' => array_map(function($item){
-                    return strtolower($item['meaning']);
-                }, $review['vocab_learning_path_item']['meanings']),
-                'type' => 'meaning'
-            ]);
-        }
+        $items_chunk = array_chunk($itemsToLearn, $itemsBeforeReviews, false);
 
         return view('app.study.vocab_review', [
-            'reviews' => json_encode($reviews)
+            'items' => json_encode($items_chunk),
+            'mode' => 'review'
         ]);
     }
 }

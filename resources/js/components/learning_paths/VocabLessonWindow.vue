@@ -4,19 +4,21 @@
             <learning-panel
                 :items="items"
                 @do-review="startReview"
+                :type="type"
             ></learning-panel>
         </div>
 
         <!-- When the user is doing a review -->
         <div v-else>
-            <review-panel
+            <component
+                :is="reviewComponent"
                 :update-levels-endpoint="updateLevelsEndpoint"
                 :remove-wrong="true"
                 :items-to-review="nextReviewItems"
                 :has-items-after-review="chunkToReview + 1 >= items.length"
                 @review-end="stopReview"
                 @go-home="goHome"
-            ></review-panel>
+            ></component>
         </div>
     </div>
 
@@ -24,11 +26,13 @@
 </template>
 
 <script>
-    import LearningPanel from "./LearningPanel";
-    import ReviewPanel from "./ReviewPanel";
+    import LearningPanel from "./learn/LearningPanel";
+    import VocabReviewPanel from "./learn/VocabReviewPanel";
+    import KanaReviewPanel from "./learn/KanaReviewPanel";
+
     export default {
         name: "VocabLessonWindow",
-        components: {ReviewPanel, LearningPanel},
+        components: {KanaReviewPanel, VocabReviewPanel, LearningPanel},
         props: {
             updateLevelsEndpoint: {
                 type: String,
@@ -45,17 +49,27 @@
                     return []
                 }
             },
+            type: {
+                type: String
+            }
         },
         data: function(){
             return {
                 isDoingReview: false,
-                chunkToReview: 0
+                chunkToReview: 0,
             }
         },
         computed:{
+            reviewComponent(){
+                if(this.type === "vocab"){
+                    return "VocabReviewPanel";
+                }else if(this.type === "kana"){
+                    return "KanaReviewPanel";
+                }
+
+            },
             nextReviewItems(){
-                //todo here
-                return [1, 2, 3, 4, 5]
+                return this.items[this.chunkToReview]
             }
         },
         methods: {

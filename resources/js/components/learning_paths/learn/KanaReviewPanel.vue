@@ -4,9 +4,9 @@
             <div class="item-word">
                 <p>{{currentItem.question}}</p>
             </div>
-            <div v-if="currentItem.type === 'meaning'">
+            <div>
                 <md-field>
-                    <label>What is the meaning ?</label>
+                    <label>What is the romaji equivalent of this kana ?</label>
                     <md-input v-on:keyup.enter="submitAnswer" v-model="answer"/>
                     <md-button @click="submitAnswer" class="md-icon-button">
                         <md-icon>send</md-icon>
@@ -15,6 +15,7 @@
             </div>
 
         </md-content>
+
         <back-drop v-show="readyForLearn" title="Congratulations !">
             <template v-slot:actions>
                 <div v-if="hasItemsAfterReview">
@@ -34,9 +35,9 @@
 </template>
 
 <script>
-    import BackDrop from "../BackDrop";
+    import BackDrop from "../../BackDrop";
     export default {
-        name: "ReviewPanel",
+        name: "VocabReviewPanel",
         components: {BackDrop},
         props: {
             itemsToReview: {
@@ -71,6 +72,13 @@
             }
         },
         computed: {
+            itemTextProperty(){
+                if(this.type === 'vocab'){
+                    return 'word';
+                }else if(this.type === 'kana'){
+                    return 'kana';
+                }
+            },
             currentItem: function(){
                 return this.items[this.currentItemIndex]
             },
@@ -83,7 +91,6 @@
             verifyAnswer(){
                 if(this.currentItem.answers.includes(this.answer.toLowerCase())){
                     //Good answer
-                    console.log("CORRECT");
                     if(this.removeWrong || !this.wrong.includes(this.currentItem)) {
                         this.good.push(this.currentItem);
                     }
@@ -136,7 +143,15 @@
             },
         },
         mounted() {
-            this.items = _.clone(this.itemsToReview)
+            this.itemsToReview.forEach(item => {
+                this.items.push({
+                    question: item.kana,
+                    answers: item.romaji,
+                })
+            });
+
+            this.items = _.shuffle(this.items);
+
         }
     }
 </script>
