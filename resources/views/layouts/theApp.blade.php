@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
 
     <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+
+    @yield('scripts')
 </head>
 <body>
     <div id="app" class="page-container md-layout-column">

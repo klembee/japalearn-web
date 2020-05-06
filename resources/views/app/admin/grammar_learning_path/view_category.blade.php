@@ -6,7 +6,7 @@
 @section('toolbar_right')
 
     <add-grammar-item-modal
-        save-api-endpoint="{{route('api.learning_path.grammar.store')}}"
+        save-api-endpoint="{{route('api.learning_path.grammar.admin.store')}}"
         :category-id="{{$category->id}}"
     ></add-grammar-item-modal>
 @endsection

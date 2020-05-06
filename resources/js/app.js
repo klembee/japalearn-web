@@ -44,6 +44,9 @@ Vue.component('LearningJourney', require('./components/dashboard/LearningJourney
 Vue.component('AddGrammarItemModal', require('./components/grammar/AddGrammarItemModal.vue').default);
 Vue.component('EditGrammarItem', require('./components/grammar/EditGrammarItem.vue').default);
 Vue.component('ConferenceRoom', require('./components/conference/ConferenceRoom.vue').default);
+Vue.component('EditKanaModal', require('./components/kanas/admin/EditKanaModal.vue').default);
+Vue.component('CreateStoryForm', require('./components/stories/CreateStoryForm.vue').default);
+
 
 /**
  * Material Design Components

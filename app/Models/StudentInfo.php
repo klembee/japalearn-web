@@ -24,9 +24,11 @@ class StudentInfo extends Model
         return $this->hasMany(KanaLearningStats::class, 'student_info_id');
     }
 
-//    public function grammarItemsDone(){
-//        return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'grammar_item_id','student_info_id');
-//    }
+    public function grammarItemsDone(){
+        return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'grammar_item_id','student_info_id');
+    }
+
+
 //
 //    public function getNumberLessonsAttribute(){
 //        $vocabToLearn = $this->getVocabLessonItems();

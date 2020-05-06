@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
  * Api controller that controls learning path controller related stuff.
  * Like creating a new item or leveling up the item attached to a user
  *
- * Class LearningPathController
+ * Class KanjiLearningPathController
  * @package App\Http\Controllers\Api
  */
 class LearningPathController extends Controller

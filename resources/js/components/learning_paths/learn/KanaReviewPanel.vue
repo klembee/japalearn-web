@@ -145,6 +145,7 @@
         mounted() {
             this.itemsToReview.forEach(item => {
                 this.items.push({
+                    id: item.id,
                     question: item.kana,
                     answers: item.romaji,
                 })

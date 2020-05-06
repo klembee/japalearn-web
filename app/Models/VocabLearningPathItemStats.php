@@ -15,6 +15,7 @@ class VocabLearningPathItemStats extends Model implements Learnable
         'level',
         'last_review_date',
         'human_level',
+        'object_id'
     ];
 
     protected $dates = [
@@ -68,4 +69,8 @@ class VocabLearningPathItemStats extends Model implements Learnable
 //            }, $this->vocabLearningPathItem->readings->toArray());
 //        }
 //    }
+    public function getObjectIdAttribute()
+    {
+        return $this->learning_path_item_id;
+    }
 }

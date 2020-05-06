@@ -1,20 +1,25 @@
 <template>
     <div>
-        <review-panel
+        <component
+            :is="reviewComponent"
             :update-levels-endpoint="updateLevelsEndpoint"
             :remove-wrong="false"
             :items-to-review="reviews"
             :has-items-after-review="false"
             @go-home="goHome()"
-        ></review-panel>
+        >
+
+        </component>
     </div>
 </template>
 
 <script>
-    import ReviewPanel from "./learn/VocabReviewPanel";
+    import VocabReviewPanel from "./learn/VocabReviewPanel";
+    import KanaReviewPanel from "./learn/KanaReviewPanel";
+
     export default {
         name: "VocabReviewWindow",
-        components: {ReviewPanel},
+        components: {KanaReviewPanel, VocabReviewPanel},
         props: {
             updateLevelsEndpoint: {
                 type: String,
@@ -27,7 +32,20 @@
             reviews: {
                 type: Array,
                 required: true
+            },
+            type: {
+                type: String,
+                default: "vocab"
             }
+        },
+        computed: {
+            reviewComponent(){
+                if(this.type === "vocab"){
+                    return "VocabReviewPanel";
+                }else if(this.type === "kana"){
+                    return "KanaReviewPanel";
+                }
+            },
         },
         methods:{
             goHome(){

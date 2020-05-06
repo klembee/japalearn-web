@@ -160,7 +160,6 @@
         width: 65%;
         margin: auto;
         display:flex;
-        align-items: center;
     }
 
     .prev-button{

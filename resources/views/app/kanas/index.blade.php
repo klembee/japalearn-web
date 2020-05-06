@@ -8,6 +8,34 @@
 @endsection
 
 @section('content')
+
+    <div class="row">
+        <md-card class="col-md-3 col-12">
+            <md-card-header>
+                <h1>{{__('Items to learn')}}</h1>
+            </md-card-header>
+            <md-card-content>
+                <p>{{count($itemsToLearn)}}</p>
+            </md-card-content>
+            <md-card-actions>
+                <md-button href="{{route('study.kana.lesson')}}">{{__('Learn')}}</md-button>
+            </md-card-actions>
+        </md-card>
+        <md-card class="col-md-3 col-12">
+            <md-card-header>
+                <h1>{{__('Items to review')}}</h1>
+            </md-card-header>
+            <md-card-content>
+                <p>{{count($itemsToReview)}}</p>
+            </md-card-content>
+            <md-card-actions>
+                <md-button href="{{route('study.kana.review')}}">{{__('Review')}}</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+    <hr />
+
+
     <p>The Japanese language consists of two scripts known as "kanas". The first one is the hiraganas.
         These are mainly used for grammatical purposes. The second one is the katakanas.
         These are mainly used to represent words imported from other countries.</p>

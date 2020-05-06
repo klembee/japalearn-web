@@ -14,7 +14,7 @@ class GrammarLearningPathController extends Controller
         $categories = GrammarLearningPathCategory::query()->get();
 
 
-        return view('app.grammar_learning_path.index', compact('categories'));
+        return view('app.admin.grammar_learning_path.index', compact('categories'));
     }
 
     /**
@@ -25,7 +25,7 @@ class GrammarLearningPathController extends Controller
     public function edit(Request $request, GrammarLearningPathItem $item){
         $item = $item->load('questions', 'questions.answers');
 
-        return view('app.grammar_learning_path.edit', compact('item'));
+        return view('app.admin.grammar_learning_path.edit', compact('item'));
     }
 
     /**
@@ -40,6 +40,6 @@ class GrammarLearningPathController extends Controller
     public function viewCategory(Request $request, GrammarLearningPathCategory $category){
         $items = $category->items;
 
-        return view('app.grammar_learning_path.view_category', compact('items', 'category'));
+        return view('app.admin.grammar_learning_path.view_category', compact('items', 'category'));
     }
 }

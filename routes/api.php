@@ -56,16 +56,28 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         });
 
         Route::prefix('kana')->name('kana.')->group(function(){
+            Route::prefix('admin')->name('admin.')->middleware('isRole:admin')->group(function(){
+                Route::post('{kana}/update', 'Api\KanaLearningPathController@update')->name('update');
+            });
+
             Route::name('review.')->prefix('review')->group(function(){
                 Route::post('update_level', 'Api\KanaLearningPathController@updateLevel')->name('update_level');
             }) ;
         });
 
-        Route::prefix('grammar')->name('grammar.')->middleware('isRole:admin')->group(function(){
-            Route::post('create', 'Api\GrammarLearningPathController@addGrammarLesson')->name('store');
-            Route::post('update/{item}', 'Api\GrammarLearningPathController@updateGrammarLesson')->name('update');
+        Route::prefix('grammar')->name('grammar.')->group(function(){
+            Route::prefix('admin')->name('admin.')->middleware('isRole:admin')->group(function() {
+                Route::post('create', 'Api\GrammarLearningPathController@addGrammarLesson')->name('store');
+                Route::post('update/{item}', 'Api\GrammarLearningPathController@updateGrammarLesson')->name('update');
 
-            Route::post('question/delete', 'Api\GrammarLearningPathController@deleteQuestion')->name('question.delete');
+                Route::post('question/delete', 'Api\GrammarLearningPathController@deleteQuestion')->name('question.delete');
+            });
+        });
+
+        Route::prefix('stories')->name('stories.')->group(function(){
+            Route::prefix('admin')->name('admin.')->middleware('isRole:admin')->group(function() {
+                Route::post('create-update', 'Api\StoriesController@createUpdate')->name('createupdate');
+            });
         });
 
     });

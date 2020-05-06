@@ -11,6 +11,20 @@ class KanaLearningStats extends Model implements Learnable
 {
     protected $table = "kana_student";
 
+    protected $fillable = [
+        'student_info_id',
+        'kana_id',
+        'number_right',
+        'last_review'
+    ];
+
+    protected $appends = [
+        'last_review_date',
+        'level',
+        'human_level',
+        'object_id'
+    ];
+
     public function student(){
         return $this->belongsTo(User::class, 'student_id');
     }
@@ -26,11 +40,16 @@ class KanaLearningStats extends Model implements Learnable
 
     public function getLevelAttribute()
     {
-        return $this->level;
+        return $this->number_right;
     }
 
     public function getHumanLevelAttribute()
     {
         return "HAHA";
+    }
+
+    public function getObjectIdAttribute()
+    {
+        return $this->kana_id;
     }
 }

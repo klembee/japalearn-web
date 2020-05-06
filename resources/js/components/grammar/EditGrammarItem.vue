@@ -94,8 +94,7 @@
 
             <md-button @click="save" class="md-raised md-primary">Save</md-button>
         </div>
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+        
     </div>
 </template>
 

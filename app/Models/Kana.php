@@ -13,7 +13,8 @@ class Kana extends Model
     protected $fillable = [
         'kana',
         'romaji',
-        'mnemonic'
+        'mnemonic',
+        'learn_order'
     ];
 
     protected $appends = [

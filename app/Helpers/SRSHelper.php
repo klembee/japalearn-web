@@ -42,7 +42,10 @@ class SRSHelper
 
         foreach($this->objectUser as $item){
             if($this->itemNeedReview($item)){
-                $toReview[] = $item;
+                // This is to get the object and not the object-student association
+                $toReview[] = array_values(array_filter($this->allObjects, function($object) use ($item){
+                    return $object['id'] == $item['kana_id'];
+                }))[0];
             }
         }
 
@@ -87,7 +90,7 @@ class SRSHelper
      */
     private function unlearnedItems(){
         // Get the indices of the objects the user learned
-        $itemsLearnedIndices = array_column($this->objectUser, 'id');
+        $itemsLearnedIndices = array_column($this->objectUser, 'object_id');
 
         return array_filter($this->allObjects, function($item) use ($itemsLearnedIndices){
             return !in_array($item['id'], $itemsLearnedIndices);

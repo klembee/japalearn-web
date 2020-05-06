@@ -71,7 +71,7 @@
 </script>
 
 <style scoped>
-    .dialog{
-        width:40%;
-    }
+    /*.dialog{*/
+    /*    width:40%;*/
+    /*}*/
 </style>

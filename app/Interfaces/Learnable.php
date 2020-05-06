@@ -16,5 +16,7 @@ interface Learnable
 
     public function getHumanLevelAttribute();
 
+    public function getObjectIdAttribute();
+
 //    public function getAnswersAttribute();
 }

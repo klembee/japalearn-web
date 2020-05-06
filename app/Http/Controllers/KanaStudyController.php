@@ -23,6 +23,7 @@ class KanaStudyController extends Controller
         $user = $request->user();
 
         $allKanas = Kana::all()->toArray();
+
         $kanaUser = $user->info->information->kanaLearningPathStats->toArray();
 
         $helper = new SRSHelper($allKanas, $kanaUser);
@@ -45,7 +46,17 @@ class KanaStudyController extends Controller
     /**
      * Allow the user to review already learned kanas
      */
-    public function review(){
+    public function review(Request $request){
+        $user = $request->user();
+        $allKanas = Kana::all()->toArray();
+        $kanaUser = $user->info->information->kanaLearningPathStats->toArray();
 
+        $helper = new SRSHelper($allKanas, $kanaUser);
+        $reviews = $helper->reviewsAvailable();
+
+
+        return view("app.study.kana_review", [
+           'reviews' => json_encode($reviews),
+        ]);
     }
 }

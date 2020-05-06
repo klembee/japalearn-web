@@ -47,11 +47,22 @@ Route::middleware('auth')->group(function(){
     Route::get('vocabulary', 'VocabularyController@index')->name('vocabulary.index');
 
     Route::prefix('learning_path/')->name('learning_path.')->middleware('isRole:admin')->group(function(){
-        Route::prefix('vocab/')->name('vocab.')->group(function(){
-            Route::get('', 'LearningPathController@index')->name('index');
-            Route::get('/{level}/edit', 'LearningPathController@viewLevel')->name('edit');
+        Route::prefix('stories/')->name('stories.')->group(function(){
+            Route::get('', 'StoriesController@indexAdmin')->name('index');
+            Route::get('create/', 'StoriesController@create')->name('create');
+            Route::get('edit/{story}', 'StoriesController@edit')->name('edit');
+            Route::get('delete/{story}', 'StoriesController@delete')->name('delete');
+        });
 
-            Route::get('export', "LearningPathController@export")->name('export');
+        Route::prefix('kana/')->name('kana.')->group(function(){
+            Route::get('', 'KanaLearningPathController@index')->name('index');
+        });
+
+        Route::prefix('vocab/')->name('vocab.')->group(function(){
+            Route::get('', 'KanjiLearningPathController@index')->name('index');
+            Route::get('/{level}/edit', 'KanjiLearningPathController@viewLevel')->name('edit');
+
+            Route::get('export', "KanjiLearningPathController@export")->name('export');
         });
 
         Route::prefix('grammar/')->name('grammar.')->group(function(){
@@ -99,6 +110,11 @@ Route::middleware('auth')->group(function(){
 // Reading
     Route::prefix('reading/')->name('reading.')->group(function(){
         Route::get('/', 'ReadingController@index')->name('index');
+    });
+
+    // Stories
+    Route::prefix('stories/')->name('stories.')->group(function(){
+        Route::get('{story}/', 'StoriesController@read')->name('read');
     });
 
 // listening
