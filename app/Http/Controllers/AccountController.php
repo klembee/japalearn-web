@@ -11,6 +11,9 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Stripe\Exception\ApiErrorException;
+use Stripe\Plan;
+use Stripe\Stripe;
 
 /**
  * Controller for the tasks relating the account like settings.
@@ -111,5 +114,23 @@ class AccountController extends Controller
 
         $stripeIntent = $request->user()->createSetupIntent()->client_secret;
         return view('app.account.settings.payment', compact('paymentMethods', 'stripeIntent'));
+    }
+
+    /**
+     * Allow a student to view its current subscription and choose a plan
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function subscription(Request $request){
+        Stripe::setApiKey(config('services.stripe.secret'));
+        try {
+            $monthlyPlan = Plan::retrieve(env('MONTHLY_SUBSCRIPTION_ID'));
+            $trimonthlyPlan = Plan::retrieve(env('TRIMONTHLY_SUBSCRIPTION_ID'));
+            $annualPlan = Plan::retrieve(env('YEARLY_SUBSCRIPTION_ID'));
+        }catch(ApiErrorException $e){
+            error_log("Failed to retrieve plans: " . $e->getMessage());
+        }
+
+        return view("app.account.settings.subscription", compact('monthlyPlan', 'trimonthlyPlan', 'annualPlan'));
     }
 }

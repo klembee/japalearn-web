@@ -140,7 +140,7 @@
                         console.log(response)
                     })
                     .catch(function(error){
-                        console.log("Error while saving level")
+                        toastr.error("Error while saving level");
                     })
             },
             stopReview(goHome = false){

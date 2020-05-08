@@ -86,7 +86,7 @@
                         self.messageToSend = "";
                     })
                     .catch(function(error){
-                        console.log("Error while sending message !")
+                        toastr.error("Error while sending message !");
                     });
             },
             closeConversation: function(){

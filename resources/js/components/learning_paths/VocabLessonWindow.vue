@@ -5,6 +5,7 @@
                 :items="items"
                 @do-review="startReview"
                 :type="type"
+                :current-chunk="chunkToReview"
             ></learning-panel>
         </div>
 
@@ -15,7 +16,7 @@
                 :update-levels-endpoint="updateLevelsEndpoint"
                 :remove-wrong="true"
                 :items-to-review="nextReviewItems"
-                :has-items-after-review="chunkToReview + 1 >= items.length"
+                :has-items-after-review="chunkToReview + 1 < items.length"
                 @review-end="stopReview"
                 @go-home="goHome"
             ></component>
@@ -74,11 +75,14 @@
         },
         methods: {
             startReview(chunkIndex){
+                console.log(this.items.length);
+                console.log(this.chunkToReview);
                 this.isDoingReview = true;
                 this.chunkToReview = chunkIndex
             },
             stopReview(){
                 this.isDoingReview = false;
+                //todo: Dont mutate the prop
                 this.items = this.items.slice(1)
             },
             goHome(){

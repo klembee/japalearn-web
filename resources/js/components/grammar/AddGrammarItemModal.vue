@@ -54,16 +54,13 @@
                 axios.post(this.saveApiEndpoint, payload)
                     .then(function(response){
                         if(response.data.success){
-                            console.log("Success !");
                             location.reload()
                         }else{
-                            console.log("Error: " + response.data.message)
-                            //todo (Jonathan): Show message to user
+                            toastr.error("Error: " + response.data.message);
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while save grammar lesson !")
-                        //todo (Jonathan): Show message to user
+                        toastr.error("Error while save grammar lesson !");
                     })
             }
         }

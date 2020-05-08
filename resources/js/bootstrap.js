@@ -37,6 +37,7 @@ window.newMessageSound = new Audio('/sound/message-notification.wav');
 window.Chart = require('chart.js');
 window.moment = require('moment');
 window.JSSoup = require('jssoup').default;
+window.toastr = require('toastr');
 
 
 window.Echo = new Echo({

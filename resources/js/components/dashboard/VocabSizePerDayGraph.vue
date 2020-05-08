@@ -31,7 +31,7 @@
                         self.buildGraph()
                     })
                     .catch(function (error) {
-                        console.log("Error while retrieving vocab size data for graph.")
+                        toastr.error('Error while retrieving vocab size data for graph.');
                     })
             },
             buildGraph(){

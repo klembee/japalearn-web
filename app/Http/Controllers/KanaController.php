@@ -19,6 +19,6 @@ class KanaController extends Controller
         $itemsToLearn = $helper->toLearnAvailable();
         $itemsToReview = $helper->reviewsAvailable();
 
-        return view('app.kanas.index', compact('itemsToLearn', 'itemsToReview'));
+        return view('app.kanas.index', compact('itemsToLearn', 'itemsToReview', 'allKanas', 'kanaUser'));
     }
 }

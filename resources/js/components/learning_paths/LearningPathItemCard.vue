@@ -198,13 +198,11 @@
                             self.deleted = true
 
                         }else{
-                            console.log("Error while deleting item")
-                            //todo (Jonathan): afficher l'erreur
+                            toastr.error("Error while deleting item");
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while deleting item")
-                        //todo (Jonathan): afficher l'erreur
+                        toastr.error("Error while deleting item");
                     })
             },
             save(){
@@ -226,13 +224,11 @@
                             console.log("updated successfuly");
                             location.reload();
                         }else{
-                            console.log("Error while updating item: " + response.data.message)
-                            //todo (Jonathan): afficher l'erreur
+                            toastr.error("Error while updating item: " + response.data.message);
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while updating item: " + error)
-                        //todo (Jonathan): afficher l'erreur
+                        toastr.error("Error while updating item");
                     });
             },
             addMeaning(meaning){

@@ -28,8 +28,7 @@
                         location.reload();
                     })
                     .catch(function(error){
-                        console.log("Error while deleting payment method")
-                        //todo (Jonathan): show error
+                        toastr.error('Error while deleting payment method');
                     })
             }
         }

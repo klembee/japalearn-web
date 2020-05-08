@@ -33,7 +33,7 @@
         },
         methods: {
             playSound: _.debounce(function(){
-                var audio = new Audio('/sound/kanas/' + this.item.romaji + ".wav");
+                var audio = new Audio(this.item.sound_file);
                 audio.play();
             }, 300)
         }

@@ -126,7 +126,7 @@
                         self.total = response.data.total;
                     })
                     .catch(function(error){
-                        console.log("Error querying dictionary")
+                        toastr.error('Error querying dictionary');
                     })
             }, 400),
             addToList(vocabulary){
@@ -139,10 +139,12 @@
                         if(!response.data.error){
                             // Add to the vocabulary
                             self.userVocabulary.push(response.data)
+                        }else{
+                            toastr.error('Error while adding to list');
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while adding to list")
+                        toastr.error('Error while adding to list');
                     })
             }
         },

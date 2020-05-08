@@ -5,6 +5,8 @@
 @import 'variables';
 @import 'fonts';
 
+@import "~toastr";
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';

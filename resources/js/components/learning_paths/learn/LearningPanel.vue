@@ -75,12 +75,16 @@
             type: {
                 type: String,
                 default: "vocab"
-            }
+            },
+            currentChunk: {
+                type: Number,
+                default: 0
+            },
         },
         data: function(){
             return {
                 currentItemIndex: 0,
-                currentChunk: 0,
+
                 numberItemsDone: 0,
                 numberItemsBeforeReview: 5,
                 readyForReview: false

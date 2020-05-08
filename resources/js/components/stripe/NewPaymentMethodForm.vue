@@ -67,12 +67,11 @@
                                 if(response.data.success){
                                     location.reload();
                                 }else{
-                                    console.log(response.data.message);
+                                    toastr.error("Error while saving payment method");
                                 }
                             })
                             .catch(function(error){
-                                console.log("Error while saving payment method.");
-                                //todo (Jonathan): Show error to client
+                                toastr.error("Error while saving payment method.");
                             })
                     }else{
                         //todo: Print error

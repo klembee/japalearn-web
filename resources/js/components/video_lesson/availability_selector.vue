@@ -156,12 +156,11 @@
 
                             self.$forceUpdate();
 
-                            //todo(Jonathan): Afficher un message de success
+                            toastr.success("Availability updated");
 
                         })
                         .catch(function(error){
-                            //todo(Jonathan): Afficher un message d'erreur (sans utiliser le message pour raison de securité)
-                            console.log("Error while saving availabilities")
+                            toastr.error("Error while saving availability");
                         })
                 }
             }, 700),
@@ -200,7 +199,7 @@
 
                     })
                     .catch(function(error){
-                        console.log("Error while retrieving availabilities : " + error);
+                        toastr.error("Error while retrieving availabilities");
                     })
             }
         },

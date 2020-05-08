@@ -66,17 +66,8 @@ class VocabularyStudyController extends Controller
         $helper = new SRSHelper($allVocabItems, $vocabUser);
         $itemsToLearn = $helper->reviewsAvailable();
 
-        $itemsBeforeReviews = 5;
-        if(count($itemsToLearn) == 0){
-            // No items to learn, redirect to dashboard
-            return redirect()->route('dashboard');
-        }
-
-        $items_chunk = array_chunk($itemsToLearn, $itemsBeforeReviews, false);
-
         return view('app.study.vocab_review', [
-            'items' => json_encode($items_chunk),
-            'mode' => 'review'
+            'reviews' => json_encode($itemsToLearn)
         ]);
     }
 }

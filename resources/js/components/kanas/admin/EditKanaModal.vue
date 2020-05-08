@@ -53,7 +53,7 @@
                         location.reload();
                     })
                     .catch(function(error){
-                        console.log("Error: " + error)
+                        toastr.error("Error while saving");
                     });
             }
         },

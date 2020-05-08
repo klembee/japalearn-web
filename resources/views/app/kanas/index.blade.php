@@ -43,11 +43,16 @@
     <div class="row">
         <div class="col-xl-6 col-12">
             <h2>Hiragana</h2>
-            <hiragana-table></hiragana-table>
+            <hiragana-table
+                :kanas="{{json_encode($allKanas)}}"
+            ></hiragana-table>
         </div>
         <div class="col-xl-6 col-12">
             <h2>Katakana</h2>
-            <katakana-table></katakana-table>
+            <hiragana-table
+                :kanas="{{json_encode($allKanas)}}"
+                :is-katakana="true"
+            ></hiragana-table>
         </div>
     </div>
 

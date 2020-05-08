@@ -130,13 +130,11 @@
                             if (response.data.success) {
                                 self.availableTimes = response.data.times;
                             } else {
-                                let error = response.data.message
-                                //todo (Jonhatan): Afficher message erreur
+                                toastr.error("Can't retrieve available times of this teacher.");
                             }
                         })
                         .catch(function (exception) {
-                            //todo (Jonathan): Afficher un message d'erreur en front end
-                            console.log("Error while getting available times for specified date")
+                            toastr.error("Error while getting available times for specified date");
                         })
                 }
             },

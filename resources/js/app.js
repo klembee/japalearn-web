@@ -39,7 +39,6 @@ Vue.component("schedule_form", require('./components/video_lesson/ScheduleForm.v
 Vue.component("new-payment-method-form", require('./components/stripe/NewPaymentMethodForm.vue').default);
 Vue.component('delete-payment-method-button', require('./components/stripe/DeletePaymentMethodButton.vue').default);
 Vue.component('HiraganaTable', require('./components/kanas/HiraganaTable.vue').default);
-Vue.component('KatakanaTable', require('./components/kanas/KatakanaTable.vue').default);
 Vue.component('LearningJourney', require('./components/dashboard/LearningJourney.vue').default);
 Vue.component('AddGrammarItemModal', require('./components/grammar/AddGrammarItemModal.vue').default);
 Vue.component('EditGrammarItem', require('./components/grammar/EditGrammarItem.vue').default);
@@ -49,6 +48,7 @@ Vue.component('CreateStoryForm', require('./components/stories/CreateStoryForm.v
 Vue.component('StoryReader', require('./components/stories/StoryReader.vue').default);
 Vue.component('StoryListItemCard', require('./components/stories/StoryListItemCard.vue').default);
 Vue.component('CreateAuthorForm', require('./components/authors/CreateAuthorForm.vue').default);
+Vue.component('SubscriptionPage', require('./components/settings/subscriptions/SubscriptionPage.vue').default);
 
 /**
  * Material Design Components
@@ -75,6 +75,7 @@ import {MdApp,
     MdSwitch,
     MdRipple,
     MdSubheader,
+    MdTooltip,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -99,6 +100,8 @@ Vue.use(MdMenu);
 Vue.use(MdSwitch);
 Vue.use(MdRipple);
 Vue.use(MdSubheader);
+Vue.use(MdTooltip);
+
 
 import { BootstrapVue } from 'bootstrap-vue'
 Vue.use(BootstrapVue);

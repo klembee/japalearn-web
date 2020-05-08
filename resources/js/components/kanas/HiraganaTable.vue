@@ -20,32 +20,32 @@
             <tbody>
                 <!-- A -->
                 <tr>
-                    <td class="clickable">ん</td>
-                    <td class="clickable">わ</td>
-                    <td class="clickable">ら</td>
-                    <td class="clickable">や</td>
-                    <td class="clickable">ま</td>
-                    <td class="clickable">は</td>
-                    <td class="clickable">な</td>
-                    <td class="clickable">た</td>
-                    <td class="clickable">さ</td>
-                    <td class="clickable">か</td>
-                    <td class="clickable" @click="playSound('a')">あ</td>
+                    <kana-cell :kana="getKana('ん')"></kana-cell>
+                    <kana-cell :kana="getKana('わ')"></kana-cell>
+                    <kana-cell :kana="getKana('ら')"></kana-cell>
+                    <kana-cell :kana="getKana('や')"></kana-cell>
+                    <kana-cell :kana="getKana('ま')"></kana-cell>
+                    <kana-cell :kana="getKana('は')"></kana-cell>
+                    <kana-cell :kana="getKana('な')"></kana-cell>
+                    <kana-cell :kana="getKana('た')"></kana-cell>
+                    <kana-cell :kana="getKana('さ')"></kana-cell>
+                    <kana-cell :kana="getKana('か')"></kana-cell>
+                    <kana-cell :kana="getKana('あ')"></kana-cell>
                     <td>A</td>
                 </tr>
                 <!-- I -->
                 <tr>
                     <td></td>
                     <td></td>
-                    <td class="clickable">り</td>
+                    <kana-cell :kana="getKana('り')"></kana-cell>
                     <td></td>
-                    <td class="clickable">み</td>
-                    <td class="clickable">ひ</td>
-                    <td class="clickable">に</td>
-                    <td class="clickable">ち</td>
-                    <td class="clickable">し</td>
-                    <td class="clickable">き</td>
-                    <td class="clickable" @click="playSound('i')">い</td>
+                    <kana-cell :kana="getKana('み')"></kana-cell>
+                    <kana-cell :kana="getKana('ひ')"></kana-cell>
+                    <kana-cell :kana="getKana('に')"></kana-cell>
+                    <kana-cell :kana="getKana('ち')"></kana-cell>
+                    <kana-cell :kana="getKana('し')"></kana-cell>
+                    <kana-cell :kana="getKana('き')"></kana-cell>
+                    <kana-cell :kana="getKana('い')"></kana-cell>
                     <td>I</td>
                 </tr>
 
@@ -53,15 +53,15 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td class="clickable">る</td>
-                    <td class="clickable">ゆ</td>
-                    <td class="clickable">む</td>
-                    <td class="clickable">ふ</td>
-                    <td class="clickable">ぬ</td>
-                    <td class="clickable">つ</td>
-                    <td class="clickable">す</td>
-                    <td class="clickable">く</td>
-                    <td class="clickable" @click="playSound('u')">う</td>
+                    <kana-cell :kana="getKana('る')"></kana-cell>
+                    <kana-cell :kana="getKana('ゆ')"></kana-cell>
+                    <kana-cell :kana="getKana('む')"></kana-cell>
+                    <kana-cell :kana="getKana('ふ')"></kana-cell>
+                    <kana-cell :kana="getKana('ぬ')"></kana-cell>
+                    <kana-cell :kana="getKana('つ')"></kana-cell>
+                    <kana-cell :kana="getKana('す')"></kana-cell>
+                    <kana-cell :kana="getKana('く')"></kana-cell>
+                    <kana-cell :kana="getKana('う')"></kana-cell>
                     <td>U</td>
                 </tr>
 
@@ -69,31 +69,31 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td class="clickable">れ</td>
+                    <kana-cell :kana="getKana('れ')"></kana-cell>
                     <td></td>
-                    <td class="clickable">め</td>
-                    <td class="clickable">へ</td>
-                    <td class="clickable">ね</td>
-                    <td class="clickable">て</td>
-                    <td class="clickable">せ</td>
-                    <td class="clickable">け</td>
-                    <td class="clickable" @click="playSound('e')">え</td>
+                    <kana-cell :kana="getKana('め')"></kana-cell>
+                    <kana-cell :kana="getKana('へ')"></kana-cell>
+                    <kana-cell :kana="getKana('ね')"></kana-cell>
+                    <kana-cell :kana="getKana('て')"></kana-cell>
+                    <kana-cell :kana="getKana('せ')"></kana-cell>
+                    <kana-cell :kana="getKana('け')"></kana-cell>
+                    <kana-cell :kana="getKana('え')"></kana-cell>
                     <td>E</td>
                 </tr>
 
                 <!-- o -->
                 <tr>
                     <td></td>
-                    <td class="clickable">を</td>
-                    <td class="clickable">ろ</td>
-                    <td class="clickable">よ</td>
-                    <td class="clickable">も</td>
-                    <td class="clickable">ほ</td>
-                    <td class="clickable">の</td>
-                    <td class="clickable">と</td>
-                    <td class="clickable">そ</td>
-                    <td class="clickable">こ</td>
-                    <td class="clickable" @click="playSound('o')">お</td>
+                    <kana-cell :kana="getKana('を')"></kana-cell>
+                    <kana-cell :kana="getKana('ろ')"></kana-cell>
+                    <kana-cell :kana="getKana('よ')"></kana-cell>
+                    <kana-cell :kana="getKana('も')"></kana-cell>
+                    <kana-cell :kana="getKana('ほ')"></kana-cell>
+                    <kana-cell :kana="getKana('の')"></kana-cell>
+                    <kana-cell :kana="getKana('と')"></kana-cell>
+                    <kana-cell :kana="getKana('そ')"></kana-cell>
+                    <kana-cell :kana="getKana('こ')"></kana-cell>
+                    <kana-cell :kana="getKana('お')"></kana-cell>
                     <td>O</td>
                 </tr>
             </tbody>
@@ -102,12 +102,30 @@
 </template>
 
 <script>
+    import KanaCell from "./KanaCell";
     export default {
         name: "HiraganaTable",
+        components: {KanaCell},
+        props: {
+            kanas: {
+                type: Array,
+                required: true
+            },
+            isKatakana: {
+                type: Boolean,
+                default: false
+            }
+        },
         methods: {
-            playSound(romaji){
-                var audio = new Audio('/sound/kanas/' + romaji + ".wav");
-                audio.play();
+            getKana(kana){
+                if(this.isKatakana){
+                    // Add x to unicode
+                    let a = 96;
+
+                    kana = String.fromCharCode(kana.charCodeAt(0) + a);
+                }
+
+                return this.kanas.filter(k => k.kana === kana)[0];
             }
         }
     }

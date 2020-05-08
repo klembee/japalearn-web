@@ -224,10 +224,10 @@ class LearningPathController extends Controller
 
                     if ($good['answer_type'] == "meaning") {
                         $stat->meaning_right += 1;
-                        $stat->meaning_last_right_date = now();
+                        $stat->meaning_last_study_date = now();
                     } else if ($good['answer_type'] == "reading") {
                         $stat->writing_right += 1;
-                        $stat->writing_last_right_date = now();
+                        $stat->writing_last_study_date = now();
                     }
 
                     $stat->save();
@@ -239,10 +239,10 @@ class LearningPathController extends Controller
 
                     if ($good['answer_type'] == "meaning") {
                         $stat->meaning_right = 1;
-                        $stat->meaning_last_right_date = now();
+                        $stat->meaning_last_study_date = now();
                     } else if ($good['answer_type'] == "reading") {
                         $stat->writing_right = 1;
-                        $stat->writing_last_right_date = now();
+                        $stat->writing_last_study_date = now();
                     }
 
                     $stat->save();
@@ -265,9 +265,9 @@ class LearningPathController extends Controller
                 ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
             if ($wrong['answer_type'] == "meaning") {
-                $stat->meaning_last_right_date = now();
+                $stat->meaning_last_study_date = now();
             } else if ($wrong['answer_type'] == "reading") {
-                $stat->writing_last_right_date = now();
+                $stat->writing_last_study_date = now();
             }
 
             $stat->save();

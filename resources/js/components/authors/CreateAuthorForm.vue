@@ -49,11 +49,11 @@
                         if(response.data.success){
                             location.reload();
                         }else{
-                            console.log("Error while saving author")
+                            toastr.error('Error while saving author');
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while saving author")
+                        toastr.error('Error while saving author');
                     });
             }
         }

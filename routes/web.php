@@ -13,19 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::post("/get-notified", "EmailListController@add");
-
 
 Auth::routes();
 
 Route::middleware('auth')->group(function(){
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/', 'DashboardController@index')->name('dashboard');
 
-// Users
+    // Users
     Route::prefix('users/')->group(function(){
         Route::get('/', 'UsersController@index')->name('users.index');
         Route::get('/create', 'UsersController@create')->name('users.create');
@@ -80,8 +75,11 @@ Route::middleware('auth')->group(function(){
         Route::get('profile/', 'AccountController@profile')->name('profile.index');
         Route::post('profile/', 'AccountController@updateProfile')->name('profile.update');
 
-        Route::get('learning/', 'AccountController@learning')->name('learning.index');
+        Route::get('learning/', 'AccountController@learning')->middleware('isRole:student')->name('learning.index');
         Route::get('payment/', 'AccountController@payment')->middleware('isRole:student')->name('payment.index');
+
+        Route::get('subscription/', 'AccountController@subscription')->middleware('isRole:student')->name('subscription.index');
+        Route::post('subscription/', 'AccountController@updateSubscription')->middleware('isRole:student')->name('subscription.update');
     });
 
     Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){

@@ -65,6 +65,7 @@
                         self.code = response.data;
                     })
                     .catch(function(error){
+                        toastr.error("An error happened.");
                         self.loading = false
                     });
             },

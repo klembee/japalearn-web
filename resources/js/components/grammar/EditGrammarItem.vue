@@ -94,7 +94,7 @@
 
             <md-button @click="save" class="md-raised md-primary">Save</md-button>
         </div>
-        
+
     </div>
 </template>
 
@@ -151,13 +151,11 @@
                         if(response.data.success){
                             console.log("SAVED !");
                         }else{
-                            console.log("Error while saving grammar item")
-                            //todo (Jonathan): Show error to user
+                            toastr.error("Error while saving grammar item");
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while saving grammar item")
-                        //todo (Jonathan): Show error to user
+                        toastr.error("Error while saving grammar item");
                     })
             },
             removeCreationAnswer(index){
@@ -173,7 +171,7 @@
 
                     })
                     .catch(function(error){
-
+                        toastr.error("Error while deleting question");
                     });
 
                 this.$delete(this.item.questions, index)

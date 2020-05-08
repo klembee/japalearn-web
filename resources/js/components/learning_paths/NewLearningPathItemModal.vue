@@ -111,12 +111,11 @@
                         if(success){
                             location.reload()
                         }else{
-                            //todo: Display on front-end
-                            console.log(response.data.message)
+                            toastr.error("Error: " + response.data.message);
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while saving item")
+                        toastr.error("Error while saving item");
                     })
             },
             addMeaning(meaning){

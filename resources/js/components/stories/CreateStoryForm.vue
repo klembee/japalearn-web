@@ -139,11 +139,11 @@
                             // Redirect to story
                             window.location.href = response.data.story_url;
                         }else{
-                            console.log("Error while saving story");
+                            toastr.error("Error while saving story");
                         }
                     })
                     .catch(function(error){
-                        console.log("Error while saving story")
+                        toastr.error("Error while saving story");
                     });
             },
             imageChanged(dataurl){

@@ -67,7 +67,7 @@
                         self.conversations = response.data;
                     })
                     .catch(function(error){
-                        console.log("Error while fetching conversations");
+                        toastr.error("Error while fetching conversations");
                     })
             },
             searchSelected(val){
