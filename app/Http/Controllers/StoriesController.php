@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Author;
 use App\Models\Story;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class StoriesController extends Controller
      */
     public function indexAdmin(Request $request){
         $stories = Story::all();
-        return view('app.admin.stories.index', compact('stories'));
+        $authors = Author::all();
+
+        return view('app.admin.stories.index', compact('stories', 'authors'));
     }
 
     /**
@@ -35,6 +38,7 @@ class StoriesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, Story $story){
+        $story = $story->load('translations');
         return view('app.admin.stories.edit', compact('story'));
     }
 
@@ -60,6 +64,8 @@ class StoriesController extends Controller
     public function read(Request $request, Story $story){
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($story->content);
+
+        $story = $story->load('translations');
 
         return view('app.stories.read', compact('story', 'parsedContent'));
     }

@@ -77,6 +77,7 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::prefix('stories')->name('stories.')->group(function(){
             Route::prefix('admin')->name('admin.')->middleware('isRole:admin')->group(function() {
                 Route::post('create-update', 'Api\StoriesController@createUpdate')->name('createupdate');
+                Route::post('create-author', 'Api\AuthorController@create')->name('create_author');
             });
         });
 

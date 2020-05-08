@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-subheader>{{title}}</md-subheader>
+        <md-subheader v-if="title">{{title}}</md-subheader>
         <md-field>
             <label>{{label}}</label>
             <md-file @md-change="loadImage" id="file_selector"/>
@@ -35,7 +35,11 @@
         props: {
             inputName: String,
             title: String,
-            label: String
+            label: String,
+            aspectRatio: {
+                type: Number,
+                default: 1
+            }
         },
         data: function(){
             return {
@@ -67,7 +71,7 @@
                 let previewImage = document.getElementById('preview-image');
                 let self = this;
                 this.cropper = new Cropper(previewImage, {
-                    aspectRatio: 1,
+                    aspectRatio: this.aspectRatio,
                     ready(event){
                         self.addImageToForm();
                     },
@@ -102,6 +106,7 @@
             },
             addImageToForm(){
                 this.croppedData = this.cropper.getCroppedCanvas().toDataURL();
+                this.$emit('image-changed', this.croppedData)
             }
         },
         mounted() {

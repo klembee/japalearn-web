@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\PictureUploaderHelper;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -93,22 +94,7 @@ class AccountController extends Controller
         if($request->has('picture')){
             $picture_base64 = $request->input('picture');
 
-            //Convert to file
-            //todo: Make this into a helper function if used a lot
-            $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $picture_base64));
-
-            $tmpFilePath = sys_get_temp_dir() . "/" . Str::uuid()->toString();
-            file_put_contents($tmpFilePath, $fileData);
-
-            $tmpFile = new File($tmpFilePath);
-            $file = new UploadedFile(
-                $tmpFile->getPathname(),
-                $tmpFile->getFilename(),
-                $tmpFile->getMimeType(),
-                0,
-                true
-            );
-
+            $file = PictureUploaderHelper::uploadFile($picture_base64);
             $user->setProfileImage($file);
         }
 

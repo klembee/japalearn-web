@@ -1,0 +1,46 @@
+.story{
+    width: 50%;
+    margin: auto;
+    background-color: #fbfbfb;
+    position: relative;
+    bottom: 100px;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #969696;
+}
+
+.story-image{
+    max-height: 40rem;
+    overflow: hidden;
+}
+
+blockquote {
+    padding-left:15px;
+}
+blockquote > p {
+    font-style:italic;
+}
+
+@media screen and (max-width: 2100px) {
+    .story{
+        width:60%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .story{
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .story{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .story{
+        width: 92%;
+    }
+}

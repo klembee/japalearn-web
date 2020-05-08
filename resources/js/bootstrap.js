@@ -30,11 +30,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 import Echo from 'laravel-echo';
+import JSSoup from 'jssoup';
 
 window.Pusher = require('pusher-js');
 window.newMessageSound = new Audio('/sound/message-notification.wav');
 window.Chart = require('chart.js');
 window.moment = require('moment');
+window.JSSoup = require('jssoup').default;
 
 
 window.Echo = new Echo({

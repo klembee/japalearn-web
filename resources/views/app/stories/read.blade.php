@@ -5,6 +5,9 @@
 
 @section('content')
     <div>
-        {!! $parsedContent !!}
+        <story-reader
+            :story="{{json_encode($story)}}"
+        ></story-reader>
     </div>
 @endsection
+

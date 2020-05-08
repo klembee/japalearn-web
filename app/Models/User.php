@@ -89,7 +89,6 @@ class User extends Authenticatable
         $savedFile = $image->store('public/avatars');
 
         //todo: Resize to a specific size to reduce file space
-
         // Remove the "/public/" part before save in database
         $path = substr($savedFile, strpos($savedFile, "/") + 1);
 

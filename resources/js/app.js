@@ -46,7 +46,9 @@ Vue.component('EditGrammarItem', require('./components/grammar/EditGrammarItem.v
 Vue.component('ConferenceRoom', require('./components/conference/ConferenceRoom.vue').default);
 Vue.component('EditKanaModal', require('./components/kanas/admin/EditKanaModal.vue').default);
 Vue.component('CreateStoryForm', require('./components/stories/CreateStoryForm.vue').default);
-
+Vue.component('StoryReader', require('./components/stories/StoryReader.vue').default);
+Vue.component('StoryListItemCard', require('./components/stories/StoryListItemCard.vue').default);
+Vue.component('CreateAuthorForm', require('./components/authors/CreateAuthorForm.vue').default);
 
 /**
  * Material Design Components

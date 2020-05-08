@@ -44,7 +44,7 @@ class SRSHelper
             if($this->itemNeedReview($item)){
                 // This is to get the object and not the object-student association
                 $toReview[] = array_values(array_filter($this->allObjects, function($object) use ($item){
-                    return $object['id'] == $item['kana_id'];
+                    return $object['id'] == $item['object_id'];
                 }))[0];
             }
         }
