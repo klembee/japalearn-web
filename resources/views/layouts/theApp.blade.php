@@ -32,6 +32,8 @@
 </head>
 <body>
     <div id="app" class="page-container md-layout-column">
+        @include('layouts.flash')
+
         <dashboard>
             <template v-slot:title>
                 @yield('title')

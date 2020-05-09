@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-3">
         <h2>Please select a plan</h2>
         <div class="all-plan-container">
             <div class="row justify-content-center">
@@ -13,12 +13,12 @@
                         </div>
 
                         <hr />
-                        <p>{{month.metadata.description}}</p>
+                        <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
                         <hr />
                         <p>Recurring charge every month <sup>1</sup></p>
                     </div>
 
-                    <button class="select-plan">Select</button>
+                    <button @click="selectedPlan = month" class="select-plan">Select</button>
                 </div>
                 <div class="col-md-3 offset-md-1 plan-container">
                     <div class="content">
@@ -29,13 +29,13 @@
                             </div>
                         </div>
                         <hr />
-                        <p>{{trimonth.metadata.description}}</p>
+                        <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
                         <hr />
-                        <p>Recurring charge every month <sup>1</sup></p>
+                        <p>Recurring charge every three months <sup>1</sup></p>
                     </div>
 
 
-                    <button class="select-plan">Select</button>
+                    <button @click="selectedPlan = trimonth" class="select-plan">Select</button>
                 </div>
                 <div class="col-md-3 offset-md-1 plan-container">
                     <div class="content">
@@ -46,30 +46,60 @@
                             </div>
                         </div>
                         <hr />
-                        <p>{{year.metadata.description}}</p>
+                        <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
                         <hr />
-                        <p>Recurring charge every month <sup>1</sup></p>
+                        <p>Recurring charge every year <sup>1</sup></p>
                     </div>
 
-                    <button class="select-plan">Select</button>
+                    <button @click="selectedPlan = year" class="select-plan">Select</button>
                 </div>
             </div>
         </div>
 
-        <!-- TODO: !!! -->
         <ol>
             <li>
-                <p>WaniKani will charge you at the beginning of a subscription period. A period begins on the date when a subscription is added and ends a month or year after the date, depending on the plan selected. Refer to the generated invoice for more information.</p>
-                <p>If you do not wish to have your subscription on recurring charge (Month or Annual) simply cancel the subscription anytime during the subscription period under Billing. The account will remain active until the end of the subscription period. At the end of your subscription you will only have access to the free levels (up to level 3). Don't fret! If you decide to subscribe again you'll be back to where you have left off.</p>
+                <p>JapaLearn will charge you at the beginning of a subscription period. A period begins on the date when a subscription is added and ends a month, three month or one year after the date depending on the selected plan.</p>
+                <p>You can cancel your subscription any time.</p>
             </li>
         </ol>
+
+        <div v-if="selectedPlan">
+            <h2>Payment</h2>
+            <p>How do you want to pay ?</p>
+            <credit-card-chooser
+                :credit-cards="creditCards"
+                :amount="selectedPlan.amount"
+                :save-method-endpoint="saveMethodEndpoint"
+                :stripe-key="stripeKey"
+                :client-secret="clientSecret"
+                @card-selected="methodSelected"
+                @card-unselected="selectedCard = null"
+            >
+
+            </credit-card-chooser>
+
+            <div v-if="selectedCard">
+                <p>You will be charged ${{selectedPlan.amount / 100}} CAD when you proceed with the payment.</p>
+                <md-button @click="pay" :disabled="isSubscribing"  class="md-raised md-primary">Proceed to payment</md-button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import CreditCardChooser from "../../CreditCardChooser";
     export default {
         name: "SubscriptionPage",
+        components: {CreditCardChooser},
         props: {
+            subscribeEndpoint: {
+                type: String,
+                required: true
+            },
+            redirectUrl: {
+                type: String,
+                required: true
+            },
             month: {
                 type: Object,
                 required: true
@@ -81,6 +111,57 @@
             year: {
                 type: Object,
                 required: true
+            },
+            creditCards: {
+                type: Array,
+            },
+            saveMethodEndpoint: {
+                type: String,
+                required: true
+            },
+            stripeKey: {
+                type: String,
+                required: true
+            },
+            clientSecret: {
+                type: String,
+                required: true
+            }
+        },
+        data: function(){
+            return {
+                selectedPlan: null,
+                selectedCard: null,
+                isSubscribing: false
+            }
+        },
+        methods: {
+            methodSelected(method){
+                this.selectedCard = method;
+            },
+            pay(){
+                this.isSubscribing = true;
+
+                let payload = {
+                    card_id: this.selectedCard,
+                    plan_id: this.selectedPlan.id
+                };
+
+                let self = this;
+                axios.post(this.subscribeEndpoint, payload)
+                    .then(function(response){
+                        if(response.data.success){
+                            toastr.success(response.data.message);
+                            window.location.href = self.redirectUrl;
+                        }else{
+                            toastr.error("Error while subscribing: " + response.data.message);
+                            self.isSubscribing = false;
+                        }
+                    })
+                    .catch(function(error){
+                        toastr.error("Error while subscribing");
+                        self.isSubscribing = false;
+                    })
             }
         }
     }

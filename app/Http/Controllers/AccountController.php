@@ -131,6 +131,26 @@ class AccountController extends Controller
             error_log("Failed to retrieve plans: " . $e->getMessage());
         }
 
-        return view("app.account.settings.subscription", compact('monthlyPlan', 'trimonthlyPlan', 'annualPlan'));
+        $user = $request->user();
+        $creditCardsStripe = $user->paymentMethods()->toArray();
+        $creditCards = [];
+        foreach($creditCardsStripe as $creditCard){
+            $creditCards[] = [
+                'id' => $creditCard->id,
+                'last4' => $creditCard->card->last4,
+                'exp_month' => $creditCard->card->exp_month,
+                'exp_year' => $creditCard->card->exp_year
+            ];
+
+        }
+
+        $stripeIntent = $request->user()->createSetupIntent()->client_secret;
+        return view("app.account.settings.subscription", compact(
+            'monthlyPlan',
+            'trimonthlyPlan',
+            'annualPlan',
+            'creditCards',
+            'stripeIntent'
+        ));
     }
 }

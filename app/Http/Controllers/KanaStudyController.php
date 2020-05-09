@@ -26,7 +26,7 @@ class KanaStudyController extends Controller
 
         $kanaUser = $user->info->information->kanaLearningPathStats->toArray();
 
-        $helper = new SRSHelper($allKanas, $kanaUser);
+        $helper = new SRSHelper($allKanas, $kanaUser, 3, 10);
         $itemsToLearn = $helper->toLearnAvailable();
 
         $itemsBeforeReviews = 5;

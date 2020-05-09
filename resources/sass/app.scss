@@ -5,8 +5,6 @@
 @import 'variables';
 @import 'fonts';
 
-@import "~toastr";
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
@@ -21,6 +19,7 @@
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 @import "components/_components";
+@import "~toastr/toastr";
 
 .clickable{
     cursor:pointer;

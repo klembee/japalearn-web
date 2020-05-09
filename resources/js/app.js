@@ -49,6 +49,7 @@ Vue.component('StoryReader', require('./components/stories/StoryReader.vue').def
 Vue.component('StoryListItemCard', require('./components/stories/StoryListItemCard.vue').default);
 Vue.component('CreateAuthorForm', require('./components/authors/CreateAuthorForm.vue').default);
 Vue.component('SubscriptionPage', require('./components/settings/subscriptions/SubscriptionPage.vue').default);
+Vue.component('Flash', require('./components/Flash.vue').default);
 
 /**
  * Material Design Components

@@ -30,6 +30,10 @@
             saveMethodEndpoint: {
                 type: String,
                 required: true
+            },
+            reloadOnSuccess: {
+                type: Boolean,
+                default: true
             }
         },
         data: function(){
@@ -65,7 +69,13 @@
                         axios.post(self.saveMethodEndpoint, payload)
                             .then(function(response){
                                 if(response.data.success){
-                                    location.reload();
+                                    let paymentMethod = response.data.payment_method;
+                                    if(self.reloadOnSuccess) {
+                                        location.reload();
+                                    }else{
+                                        // Send payment information to parent
+                                        self.$emit('payment-method-added', paymentMethod);
+                                    }
                                 }else{
                                     toastr.error("Error while saving payment method");
                                 }
@@ -74,13 +84,12 @@
                                 toastr.error("Error while saving payment method.");
                             })
                     }else{
-                        //todo: Print error
+                        toastr.error("Failed to add payment method.");
                     }
 
 
                 }).catch(function(error){
-                    console.log(error);
-                    //todo (Jonathan): Show error to client
+                    toastr.error("Failed to add payment method.");
                 });
             }
         },

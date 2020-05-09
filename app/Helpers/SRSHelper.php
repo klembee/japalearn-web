@@ -14,7 +14,6 @@ use Carbon\Carbon;
 class SRSHelper
 {
     private $levels_interval = [4, 8, 24, 72, 168, 336, 720, 2880]; # In hours
-    private $MAX_NB_ITEMS = 30;
 
     /**
      * @var array
@@ -26,10 +25,15 @@ class SRSHelper
      */
     private $objectUser;
 
-    public function  __construct($allObjects, $objectUser)
+    private $levelBeforeNewItems;
+    private $numberItemsAtATime;
+
+    public function  __construct($allObjects, $objectUser, $levelBeforeNewItems = 5, $numberItemsAtATime = 30)
     {
         $this->allObjects = $allObjects;
         $this->objectUser = $objectUser;
+        $this->levelBeforeNewItems = $levelBeforeNewItems;
+        $this->numberItemsAtATime = $numberItemsAtATime;
     }
 
 
@@ -72,11 +76,11 @@ class SRSHelper
      */
     public function toLearnAvailable(){
         if(count($this->objectUser) == 0){
-            return array_splice($this->allObjects, 0, $this->MAX_NB_ITEMS);
+            return array_splice($this->allObjects, 0, $this->numberItemsAtATime);
         }
 
-        $nbItemsAvailable = $this->MAX_NB_ITEMS - count(array_filter($this->objectUser, function($item){
-            return $item['level'] < 5;
+        $nbItemsAvailable = $this->numberItemsAtATime - count(array_filter($this->objectUser, function($item){
+            return $item['level'] < $this->levelBeforeNewItems;
         }));
 
         $unlearnedItems = $this->unlearnedItems();

@@ -37,7 +37,7 @@ class PaymentController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => ""
+            'payment_method' => $paymentMethod
         ]);
     }
 
@@ -66,6 +66,32 @@ class PaymentController extends Controller
         return response()->json([
             'success' => true,
             'message' => ""
+        ]);
+    }
+
+    public function subscribe(Request $request){
+        $this->validate($request, [
+            'card_id' => 'required',
+            'plan_id' => 'required'
+        ]);
+        // todo: Check that the card id is owned by the logged in user !
+
+        $user = $request->user();
+        $planId = $request->input('plan_id');
+        $cardId = $request->input('card_id');
+
+        if(!$user->subscribed('default')) {
+            $user->newSubscription('default', $planId)->create($cardId);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => "You are already subscribed !"
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Thank you for subscribing !"
         ]);
     }
 }
