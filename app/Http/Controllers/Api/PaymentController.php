@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -93,5 +94,37 @@ class PaymentController extends Controller
             'success' => true,
             'message' => "Thank you for subscribing !"
         ]);
+    }
+
+    public function unsubscribe(Request $request){
+        $user = $request->user();
+
+        if($request->has('reason')){
+            $reason = $request->input('reason');
+            if($request->has('specify')){
+                $specify = $request->input('specify');
+            }
+
+            DB::table('unsubscription_reason')->insert([
+                'user_id' => $user->id,
+                'reason' => $reason,
+                'extra' => $specify
+            ]);
+        }
+
+        if ($user->subscribed('default')) {
+            $user->subscription()->cancel();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have an active subscription."
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Subscribed successfully"
+        ]);
+
     }
 }

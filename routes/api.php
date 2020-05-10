@@ -93,5 +93,6 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::post('add-payment-method', 'Api\PaymentController@addPaymentMethod')->name('add-payment-method');
         Route::post('delete-payment-method', 'Api\PaymentController@deletePaymentMethod')->name('delete-payment-method');
         Route::post('subscribe', 'Api\PaymentController@subscribe')->name('subscribe');
+        Route::post('unsubscribe', 'Api\PaymentController@unsubscribe')->name('unsubscribe');
     });
 });

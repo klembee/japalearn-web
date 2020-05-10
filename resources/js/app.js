@@ -50,6 +50,7 @@ Vue.component('StoryListItemCard', require('./components/stories/StoryListItemCa
 Vue.component('CreateAuthorForm', require('./components/authors/CreateAuthorForm.vue').default);
 Vue.component('SubscriptionPage', require('./components/settings/subscriptions/SubscriptionPage.vue').default);
 Vue.component('Flash', require('./components/Flash.vue').default);
+Vue.component('UnsubscriptionForm', require('./components/stripe/UnsubscriptionForm.vue').default);
 
 /**
  * Material Design Components

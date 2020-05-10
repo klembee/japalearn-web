@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Plan;
 use Stripe\Stripe;
+use Stripe\Subscription;
 
 /**
  * Controller for the tasks relating the account like settings.
@@ -145,12 +146,22 @@ class AccountController extends Controller
         }
 
         $stripeIntent = $request->user()->createSetupIntent()->client_secret;
+        $currentlySubscribed = $user->subscribed('default');
+        $subscriptionId = $user->subscription('default')->stripe_id;
+        $subscription = Subscription::retrieve($subscriptionId);
+
         return view("app.account.settings.subscription", compact(
             'monthlyPlan',
             'trimonthlyPlan',
             'annualPlan',
             'creditCards',
-            'stripeIntent'
+            'stripeIntent',
+            'currentlySubscribed',
+            'subscription'
         ));
+    }
+
+    public function unsubscribeIndex(Request $request){
+        return view('app.account.unsubscribe');
     }
 }

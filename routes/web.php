@@ -80,6 +80,8 @@ Route::middleware('auth')->group(function(){
 
         Route::get('subscription/', 'AccountController@subscription')->middleware('isRole:student')->name('subscription.index');
         Route::post('subscription/', 'AccountController@updateSubscription')->middleware('isRole:student')->name('subscription.update');
+
+        Route::get('unsubscribe/', 'AccountController@unsubscribeIndex')->middleware('isRole:student')->name('unsubscribe');
     });
 
     Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){
