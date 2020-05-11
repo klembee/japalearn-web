@@ -19,8 +19,8 @@
 @endsection
 
 @section('content')
-    @foreach($itemsByLevel as $level => $items)
         <div class="row">
+            @foreach($itemsByLevel as $level => $items)
             <md-card class="col-md-3" md-with-hover>
                 <md-card-header>
                     <md-card-header-text>
@@ -37,7 +37,8 @@
                     <md-button href="{{route('learning_path.vocab.edit', ['level' => $level])}}">{{__("Edit")}}</md-button>
                 </md-card-actions>
             </md-card>
+            @endforeach
         </div>
 
-    @endforeach
+
 @endsection

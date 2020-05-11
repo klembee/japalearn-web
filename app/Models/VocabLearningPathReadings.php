@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class VocabLearningPathReadings extends Model
 {
     protected $table = "vocab_learning_path_readings";
-    protected $fillable = ['reading'];
+    protected $fillable = ['reading', 'vocab_learning_path_item_id'];
 
 
     public function learningPathItem(){

@@ -110,11 +110,20 @@ class KanjiLearningPathController extends Controller
      */
     public function viewLevel(Request $request, int $level){
 
-        $radicals = VocabLearningPath::query()->where('word_type_id', WordType::radical()->id)->with('meanings', 'readings', 'examples')->get();
+        $radicals = VocabLearningPath::query()
+            ->where('word_type_id', WordType::radical()->id)
+            ->where('level', $level)
+            ->with('meanings', 'readings', 'examples')->get();
 
-        $kanjis = VocabLearningPath::query()->where('word_type_id', WordType::kanji()->id)->with('meanings', 'readings', 'examples')->get();
+        $kanjis = VocabLearningPath::query()
+            ->where('word_type_id', WordType::kanji()->id)
+            ->where('level', $level)
+            ->with('meanings', 'readings', 'examples')->get();
 
-        $vocabulary = VocabLearningPath::query()->where('word_type_id', WordType::vocabulary()->id)->with('meanings', 'readings', 'examples')->get();
+        $vocabulary = VocabLearningPath::query()
+            ->where('word_type_id', WordType::vocabulary()->id)
+            ->where('level', $level)
+            ->with('meanings', 'readings', 'examples')->get();
 
         return view('app.admin.kanji_learning_path.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
     }

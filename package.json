@@ -25,7 +25,7 @@
     },
     "dependencies": {
         "amazon-chime-sdk-js": "^1.4.0",
-        "bootstrap-vue": "^2.11.0",
+        "bootstrap-vue": "2.13.1",
         "chart.js": "^2.9.3",
         "cropperjs": "^1.5.6",
         "editor": "github:lepture/editor",
@@ -36,7 +36,7 @@
         "moment": "^2.24.0",
         "pusher-js": "^5.1.1",
         "toastr": "^2.1.4",
-        "vue-material": "^1.0.0-beta-12",
+        "vue-material": "^1.0.0-beta-13",
         "vue-multiselect": "^2.1.6"
     }
 }

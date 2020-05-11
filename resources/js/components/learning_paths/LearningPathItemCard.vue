@@ -1,7 +1,7 @@
 <template>
     <md-card v-if="!deleted" class="mb-4 col-md-2 col-sm-4 col-6 vocab_learning_path_view_item" md-with-hover>
         <p class="word_title">{{itemProp.word}}</p>
-        <p class="word_meaning">{{itemProp.meanings[0].meaning}}</p>
+        <p class="word_meaning" v-if="itemProp.meanings[0]">{{itemProp.meanings[0].meaning}}</p>
 
         <md-card-actions>
             <md-button @click="deleteItem()" class="md-icon-button">
@@ -268,6 +268,6 @@
 
 <style scoped>
     .update-dialog{
-        width: 30%;
+        /*width: 30%;*/
     }
 </style>

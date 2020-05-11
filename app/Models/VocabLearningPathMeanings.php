@@ -10,7 +10,9 @@ class VocabLearningPathMeanings extends Model
 {
     protected $table = "vocab_learning_path_meanings";
 
-    protected $fillable = ['meaning'];
+    protected $fillable = [
+        'meaning',
+        'vocab_learning_path_item_id'];
 
     public function learningPathItem(){
         return $this->belongsTo(VocabLearningPath::class, "vocab_learning_path_item_id");
