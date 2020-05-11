@@ -57,6 +57,7 @@ I recommended to quickly go through these documentations:
 1. Laravel documentation (version >= 7.0): https://laravel.com/docs/7.x/
 1. VueJS documentation https://vuejs.org/v2/guide/
 1. How to create **tests** with Laravel: https://laravel.com/docs/7.x/testing
+1. Japanese dictionary https://jisho.org/
 
 
 # Pushing to prod
