@@ -123,7 +123,7 @@ class KanjiLearningPathController extends Controller
         $vocabulary = VocabLearningPath::query()
             ->where('word_type_id', WordType::vocabulary()->id)
             ->where('level', $level)
-            ->with('meanings', 'readings', 'examples')->get();
+            ->with('meanings', 'readings', 'examples')->orderBy('word')->get();
 
         return view('app.admin.kanji_learning_path.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
     }

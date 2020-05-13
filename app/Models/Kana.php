@@ -32,7 +32,7 @@ class Kana extends Model
 
     public function getLevelAttribute(){
         $user = Auth::user();
-        if(!$user->isStudent()){
+        if($user == null || !$user->isStudent()){
             return 0;
         }
 

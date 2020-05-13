@@ -15,8 +15,6 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 //
 //        foreach($kanjis as $levelCount => $level){
 //            foreach ($level as $kanji){
-////                error_log($levelCount . " " . $kanji['kanji']);
-//
 //                $item = new \App\Models\VocabLearningPath([
 //                    'level' => $levelCount + 1,
 //                    'word' => $kanji['kanji'],
@@ -45,7 +43,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 //
 //            }
 //        }
-
+//
 //        $vocab_json = file_get_contents('database/seeds/vocab_by_level.json');
 //        $vocab = json_decode($vocab_json, true);
 //
@@ -76,15 +74,12 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 //                $readingItem->save();
 //            }
 //        }
-
-        $radical_json = $this->file_get_contents_utf8('database/seeds/kanji_with_radical.json');
-        $radical = json_decode($radical_json, true);
-
-        //todo: read unicode
-
+//
+//        $radical_json = mb_convert_encoding($this->file_get_contents_utf8('database/seeds/kanji_with_radical.json'), "UTF-8");
+//        $radical = json_decode($radical_json, true);
+//
 //        foreach($radical as $levelCount => $level){
 //            foreach($level as $rad){
-//                print($rad);
 //
 //                $item = new \App\Models\VocabLearningPath([
 //                    'level' => $levelCount + 1,
@@ -95,7 +90,47 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 //                $item->save();
 //            }
 //        }
+//
+//
+//        # Convert kanji reading from katakana to hiragana
+//        $kanjis = \App\Models\VocabLearningPath::query()->where('word_type_id', \App\Models\WordType::kanji()->id)->get();
+//        foreach ($kanjis as $kanji){
+//            $readings = $kanji->readings;
+//            foreach($readings as $reading){
+//                $newReading = "";
+//                foreach (mb_str_split($reading->reading) as $letter){
+//                    $unicode = IntlChar::ord($letter);
+//                    $newChar = "";
+//                    if($unicode >= 12448 && $unicode <= 12538){
+//                        # This is katakana
+//                        $newChar = IntlChar::chr($unicode -= 96);
+//                        $newReading .= $newChar;
+//                    }else{
+//                        $newReading .= $letter;
+//                    }
+//                }
+//
+//                $reading->reading = $newReading;
+//                $reading->save();
+//            }
+//        }
 
+        # Separate meanings containing ';'
+        $items = \App\Models\VocabLearningPath::query()
+            ->where('word_type_id', '!=', \App\Models\WordType::radical()->id)->get();
+
+        foreach ($items as $item){
+            $meanings = $item->meanings;
+            foreach ($meanings as $meaning){
+                $sub_meanings = explode(';', $meaning->meaning);
+                foreach($sub_meanings as $sub_meaning){
+                    $item->meanings()->save(new \App\Models\VocabLearningPathMeanings([
+                        'meaning' => $sub_meaning
+                    ]));
+                }
+                $meaning->delete();
+            }
+        }
 
     }
 }

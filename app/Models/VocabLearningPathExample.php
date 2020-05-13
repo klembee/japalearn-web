@@ -10,5 +10,5 @@ class VocabLearningPathExample extends Model
 {
     protected $table = "vocab_learning_path_examples";
 
-    protected $fillable = ['example', 'translation'];
+    protected $fillable = ['example', 'translation', 'type'];
 }

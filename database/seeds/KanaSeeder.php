@@ -12,7 +12,8 @@ class KanaSeeder extends \Illuminate\Database\Seeder
             "い" => [
                 'kana' => 'i',
                 'sound_file' => 'i.wav'
-            ], "う" => [
+            ],
+            "う" => [
                 'kana' => 'u',
                 'sound_file' => 'u.wav'
             ],
@@ -52,9 +53,9 @@ class KanaSeeder extends \Illuminate\Database\Seeder
                 'kana' => 'shi',
                 'sound_file' => 'shi.wav'
             ],
-            "つ" => [
-                'kana' => 'tsu',
-                'sound_file' => 'tsu.wav'
+            "す" => [
+                'kana' => 'su',
+                'sound_file' => 'su.wav'
             ],
             "せ" => [
                 'kana' => 'se',
@@ -92,9 +93,9 @@ class KanaSeeder extends \Illuminate\Database\Seeder
                 'kana' => 'chi',
                 'sound_file' => 'chi.wav'
             ],
-            "す" => [
-                'kana' => 'su',
-                'sound_file' => 'su.wav'
+            "つ" => [
+                'kana' => 'tsu',
+                'sound_file' => 'tsu.wav'
             ],
             "て" => [
                 'kana' => 'te',

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class VocabLearningPath extends Model
 {
     protected $table = "vocab_learning_path";
-    protected $fillable = ['word', 'level', 'word_type_id'];
+    protected $fillable = ['word', 'level', 'word_type_id', 'mnemonic'];
     protected $appends = [
         'answers',
         'type'

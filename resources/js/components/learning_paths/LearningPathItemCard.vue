@@ -1,5 +1,6 @@
 <template>
     <md-card v-if="!deleted" class="mb-4 col-md-2 col-sm-4 col-6 vocab_learning_path_view_item" md-with-hover>
+        <!-- todo: Give indication if no mnemonic  -->
         <p class="word_title">{{itemProp.word}}</p>
         <p class="word_meaning" v-if="itemProp.meanings[0]">{{itemProp.meanings[0].meaning}}</p>
 
@@ -222,7 +223,8 @@
                     .then(function(response){
                         if(response.data.success){
                             console.log("updated successfuly");
-                            location.reload();
+                            // location.reload();
+                            self.showEditForm = false
                         }else{
                             toastr.error("Error while updating item: " + response.data.message);
                         }
