@@ -68,8 +68,14 @@
 
                 <!-- Mnemonic -->
                 <md-field>
-                    <label>Mnemonic</label>
-                    <md-textarea v-model="update.mnemonic">
+                    <label>Meaning mnemonic</label>
+                    <md-textarea v-model="update.meaning_mnemonic">
+
+                    </md-textarea>
+                </md-field>
+                <md-field>
+                    <label>Reading mnemonic</label>
+                    <md-textarea v-model="update.reading_mnemonic">
 
                     </md-textarea>
                 </md-field>
@@ -174,7 +180,8 @@
                     wordTypeId: 0,
                     meanings: [],
                     readings: [],
-                    mnemonic: "",
+                    meaning_mnemonic: "",
+                    reading_mnemonic: "",
                     examples: [],
                 },
                 newExample: {
@@ -210,7 +217,8 @@
                 let payload = {
                     word: this.update.word,
                     word_type_id: this.update.wordTypeId,
-                    mnemonic: this.update.mnemonic,
+                    meaning_mnemonic: this.update.meaning_mnemonic,
+                    reading_mnemonic: this.update.reading_mnemonic,
                     examples: this.update.examples,
                     meanings: this.update.meanings,
                     readings: this.update.readings,
@@ -262,7 +270,8 @@
             this.update.wordTypeId = this.item.word_type_id;
             this.update.meanings = this.item.meanings;
             this.update.readings = this.item.readings;
-            this.update.mnemonic = this.item.mnemonic;
+            this.update.meaning_mnemonic = this.item.meaning_mnemonic;
+            this.update.reading_mnemonic = this.item.reading_mnemonic;
             this.update.examples = this.item.examples;
         }
     }
