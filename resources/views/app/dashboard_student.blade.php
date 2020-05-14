@@ -8,7 +8,7 @@
         Welcome to your dashboard !
         <learning-journey
             :done-basic-kanas="{{$doneBasicKanas ? 'true' : 'false'}}"
-            kana-url="{{route('')}}"
+            kana-url="{{route('study.kana.lesson')}}"
         ></learning-journey>
     </div>
 @endsection
