@@ -3,7 +3,7 @@
         <h2>Your learning journey</h2>
         <div class="d-flex align-items-center">
             <!-- Kanas -->
-            <div class="learning-journey-item">
+            <div @click="window.location.href = kanaUrl" class="learning-journey-item">
                 <div v-if="doneBasicKanas">
                     <p>Kanas</p>
                     <md-icon>check_circle</md-icon>
@@ -73,6 +73,10 @@
                 type: Boolean,
                 default: false
             },
+            kanaUrl: {
+                type: String,
+                required: true
+            }
         },
         computed: {
             currentlyLearningKanas() {
@@ -106,8 +110,13 @@
     .currently_learning{
         border:1px solid #151515;
         border-radius: 5px;
-        background-color:#d3cfa5;
+        color: #F2F2F2;
+        background-color:#325259;
     }
+    .currently_learning .md-icon{
+        color: inherit !important;
+    }
+
     .currently_learning > p{
         display:inline;
     }

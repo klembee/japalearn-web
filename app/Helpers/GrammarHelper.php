@@ -19,6 +19,12 @@ class GrammarHelper
     public static function getNextItem(){
         $itemsNotDone = GrammarLearningPathItem::notDone()->get();
 
-        return $itemsNotDone[0];
+        if(count($itemsNotDone) > 0 ){
+            return $itemsNotDone[0];
+        }else{
+            return null;
+        }
+
+
     }
 }

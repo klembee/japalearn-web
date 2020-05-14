@@ -15,10 +15,12 @@
         </div>
         <hr />
 
-        <div>
-            <h3>{{__('Continue where you left')}}: <b>{{$nextItem->title}}</b></h3>
-            <p>{{substr($nextItem->content, 0, 20)}}...</p>
-            <md-button href="{{route('grammar.learn', $nextItem)}}" class="md-primary md-raised">Continue learning</md-button>
-        </div>
+        @if($nextItem)
+            <div>
+                <h3>{{__('Continue where you left')}}: <b>{{$nextItem->title}}</b></h3>
+                <p>{{substr($nextItem->content, 0, 20)}}...</p>
+                <md-button href="{{route('grammar.learn', $nextItem)}}" class="md-primary md-raised">Continue learning</md-button>
+            </div>
+        @endif
     </div>
 @endsection
