@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\VideoConferenceHelper;
+use App\Models\User;
 use Aws\Chime\ChimeClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,21 @@ class DashboardController extends Controller
         $user = $request->user();
         $role = $user->role->name;
 
-        return view("app.dashboard_$role", compact('user'));
+        $funcName = "index_$role";
+        return $this->$funcName($user, $request);
+    }
+
+    public function index_admin(User $user, Request $request){
+        return view("app.dashboard_admin", compact('user'));
+    }
+
+    public function index_teacher(User $user, Request $request){
+        return view("app.dashboard_teacher", compact('user'));
+    }
+
+    public function index_Student(User $user, Request $request){
+        $doneBasicKanas = $user->info->information->finishedKanas();
+
+        return view("app.dashboard_student", compact('user', 'doneBasicKanas'));
     }
 }

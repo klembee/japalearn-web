@@ -6,6 +6,8 @@
 @section('content')
     <div>
         Welcome to your dashboard !
-        <learning-journey></learning-journey>
+        <learning-journey
+            :done-basic-kanas="{{$doneBasicKanas ? 'true' : 'false'}}"
+        ></learning-journey>
     </div>
 @endsection

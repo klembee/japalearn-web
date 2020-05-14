@@ -20,14 +20,16 @@ class KanjiVocabularyController extends Controller
     public function index(Request $request){
         $user = $request->user();
 
-        $allVocabItems = VocabLearningPath::all()->toArray();
-        $vocabUser = $user->info->information->vocabLearningPathStats->toArray();
+        $vocabUser = $user->info->information->vocabLearningPathStats;
+        $allVocabItems = VocabLearningPath::query()
+            ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
+            ->orderBy('level')
+            ->orderBy('word_type_id')
+            ->limit(30)->get()->toArray();
 
-        $helper = new SRSHelper($allVocabItems, $vocabUser);
+        $helper = new SRSHelper($allVocabItems, $vocabUser->toArray());
         $itemsToLearn = $helper->toLearnAvailable();
         $itemsToReview = $helper->reviewsAvailable();
-
-        error_log(print_r($itemsToLearn, true));
 
         return view('app.kanji_vocabulary.index', compact('user', 'itemsToLearn', 'itemsToReview', 'vocabUser'));
     }

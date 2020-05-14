@@ -5,6 +5,7 @@ namespace App\Helpers;
 
 use App\Interfaces\Learnable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Helper class for the spaced repetition algorithm
@@ -28,8 +29,10 @@ class SRSHelper
     private $levelBeforeNewItems;
     private $numberItemsAtATime;
 
-    public function  __construct($allObjects, $objectUser, $levelBeforeNewItems = 5, $numberItemsAtATime = 30)
+    public function  __construct($allObjects, $objectUser, $levelBeforeNewItems = 4, $numberItemsAtATime = 30)
     {
+
+
         $this->allObjects = $allObjects;
         $this->objectUser = $objectUser;
         $this->levelBeforeNewItems = $levelBeforeNewItems;
@@ -67,7 +70,7 @@ class SRSHelper
      * @return bool
      */
     private function itemNeedReview($item){
-        return Carbon::now()->diffInHours($item['last_review_date']) > $this->levels_interval[$item['level']];
+        return Carbon::now()->diffInHours($item['last_review_date']) > $this->levels_interval[$item['level'] - 1];
     }
 
     /**
@@ -80,7 +83,7 @@ class SRSHelper
         }
 
         $nbItemsAvailable = $this->numberItemsAtATime - count(array_filter($this->objectUser, function($item){
-            return $item['level'] < $this->levelBeforeNewItems;
+            return $item['level'] - 1 < $this->levelBeforeNewItems;
         }));
 
         $unlearnedItems = $this->unlearnedItems();

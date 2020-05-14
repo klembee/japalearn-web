@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kana;
+use App\Models\KanaLearningStats;
+use App\Models\Role;
 use App\Models\StudentInfo;
 use App\Models\TeacherInfo;
 use App\Models\User;
@@ -56,6 +59,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'account_type' => ['required','in:student,teacher'],
+            'experience_kana' => ['nullable','in:no_knowlege,full_knowledge,katakana_knowledge,hiragana_knowledge'],
+            'concentration' => ['nullable','in:everything,kanjis,speaking,reading'],
+            'experience_other_platform' => ['nullable','in:no,yes']
         ]);
     }
 
@@ -71,13 +78,22 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role_id' => $data['account_type'] == 'teacher' ? Role::teacher()->id : Role::student()->id
         ]);
 
         if($user->isStudent()){
             // Create the student info if user is student
 
             $studentInfo = new StudentInfo();
-            $studentInfo->level = 1;
+            $studentInfo->kanji_level = 1;
+            $studentInfo->grammar_level = 1;
+
+            $studentInfo->concentration = $data['concentration'];
+
+            if(array_key_exists('experience_other_platform', $data)){
+                $studentInfo->used_other_platforms_before = $data['experience_other_platform'] === "yes";
+            }
+
             $studentInfo->save();
 
             $informationUser = new UserInformation();
@@ -85,6 +101,34 @@ class RegisterController extends Controller
             $informationUser->information_id = $studentInfo->id;
             $informationUser->information_type = StudentInfo::class;
             $informationUser->save();
+
+
+
+            $objects = null;
+
+            switch ($data['experience_kana']){
+                case "full_knowledge":
+                    $objects = Kana::all();
+                    break;
+                case "katakana_knowledge":
+                    $objects = Kana::katakanas()->get();
+                    break;
+                case "hiragana_knowledge":
+                    $objects = Kana::hiraganas()->get();
+                    break;
+            }
+
+            if($objects != null){
+                foreach ($objects as $kana){
+                    $kana_student = new KanaLearningStats([
+                        'student_info_id' => $studentInfo->id,
+                        'kana_id' => $kana->id,
+                        'number_right' => 5,
+                        'last_review' => now()
+                    ]);
+                    $kana_student->save();
+                }
+            }
 
         }else if($user->isTeacher()){
             // Create teacher info

@@ -30,6 +30,46 @@ class Kana extends Model
         ];
     }
 
+    /**
+     * Get all the hiraganas
+     */
+    public static function hiraganas(){
+        $allKanas = Kana::all()->pluck('kana')->toArray();
+        $onlyHiraganas = [];
+
+        foreach ($allKanas as $kana){
+            foreach(mb_str_split($kana) as $character){
+                if(\IntlChar::ord($character) >= 12353 && \IntlChar::ord($character) <= 12438){
+                    $onlyHiraganas[] = $kana;
+                    break;
+                }
+            }
+
+        }
+
+        return Kana::query()->whereIn('kana', $onlyHiraganas);
+    }
+
+    /**
+     * Get all the katakanas
+     */
+    public static function katakanas(){
+        $allKanas = Kana::all()->pluck('kana')->toArray();
+        $onlyKatakana = [];
+
+        foreach ($allKanas as $kana){
+            foreach(mb_str_split($kana) as $character){
+                if(\IntlChar::ord($character) >= 12449 && \IntlChar::ord($character) <= 12538){
+                    $onlyKatakana[] = $kana;
+                    break;
+                }
+            }
+
+        }
+
+        return Kana::query()->whereIn('kana', $onlyKatakana);
+    }
+
     public function getLevelAttribute(){
         $user = Auth::user();
         if($user == null || !$user->isStudent()){

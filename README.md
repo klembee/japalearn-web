@@ -31,6 +31,18 @@ Here are the steps to start working on this project
 1. Run `php artisan serve` to launch the web app
 1. The command `php artisan db:seed` created multiple users of different roles.
 
+## Custom commands
+It can be usefull to export and import the learning items (kanas, kanji, vocab).
+ To do this, you can use the command:
+ 
+ `php artisan export:all`
+ 
+ Then to import use the following command:
+ 
+ `php artisan import:kanjis {file}`
+ 
+ `php artisan import:kanas {file}`
+
 ### Test users
 To login go to http://localhost:8000/login
 
