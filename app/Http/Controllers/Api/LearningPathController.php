@@ -105,7 +105,7 @@ class LearningPathController extends Controller
 
         $word = $request->input('word');
         $wordTypeId = $request->input('word_type_id');
-        $mnemonic = $request->input('mnemonic');
+        $mnemonic = $request->input('meaning_mnemonic');
         $examples = $request->input('examples');
         $meanings = $request->input('meanings');
         $readings = $request->input('readings');
