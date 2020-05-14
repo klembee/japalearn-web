@@ -31,8 +31,6 @@ class SRSHelper
 
     public function  __construct($allObjects, $objectUser, $levelBeforeNewItems = 4, $numberItemsAtATime = 30)
     {
-
-
         $this->allObjects = $allObjects;
         $this->objectUser = $objectUser;
         $this->levelBeforeNewItems = $levelBeforeNewItems;
@@ -86,9 +84,9 @@ class SRSHelper
             return $item['level'] - 1 < $this->levelBeforeNewItems;
         }));
 
-        $unlearnedItems = $this->unlearnedItems();
+//        $unlearnedItems = $this->unlearnedItems();
 
-        return array_splice($unlearnedItems, 0, $nbItemsAvailable);
+        return array_splice($this->allObjects, 0, $nbItemsAvailable);
     }
 
     /**

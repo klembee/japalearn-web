@@ -23,9 +23,11 @@ class KanjiVocabularyController extends Controller
         $vocabUser = $user->info->information->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
-            ->orderBy('level')
-            ->orderBy('word_type_id')
-            ->limit(30)->get()->toArray();
+            ->orderBy('level', 'asc')
+            ->orderBy('word_type_id', 'asc')
+            ->orderBy('word')
+            ->limit(30)->get()
+            ->toArray();
 
         $helper = new SRSHelper($allVocabItems, $vocabUser->toArray());
         $itemsToLearn = $helper->toLearnAvailable();

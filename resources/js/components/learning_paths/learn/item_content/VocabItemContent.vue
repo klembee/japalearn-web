@@ -7,9 +7,24 @@
         </b-tab>
 
         <b-tab id="tab-meaning" title="Meaning">
-            <p v-for="meaning in item.meanings" :key="meaning.id">
-                {{meaning.meaning}}
-            </p>
+            <div class="row mt-4">
+                <div class="col-3">
+                    <h3>Type</h3>
+                    <p class="text-capitalize font-weight-bold">{{item.type}}</p>
+                    <hr/>
+                    <h3>Meanings</h3>
+                    <ul v-for="meaning in item.meanings" :key="meaning.id">
+                        <li class="text-capitalize">{{meaning.meaning}}</li>
+                    </ul>
+                </div>
+                <div class="col-9">
+                    <h3>Tip for remembering</h3>
+                    <div v-html="meaningMnemonic">
+
+                    </div>
+                </div>
+            </div>
+
 
         </b-tab>
 
@@ -27,6 +42,8 @@
 </template>
 
 <script>
+    import marked from "marked"
+
     export default {
         name: "VocabItemContent.vue",
         props: {
@@ -38,6 +55,15 @@
         data: function(){
             return {
                 activeTab: 0,
+            }
+        },
+        computed: {
+            meaningMnemonic(){
+                if(this.item.meaning_mnemonic) {
+                    return marked(this.item.meaning_mnemonic);
+                }else{
+                    return "";
+                }
             }
         }
     }
