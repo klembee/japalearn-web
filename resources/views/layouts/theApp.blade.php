@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>JapaLearn</title>
 
     @include('layouts.header')
     @yield('scripts')
@@ -13,6 +13,10 @@
         <dashboard>
             <template v-slot:title>
                 @yield('title')
+            </template>
+
+            <template v-slot:alert>
+                @yield('alert')
             </template>
 
             <template v-slot:toolbar_right>

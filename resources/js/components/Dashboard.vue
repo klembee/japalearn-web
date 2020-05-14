@@ -23,6 +23,9 @@
             </md-list>
         </md-app-drawer>
         <md-app-content>
+
+            <slot name="alert"></slot>
+
             <md-card class="p-3">
                 <slot name="content"></slot>
             </md-card>

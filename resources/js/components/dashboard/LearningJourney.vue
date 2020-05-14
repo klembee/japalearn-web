@@ -3,7 +3,7 @@
         <h2>Your learning journey</h2>
         <div class="d-flex align-items-center">
             <!-- Kanas -->
-            <div @click="window.location.href = kanaUrl" class="learning-journey-item">
+            <div @click="redirectToKana" class="learning-journey-item">
                 <div v-if="doneBasicKanas">
                     <p>Kanas</p>
                     <md-icon>check_circle</md-icon>
@@ -88,6 +88,11 @@
             currentlyLearningKanjis(){
                 return this.doneBasicKanas && this.doneBasicGrammar && !this.doneBasicKanjis;
             }
+        },
+        methods:{
+            redirectToKana: function(){
+                window.location.href = this.kanaUrl;
+            }
         }
     }
 </script>
@@ -95,6 +100,7 @@
 <style scoped>
     .learning-journey-item{
         text-align:center;
+        cursor: pointer;
     }
     .learning-journey-item > div{
         padding:1rem;

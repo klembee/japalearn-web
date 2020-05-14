@@ -20,6 +20,8 @@ class KanjiVocabularyController extends Controller
     public function index(Request $request){
         $user = $request->user();
 
+        $userLearnedKanas = $user->info->information->finishedKanas();
+
         $vocabUser = $user->info->information->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
@@ -33,7 +35,7 @@ class KanjiVocabularyController extends Controller
         $itemsToLearn = $helper->toLearnAvailable();
         $itemsToReview = $helper->reviewsAvailable();
 
-        return view('app.kanji_vocabulary.index', compact('user', 'itemsToLearn', 'itemsToReview', 'vocabUser'));
+        return view('app.kanji_vocabulary.index', compact('user', 'userLearnedKanas', 'itemsToLearn', 'itemsToReview', 'vocabUser'));
     }
 
 }

@@ -13,9 +13,8 @@ class KanaController extends Controller
     public function index(Request $request){
         $user = $request->user();
 
-        error_log(print_r(Kana::hiraganas()->get()->pluck('kana')->toArray(), true));
-
         $allKanas = Kana::all()->toArray();
+
         $kanaUser = $user->info->information->kanaLearningPathStats->toArray();
         $helper = new SRSHelper($allKanas, $kanaUser, 3, 10);
         $itemsToLearn = $helper->toLearnAvailable();
