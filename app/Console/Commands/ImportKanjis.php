@@ -62,7 +62,7 @@ class ImportKanjis extends Command
                 $existingKanji = $existingKanji->firstOrFail();
                 $existingKanji->update([
                     'word' => $kanji['word'],
-                    'mnemonic' => $kanji['mnemonic'],
+                    'meaning_mnemonic' => $kanji['meaning_mnemonic'],
                     'word_type_id' => WordType::query()->where('name', $kanji['type'])->firstOrFail()->id,
                     'level' => $kanji['level']
                 ]);
@@ -80,7 +80,7 @@ class ImportKanjis extends Command
                 // Create new one
                 $newItem = new VocabLearningPath([
                     'word' => $kanji['word'],
-                    'mnemonic' => $kanji['mnemonic'],
+                    'meaning_mnemonic' => $kanji['meaning_mnemonic'],
                     'word_type_id' => WordType::query()->where('name', $kanji['type'])->firstOrFail()->id,
                     'level' => $kanji['level']
                 ]);
