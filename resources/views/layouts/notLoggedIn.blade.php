@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>JapaLearn - Learn Japanese the right way !</title>
+    <meta property="og:title" content="JapaLearn - Learn Japanese the right way !">
+    <meta property="og:image" content="/images/facebook-share.jpg">
 
     @include('layouts.header')
     @yield('scripts')
