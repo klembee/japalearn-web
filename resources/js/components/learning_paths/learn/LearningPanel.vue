@@ -119,7 +119,13 @@
                 if(this.currentChunk + 1 >= this.items.length){
                     return [];
                 }
-                return _.clone(this.items[this.currentChunk + 1]).splice(0, this.currentItemIndex + 1);
+
+                let numberToSplit = 0;
+                if(this.currentItemIndex == 0){
+                    numberToSplit = 1;
+                }
+
+                return _.clone(this.items[this.currentChunk + 1]).splice(0, this.currentItemIndex + numberToSplit);
             },
             canGoLeft: function(){
                 return this.currentItemIndex > 0
@@ -185,6 +191,6 @@
     }
 
     .map-item.active{
-        background-color:#007BFF;
+        background-color:#99D0F2;
     }
 </style>

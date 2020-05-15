@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="review-content">
         <component
             :is="reviewComponent"
             :update-levels-endpoint="updateLevelsEndpoint"

@@ -1,17 +1,26 @@
 <template>
     <div>
-        <div class="d-flex">
-            <h2>Romaji: {{item.romaji}}</h2>
-            <md-button @click="playSound" class="md-icon-button md-raised">
-                <md-icon>volume_up</md-icon>
-            </md-button>
-        </div>
-        <hr/>
-        <div v-if="item.mnemonic">
-            <h3><b>How to remember this kana: </b></h3>
-            <div v-html="parsedMnemonic"></div>
-        </div>
+        <div class="row">
+            <div class="col-3">
+                <div>
+                    <p class="h4 mt-0">Romaji: {{item.romaji}}</p>
 
+                    <div>
+                        <p class="d-inline">Listen: </p>
+                        <md-button @click="playSound" class="md-icon-button md-raised d-inline">
+                            <md-icon>volume_up</md-icon>
+                        </md-button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-9">
+                <h3><b>How to remember this kana: </b></h3>
+                <div v-if="item.mnemonic">
+                    <div v-html="parsedMnemonic"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

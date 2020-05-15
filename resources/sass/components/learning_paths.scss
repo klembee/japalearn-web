@@ -16,3 +16,21 @@
         font-size:1.2em;
     }
 }
+
+.review-content{
+    width:50%;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.error.md-field{
+    border: 3px dotted $error;
+
+    label, input{
+        margin-left:15px;
+    }
+}
+.error.md-field.md-theme-default:before{
+    background:none;
+}

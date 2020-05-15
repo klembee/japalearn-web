@@ -5,13 +5,22 @@
                 <p>{{currentItem.question}}</p>
             </div>
             <div>
-                <md-field>
+                <md-field :class="{error: hasError}">
                     <label>What is the romaji equivalent of this kana ?</label>
                     <md-input v-on:keyup.enter="submitAnswer" v-model="answer"/>
                     <md-button @click="submitAnswer" class="md-icon-button">
                         <md-icon>send</md-icon>
                     </md-button>
                 </md-field>
+            </div>
+
+            <!-- Answer -->
+            <div v-if="showAnswer">
+                <kana-item-content
+                    :item="currentItem"
+                >
+
+                </kana-item-content>
             </div>
 
         </md-content>
@@ -37,9 +46,10 @@
 
 <script>
     import BackDrop from "../../BackDrop";
+    import KanaItemContent from "./item_content/KanaItemContent";
     export default {
         name: "VocabReviewPanel",
-        components: {BackDrop},
+        components: {KanaItemContent, BackDrop},
         props: {
             itemsToReview: {
                 type: Array,
@@ -69,7 +79,8 @@
                 good: [],
                 wrong: [],
                 readyForLearn: false,
-
+                showAnswer: false,
+                hasError: false
             }
         },
         computed: {
@@ -86,10 +97,33 @@
         },
         methods: {
             submitAnswer(){
-                this.verifyAnswer();
-                this.nextQuestion();
+
+                if(this.showAnswer){
+                    this.nextQuestion();
+                    this.showAnswer = false;
+                    return
+                }
+
+                if(!this.verifyAnswer()){
+                    // There was an error with the input
+                    this.hasError = true;
+
+                }else{
+                    this.hasError = false;
+
+                    // After verifyAnswer, showAnswer could have changed
+                    if(!this.showAnswer){
+                        this.nextQuestion();
+                    }
+                }
             },
             verifyAnswer(){
+                if(this.invalidAnswer()){
+                    console.log("invalid");
+                    return false;
+                }
+
+
                 if(this.currentItem.answers.includes(this.answer.toLowerCase())){
                     //Good answer
                     if(this.removeWrong || !this.wrong.includes(this.currentItem)) {
@@ -99,9 +133,9 @@
                         // Remove the item that was wrong
                         this.wrong = this.wrong.filter(item => item != this.currentItem);
                     }
+                    this.showAnswer = false
                 }else{
                     //Wrong answer
-                    console.log("WRONG!");
                     //Add the item at the end of the list
                     this.items.push(this.currentItem);
 
@@ -109,7 +143,15 @@
                         this.wrong.push(this.currentItem);
                     }
 
+                    this.showAnswer = true
                 }
+
+                return true;
+            },
+            invalidAnswer(){
+                let empty = this.answer === "" || this.answer == null;
+
+                return empty;
             },
             nextQuestion(){
                 this.answer = "";
@@ -149,6 +191,10 @@
                     id: item.id,
                     question: item.kana,
                     answers: item.romaji,
+                    kana: item.kana,
+                    romaji: item.romaji,
+                    mnemonic: item.mnemonic,
+                    sound_file: item.sound_file
                 })
             });
 

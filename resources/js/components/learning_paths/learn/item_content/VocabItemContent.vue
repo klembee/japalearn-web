@@ -45,7 +45,7 @@
     import marked from "marked"
 
     export default {
-        name: "VocabItemContent.vue",
+        name: "VocabItemContent",
         props: {
             item: {
                 type: Object,

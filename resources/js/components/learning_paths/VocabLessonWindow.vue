@@ -10,7 +10,7 @@
         </div>
 
         <!-- When the user is doing a review -->
-        <div v-else>
+        <div v-else class="review-content">
             <component
                 :is="reviewComponent"
                 :update-levels-endpoint="updateLevelsEndpoint"
