@@ -28,6 +28,25 @@ class StudentInfo extends Model
         return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'grammar_item_id','student_info_id');
     }
 
+    /**
+     * Get the date and time that the user will have
+     * reviews for the next week. It is used to the review forecast component
+     * @return mixed
+     */
+    public function getNextWeekVocabReviews(){
+        // Get the vocab review for the week
+        $nextWeek = Carbon::now()->addWeek();
+        $vocabsNextWeek = $this->vocabLearningPathStats->filter(function($obj, $key) use($nextWeek){
+            return $obj->next_review->lte($nextWeek);
+        });
+
+        // Sort them by review date
+        $vocabsNextWeekTimes = $vocabsNextWeek->map(function($obj, $key){
+            return $obj->next_review->addHour()->format("Y-m-d H:00:00");
+        });
+        return $vocabsNextWeekTimes->countBy()->all();
+    }
+
     public function finishedKanas(){
         $kana_user = $this->kanaLearningPathStats;
         $all_over_lvl_5 = true;

@@ -40,12 +40,12 @@
             </template>
         </dashboard>
 
-        <chat
-            conversation-endpoint="{{route('api.chat.get_conversations')}}"
-            send-message-endpoint="{{route('api.chat.send')}}"
-            current-user-id="{{Auth::user()->id}}"
-            :friends="{{Auth::user()->friends}}"
-        ></chat>
+{{--        <chat--}}
+{{--            conversation-endpoint="{{route('api.chat.get_conversations')}}"--}}
+{{--            send-message-endpoint="{{route('api.chat.send')}}"--}}
+{{--            current-user-id="{{Auth::user()->id}}"--}}
+{{--            :friends="{{Auth::user()->friends}}"--}}
+{{--        ></chat>--}}
 
         <!-- Snack Bar flash messages -->
         @if(Session::has('message'))

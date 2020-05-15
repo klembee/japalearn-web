@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class SRSHelper
 {
-    private $levels_interval = [4, 8, 24, 72, 168, 336, 720, 2880]; # In hours
+    public static $LEVELS_INTERVAL = [0, 4, 8, 24, 72, 168, 336, 720, 2880]; # In hours
 
     /**
      * @var array
@@ -47,10 +47,7 @@ class SRSHelper
 
         foreach($this->objectUser as $item){
             if($this->itemNeedReview($item)){
-                // This is to get the object and not the object-student association
-                $toReview[] = array_values(array_filter($this->allObjects, function($object) use ($item){
-                    return $object['id'] == $item['object_id'];
-                }))[0];
+                $toReview[] = $item;
             }
         }
 
@@ -68,7 +65,7 @@ class SRSHelper
      * @return bool
      */
     private function itemNeedReview($item){
-        return Carbon::now()->diffInHours($item['last_review_date']) > $this->levels_interval[$item['level'] - 1];
+        return Carbon::now()->gte($item['next_review']);
     }
 
     /**

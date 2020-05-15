@@ -4,6 +4,7 @@
 namespace App\Models;
 
 
+use App\Helpers\SRSHelper;
 use App\Interfaces\Learnable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,12 +16,13 @@ class VocabLearningPathItemStats extends Model implements Learnable
         'level',
         'last_review_date',
         'human_level',
-        'object_id'
+        'object_id',
+        'answers',
+        'next_review'
     ];
 
     protected $dates = [
-        'writing_last_right_date',
-        'meaning_last_right_date'];
+        'last_study_date'];
 
     public function student(){
         return $this->belongsTo(User::class);
@@ -30,19 +32,18 @@ class VocabLearningPathItemStats extends Model implements Learnable
         return $this->belongsTo(VocabLearningPath::class, 'learning_path_item_id');
     }
 
+    public function getNextReviewAttribute(){
+        return $this->last_study_date->addHours(SRSHelper::$LEVELS_INTERVAL[$this->nb_right]);
+    }
+
     public function getLastReviewDateAttribute()
     {
-        return max($this->writing_last_right_date, $this->meaning_last_right_date);
+        return $this->last_study_date;
     }
 
     public function getLevelAttribute()
     {
-        // Radicals don't have writings
-        if($this->vocabLearningPathItem->word_type_id == WordType::radical()->id){
-            return $this->meaning_right;
-        }
-
-        return min($this->writing_right, $this->meaning_right);
+        return $this->nb_right;
     }
 
 
@@ -56,8 +57,8 @@ class VocabLearningPathItemStats extends Model implements Learnable
         return 'Burned';
     }
 
-//    public function getAnswersAttribute()
-//    {
+    public function getAnswersAttribute()
+    {
 //        if($this->vocabLearningPathItem->word_type_id == WordType::radical()->id) {
 //            return array_map(function($meaning){
 //                return strtolower($meaning['meaning']);
@@ -68,7 +69,9 @@ class VocabLearningPathItemStats extends Model implements Learnable
 //                return strtolower($meaning['reading']);
 //            }, $this->vocabLearningPathItem->readings->toArray());
 //        }
-//    }
+        return $this->vocabLearningPathItem->answers;
+    }
+
     public function getObjectIdAttribute()
     {
         return $this->learning_path_item_id;

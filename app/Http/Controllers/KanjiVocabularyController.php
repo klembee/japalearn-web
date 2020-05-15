@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Helpers\SRSHelper;
 use App\Models\VocabLearningPath;
 use App\Models\VocabLearningPathItemStats;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class KanjiVocabularyController extends Controller
@@ -35,7 +36,17 @@ class KanjiVocabularyController extends Controller
         $itemsToLearn = $helper->toLearnAvailable();
         $itemsToReview = $helper->reviewsAvailable();
 
-        return view('app.kanji_vocabulary.index', compact('user', 'userLearnedKanas', 'itemsToLearn', 'itemsToReview', 'vocabUser'));
+        $nextWeekVocabReview = $user->info->information->getNextWeekVocabReviews();
+
+        error_log(Carbon::now()->format("Y-m-d H:i:m"));
+
+        return view('app.kanji_vocabulary.index', compact(
+            'user',
+            'userLearnedKanas',
+            'itemsToLearn',
+            'itemsToReview',
+            'vocabUser',
+            'nextWeekVocabReview'));
     }
 
 }

@@ -11,8 +11,10 @@ namespace App\Interfaces;
  */
 interface Learnable
 {
+    public function getNextReviewAttribute();
     public function getLastReviewDateAttribute();
     public function getLevelAttribute();
+    public function getAnswersAttribute();
 
     public function getHumanLevelAttribute();
 

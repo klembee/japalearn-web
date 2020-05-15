@@ -4,6 +4,7 @@
 namespace App\Models;
 
 
+use App\Helpers\SRSHelper;
 use App\Interfaces\Learnable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,7 +23,13 @@ class KanaLearningStats extends Model implements Learnable
         'last_review_date',
         'level',
         'human_level',
-        'object_id'
+        'object_id',
+        'next_review',
+        'answers'
+    ];
+
+    protected $dates = [
+        'last_review'
     ];
 
     public function student(){
@@ -48,8 +55,17 @@ class KanaLearningStats extends Model implements Learnable
         return "HAHA";
     }
 
+    public function getAnswersAttribute(){
+        return $this->kana->answers;
+    }
+
     public function getObjectIdAttribute()
     {
         return $this->kana_id;
+    }
+
+    public function getNextReviewAttribute()
+    {
+        return $this->last_review->addHours(SRSHelper::$LEVELS_INTERVAL[$this->number_right]);
     }
 }

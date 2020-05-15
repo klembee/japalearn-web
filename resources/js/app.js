@@ -51,6 +51,7 @@ Vue.component('CreateAuthorForm', require('./components/authors/CreateAuthorForm
 Vue.component('SubscriptionPage', require('./components/settings/subscriptions/SubscriptionPage.vue').default);
 Vue.component('Flash', require('./components/Flash.vue').default);
 Vue.component('UnsubscriptionForm', require('./components/stripe/UnsubscriptionForm.vue').default);
+Vue.component('ReviewForecast', require('./components/kanji_vocabulary/ReviewForecast.vue').default);
 
 /**
  * Material Design Components

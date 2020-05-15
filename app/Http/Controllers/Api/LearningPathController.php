@@ -222,13 +222,8 @@ class LearningPathController extends Controller
                         ->where('learning_path_item_id', $item->id)
                         ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
-                    if ($good['answer_type'] == "meaning") {
-                        $stat->meaning_right += 1;
-                        $stat->meaning_last_study_date = now();
-                    } else if ($good['answer_type'] == "reading") {
-                        $stat->writing_right += 1;
-                        $stat->writing_last_study_date = now();
-                    }
+                    $stat->nb_right += 1;
+                    $stat->last_study_date = now();
 
                     $stat->save();
                 } else {
@@ -237,13 +232,8 @@ class LearningPathController extends Controller
                     $stat->learning_path_item_id = $item->id;
                     $stat->student_info_id = $user->info->information->id;
 
-                    if ($good['answer_type'] == "meaning") {
-                        $stat->meaning_right = 1;
-                        $stat->meaning_last_study_date = now();
-                    } else if ($good['answer_type'] == "reading") {
-                        $stat->writing_right = 1;
-                        $stat->writing_last_study_date = now();
-                    }
+                    $stat->nb_right = 1;
+                    $stat->last_study_date = now();
 
                     $stat->save();
                 }
@@ -264,11 +254,7 @@ class LearningPathController extends Controller
                 ->where('learning_path_item_id', $item->id)
                 ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
-            if ($wrong['answer_type'] == "meaning") {
-                $stat->meaning_last_study_date = now();
-            } else if ($wrong['answer_type'] == "reading") {
-                $stat->writing_last_study_date = now();
-            }
+            $stat->last_study_date = now();
 
             $stat->save();
 

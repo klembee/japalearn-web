@@ -37,12 +37,14 @@
         <back-drop v-show="readyForLearn" title="Congratulations !">
             <template v-slot:actions>
                 <div v-if="hasItemsAfterReview">
-                    You did a great job ! Do you want to continue learning?
+                    <p>You did a great job ! Do you want to continue learning?</p>
+
                     <md-button @click="stopReview(true)" class="md-raised">Exit</md-button>
                     <md-button @click="stopReview()" class="md-raised">Continue with lessons</md-button>
                 </div>
                 <div v-else>
-                    You have no more items to learn.
+                    <p>You have no more items to learn.</p>
+
                     <md-button @click="stopReview(true)" class="md-raised">Exit</md-button>
                 </div>
             </template>
