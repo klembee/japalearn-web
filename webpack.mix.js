@@ -12,6 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css')
+    .version();
 
-mix.sass('node_modules/cropperjs/src/css/cropper.scss', 'public/css')
+mix.sass('node_modules/cropperjs/src/css/cropper.scss', 'public/css');
+
+
