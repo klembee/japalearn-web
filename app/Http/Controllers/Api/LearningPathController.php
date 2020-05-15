@@ -109,13 +109,15 @@ class LearningPathController extends Controller
         $examples = $request->input('examples');
         $meanings = $request->input('meanings');
         $readings = $request->input('readings');
+        $level = $request->input('level');
 
 
         try {
-            DB::transaction(function() use(&$item, $word, $wordTypeId, $mnemonic, $meanings, $readings, $examples){
+            DB::transaction(function() use(&$item, $word, $wordTypeId, $mnemonic, $meanings, $readings, $examples, $level){
                 $item->word = $word;
                 $item->word_type_id = $wordTypeId;
                 $item->meaning_mnemonic = $mnemonic;
+                $item->level = $level;
 
                 $item->examples()->delete();
                 foreach($examples as $example){

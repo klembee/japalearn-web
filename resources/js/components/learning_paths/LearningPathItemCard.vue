@@ -17,6 +17,12 @@
         <md-dialog class="update-dialog" :md-active.sync="showEditForm">
             <md-dialog-title>Editing {{itemProp.word}}</md-dialog-title>
             <md-dialog-content>
+
+                <md-field>
+                    <label>Level</label>
+                    <md-input v-model="update.level"></md-input>
+                </md-field>
+
                 <md-field>
                     <label>Word</label>
                     <md-input v-model="update.word"></md-input>
@@ -222,9 +228,8 @@
                     examples: this.update.examples,
                     meanings: this.update.meanings,
                     readings: this.update.readings,
+                    level: this.update.level
                 };
-
-                console.log(payload);
 
                 let self = this;
                 axios.post(this.updateEndpoint, payload)
@@ -273,6 +278,7 @@
             this.update.meaning_mnemonic = this.item.meaning_mnemonic;
             this.update.reading_mnemonic = this.item.reading_mnemonic;
             this.update.examples = this.item.examples;
+            this.update.level = this.item.level;
         }
     }
 </script>
