@@ -126,11 +126,10 @@
             },
             verifyAnswer(){
                 if(this.invalidAnswer()){
-                    console.log("invalid");
                     return false;
                 }
 
-                if(this.currentItem.answers.includes(this.answer.toLowerCase())){
+                if(this.answerIsCorrect()){
                     //Good answer
                     if(this.removeWrong || !this.wrong.includes(this.currentItem)) {
                         this.good.push(this.currentItem);
@@ -142,7 +141,6 @@
                     this.showAnswer = false
                 }else{
                     //Wrong answer
-                    console.log("WRONG!");
                     //Add the item at the end of the list
                     this.items.push(this.currentItem);
 
@@ -151,6 +149,8 @@
                     }
                     this.showAnswer = true
                 }
+
+                return true;
             },
             invalidAnswer(){
                 let empty = this.answer === "" || this.answer == null;
@@ -190,6 +190,35 @@
             },
             transformToKana(){
                 this.answer = toKana(this.answer)
+            },
+            answerIsCorrect(){
+                let allAnswersToCheck = [
+                    this.answer,
+                    this.answer.replace(' ', ''),
+                    this.answer.replace('-', ''),
+                    this.answer.replace('-', '').replace(' ', '')
+                ];
+
+                let rightAnswers = [];
+
+                this.currentItem.answers.forEach(rightAnswer => {
+                    rightAnswers.push(rightAnswer);
+                    rightAnswers.push(rightAnswer.replace(' ', ''));
+                    rightAnswers.push(rightAnswer.replace('-', ''));
+                    rightAnswers.push(rightAnswer.replace(' ', '').replace('-', ''));
+                });
+
+                var goodAnswer = false;
+
+                allAnswersToCheck.forEach(answer => {
+                    rightAnswers.forEach(rightAnswer => {
+                        if(answer.toLowerCase() === rightAnswer.toLowerCase()){
+                            goodAnswer =  true;
+                        }
+                    });
+                });
+
+                return goodAnswer;
             }
         },
         mounted() {
