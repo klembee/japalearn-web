@@ -6,9 +6,13 @@
 @section('content')
     <div>
         <div class="grammar-item-content">
-            <p>{!! $parsedContent !!}</p>
+            <div>{!! $parsedContent !!}</div>
+
+            <hr />
+            @if($item->questions->count() > 0)
+                <md-button href="{{route('study.grammar.review', $item)}}" class="md-primary md-raised">{{__('Practice')}}</md-button>
+            @endif
         </div>
 
-        <md-button href="#" class="md-primary md-raised">{{__('Go to exercises')}}</md-button>
     </div>
 @endsection

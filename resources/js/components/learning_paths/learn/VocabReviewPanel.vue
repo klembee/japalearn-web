@@ -235,7 +235,8 @@
                         meaning_mnemonic: item.meaning_mnemonic,
                         reading_mnemonic: item.reading_mnemonic,
                         readings: item.readings,
-                        word_type_id: item.word_type_id
+                        word_type_id: item.word_type_id,
+                        id: item.id,
                     })
                 }else{
                     this.items.push({
@@ -247,7 +248,8 @@
                         meaning_mnemonic: item.meaning_mnemonic,
                         reading_mnemonic: item.reading_mnemonic,
                         readings: item.readings,
-                        word_type_id: item.word_type_id
+                        word_type_id: item.word_type_id,
+                        id: item.id,
                     });
 
                     this.items.push({
@@ -259,7 +261,8 @@
                         meaning_mnemonic: item.meaning_mnemonic,
                         reading_mnemonic: item.reading_mnemonic,
                         readings: item.readings,
-                        word_type_id: item.word_type_id
+                        word_type_id: item.word_type_id,
+                        id: item.id,
                     });
                 }
             });

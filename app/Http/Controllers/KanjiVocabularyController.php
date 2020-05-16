@@ -38,8 +38,6 @@ class KanjiVocabularyController extends Controller
 
         $nextWeekVocabReview = $user->info->information->getNextWeekVocabReviews();
 
-        error_log(Carbon::now()->format("Y-m-d H:i:m"));
-
         return view('app.kanji_vocabulary.index', compact(
             'user',
             'userLearnedKanas',

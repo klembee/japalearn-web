@@ -4,6 +4,9 @@
 namespace App\Helpers;
 
 use App\Interfaces\Learnable;
+use App\Models\Kana;
+use App\Models\KanaLearningStats;
+use App\Models\VocabLearningPathItemStats;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -47,13 +50,9 @@ class SRSHelper
 
         foreach($this->objectUser as $item){
             if($this->itemNeedReview($item)){
-                $toReview[] = $item;
-            }
-        }
+                $toReview[] = $item[$item['object_id']];
 
-        $answers = [];
-        foreach($toReview as $item){
-            $answers[] = $item['answers'];
+            }
         }
 
         return $toReview;
@@ -84,18 +83,5 @@ class SRSHelper
 //        $unlearnedItems = $this->unlearnedItems();
 
         return array_splice($this->allObjects, 0, $nbItemsAvailable);
-    }
-
-    /**
-     * Get the objects that the users have not learned yet
-     * @return array
-     */
-    private function unlearnedItems(){
-        // Get the indices of the objects the user learned
-        $itemsLearnedIndices = array_column($this->objectUser, 'object_id');
-
-        return array_filter($this->allObjects, function($item) use ($itemsLearnedIndices){
-            return !in_array($item['id'], $itemsLearnedIndices);
-        });
     }
 }

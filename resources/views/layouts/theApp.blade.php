@@ -48,9 +48,11 @@
 {{--        ></chat>--}}
 
         <!-- Snack Bar flash messages -->
-        @if(Session::has('message'))
-            <flash message="{{Session::get('message')}}"></flash>
-        @endif
+{{--        @if(Session::has('error'))--}}
+{{--            <flash--}}
+{{--                message="{{Session::get('message')}}"--}}
+{{--                type="error"></flash>--}}
+{{--        @endif--}}
     </div>
 
 </body>

@@ -32,4 +32,30 @@ class GrammarController extends Controller
 
         return view('app.grammar.learn', compact('item', 'parsedContent'));
     }
+
+    public function review(Request $request, GrammarLearningPathItem $grammarlesson){
+
+        $questions = $grammarlesson->questions()->with('answers')->get()->toArray();
+
+        if(count($questions) == 0){
+            $request->session()->flash('error', "This grammar lesson doesn't have any questions yet !");
+            return redirect()->route('grammar.learn', $grammarlesson);
+        }
+
+        $nextLessonId = $grammarlesson->id + 1;
+        $nextLessonModel = GrammarLearningPathItem::query()->where('id', $nextLessonId);
+        $nextLesson = null;
+
+        if($nextLessonModel->exists()){
+            $nextLesson = $nextLessonModel->first();
+        }
+
+        shuffle($questions);
+        $questions = array_map(function($question){
+            $question['answers'] = array_column($question['answers'], 'answer');
+            return $question;
+        }, $questions);
+
+        return view('app.study.grammar_exercise', compact('grammarlesson', 'questions', 'nextLesson'));
+    }
 }

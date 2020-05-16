@@ -137,5 +137,8 @@ Route::middleware('auth')->group(function(){
         Route::get('vocabulary_lesson', "VocabularyStudyController@vocabularyLesson")->name('vocab.lesson');
         Route::get('vocabulary_review', 'VocabularyStudyController@vocabularyReview')->name('vocab.review');
 
+        // Grammar
+        Route::get('grammar_lesson/{grammarlesson}', "GrammarController@review")->name('grammar.review');
+
     });
 });

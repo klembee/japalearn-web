@@ -36,6 +36,15 @@ class VocabLearningPath extends Model
         return $this->hasMany(VocabLearningPathExample::class, "vocab_learning_path_item_id");
     }
 
+    public function radicals(){
+        if($this->word_type_id != WordType::kanji()->id){
+            error_log("Trying to get radicals of non kanji item");
+            return $this->newQuery();
+        }
+
+        return $this->belongsToMany(Radical::class, 'kanji_radical', 'kanji_id', 'radical_id');
+    }
+
     public function getAnswersAttribute(){
         if($this->word_type_id == WordType::radical()->id){
             return $this->meanings->pluck('meaning');

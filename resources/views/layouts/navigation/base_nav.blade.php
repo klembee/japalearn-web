@@ -19,8 +19,8 @@
 </md-list-item>
 
 <!-- Log Out link -->
-<md-list-item href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+<md-list-item href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
     <md-icon>exit_to_app</md-icon>
     <span class="md-list-item-text">{{__('Log Out')}}</span>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
 </md-list-item>

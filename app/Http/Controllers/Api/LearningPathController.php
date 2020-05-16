@@ -245,15 +245,17 @@ class LearningPathController extends Controller
 
         }
 
+        error_log(count($wrongItems));
+
         // Go Through each items that the user got wrong and update the study date to now
         foreach($wrongItems as $wrong) {
-            $word = $wrong['question'];
-            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
-                return $query->where('word', $word);
-            })->get();
+//            $word = $wrong['question'];
+//            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
+//                return $query->where('word', $word);
+//            })->get();
 
             $stat = VocabLearningPathItemStats::query()
-                ->where('learning_path_item_id', $item->id)
+                ->where('learning_path_item_id', $wrong['id'])
                 ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
             $stat->last_study_date = now();

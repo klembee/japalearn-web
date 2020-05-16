@@ -61,7 +61,7 @@ class KanaLearningStats extends Model implements Learnable
 
     public function getObjectIdAttribute()
     {
-        return $this->kana_id;
+        return "kana";
     }
 
     public function getNextReviewAttribute()

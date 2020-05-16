@@ -74,6 +74,6 @@ class VocabLearningPathItemStats extends Model implements Learnable
 
     public function getObjectIdAttribute()
     {
-        return $this->learning_path_item_id;
+        return "vocab_learning_path_item";
     }
 }

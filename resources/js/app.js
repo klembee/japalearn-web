@@ -24,7 +24,7 @@ window._ = require('lodash');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('student-invitation-dialog', require('./components/teachers/StudentInvitationDialog').default);
-Vue.component('flash', require('./components/FlashSnackBar').default);
+// Vue.component('flash', require('./components/FlashSnackBar').default);
 Vue.component('dictionary', require('./components/dictionary/Dictionary.vue').default);
 Vue.component('chat', require('./components/messages/Chat.vue').default);
 Vue.component('study-page', require('./components/study/StudyPage.vue').default);
@@ -52,6 +52,7 @@ Vue.component('SubscriptionPage', require('./components/settings/subscriptions/S
 Vue.component('Flash', require('./components/Flash.vue').default);
 Vue.component('UnsubscriptionForm', require('./components/stripe/UnsubscriptionForm.vue').default);
 Vue.component('ReviewForecast', require('./components/kanji_vocabulary/ReviewForecast.vue').default);
+Vue.component('GrammarReviews', require('./components/grammar/GrammarReviews.vue').default);
 
 /**
  * Material Design Components
