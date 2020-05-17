@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Number of level up per day this month</h3>
+        <h3>Number of items learned this month</h3>
         <div>
             <canvas id="chart" width="400" height="300"></canvas>
         </div>
@@ -42,12 +42,35 @@
                     data: {
                         labels: Object.keys(this.graphData),
                         datasets: [{
-                            label: "asdf",
+                            label: "Items learned",
                             data: Object.values(this.graphData),
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
+                            borderColor: 'rgba(50, 82, 89, 1)',
+                            backgroundColor: 'rgba(153,208,242,0.27)',
+                            hoverBackgroundColor: 'rgba(153,208,242,0.40)',
+                            borderWidth: 3,
+                            pointBorderWidth: 4,
+                            pointHoverBorderWidth: 10,
+                            borderJoinStyle: 'round',
+                            lineTension: 0.1,
+                            yAxisID: 'y-axis'
                         }],
-
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [
+                                {
+                                    id: 'y-axis',
+                                    type: 'linear',
+                                    ticks: {
+                                        min: 0,
+                                        stepSize: 2
+                                    }
+                                }
+                            ]
+                        }
                     }
                 })
             }

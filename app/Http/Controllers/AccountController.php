@@ -114,6 +114,7 @@ class AccountController extends Controller
         $paymentMethods = $user->paymentMethods()->toarray();
 
         $stripeIntent = $request->user()->createSetupIntent()->client_secret;
+
         return view('app.account.settings.payment', compact('paymentMethods', 'stripeIntent'));
     }
 
@@ -147,8 +148,10 @@ class AccountController extends Controller
 
         $stripeIntent = $request->user()->createSetupIntent()->client_secret;
         $currentlySubscribed = $user->subscribed('default');
-        $subscriptionId = $user->subscription('default')->stripe_id;
-        $subscription = Subscription::retrieve($subscriptionId);
+        if($currentlySubscribed) {
+            $subscriptionId = $user->subscription('default')->stripe_id;
+            $subscription = Subscription::retrieve($subscriptionId);
+        }
 
         return view("app.account.settings.subscription", compact(
             'monthlyPlan',

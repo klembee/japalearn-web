@@ -7,10 +7,32 @@
                 <label>Card holder's name</label>
                 <md-input v-model="cardHolderName"></md-input>
             </md-field>
+
+            <md-field>
+                <label>Street address</label>
+                <md-input v-model="streetAddress"></md-input>
+            </md-field>
+
+            <md-field>
+                <label>City</label>
+                <md-input v-model="city"></md-input>
+            </md-field>
+
+            <md-field>
+                <label>Province</label>
+                <md-input v-model="province"></md-input>
+            </md-field>
+
+            <md-field>
+                <label>Country</label>
+                <md-select v-model="country">
+                    <md-option value="CA">Canada</md-option>
+                </md-select>
+            </md-field>
         </div>
 
-        <md-button class="md-raised md-primary" @click="addMethod" id="card-button">
-            Update Payment Method
+        <md-button class="md-raised md-accent" @click="addMethod" id="card-button">
+            Add Payment Method
         </md-button>
     </div>
 </template>
@@ -19,6 +41,10 @@
     export default {
         name: "NewPaymentMethodForm",
         props: {
+            userEmail: {
+                type: String,
+                required: true
+            },
             stripeKey: {
                 type: String,
                 required: true
@@ -41,7 +67,27 @@
                   stripe: {},
                   elements: {},
                   cardElement: {},
-                  cardHolderName: ""
+                  cardHolderName: "",
+                  streetAddress: "",
+                  city: "",
+                  zipcode: "",
+                  province: "",
+                  country: "CA",
+                  style:{
+                      base: {
+                          color: '#32325d',
+                          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                          fontSmoothing: 'antialiased',
+                          fontSize: '16px',
+                          '::placeholder': {
+                              color: '#aab7c4'
+                          }
+                      },
+                      invalid: {
+                          color: '#fa755a',
+                          iconColor: '#fa755a'
+                      }
+                  }
               }
         },
         methods: {
@@ -56,14 +102,23 @@
                         payment_method: {
                             card: this.cardElement,
                             billing_details: {
-                                name: this.cardHolderName
+                                name: this.cardHolderName,
+                                email: this.userEmail,
+                                address: {
+                                    city: this.city,
+                                    country: this.country,
+                                    line1: this.streetAddress,
+                                    // postal_code: this.zipcode,
+                                    state: this.province,
+                                },
                             }
                         }
                     }
                 ).then(function(response){
                     if(response.setupIntent){
                         let payload = {
-                            payment: response.setupIntent.payment_method
+                            payment: response.setupIntent.payment_method,
+
                         };
 
                         axios.post(self.saveMethodEndpoint, payload)
@@ -81,10 +136,11 @@
                                 }
                             })
                             .catch(function(error){
+                                console.log(error);
                                 toastr.error("Error while saving payment method.");
                             })
                     }else{
-                        toastr.error("Failed to add payment method.");
+                        toastr.error("You need to fill your address information !");
                     }
 
 
@@ -96,7 +152,7 @@
         mounted() {
             this.stripe = Stripe(this.stripeKey);
             this.elements = this.stripe.elements();
-            this.cardElement = this.elements.create('card');
+            this.cardElement = this.elements.create('card', {style: this.style});
 
             this.mountStripeElements();
         }

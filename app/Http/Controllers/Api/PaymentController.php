@@ -113,7 +113,7 @@ class PaymentController extends Controller
         }
 
         if ($user->subscribed('default')) {
-            $user->subscription()->cancel();
+            $user->subscription('default')->cancel();
         } else {
             return response()->json([
                 'success' => false,

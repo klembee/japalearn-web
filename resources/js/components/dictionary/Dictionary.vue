@@ -80,7 +80,9 @@
             },
             userVocabularyProp: {
                 type: Array,
-                default: []
+                default: function(){
+                    return []
+                }
             },
             isStudent: {
                 type: Boolean,

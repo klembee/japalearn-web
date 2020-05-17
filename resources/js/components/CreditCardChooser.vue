@@ -31,6 +31,7 @@
             <md-tab id="new-card" md-label="New card">
                 <h3>New payment method</h3>
                 <new-payment-method-form
+                    :user-email="userEmail"
                     :save-method-endpoint="saveMethodEndpoint"
                     :stripe-key="stripeKey"
                     :client-secret="clientSecret"
@@ -49,6 +50,10 @@
     export default {
         name: "CreditCardChooser",
         props:{
+            userEmail: {
+                type: String,
+                required: true
+            },
             creditCards: {
                 type: Array
             },

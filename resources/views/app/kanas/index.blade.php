@@ -18,7 +18,11 @@
                 <p class="h3">{{count($itemsToLearn)}}</p>
             </md-card-content>
             <md-card-actions>
-                <md-button href="{{route('study.kana.lesson')}}">{{__('Learn')}}</md-button>
+                @if(count($itemsToLearn) > 0)
+                    <md-button href="{{route('study.kana.lesson')}}" class="md-raised md-accent">{{__('Learn')}}</md-button>
+                @else
+                    <md-button disabled class="md-raised md-accent">{{__('Learn')}}</md-button>
+                @endif
             </md-card-actions>
         </md-card>
         <md-card class="col-md-3 col-12">
@@ -29,7 +33,11 @@
                 <p class="h3">{{count($itemsToReview)}}</p>
             </md-card-content>
             <md-card-actions>
-                <md-button href="{{route('study.kana.review')}}">{{__('Review')}}</md-button>
+                @if(count($itemsToReview) > 0)
+                    <md-button href="{{route('study.kana.review')}}" class="md-raised md-accent">{{__('Review')}}</md-button>
+                @else
+                    <md-button disabled class="md-raised md-accent">{{__('Review')}}</md-button>
+                @endif
             </md-card-actions>
         </md-card>
     </div>

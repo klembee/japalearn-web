@@ -38,11 +38,17 @@
         @endif
 
         <!-- New Payment Method form -->
-        <h3>New payment method</h3>
-        <new-payment-method-form
-            save-method-endpoint="{{route('api.payment.add-payment-method')}}"
-            stripe-key="{{env('STRIPE_KEY')}}"
-            client-secret="{{$stripeIntent}}"
-        ></new-payment-method-form>
+        <div class="row">
+            <div class="col-6">
+                <h3>New payment method</h3>
+                <new-payment-method-form
+                    user-email="{{Auth::user()->email}}"
+                    save-method-endpoint="{{route('api.payment.add-payment-method')}}"
+                    stripe-key="{{env('STRIPE_KEY')}}"
+                    client-secret="{{$stripeIntent}}"
+                ></new-payment-method-form>
+            </div>
+        </div>
+
     </md-content>
 @endsection

@@ -25,7 +25,11 @@
                             <p class="h3">{{count($itemsToLearn)}}</p>
                         </md-card-content>
                         <md-card-actions>
-                            <md-button href="{{route('study.vocab.lesson')}}">{{__('Learn')}}</md-button>
+                            @if(count($itemsToLearn) > 0)
+                                <md-button href="{{route('study.vocab.lesson')}}" class="md-raised md-accent">{{__('Learn')}}</md-button>
+                            @else
+                                <md-button disabled class="md-raised md-accent">{{__('Learn')}}</md-button>
+                            @endif
                         </md-card-actions>
                     </md-card>
 
@@ -37,7 +41,11 @@
                             <p class="h3">{{count($itemsToReview)}}</p>
                         </md-card-content>
                         <md-card-actions>
-                            <md-button href="{{route('study.vocab.review')}}">{{__('Study')}}</md-button>
+                            @if(count($itemsToReview))
+                                <md-button href="{{route('study.vocab.review')}}" class="md-raised md-accent">{{__('Study')}}</md-button>
+                            @else
+                                <md-button disabled class="md-raised md-accent">{{__('Study')}}</md-button>
+                            @endif
                         </md-card-actions>
                     </md-card>
                 </div>

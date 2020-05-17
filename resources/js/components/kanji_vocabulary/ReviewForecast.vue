@@ -1,6 +1,7 @@
 <template>
     <div class="accordion" id="accordion">
         <review-forecast-item
+            :day="getMomentDay(0)"
             :week-day="getWeekDay(0)"
             :hours="days[0]"
             id="zero"
@@ -8,6 +9,7 @@
         </review-forecast-item>
 
         <review-forecast-item
+            :day="getMomentDay(1)"
             :week-day="getWeekDay(1)"
             :hours="days[1]"
             id="one"
@@ -15,6 +17,7 @@
         </review-forecast-item>
 
         <review-forecast-item
+            :day="getMomentDay(2)"
             :week-day="getWeekDay(2)"
             :hours="days[2]"
             id="two"
@@ -22,6 +25,7 @@
         </review-forecast-item>
 
         <review-forecast-item
+            :day="getMomentDay(3)"
             :week-day="getWeekDay(3)"
             :hours="days[3]"
             id="three"
@@ -29,6 +33,7 @@
         </review-forecast-item>
 
         <review-forecast-item
+            :day="getMomentDay(4)"
             :week-day="getWeekDay(4)"
             :hours="days[4]"
             id="four"
@@ -36,6 +41,7 @@
         </review-forecast-item>
 
         <review-forecast-item
+            :day="getMomentDay(5)"
             :week-day="getWeekDay(5)"
             :hours="days[5]"
             id="five"
@@ -43,6 +49,7 @@
         </review-forecast-item>
 
         <review-forecast-item
+            :day="getMomentDay(6)"
             :week-day="getWeekDay(6)"
             :hours="days[6]"
             id="six"
@@ -69,6 +76,11 @@
             }
         },
         methods: {
+            getMomentDay(n){
+                let today = moment();
+                let nDays = today.add(n, 'days');
+                return nDays;
+            },
             getDay(n){
                 let today = moment();
                 let nDays = today.add(n, 'days').format("YYYY-MM-DD");

@@ -65,8 +65,10 @@
 
         <div v-if="selectedPlan">
             <h2>Payment</h2>
-            <p>How do you want to pay ?</p>
+            <p class="h3">How do you want to pay ?</p>
+
             <credit-card-chooser
+                :user-email="userEmail"
                 :credit-cards="creditCards"
                 :amount="selectedPlan.amount"
                 :save-method-endpoint="saveMethodEndpoint"
@@ -92,6 +94,10 @@
         name: "SubscriptionPage",
         components: {CreditCardChooser},
         props: {
+            userEmail: {
+                type: String,
+                required: true
+            },
             subscribeEndpoint: {
                 type: String,
                 required: true

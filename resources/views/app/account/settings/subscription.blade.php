@@ -28,15 +28,26 @@
             </tr>
             <tr>
                 <td>Next payment date</td>
-                <td>{{\Carbon\Carbon::createFromTimestamp($subscription['current_period_end'])->format("Y-m-d")}}</td>
+                @if($subscription['cancel_at_period_end'])
+                    <td>Canceled</td>
+                @else
+                    <td>{{\Carbon\Carbon::createFromTimestamp($subscription['current_period_end'])->format("Y-m-d")}}</td>
+                @endif
             </tr>
         </table>
-        <md-button href="{{route('account.unsubscribe')}}" class="md-primary md-raised">{{__('Cancel subscription')}}</md-button>
+        @if(!$subscription['cancel_at_period_end'])
+            <md-button href="{{route('account.unsubscribe')}}" class="md-primary md-raised">{{__('Cancel subscription')}}</md-button>
+        @else
+            <div class="alert alert-danger">
+                Your subscription will end on {{\Carbon\Carbon::createFromTimestamp($subscription['current_period_end'])->format("Y-m-d")}}. You will not be charged again.
+            </div>
+        @endif
 {{--        <pre>--}}
 {{--            {{print_r($subscription, true)}}--}}
 {{--        </pre>--}}
     @else
         <subscription-page
+            user-email="{{Auth::user()->email}}"
             subscribe-endpoint="{{route('api.payment.subscribe')}}"
             redirect-url="{{route('dashboard')}}"
             :month="{{json_encode($monthlyPlan)}}"
