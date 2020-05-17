@@ -53,6 +53,7 @@ Vue.component('Flash', require('./components/Flash.vue').default);
 Vue.component('UnsubscriptionForm', require('./components/stripe/UnsubscriptionForm.vue').default);
 Vue.component('ReviewForecast', require('./components/kanji_vocabulary/ReviewForecast.vue').default);
 Vue.component('GrammarReviews', require('./components/grammar/GrammarReviews.vue').default);
+Vue.component('LatestActivityWidget', require('./components/dashboard/LatestActivityWidget.vue').default);
 
 /**
  * Material Design Components
@@ -80,6 +81,7 @@ import {MdApp,
     MdRipple,
     MdSubheader,
     MdTooltip,
+    MdEmptyState,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -105,6 +107,7 @@ Vue.use(MdSwitch);
 Vue.use(MdRipple);
 Vue.use(MdSubheader);
 Vue.use(MdTooltip);
+Vue.use(MdEmptyState);
 
 
 import { BootstrapVue } from 'bootstrap-vue'

@@ -11,7 +11,7 @@
 
     <vocab-review-window
         update-levels-endpoint="{{route('api.learning_path.kanji.items.review.update_level')}}"
-        dashboard-url="{{route('dashboard')}}"
+        dashboard-url="{{route('kanji_vocabulary.index')}}"
         :reviews="{{$reviews}}"
     >
 

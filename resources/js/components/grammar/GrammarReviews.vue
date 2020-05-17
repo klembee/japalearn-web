@@ -1,7 +1,7 @@
 <template>
     <div class="review-content">
         <div>
-            <p class="question">{{question.question}}</p>
+            <div class="question" v-html="formatedQuestion"></div>
             <md-field :class="{error: showInvalid, animate__headShake: showInvalid || showWrongAnswer}" class="animate__animated">
                 <label for="answer">Answer</label>
                 <md-input  v-on:keyup.enter="submitAnswer" id="answer" v-model="answer"/>
@@ -10,15 +10,19 @@
                 </md-button>
             </md-field>
             <md-button v-show="gotWrongAnswer" @click="showAnswers = !showAnswers" class="md-accent md-raised">Show answer</md-button>
-            <div v-show="showAnswers">
+            <div v-show="showAnswers" class="answers">
+                <h2>Answer: </h2>
                 <ul>
                     <li v-for="answer in question.answers" :key="answer">
                         {{answer}}
                     </li>
                 </ul>
+                <hr />
                 <div v-if="question.indication">
                     <h2>Indication: </h2>
-                    <p>{{question.indication}}</p>
+                    <p v-html="formatedIndication" class="indication-text">
+
+                    </p>
                 </div>
 
             </div>
@@ -44,6 +48,7 @@
 
 <script>
     import BackDrop from "../BackDrop";
+    import Marked from "marked"
     export default {
         name: "GrammarReviews",
         components: {BackDrop},
@@ -74,6 +79,15 @@
         computed: {
             question(){
                 return this.questions[this.currentQuestion];
+            },
+            formatedQuestion(){
+                return Marked(this.question.question);
+            },
+            formatedIndication(){
+                if(this.question.indication){
+                    return Marked(this.question.indication);
+                }
+                return "";
             },
             hasNextQuestion(){
                 return this.currentQuestion + 1 <= 5;
@@ -136,5 +150,21 @@
     .question{
         font-size:2.0em;
         text-align:center;
+    }
+    /deep/ .question img {
+        max-height:500px;
+    }
+
+    .answers {
+        padding: 15px;
+        background-color: #f7f7f7;
+        border: 1px solid #325259;
+        border-radius: 10px;
+        margin-top:15px;
+    }
+
+    .indication-text{
+        margin-left: 20px;
+        margin-top: 10px;
     }
 </style>

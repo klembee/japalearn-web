@@ -1,9 +1,9 @@
 <template>
-    <md-content>
-        <md-toolbar>
+    <md-content class="dictionary md-elevation-3">
+        <md-toolbar class="md-elevation-0">
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
-                    <h3 class="md-title">Search for a word</h3>
+                    <h3 class="md-title">Japanese dictionary</h3>
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-field class="mr-2">
@@ -12,6 +12,7 @@
                     </md-field>
                 </div>
             </div>
+
             <div class="md-toolbar-row">
                 <md-switch @change="search()" v-model="convertToHiragana">Convert to hiragana</md-switch>
                 <md-field>
@@ -26,32 +27,42 @@
         </md-toolbar>
 
         <!-- Result -->
-        <p v-if="lastQuery" class="result_for_indication">Results for: {{lastQuery}}</p>
-        <md-table class="dictionary mt-2">
-            <md-table-row v-for="result in results" :key="result.id">
-                <md-table-cell>
-                    <p class="dictionary-word"><ruby>{{result.word}}<rt>{{result.writings[0].writing}}</rt></rt></ruby></p>
-                </md-table-cell>
-                <md-table-cell>
-                    <div class="md-list-item-text">
-                        <!-- Meanings -->
-                        <p><b>{{result.meanings.map(meaning => meaning.meaning).slice(0, 4).join(", ")}}</b></p>
+        <div class="results" v-if="lastQuery">
+            <p class="result_for_indication">Results for: {{lastQuery}}</p>
+            <md-table class="mt-2">
+                <md-table-row v-for="result in results" :key="result.id">
+                    <md-table-cell>
+                        <p class="dictionary-word"><ruby>{{result.word}}<rt>{{result.writings[0].writing}}</rt></rt></ruby></p>
+                    </md-table-cell>
+                    <md-table-cell>
+                        <div class="md-list-item-text">
+                            <!-- Meanings -->
+                            <p><b>{{result.meanings.map(meaning => meaning.meaning).slice(0, 4).join(", ")}}</b></p>
 
-                        <!-- Part of speech -->
-                        <p>{{result.pos.map(pos => pos.pos).join(", ")}}</p>
-                    </div>
-                </md-table-cell>
-                <md-table-cell v-if="isStudent">
+                            <!-- Part of speech -->
+                            <p>{{result.pos.map(pos => pos.pos).join(", ")}}</p>
+                        </div>
+                    </md-table-cell>
+                    <md-table-cell v-if="isStudent">
 
-                    <md-button v-if="inUserVocab(result)">
-                        <md-icon>check</md-icon>
-                    </md-button>
-                    <md-button v-else @click="addToList(result)">
-                        <md-icon>add_box</md-icon>
-                    </md-button>
-                </md-table-cell>
-            </md-table-row>
-        </md-table>
+                        <md-button v-if="inUserVocab(result)">
+                            <md-icon>check</md-icon>
+                        </md-button>
+                        <md-button v-else @click="addToList(result)">
+                            <md-icon>add_box</md-icon>
+                        </md-button>
+                    </md-table-cell>
+                </md-table-row>
+            </md-table>
+        </div>
+        <div v-else>
+            <md-empty-state
+                md-icon="search"
+                md-label="Search a word"
+                md-description="Search a word in the search bar to get the meanings and readings">
+            </md-empty-state>
+        </div>
+
     </md-content>
 </template>
 
@@ -163,6 +174,16 @@
     .result_for_indication{
         font-size: 1.3em;
         margin-top: 20px;
+    }
+
+    .results{
+        padding-left: 20px;
+        padding-bottom: 20px;
+        padding-right: 20px;
+    }
+
+    .dictionary{
+        border: 1px solid #c5c5c5;
     }
 
     /deep/ .md-table-content table{

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
          $this->call(KanaSeeder::class);
          $this->call(GrammarCategorySeeder::class);
          $this->call(RadicalsSeeder::class);
+         $this->call(ActivityTypeSeeder::class);
     }
 }

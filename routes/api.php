@@ -40,6 +40,7 @@ Route::middleware('auth:api')->name('api.')->group(function(){
 
     Route::name('dashboard.')->prefix('dashboard')->group(function(){
         Route::get('vocabSizePerDayThisMonth', 'Api\DashboardController@vocabSizePerDayThisMonth')->name('vocab_size');
+        Route::get('latest_activity', 'Api\DashboardController@latestActivity')->name('latest_activity');
     });
 
     Route::name('learning_path.')->prefix('learning_path')->group(function(){

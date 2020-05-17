@@ -28,6 +28,10 @@ class StudentInfo extends Model
         return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'grammar_item_id','student_info_id');
     }
 
+    public function activity(){
+        return $this->hasMany(StudentActivity::class);
+    }
+
     /**
      * Get the date and time that the user will have
      * reviews for the next week. It is used to the review forecast component

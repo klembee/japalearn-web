@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityType;
+use App\Models\StudentActivity;
 use App\Models\VocabLearningPath;
 use App\Models\VocabLearningPathExample;
 use App\Models\VocabLearningPathItemStats;
@@ -206,6 +208,9 @@ class LearningPathController extends Controller
         $goodItems = $request->input('good');
         $wrongItems = $request->input('wrong');
 
+        $nbNewlyLearnedItems = 0;
+        $nbReviewedItems = 0;
+
         // Go through each items that the user got right and increase the level
         foreach($goodItems as $good){
             $word = $good['question'];
@@ -228,6 +233,7 @@ class LearningPathController extends Controller
                     $stat->last_study_date = now();
 
                     $stat->save();
+                    $nbReviewedItems += 1;
                 } else {
                     // Create new item stat
                     $stat = new VocabLearningPathItemStats;
@@ -238,14 +244,30 @@ class LearningPathController extends Controller
                     $stat->last_study_date = now();
 
                     $stat->save();
+                    $nbNewlyLearnedItems += 1;
                 }
             }catch (\Exception $e){
                 error_log($e->getMessage());
             }
-
         }
 
-        error_log(count($wrongItems));
+        $studentInformation = $user->info->information;
+        if($nbReviewedItems > 0){
+            $studentActivity = new StudentActivity([
+                'nb_items' => $nbReviewedItems
+            ]);
+            $studentActivity->student_info_id = $studentInformation->id;
+            $studentActivity->activity_type_id = ActivityType::kanjiReviewed()->id;
+            $studentActivity->save();
+        }
+        if($nbNewlyLearnedItems > 0){
+            $studentActivity = new StudentActivity([
+                'nb_items' => $nbNewlyLearnedItems
+            ]);
+            $studentActivity->student_info_id = $studentInformation->id;
+            $studentActivity->activity_type_id = ActivityType::kanjiLearned()->id;
+            $studentActivity->save();
+        }
 
         // Go Through each items that the user got wrong and update the study date to now
         foreach($wrongItems as $wrong) {

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityType;
 use App\Models\Kana;
 use App\Models\KanaLearningStats;
+use App\Models\StudentActivity;
 use Illuminate\Http\Request;
 
 class KanaLearningPathController extends Controller
@@ -57,6 +59,9 @@ class KanaLearningPathController extends Controller
 
         $studentInformation = $user->info->information;
 
+        $nbNewlyLearned = 0;
+        $nbLevelUpped = 0;
+
         foreach($request->input('good') as $good){
             $alreadyLearnedId = $studentInformation->kanaLearningPathStats->pluck('kana_id');
 
@@ -70,6 +75,8 @@ class KanaLearningPathController extends Controller
                 $stat->last_review = now();
                 $stat->save();
 
+                $nbLevelUpped += 1;
+
             } else {
                 // Set the level to 1
                 $stat = new KanaLearningStats([
@@ -79,8 +86,28 @@ class KanaLearningPathController extends Controller
                     'last_review' => now()
                 ]);
                 $stat->save();
+                $nbNewlyLearned += 1;
             }
         }
+
+        // Add the number of good item to the student activity
+        if($nbNewlyLearned > 0){
+            $studentActivity = new StudentActivity([
+                'nb_items' => $nbNewlyLearned
+            ]);
+            $studentActivity->student_info_id = $studentInformation->id;
+            $studentActivity->activity_type_id = ActivityType::kanaLearned()->id;
+            $studentActivity->save();
+        }
+        if($nbLevelUpped > 0){
+            $studentActivity = new StudentActivity([
+                'nb_items' => $nbLevelUpped
+            ]);
+            $studentActivity->student_info_id = $studentInformation->id;
+            $studentActivity->activity_type_id = ActivityType::kanaReviewed()->id;
+            $studentActivity->save();
+        }
+
 
         foreach($request->input('wrong') as $wrong){
             $alreadyLearnedId = $studentInformation->kanaLearningPathStats->pluck('kana_id');

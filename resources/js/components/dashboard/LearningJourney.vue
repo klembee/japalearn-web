@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="learning-journey-item-divisor">
+            <div class="learning-journey-item-divisor d-none d-md-block">
 
             </div>
 
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="learning-journey-item-divisor">
+            <div class="learning-journey-item-divisor d-none d-sm-block">
 
             </div>
 

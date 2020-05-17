@@ -19,6 +19,7 @@
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 @import "components/_components";
+@import "utils";
 @import "~toastr/toastr";
 
 .clickable{

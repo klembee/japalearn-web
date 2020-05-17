@@ -47,4 +47,13 @@ class DashboardController extends Controller
         return $vocabSizePerDay;
     }
 
+    public function latestActivity(Request $request){
+        $user = $request->user();
+
+        return response()->json([
+            'success' => true,
+            'activity' => $user->info->information->activity()->orderBy('created_at', 'desc')->limit(5)->get()
+        ]);
+    }
+
 }

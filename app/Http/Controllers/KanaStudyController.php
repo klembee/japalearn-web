@@ -31,7 +31,7 @@ class KanaStudyController extends Controller
         $itemsBeforeReviews = 5;
         if(count($itemsToLearn) == 0){
             // No items to learn, redirect to dashboard
-            return redirect()->route('dashboard');
+            return redirect()->route('kanas.index');
         }
 
         $items_chunk = array_chunk($itemsToLearn, $itemsBeforeReviews, false);
