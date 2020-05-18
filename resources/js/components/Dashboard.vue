@@ -1,7 +1,7 @@
 <template>
     <md-app style="min-height: 100vh;">
         <md-app-toolbar class="md-primary">
-            <md-button class="md-icon-button d-xl-none" @click="showNavigation = !showNavigation">
+            <md-button class="md-icon-button d-lg-none" @click="showNavigation = !showNavigation">
                 <md-icon>menu</md-icon>
             </md-button>
             <span class="md-title">
