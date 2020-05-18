@@ -1,7 +1,7 @@
 <template>
     <md-app style="min-height: 100vh;">
         <md-app-toolbar class="md-primary">
-            <md-button class="md-icon-button d-lg-none" @click="showNavigation = !showNavigation">
+            <md-button class="md-icon-button" v-if="!isLargeScreen" @click="showNavigation = !showNavigation">
                 <md-icon>menu</md-icon>
             </md-button>
             <span class="md-title">
@@ -56,7 +56,7 @@
         },
         mounted() {
             let screenWidth = screen.width;
-            if(screenWidth >= 1200){
+            if(screenWidth > 1366){
                 this.isLargeScreen = true
             }
         }
