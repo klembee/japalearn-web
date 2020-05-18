@@ -20,7 +20,7 @@
                     </md-field>
 
                     <image-selector
-                        :aspect-ratio="51/16"
+                        :aspect-ratio="16/9"
                         @image-changed="imageChanged">
 
                     </image-selector>
