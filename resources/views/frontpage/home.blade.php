@@ -93,7 +93,7 @@
     <div class="section3 section">
         <div class="content">
             <div class="text">
-                <h2>Learn by reading, speaking ans listening</h2>
+                <h2>Learn by reading, speaking and listening</h2>
                 <p>Here at <b>JapaLearn</b> we believe that to learn faster your have to immerse yourself in the <b>language</b>.</p>
                 <p>We do not only teach the <b>kanjis</b> and vocabulary. Instead, we propose multiple study material.</p>
 
