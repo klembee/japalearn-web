@@ -3,14 +3,14 @@
     {{__('Learn hiragana and katakana')}}
 @endsection
 
-@section('toolbar_right')
-    <md-button href="{{route('study.kana.lesson')}}">{{__('Start learning !')}}</md-button>
-@endsection
+{{--@section('toolbar_right')--}}
+{{--    <md-button href="{{route('study.kana.lesson')}}">{{__('Start learning !')}}</md-button>--}}
+{{--@endsection--}}
 
 @section('content')
 
     <div class="row">
-        <md-card class="col-md-3 col-12">
+        <md-card class="col-lg-3 col-md-4 col-12 mb-3 mb-md-0 ml-0 ml-md-4">
             <md-card-header>
                 <h1>{{__('Items to learn')}}</h1>
             </md-card-header>
@@ -25,7 +25,7 @@
                 @endif
             </md-card-actions>
         </md-card>
-        <md-card class="col-md-3 col-12">
+        <md-card class="col-lg-3 col-md-4 col-12 ml-0">
             <md-card-header>
                 <h1>{{__('Items to review')}}</h1>
             </md-card-header>

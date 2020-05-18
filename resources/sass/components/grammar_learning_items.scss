@@ -1,8 +1,22 @@
 .grammar-item-content{
-    width: 50%;
+    width: 70%;
     margin: auto;
     padding: 20px;
     background-color: #fbfbfb;
     border-radius: 10px;
     box-shadow: -1px 7px 20px 0px #dedede;
 }
+
+@media screen and (max-width: 1000px) {
+    .grammar-item-content{
+        width:75%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .grammar-item-content{
+        width:100%;
+    }
+}
+
+

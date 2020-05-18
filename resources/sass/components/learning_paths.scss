@@ -17,6 +17,12 @@
     }
 }
 
+.item-content{
+    width: 65%;
+    margin: auto;
+    display:flex;
+}
+
 .nb-lessons-reviews-box{
     height:fit-content;
 }
@@ -37,4 +43,13 @@
 }
 .error.md-field.md-theme-default:before{
     background:none;
+}
+
+@media screen and(max-width: 600px) {
+    .review-content{
+        width:100%;
+    }
+    .item-content{
+        width:100%;
+    }
 }

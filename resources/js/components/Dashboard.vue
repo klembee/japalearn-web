@@ -1,7 +1,7 @@
 <template>
     <md-app style="min-height: 100vh;">
         <md-app-toolbar class="md-primary">
-            <md-button class="md-icon-button d-sm-none" @click="showNavigation = true">
+            <md-button class="md-icon-button d-xl-none" @click="showNavigation = !showNavigation">
                 <md-icon>menu</md-icon>
             </md-button>
             <span class="md-title">
@@ -11,7 +11,19 @@
                 <slot name="toolbar_right"></slot>
             </div>
         </md-app-toolbar>
-        <md-app-drawer :md-active.sync="showNavigation" md-swipeable md-permanent="full">
+        <md-app-drawer :md-active.sync="showNavigation" v-if="!isLargeScreen">
+            <md-toolbar class="md-transparent" md-elevation="0">
+                <div class="logo-container">
+                    <img src="/images/logo/logo_web_small.png" alt="Logo of JapaLearn with Pochi in the center"/>
+                </div>
+            </md-toolbar>
+
+            <md-list>
+                <slot name="navigation-items"></slot>
+            </md-list>
+        </md-app-drawer>
+        <!-- If large screen -->
+        <md-app-drawer v-else :md-active.sync="showNavigation" md-permanent="full">
             <md-toolbar class="md-transparent" md-elevation="0">
                 <div class="logo-container">
                     <img src="/images/logo/logo_web_small.png" alt="Logo of JapaLearn with Pochi in the center"/>
@@ -38,7 +50,14 @@
         name: "ToolbarAndDrawer",
         data: function(){
             return {
-                showNavigation: false
+                showNavigation: false,
+                isLargeScreen: false
+            }
+        },
+        mounted() {
+            let screenWidth = screen.width;
+            if(screenWidth >= 1200){
+                this.isLargeScreen = true
             }
         }
     }

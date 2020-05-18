@@ -9,6 +9,10 @@
     border: 1px solid #969696;
 }
 
+.story-card{
+    width:50%;
+}
+
 .story-image{
     max-height: 40rem;
     overflow: hidden;
@@ -31,16 +35,27 @@ blockquote > p {
     .story{
         width: 70%;
     }
+    .story-card{
+        width:60%;
+    }
 }
 
 @media screen and (max-width: 1200px) {
     .story{
         width: 80%;
     }
+    .story-card{
+        width:80%;
+    }
 }
 
 @media screen and (max-width: 600px) {
     .story{
         width: 92%;
+        padding:10px;
+        font-size:0.8em;
+    }
+    .story-card{
+        width:100%;
     }
 }

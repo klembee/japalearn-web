@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-3">
+            <div class="col-md-3 col-12">
                 <div>
                     <p class="h4 mt-0">Romaji: {{item.romaji}}</p>
 
@@ -14,7 +14,7 @@
 
                 </div>
             </div>
-            <div class="col-9">
+            <div class="col-md-9 col-12">
                 <h3><b>How to remember this kana: </b></h3>
                 <div v-if="item.mnemonic">
                     <div v-html="parsedMnemonic"></div>

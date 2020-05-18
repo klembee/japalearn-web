@@ -6,7 +6,7 @@
             </div>
             <div>
                 <md-field :class="{error: hasError}">
-                    <label>What is the romaji equivalent of this kana ?</label>
+                    <label>What is the romaji ?</label>
                     <md-input v-on:keyup.enter="submitAnswer" v-model="answer"/>
                     <md-button @click="submitAnswer" class="md-icon-button">
                         <md-icon>send</md-icon>

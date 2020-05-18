@@ -1,11 +1,11 @@
 <template>
     <md-content class="dictionary md-elevation-3">
         <md-toolbar class="md-elevation-0">
-            <div class="md-toolbar-row">
-                <div class="md-toolbar-section-start">
+            <div class="row">
+                <div class="col-12 mt-3">
                     <h3 class="md-title">Japanese dictionary</h3>
                 </div>
-                <div class="md-toolbar-section-end">
+                <div class="col-12">
                     <md-field class="mr-2">
                         <label>Search...</label>
                         <md-input @input="search()" v-model="searchQuery"></md-input>
@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="md-toolbar-row">
+            <div class="md-toolbar-row d-none d-sm-block">
                 <md-switch @change="search()" v-model="convertToHiragana">Convert to hiragana</md-switch>
                 <md-field>
                     <label for="searchIn">Search in</label>

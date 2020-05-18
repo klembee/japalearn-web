@@ -1,5 +1,5 @@
 <template>
-    <md-card class="w-50 m-auto">
+    <md-card class="m-auto story-card">
         <md-card-header>
             <div class="story-image mb-2" v-if="story.front_image_url">
                 <img :src="'/storage/' + story.front_image_url"/>

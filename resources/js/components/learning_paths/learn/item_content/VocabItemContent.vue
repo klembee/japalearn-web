@@ -8,7 +8,7 @@
 
         <b-tab id="tab-meaning" title="Meaning">
             <div class="row mt-4">
-                <div class="col-3">
+                <div class="col-md-3 col-12">
                     <h3>Type</h3>
                     <p class="text-capitalize font-weight-bold">{{item.type}}</p>
                     <hr/>
@@ -17,7 +17,7 @@
                         <li class="text-capitalize">{{meaning.meaning}}</li>
                     </ul>
                 </div>
-                <div class="col-9">
+                <div class="col-md-9 col-12">
                     <h3>Tip for remembering</h3>
                     <div v-html="meaningMnemonic">
 

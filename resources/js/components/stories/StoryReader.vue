@@ -83,6 +83,10 @@
         letter-spacing: 2px;
     }
 
+    /deep/ .story-text img{
+        width:100%;
+    }
+
     /deep/ #translation{
         position: absolute;
         width:75%;

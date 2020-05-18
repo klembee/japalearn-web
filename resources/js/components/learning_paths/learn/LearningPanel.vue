@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <md-content class="col-md-10">
+            <md-content class="col-md-10 col-12">
                 <div class="item-word">
                     <p>{{this.currentItem[itemTextProperty]}}</p>
                 </div>
@@ -26,7 +26,7 @@
             </md-content>
 
             <!-- Map -->
-            <md-content class="col-md-2">
+            <md-content class="col-md-2 d-none d-lg-block">
                 <md-card  v-for="item in itemsBeforeReview" :key="item.id">
                     <md-card-content class="map-item" :class="{active: item.id === currentItem.id}">
                         <p class="map-item-word">{{item[itemTextProperty]}}</p>
@@ -34,7 +34,7 @@
                 </md-card>
                 <md-card>
                     <md-card-content>
-                        <p class="map-item-word">Review</p>
+                        <p class="map-item-word" style="font-size: 1.5vw;">Review</p>
                     </md-card-content>
                 </md-card>
                 <md-card  v-for="item in itemsAfterReview" :key="item.id">
@@ -166,11 +166,6 @@
 </script>
 
 <style scoped>
-    .item-content{
-        width: 65%;
-        margin: auto;
-        display:flex;
-    }
 
     .prev-button{
         margin-right:20px;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="hiragana-content">
         <table class="table">
             <thead>
                 <tr>
@@ -132,6 +132,11 @@
 </script>
 
 <style scoped>
+    .hiragana-content{
+        width:100%;
+        overflow-x: scroll;
+    }
+
     td{
         -webkit-user-select: none; /* Safari */
         -moz-user-select: none; /* Firefox */

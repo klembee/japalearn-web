@@ -12,7 +12,7 @@
 
         <div class="dashboard-content">
             <div class="row mt-4">
-                <div class="col-6 h-fit">
+                <div class="col-lg-7 col-12 h-fit mb-4 mb-md-0">
                     <dictionary
                         query-api-endpoint="{{route('api.dictionary.query')}}"
                         vocabulary-add-api-endpoint="{{route('api.vocabulary.add')}}"
@@ -21,9 +21,10 @@
                     ></dictionary>
                 </div>
 
-                <md-content class="col-3 offset-2 md-elevation-3 h-fit">
+                <md-content class="col-12 col-lg-5 h-fit">
                     <latest-activity-widget
                         latest-activity-api="{{route('api.dashboard.latest_activity')}}"
+                        class="md-elevation-3 p-3"
                     ></latest-activity-widget>
                 </div>
             </div>
