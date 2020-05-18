@@ -48,6 +48,12 @@
         height: 300px;
         overflow-y: hidden;
     }
+
+    .story-image img{
+        width:100%;
+        transform: translateY(-20%);
+    }
+
     .abstract {
         padding-left: 10px;
         padding-right: 10px;

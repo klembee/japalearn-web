@@ -74,6 +74,7 @@
 <style scoped>
     .story-image > img{
         width:100%;
+        transform: translateY(-20%);
         filter: brightness(0.5);
     }
     .story-text{
