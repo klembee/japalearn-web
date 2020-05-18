@@ -134,7 +134,7 @@
 <style scoped>
     .hiragana-content{
         width:100%;
-        overflow-x: scroll;
+        overflow-x: auto;
     }
 
     td{

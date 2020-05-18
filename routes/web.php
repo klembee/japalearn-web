@@ -17,8 +17,17 @@ Route::post("/get-notified", "EmailListController@add");
 
 Auth::routes();
 
+Route::name('frontpage.')->group(function(){
+    Route::get('/', 'FrontPageController@home')->name('home');
+    Route::get('/grammar-items', 'FrontPageController@grammar')->name('grammar');
+    Route::get('/stories', 'FrontPageController@stories')->name('stories');
+    Route::get('/blog', 'FrontPageController@blog')->name('blog');
+});
+
+
+
 Route::middleware('auth')->group(function(){
-    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     // Users
     Route::prefix('users/')->group(function(){
