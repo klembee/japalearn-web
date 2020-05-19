@@ -28,7 +28,7 @@ class BlogController extends Controller
                 'title' => $title,
                 'content' => $content,
                 'meta_description' => $request->input('meta_description'),
-                'slug' => strtolower(str_replace(' ', '-', $title))
+                'slug' => preg_replace('/[^A-Za-z0-9_\-]/', '', strtolower(str_replace(' ', '-', $title)))
             ]);
 
             $blogArticle->save();

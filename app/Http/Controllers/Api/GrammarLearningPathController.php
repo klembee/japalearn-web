@@ -30,7 +30,7 @@ class GrammarLearningPathController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'category_id' => $request->input('category_id'),
-            'slug' => strtolower(str_replace(' ', "_", $request->input('title')))
+            'slug' => preg_replace('/[^A-Za-z0-9_\-]/', '', strtolower(str_replace(' ', "_", $request->input('title'))))
         ]);
         $item->save();
 
@@ -58,7 +58,6 @@ class GrammarLearningPathController extends Controller
         try {
             $item->title = $request->input('title');
             $item->content = $request->input('content');
-            $item->slug = strtolower(str_replace(' ', "_", $request->input('title')));
             $item->save();
 
             // Delete the questions before recreating them

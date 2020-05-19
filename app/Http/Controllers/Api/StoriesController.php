@@ -39,7 +39,7 @@ class StoriesController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'keywords' => $request->input('keywords'),
-                'slug' => strtolower(str_replace(' ', "_", $request->input('title')))
+                'slug' => preg_replace('/[^A-Za-z0-9_\-]/', '', strtolower(str_replace(' ', "_", $request->input('title'))))
             ]);
 
             $story->save();
@@ -50,7 +50,6 @@ class StoriesController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'keywords' => $request->input('keywords'),
-                'slug' => strtolower(str_replace(' ', "_", $request->input('title')))
             ]);
 
             $story->save();
