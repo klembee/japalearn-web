@@ -18,7 +18,7 @@ class GrammarLearningPathCategory extends Model
 
     public function getNumberItemsDoneAttribute(){
         $user = Auth::user();
-        if(!$user->isStudent()){
+        if(!Auth::user() || !$user->isStudent()){
             return 0;
         }
 
