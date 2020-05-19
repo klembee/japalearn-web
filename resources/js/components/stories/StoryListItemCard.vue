@@ -1,5 +1,5 @@
 <template>
-    <md-card class="m-auto story-card">
+    <md-card class="story-card">
         <md-card-header>
             <div class="story-image mb-2" v-if="story.front_image_url">
                 <img :src="'/storage/' + story.front_image_url"/>
@@ -44,6 +44,10 @@
 </script>
 
 <style scoped>
+    .story-card{
+        margin: auto auto 15px;
+    }
+
     .story-image{
         height: 300px;
         overflow-y: hidden;

@@ -86,7 +86,7 @@
                 axios.post(this.saveEndpoint, payload)
                     .then(function(response){
                         if(response.data.success){
-                            window.location.href = self.viewArticleUrl.replace(":id", response.data.article.id)
+                            window.location.href = self.viewArticleUrl.replace(":id", response.data.article.slug)
                         }else{
                             toastr.error("Failed to create article !")
                         }

@@ -7,5 +7,15 @@
 @endsection
 
 @section('content')
+    <div class="mt-4">
+        @foreach($stories as $story)
+            <story-list-item-card
+                :story="{{json_encode($story)}}"
+                read-url="{{route('frontpage.story.read', $story)}}"
+            >
+
+            </story-list-item-card>
+        @endforeach
+    </div>
 
 @endsection

@@ -19,7 +19,7 @@
                 </md-card-content>
 
                 <md-card-actions>
-                    <md-button v-if="editPostUrl" :href="editPostUrl.replace(':id', post.id)" class="md-raised md-accent">Edit</md-button>
+                    <md-button v-if="editPostUrl" :href="editPostUrl.replace(':id', post.slug)" class="md-raised md-accent">Edit</md-button>
                     <md-button :href="viewPostUrl.replace(':id', post.slug)" class="md-raised md-accent">Read more</md-button>
                 </md-card-actions>
             </md-card>

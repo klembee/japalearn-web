@@ -3,7 +3,7 @@
         <div class="frontImage">
             <img :src="'/storage/' + article.image_url"/>
         </div>
-        <div class="row">
+        <div class="row w-100">
             <div class="content col-12 col-sm-8 col-md-6">
                 <h1>{{article.title}}</h1>
                 <div v-html="parsedContent">

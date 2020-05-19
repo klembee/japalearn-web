@@ -53,7 +53,7 @@ class BlogController extends Controller
         return response()->json([
             'success' => true,
             'article' => [
-                'id' => $blogArticle->id,
+                'slug' => $blogArticle->slug,
             ]
         ]);
     }

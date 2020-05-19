@@ -57,6 +57,8 @@ Vue.component('LatestActivityWidget', require('./components/dashboard/LatestActi
 Vue.component('CreateArticleForm', require('./components/blog/CreateArticleForm.vue').default);
 Vue.component('ViewArticle', require('./components/blog/ViewArticle.vue').default);
 Vue.component('BlogList', require('./components/blog/BlogList.vue').default);
+Vue.component('GrammarItemList', require('./components/grammar/GrammarItemList.vue').default);
+Vue.component('ViewGrammarItem', require('./components/grammar/ViewGrammarItem.vue').default);
 
 /**
  * Material Design Components

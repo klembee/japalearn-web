@@ -20,7 +20,10 @@ Auth::routes();
 Route::name('frontpage.')->group(function(){
     Route::get('/', 'FrontPageController@home')->name('home');
     Route::get('/grammar-items', 'FrontPageController@grammar')->name('grammar');
+    Route::get('/grammar-items/{item}', 'FrontPageController@viewGrammar')->name('grammar.view');
+    Route::get('/grammar-items/category/{category}', 'FrontPageController@grammarCategory')->name('grammar.category');
     Route::get('/stories', 'FrontPageController@stories')->name('stories');
+    Route::get('/stories/read/{story}', 'FrontPageController@readStory')->name('story.read');
     Route::get('/blog', 'FrontPageController@blog')->name('blog');
     Route::get('/blog/{post}', 'FrontPageController@viewArticle')->name('blog.view');
 });
