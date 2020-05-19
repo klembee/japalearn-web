@@ -37,13 +37,19 @@ class FrontPageController extends Controller
     }
 
     public function stories(Request $request){
-        $stories = Story::query()->paginate(5);
+        // Show only 2 stories to free users
+        $stories = Story::query()->limit(2)->paginate(5);
 
         return view('frontpage.stories', compact('stories'));
     }
 
     public function readStory(Request $request, Story $story){
         $story = $story->load('translations');
+
+        if($story->id >= 3){
+            return redirect()->back();
+        }
+
 
         return view('frontpage.viewStory', compact('story'));
     }
