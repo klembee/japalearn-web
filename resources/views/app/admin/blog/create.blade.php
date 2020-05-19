@@ -14,7 +14,7 @@
 
 @section('content')
     <div>
-        @if($post)
+        @if(isset($post))
             <create-article-form
                 :post-prop="{{json_encode($post)}}"
                 save-endpoint="{{route('api.blog.save')}}"
