@@ -34,7 +34,7 @@
         },
         computed: {
             realReadUrl: function(){
-                return this.readUrl.replace(':story_id', this.story.id);
+                return this.readUrl.replace(':story_id', this.story.slug);
             },
             parsedAbstract: function(){
                 return marked(this.story.content.substr(0, 100));

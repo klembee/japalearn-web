@@ -12,7 +12,7 @@
 
                         </md-card-content>
                         <md-card-actions>
-                            <md-button :href="viewUrl.replace(':id', item.id)" class="md-raised md-accent">Learn</md-button>
+                            <md-button :href="viewUrl.replace(':id', item.slug)" class="md-raised md-accent">Learn</md-button>
                         </md-card-actions>
                     </md-card>
 
