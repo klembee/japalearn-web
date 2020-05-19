@@ -3,17 +3,19 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
 class BlogPost extends Model
 {
+
     protected $table = "blog_posts";
 
     protected $fillable = [
         'title',
-        'content'
+        'content',
+        'meta_description',
+        'slug',
     ];
 
     public function author(){
@@ -39,5 +41,10 @@ class BlogPost extends Model
         $path = substr($savedFile, strpos($savedFile, "/") + 1);
         $this->image_url = $path;
         $this->save();
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

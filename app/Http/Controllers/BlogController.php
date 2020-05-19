@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -14,7 +15,10 @@ class BlogController extends Controller
      * @param Request $request
      */
     public function index(Request $request){
-        return view('app.admin.blog.index');
+
+        $posts = BlogPost::query()->paginate(5);
+
+        return view('app.admin.blog.index', compact('posts'));
     }
 
     /**
@@ -23,6 +27,10 @@ class BlogController extends Controller
      */
     public function create(Request $request){
         return view('app.admin.blog.create');
+    }
+
+    public function edit(Request $request, BlogPost $post){
+        return view('app.admin.blog.create', compact('post'));
     }
 
 }

@@ -22,11 +22,12 @@ class FrontPageController extends Controller
     }
 
     public function blog(Request $request){
-        return view('frontpage.blog');
+        $posts = BlogPost::query()->paginate(5);
+
+        return view('frontpage.blog', compact('posts'));
     }
 
     public function viewArticle(Request $request, BlogPost $post){
-
         return view('frontpage.viewArticle', compact('post'));
     }
 }

@@ -16,6 +16,11 @@
                 @image-changed="imageChanged">
 
             </image-selector>
+
+            <md-field>
+                <label>Meta description</label>
+                <md-input v-model="post.meta_description"/>
+            </md-field>
         </div>
         <div class="col-6">
             <h1>{{post.title}}</h1>
@@ -54,6 +59,7 @@
                     title: "",
                     content: "",
                     imageData: "",
+                    meta_description: ""
                 },
                 markdownEditor: {},
                 parsedContent: "",
@@ -70,7 +76,8 @@
                     post_id: this.post.id,
                     title: this.post.title,
                     content: this.post.content,
-                    image_data: this.post.imageData
+                    image_data: this.post.imageData,
+                    meta_description: this.post.meta_description
                 };
 
                 console.log(payload);
@@ -95,6 +102,7 @@
             }
             this.markdownEditor = new SimpleMDE();
 
+            this.markdownEditor.value(this.post.content);
             this.parsedContent = marked(this.post.content);
 
             let self = this;

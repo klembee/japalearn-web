@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function(){
     Route::prefix('blog_admin/')->name('blog.')->middleware('isRole:admin')->group(function(){
         Route::get('/', 'BlogController@index')->name('index');
         Route::get('/create', 'BlogController@create')->name('create');
+        Route::get('/edit/{post}', 'BlogController@edit')->name('edit');
     });
 
     Route::prefix('learning_path/')->name('learning_path.')->middleware('isRole:admin')->group(function(){

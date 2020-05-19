@@ -14,9 +14,18 @@
 
 @section('content')
     <div>
-        <create-article-form
-            save-endpoint="{{route('api.blog.save')}}"
-            view-article-url="{{route('frontpage.blog.view', ['post' => ':id'])}}"
-        ></create-article-form>
+        @if($post)
+            <create-article-form
+                :post-prop="{{json_encode($post)}}"
+                save-endpoint="{{route('api.blog.save')}}"
+                view-article-url="{{route('frontpage.blog.view', ['post' => ':id'])}}"
+            ></create-article-form>
+        @else
+            <create-article-form
+                save-endpoint="{{route('api.blog.save')}}"
+                view-article-url="{{route('frontpage.blog.view', ['post' => ':id'])}}"
+            ></create-article-form>
+        @endif
+
     </div>
 @endsection

@@ -16,7 +16,6 @@ class BlogController extends Controller
             'post_id' => 'required',
             'title' => 'required',
             'content' => 'required',
-            'image_data' => 'required'
         ]);
 
         $postId = $request->input('post_id');
@@ -27,7 +26,9 @@ class BlogController extends Controller
             //Create a new post
             $blogArticle = new BlogPost([
                 'title' => $title,
-                'content' => $content
+                'content' => $content,
+                'meta_description' => $request->input('meta_description'),
+                'slug' => strtolower(str_replace(' ', '-', $title))
             ]);
 
             $blogArticle->save();
@@ -37,14 +38,17 @@ class BlogController extends Controller
             $blogArticle = BlogPost::query()->where('id', $postId)->firstOrFail();
             $blogArticle->fill([
                 'title' => $title,
-                'content' => $content
+                'content' => $content,
+                'meta_description' => $request->input('meta_description')
             ]);
             $blogArticle->save();
 
         }
 
-        $file = PictureUploaderHelper::uploadFile($request->input('image_data'));
-        $blogArticle->attachPicture($file);
+        if($request->has('image_data')) {
+            $file = PictureUploaderHelper::uploadFile($request->input('image_data'));
+            $blogArticle->attachPicture($file);
+        }
 
         return response()->json([
             'success' => true,

@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>JapaLearn - Learn Japanese the right way !</title>
-    <meta property="og:title" content="JapaLearn - Learn Japanese the right way !">
-    <meta property="og:image" content="/images/facebook-share.jpg">
+    @yield('seo_info')
 
     @include('layouts.header')
     @yield('scripts')
@@ -36,7 +34,10 @@
             </md-app-toolbar>
             <md-app-content class="frontpage-content">
                 @yield('content')
+
             </md-app-content>
+
+
         </md-app>
 
         <!-- Snack Bar flash messages -->
@@ -49,7 +50,7 @@
         <div class="copyright">
             <p>© Copyright {{now()->format("Y")}}, JapaLearn</p>
         </div>
-
     </footer>
+
 </body>
 </html>

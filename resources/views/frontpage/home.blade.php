@@ -1,5 +1,12 @@
 @extends('layouts.notLoggedIn')
 
+@section('seo_info')
+    <meta property="og:image" content="/images/facebook-share.jpg">
+
+    <title>JapaLearn - Learn Japanese the right way !</title>
+    <meta name="description" content="Learn the Japanese language with JapaLearn ! We propose a unique way to learn the Japanese language">
+@endsection
+
 @section('content')
     <div class="header-container">
         <div class="header">
