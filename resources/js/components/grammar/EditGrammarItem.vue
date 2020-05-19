@@ -12,6 +12,11 @@
                 <textarea id="content">
 
                 </textarea>
+
+<!--                <md-field>-->
+<!--                    <label>Slug</label>-->
+<!--                    <md-input v-model="item.slug"/>-->
+<!--                </md-field>-->
             </div>
 
             <hr />
@@ -122,6 +127,7 @@
                 item: {
                     title: "",
                     content: "",
+                    slug: "",
                     questions: []
                 },
                 newQuestion: {
@@ -143,7 +149,7 @@
                 let payload = {
                     title: this.item.title,
                     content: this.markdownEditor.value(),
-                    questions: this.item.questions
+                    questions: this.item.questions,
                 };
 
                 axios.post(this.saveEndpoint, payload)
@@ -194,7 +200,6 @@
 
             this.markdownEditor.value(this.item.content);
             this.parsedContent = marked(this.markdownEditor.value());
-
 
             let self = this;
             this.markdownEditor.codemirror.on("change", function(){

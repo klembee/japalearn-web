@@ -16,6 +16,7 @@ class Story extends Model
         'keywords',
         'front_image_url',
         'meta_description',
+        'slug'
     ];
 
     public function questions(){
@@ -36,5 +37,10 @@ class Story extends Model
         // Remove the "/public/" part before save in database
         $path = substr($savedFile, strpos($savedFile, "/") + 1);
         $this->front_image_url = $path;
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

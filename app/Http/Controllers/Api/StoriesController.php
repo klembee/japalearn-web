@@ -38,7 +38,8 @@ class StoriesController extends Controller
             $story = new Story([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'keywords' => $request->input('keywords')
+                'keywords' => $request->input('keywords'),
+                'slug' => strtolower(str_replace(' ', "_", $request->input('title')))
             ]);
 
             $story->save();
@@ -48,7 +49,8 @@ class StoriesController extends Controller
             $story->fill([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'keywords' => $request->input('keywords')
+                'keywords' => $request->input('keywords'),
+                'slug' => strtolower(str_replace(' ', "_", $request->input('title')))
             ]);
 
             $story->save();

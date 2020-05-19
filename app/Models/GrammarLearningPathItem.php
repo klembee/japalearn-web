@@ -16,6 +16,7 @@ class GrammarLearningPathItem extends Model
         'content',
         'category_id',
         'meta_description',
+        'slug'
     ];
 
     /**
@@ -38,5 +39,10 @@ class GrammarLearningPathItem extends Model
         $user = Auth::user();
         $itemsDone = $user->info->information->grammarItemsDone->pluck('id');
         return $query->whereNotIn('id', $itemsDone);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
