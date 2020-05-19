@@ -21,13 +21,16 @@
                     <md-button href="{{route('frontpage.stories')}}">Japanese stories</md-button>
                     <md-button href="{{route('frontpage.blog')}}">Blog</md-button>
 
-                    <div class="nav-separator d-none d-lg-block"></div>
+                    @if(env('APP_ENV') != 'production')
 
-                    @if(Auth::guest())
-                        <md-button href="{{route('login')}}">Login</md-button>
-                        <md-button href="{{route('register')}}">Register</md-button>
-                    @else
-                        <md-button href="{{route('dashboard')}}">Dashboard<md-icon>arrow_forward_ios</md-icon></md-button>
+                        <div class="nav-separator d-none d-lg-block"></div>
+
+                        @if(Auth::guest())
+                            <md-button href="{{route('login')}}">Login</md-button>
+                            <md-button href="{{route('register')}}">Register</md-button>
+                        @else
+                            <md-button href="{{route('dashboard')}}">Dashboard<md-icon>arrow_forward_ios</md-icon></md-button>
+                        @endif
                     @endif
 
                 </div>
