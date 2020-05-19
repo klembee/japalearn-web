@@ -22,6 +22,7 @@ Route::name('frontpage.')->group(function(){
     Route::get('/grammar-items', 'FrontPageController@grammar')->name('grammar');
     Route::get('/stories', 'FrontPageController@stories')->name('stories');
     Route::get('/blog', 'FrontPageController@blog')->name('blog');
+    Route::get('/blog/{post}', 'FrontPageController@viewArticle')->name('blog.view');
 });
 
 
@@ -49,6 +50,11 @@ Route::middleware('auth')->group(function(){
 
 // Vocabulary
     Route::get('vocabulary', 'VocabularyController@index')->name('vocabulary.index');
+
+    Route::prefix('blog_admin/')->name('blog.')->middleware('isRole:admin')->group(function(){
+        Route::get('/', 'BlogController@index')->name('index');
+        Route::get('/create', 'BlogController@create')->name('create');
+    });
 
     Route::prefix('learning_path/')->name('learning_path.')->middleware('isRole:admin')->group(function(){
         Route::prefix('stories/')->name('stories.')->group(function(){

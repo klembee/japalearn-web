@@ -17,6 +17,7 @@ class CreateBlogTables extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->string('image_url')->nullable();
             $table->foreignId('author_id')->nullable();
             $table->timestamps();
 

@@ -54,6 +54,9 @@ Vue.component('UnsubscriptionForm', require('./components/stripe/UnsubscriptionF
 Vue.component('ReviewForecast', require('./components/kanji_vocabulary/ReviewForecast.vue').default);
 Vue.component('GrammarReviews', require('./components/grammar/GrammarReviews.vue').default);
 Vue.component('LatestActivityWidget', require('./components/dashboard/LatestActivityWidget.vue').default);
+Vue.component('CreateArticleForm', require('./components/blog/CreateArticleForm.vue').default);
+Vue.component('ViewArticle', require('./components/blog/ViewArticle.vue').default);
+
 
 /**
  * Material Design Components

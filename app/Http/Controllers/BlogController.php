@@ -14,7 +14,7 @@ class BlogController extends Controller
      * @param Request $request
      */
     public function index(Request $request){
-
+        return view('app.admin.blog.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class BlogController extends Controller
      * @param Request $request
      */
     public function create(Request $request){
-
+        return view('app.admin.blog.create');
     }
 
 }

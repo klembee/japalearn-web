@@ -6,6 +6,12 @@
         <span class="md-list-item-text">{{__('Users')}}</span>
     </md-list-item>
 
+    <!-- Go blog page -->
+    <md-list-item href="{{route('blog.index')}}" exact>
+        <md-icon>book</md-icon>
+        <span class="md-list-item-text">{{__('Blog')}}</span>
+    </md-list-item>
+
     <!-- Kana learning path -->
     <md-list-item href="{{route('learning_path.kana.index')}}" exact>
         <md-icon>map</md-icon>

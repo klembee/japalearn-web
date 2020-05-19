@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class FrontPageController extends Controller
@@ -22,5 +23,10 @@ class FrontPageController extends Controller
 
     public function blog(Request $request){
         return view('frontpage.blog');
+    }
+
+    public function viewArticle(Request $request, BlogPost $post){
+
+        return view('frontpage.viewArticle', compact('post'));
     }
 }

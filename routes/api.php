@@ -43,6 +43,10 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::get('latest_activity', 'Api\DashboardController@latestActivity')->name('latest_activity');
     });
 
+    Route::name('blog.')->prefix('blog')->group(function(){
+        Route::post('save', "Api\BlogController@save")->middleware("isRole:admin")->name('save');
+    });
+
     Route::name('learning_path.')->prefix('learning_path')->group(function(){
         Route::prefix('kanji')->name('kanji.')->group(function(){
             Route::prefix('items')->name('items.')->group(function(){
