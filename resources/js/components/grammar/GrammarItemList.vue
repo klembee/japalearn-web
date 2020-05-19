@@ -18,6 +18,14 @@
 
                     <slot></slot>
 
+                    <div v-if="items.data.length === 0">
+                        <md-empty-state
+                            md-icon="spellcheck"
+                            md-label="Grammar items"
+                            md-description="Sorry ! We haven't wrote the grammar items in this category yet.">
+                        </md-empty-state>
+                    </div>
+
                 </div>
             </div>
         </div>
