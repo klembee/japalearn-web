@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Helpers\PictureUploaderHelper;
+use App\Helpers\Slugger;
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class BlogController extends Controller
                 'title' => $title,
                 'content' => $content,
                 'meta_description' => $request->input('meta_description'),
-                'slug' => preg_replace('/[^A-Za-z0-9_\-]/', '', strtolower(str_replace(' ', '-', $title)))
+                'slug' => Slugger::slugify($title)
             ]);
 
             $blogArticle->save();

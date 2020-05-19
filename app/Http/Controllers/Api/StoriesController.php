@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Helpers\PictureUploaderHelper;
+use App\Helpers\Slugger;
 use App\Http\Controllers\Controller;
 use App\Models\Story;
 use App\Models\StoryTranslation;
@@ -39,7 +40,7 @@ class StoriesController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'keywords' => $request->input('keywords'),
-                'slug' => preg_replace('/[^A-Za-z0-9_\-]/', '', strtolower(str_replace(' ', "_", $request->input('title'))))
+                'slug' => Slugger::slugify($request->input('title'))
             ]);
 
             $story->save();

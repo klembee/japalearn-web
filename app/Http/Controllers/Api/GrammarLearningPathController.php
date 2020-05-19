@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Helpers\Slugger;
 use App\Http\Controllers\Controller;
 use App\Models\GrammarLearningPathAnswer;
 use App\Models\GrammarLearningPathItem;
@@ -30,7 +31,7 @@ class GrammarLearningPathController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'category_id' => $request->input('category_id'),
-            'slug' => preg_replace('/[^A-Za-z0-9_\-]/', '', strtolower(str_replace(' ', "_", $request->input('title'))))
+            'slug' => Slugger::slugify($request->input('title'))
         ]);
         $item->save();
 
