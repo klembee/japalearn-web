@@ -59,6 +59,7 @@ Vue.component('ViewArticle', require('./components/blog/ViewArticle.vue').defaul
 Vue.component('BlogList', require('./components/blog/BlogList.vue').default);
 Vue.component('GrammarItemList', require('./components/grammar/GrammarItemList.vue').default);
 Vue.component('ViewGrammarItem', require('./components/grammar/ViewGrammarItem.vue').default);
+Vue.component('FrontPageToolbar', require('./components/FrontPageToolbar.vue').default);
 
 /**
  * Material Design Components

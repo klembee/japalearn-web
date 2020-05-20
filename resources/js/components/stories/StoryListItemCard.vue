@@ -1,20 +1,23 @@
 <template>
-    <md-card class="story-card">
-        <md-card-header>
-            <div class="story-image mb-2" v-if="story.front_image_url">
-                <img :src="'/storage/' + story.front_image_url"/>
-            </div>
-            <h2>{{story.title}}</h2>
-        </md-card-header>
-        <md-card-content>
-            <div class="abstract" v-html="parsedAbstract">
+    <div class="row m-0">
+        <md-card class="story-card col-11 col-sm-10 col-md-8 col-lg-5">
+            <md-card-header>
+                <div class="story-image mb-2" v-if="story.front_image_url">
+                    <img :src="'/storage/' + story.front_image_url"/>
+                </div>
+                <h2>{{story.title}}</h2>
+            </md-card-header>
+            <md-card-content>
+                <div class="abstract" v-html="parsedAbstract">
 
-            </div>
-        </md-card-content>
-        <md-card-actions>
-            <md-button :href="realReadUrl" class="md-primary md-raised">Read more</md-button>
-        </md-card-actions>
-    </md-card>
+                </div>
+            </md-card-content>
+            <md-card-actions>
+                <md-button :href="realReadUrl" class="md-primary md-raised">Read more</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+
 </template>
 
 <script>

@@ -11,7 +11,7 @@
         @foreach($stories as $story)
             <story-list-item-card
                 :story="{{json_encode($story)}}"
-                read-url="{{route('frontpage.story.read', $story)}}"
+                read-url="{{route('frontpage.story.read', $story['slug'])}}"
             >
 
             </story-list-item-card>

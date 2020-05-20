@@ -9,6 +9,7 @@ use App\Models\GrammarLearningPathCategory;
 use App\Models\GrammarLearningPathItem;
 use App\Models\Story;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class FrontPageController extends Controller
 {
@@ -37,13 +38,25 @@ class FrontPageController extends Controller
     }
 
     public function stories(Request $request){
-        $stories = Story::query()->paginate(5);
+        // Show only 2 stories to free users
+        $stories = Story::query()->limit(2)->get()->toArray();
+        $stories = new LengthAwarePaginator(
+            $stories,
+            count($stories),
+            5,
+            $request->has('page') ? $request->input('page') : 1
+        );
 
         return view('frontpage.stories', compact('stories'));
     }
 
     public function readStory(Request $request, Story $story){
         $story = $story->load('translations');
+
+        if($story->id >= 3){
+            return redirect()->back();
+        }
+
 
         return view('frontpage.viewStory', compact('story'));
     }

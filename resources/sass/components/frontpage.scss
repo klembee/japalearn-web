@@ -34,6 +34,7 @@ main{
     -o-background-size: cover;
     background-size: cover;
     background-color: #09acbd;
+    display:flex;
 
     .header-content{
         z-index: 2;
@@ -42,8 +43,6 @@ main{
         color: white;
         margin:auto;
         position:relative;
-        padding-top: 50%;
-        transform: translateY(-68%);
 
         h1{
             font-size:6em;
@@ -151,5 +150,35 @@ footer{
         p{
             font-size: 1.1em !important;
         }
+    }
+}
+
+@media screen and (max-width: 600px){
+    .text{
+        width:90%;
+    }
+
+    .header-content{
+        width:95% !important;
+
+        h1{
+            font-size:4em !important;
+        }
+        p{
+            font-size:2.0em !important;
+        }
+    }
+
+    .section2 .table{
+        width:80%;
+    }
+
+    .grammar-items{
+        width:90% !important;
+    }
+
+    .categories {
+        margin:auto;
+        width:fit-content;
     }
 }
