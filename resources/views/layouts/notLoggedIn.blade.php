@@ -21,6 +21,7 @@
 </head>
 <body>
     <div id="app" class="page-container md-layout-column">
+        <div class="app-wrapper">
             <front-page-toolbar>
                 <template v-slot:desktop_menu>
                     <md-button href="{{route('frontpage.home')}}">Home</md-button>
@@ -85,6 +86,8 @@
                 </template>
 
             </front-page-toolbar>
+        </div>
+
 
         <!-- Snack Bar flash messages -->
         @if(Session::has('message'))
@@ -117,7 +120,7 @@
                 <div class="col-12 col-lg-4">
                     <h3 class="h2">Contact us</h3>
                     <md-card>
-                        <form method="POST" action="#" class="contact-form">
+                        <form method="POST" action="{{route('api.frontpage.contactus')}}" class="contact-form">
                             @csrf
                             <md-field>
                                 <label>Name</label>

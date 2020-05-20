@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cfcf4f4367610389760886cb1f663d7",
+    "content-hash": "1b8769cc24d63acbba6143deaab1350a",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -4042,7 +4042,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -7946,6 +7946,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5",
+        "ext-intl": "*",
         "ext-json": "*"
     },
     "platform-dev": [],

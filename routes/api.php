@@ -23,6 +23,7 @@ Route::post('email-list/add', 'Api\EmailListController@add')->name('email-list.a
 Route::prefix('frontpage')->name('api.frontpage.')->group(function(){
     Route::get('latest-articles', 'Api\FrontPageController@latestArticles')->name('latest.articles');
     Route::get('random-grammar-items', 'Api\FrontPageController@randomGrammarLessons')->name('random.grammar');
+    Route::post('contact-us', 'Api\FrontPageController@contactUs')->name('contactus');
 });
 
 Route::middleware('auth:api')->name('api.')->group(function(){

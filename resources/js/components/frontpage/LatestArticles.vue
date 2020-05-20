@@ -46,11 +46,11 @@
                         if(response.data.success){
                             self.articles = response.data.articles;
                         }else{
-                            toastr.error("Failed to retrieve latest blog posts.")
+                            console.error("Failed to retrieve latest blog posts.")
                         }
                     })
                     .catch(function(error){
-                        toastr.error("Failed to retrieve latest blog posts.")
+                        console.error("Failed to retrieve latest blog posts.")
                     })
             },
             getAbstract(article){

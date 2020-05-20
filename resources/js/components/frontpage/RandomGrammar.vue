@@ -42,11 +42,11 @@
                         if(response.data.success){
                             self.items = response.data.items;
                         }else{
-                            toastr.error("Failed to retrieve latest blog posts.")
+                            console.error("Failed to retrieve latest grammar posts.")
                         }
                     })
                     .catch(function(error){
-                        toastr.error("Failed to retrieve latest blog posts.")
+                        console.error("Failed to retrieve latest grammar posts.")
                     })
             },
             getAbstract(item){
