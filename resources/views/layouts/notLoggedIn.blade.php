@@ -90,13 +90,64 @@
         @if(Session::has('message'))
             <flash message="{{Session::get('message')}}"></flash>
         @endif
+
+        <footer class="">
+
+            <div class="row m-0 flex-grow-1 footer-containers">
+                <div class="col-12 col-lg-4 mb-5">
+                    <h3 class="h2">Latest articles</h3>
+
+                    <latest-articles
+                        api-endpoint="{{route('api.frontpage.latest.articles')}}"
+                        read-url="{{route('frontpage.blog.view', ['post' => ':slug'])}}"
+                        read-more-url="{{route('frontpage.blog')}}"
+                    ></latest-articles>
+                </div>
+                <div class="col-12 col-lg-4 mb-5">
+                    <h3 class="h2">Grammar lessons</h3>
+
+                    <random-grammar
+                        api-endpoint="{{route('api.frontpage.random.grammar')}}"
+                        read-url="{{route('frontpage.grammar.view', ['item' => ':slug'])}}"
+                        read-more-url="{{route('frontpage.grammar')}}"
+                    >
+
+                    </random-grammar>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <h3 class="h2">Contact us</h3>
+                    <md-card>
+                        <form method="POST" action="#" class="contact-form">
+                            @csrf
+                            <md-field>
+                                <label>Name</label>
+                                <md-input name="name" required/>
+                            </md-field>
+
+                            <md-field>
+                                <label>Email</label>
+                                <md-input type="email" name="email" required/>
+                            </md-field>
+
+                            <md-field>
+                                <label>Message</label>
+                                <md-textarea name="message" required></md-textarea>
+                            </md-field>
+
+                            <md-button type="submit" class="md-raised md-primary">Send</md-button>
+                        </form>
+                    </md-card>
+
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© Copyright {{now()->format("Y")}}, JapaLearn</p>
+            </div>
+        </footer>
     </div>
 
-    <footer>
-        <div class="copyright">
-            <p>© Copyright {{now()->format("Y")}}, JapaLearn</p>
-        </div>
-    </footer>
+
 
 </body>
 </html>

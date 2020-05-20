@@ -20,6 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('email-list/add', 'Api\EmailListController@add')->name('email-list.add');
 
+Route::prefix('frontpage')->name('api.frontpage.')->group(function(){
+    Route::get('latest-articles', 'Api\FrontPageController@latestArticles')->name('latest.articles');
+    Route::get('random-grammar-items', 'Api\FrontPageController@randomGrammarLessons')->name('random.grammar');
+});
+
 Route::middleware('auth:api')->name('api.')->group(function(){
     Route::name('teachers.')->prefix('teacher')->group(function(){
         Route::get('/generate_invite_code', "Api\TeacherController@generate_invite_code")->name('generate_invite_code');
