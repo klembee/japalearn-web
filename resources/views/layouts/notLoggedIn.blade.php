@@ -15,6 +15,7 @@
 
     <meta name="fragment" content="!">
     @yield('seo_info')
+    <script> window.prerenderReady = false; </script>
 
     @include('layouts.header')
     @yield('scripts')

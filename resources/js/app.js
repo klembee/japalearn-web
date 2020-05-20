@@ -129,4 +129,9 @@ Vue.use(BootstrapVue);
 
 const app = new Vue({
     el: '#app',
+    mounted() {
+        setTimeout(function(){
+            window.prerenderReady = true;
+        }, 5000)
+    }
 });
