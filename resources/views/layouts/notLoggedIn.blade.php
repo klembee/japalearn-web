@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @if(env('APP_ENV') == "production")
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165388196-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-165388196-1');
+        </script>
+    @endif
+
     <meta name="fragment" content="!">
     @yield('seo_info')
 
@@ -55,18 +67,6 @@
             <p>© Copyright {{now()->format("Y")}}, JapaLearn</p>
         </div>
     </footer>
-
-    @if(env('APP_ENV') == "production")
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165388196-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'UA-165388196-1');
-        </script>
-    @endif
 
 </body>
 </html>
