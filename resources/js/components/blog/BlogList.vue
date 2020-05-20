@@ -1,5 +1,5 @@
 <template>
-    <div class="row w-100">
+    <div class="row w-100 m-0">
         <div class="post col-12 col-md-8 col-lg-6">
             <md-card class="post-card" v-for="post in paginatedPosts.data" :key="post.id">
                 <md-card-header>

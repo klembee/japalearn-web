@@ -1,7 +1,7 @@
 <template>
 
     <div class="row w-100 mt-4">
-        <div class="col-lg-8">
+        <div class="col-lg-8 order-last order-lg-first">
             <div>
                 <div class="grammar-items">
                     <md-card class="grammar-card" v-for="item in items.data" :key="item.id">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 categories">
             <h3>Category</h3>
             <ul class="category-list">
                 <li @click="openCategory(category)" class="category-button" :class="{active: isActive(category)}" v-for="category in categories" :key="category.id">

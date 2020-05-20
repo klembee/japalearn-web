@@ -1,5 +1,5 @@
 <template>
-    <div class="row w-100">
+    <div class="row w-100 m-0">
         <div class="content col-lg-7 col-md-9 col-12">
 
             <md-button @click="goBack" class="md-raised md-accent back-button">Back to lesson list</md-button>
