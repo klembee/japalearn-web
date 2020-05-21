@@ -82,6 +82,8 @@ class VocabularyStudyController extends Controller
         $helper = new SRSHelper($allVocabItems, $vocabUser->toArray());
         $itemsToLearn = $helper->reviewsAvailable();
 
+//        error_log(json_encode($itemsToLearn));
+
         return view('app.study.vocab_review', [
             'reviews' => json_encode($itemsToLearn)
         ]);

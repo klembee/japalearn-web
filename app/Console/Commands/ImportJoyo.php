@@ -71,9 +71,14 @@ class ImportJoyo extends Command
                 }
 
                 foreach($data['meanings'] as $meaning){
-                    $kanjiItem->meanings()->create([
-                        'meaning' => $meaning
-                    ]);
+
+                    foreach(explode(",", $meaning) as $m){
+                        $kanjiItem->meanings()->create([
+                            'meaning' => trim($m)
+                        ]);
+                    }
+
+
                 }
 
             }

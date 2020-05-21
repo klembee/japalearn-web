@@ -84,22 +84,31 @@
                 }
             },
             orderedOnReadings(){
-                return this.item.on_readings.sort(function(x, y){
-                    if(x.is_main){
-                        return -1;
-                    }else{
-                        return 1;
-                    }
-                })
+                if(this.item.on_readings){
+                    return this.item.on_readings.sort(function(x, y){
+                        if(x.is_main){
+                            return -1;
+                        }else{
+                            return 1;
+                        }
+                    })
+                }else{
+                    return []
+                }
+
             },
             orderedKunReadings(){
-                return this.item.kun_readings.sort(function(x, y){
-                    if(x.is_main){
-                        return -1;
-                    }else{
-                        return 1;
-                    }
-                })
+                if(this.item.kun_readings){
+                    return this.item.kun_readings.sort(function(x, y){
+                        if(x.is_main){
+                            return -1;
+                        }else{
+                            return 1;
+                        }
+                    })
+                }else{
+                    return []
+                }
             },
             orderedMeanings(){
                 return this.item.meanings.sort(function(x, y){

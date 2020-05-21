@@ -18,7 +18,9 @@ class VocabLearningPathItemStats extends Model implements Learnable
         'human_level',
         'object_id',
         'answers',
-        'next_review'
+        'next_review',
+//        'on_reading',
+//        'kun_reading'
     ];
 
     protected $dates = [
@@ -71,6 +73,17 @@ class VocabLearningPathItemStats extends Model implements Learnable
 //        }
         return $this->vocabLearningPathItem->answers;
     }
+
+//    public function getOnReadingAttribute(){
+//
+//        error_log(print_r($this->vocabLearningPathItem()->with('onReadings')->get(), true));
+//
+//        return $this->vocabLearningPathItem()->with('onReadings')->onReadings->get();
+//    }
+//
+//    public function getKunReadingAttribute(){
+//        return $this->vocabLearningPathItem()->with('kunReadings')->kunReadings->get();
+//    }
 
     public function getObjectIdAttribute()
     {
