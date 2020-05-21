@@ -140,7 +140,11 @@
                 if(this.answerIsCorrect()){
                     //Good answer
                     if(this.removeWrong || !this.wrong.includes(this.currentItem)) {
-                        this.good.push(this.currentItem);
+
+                        let alreadyGood = this.good.filter(item => item.question === this.currentItem.question).length > 0;
+                        if(!alreadyGood) {
+                            this.good.push(this.currentItem);
+                        }
                     }
                     if(this.removeWrong){
                         // Remove the item that was wrong
@@ -155,6 +159,11 @@
                     if(!this.wrong.includes(this.currentItem)) {
                         this.wrong.push(this.currentItem);
                     }
+
+                    if(!this.removeWrong) {
+                        this.right = this.right.filter(item => item != this.currentItem);
+                    }
+
                     this.showAnswer = true
                 }
 

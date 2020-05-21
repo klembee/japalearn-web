@@ -241,6 +241,9 @@ class LearningPathController extends Controller
             try {
                 $item = VocabLearningPath::query()->where('word', $word)->where('word_type_id', $type->id)->firstOrFail();
 
+
+                error_log($itemStats->count());
+
                 if ($itemStats->count() > 0) {
                     // Edit
                     $stat = VocabLearningPathItemStats::query()
