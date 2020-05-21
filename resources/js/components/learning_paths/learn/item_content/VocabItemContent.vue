@@ -13,16 +13,30 @@
                     <p class="text-capitalize font-weight-bold">{{item.type}}</p>
                     <hr/>
                     <h3>Meanings</h3>
-                    <ul v-for="meaning in item.meanings" :key="meaning.id">
-                        <li class="text-capitalize">{{meaning.meaning}}</li>
+                    <ul>
+                        <li :class="{'isMain': meaning.is_main}" v-for="meaning in item.meanings" :key="meaning.id" class="text-capitalize">{{meaning.meaning}}</li>
                     </ul>
                     <hr />
                     <h3>Readings</h3>
-                    <ul>
-                        <li v-for="reading in item.readings" :key="reading.id">
-                            {{reading.reading}}
-                        </li>
-                    </ul>
+                    <h4>On</h4>
+                    <div v-if="orderedOnReadings.length > 0">
+                        <ul>
+                            <li :class="{'isMain': reading.is_main}" v-for="reading in orderedOnReadings" :key="reading.id">
+                                {{reading.reading}}
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div v-if="orderedKunReadings.length > 0">
+                        <h4>Kun</h4>
+                        <ul>
+                            <li :class="{'isMain': reading.is_main}" v-for="reading in orderedKunReadings" :key="reading.id">
+                                {{reading.reading}}
+                            </li>
+                        </ul>
+                    </div>
+
 
                 </div>
                 <div class="col-md-9 col-12 mnemonic">
@@ -68,6 +82,33 @@
                 }else{
                     return "";
                 }
+            },
+            orderedOnReadings(){
+                return this.item.on_readings.sort(function(x, y){
+                    if(x.is_main){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                })
+            },
+            orderedKunReadings(){
+                return this.item.kun_readings.sort(function(x, y){
+                    if(x.is_main){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                })
+            },
+            orderedMeanings(){
+                return this.item.meanings.sort(function(x, y){
+                    if(x.is_main){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                })
             }
         }
     }
@@ -84,5 +125,14 @@
     }
     .mnemonic-content{
         flex-grow: 1;
+    }
+
+    /deep/ .mnemonic-content b{
+        color:#4881a5;
+    }
+
+    .isMain{
+        color: #D93636;
+        font-size:1.3em;
     }
 </style>

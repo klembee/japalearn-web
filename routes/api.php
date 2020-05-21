@@ -83,6 +83,8 @@ Route::middleware('auth:api')->name('api.')->group(function(){
 
                 Route::post('question/delete', 'Api\GrammarLearningPathController@deleteQuestion')->name('question.delete');
             });
+
+            Route::post('update-level', 'Api\GrammarLessonController@updateLevel')->middleware('isRole:student')->name('update-level');
         });
 
         Route::prefix('stories')->name('stories.')->group(function(){

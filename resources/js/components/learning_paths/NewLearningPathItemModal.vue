@@ -39,16 +39,31 @@
             </div>
 
             <div>
-                <p>Readings: </p>
+                <p>On readings: </p>
                 <Multiselect
-                    v-model="readings"
+                    v-model="onReadings"
                     :options="[]"
                     :allow-empty="true"
                     tag-placeholder="Add reading"
                     placeholder="Add reading"
                     :taggable="true"
                     :multiple="true"
-                    @tag="addReading"
+                    @tag="addOnReading"
+                >
+                </Multiselect>
+            </div>
+
+            <div>
+                <p>Kun readings: </p>
+                <Multiselect
+                    v-model="kunReadings"
+                    :options="[]"
+                    :allow-empty="true"
+                    tag-placeholder="Add reading"
+                    placeholder="Add reading"
+                    :taggable="true"
+                    :multiple="true"
+                    @tag="addKunReading"
                 >
                 </Multiselect>
             </div>
@@ -91,7 +106,8 @@
                 wordType: 'radical',
                 level: 1,
                 meanings: [],
-                readings: [],
+                onReadings: [],
+                kunReadings: [],
             }
         },
         methods: {
@@ -121,8 +137,11 @@
             addMeaning(meaning){
                 this.meanings.push(meaning);
             },
-            addReading(reading){
-                this.readings.push(reading);
+            addOnReading(reading){
+                this.onReadings.push(reading);
+            },
+            addKunReading(reading){
+                this.kunReadings.push(reading);
             }
         }
     }

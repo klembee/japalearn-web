@@ -12,5 +12,6 @@
         :questions="{{json_encode($questions)}}"
         last-lesson-url="{{route('grammar.learn', $grammarlesson)}}"
         next-lesson-url="{{$nextLesson ? route('grammar.learn', $nextLesson) : ''}}"
+        update-grammar-level-endpoint="{{route('api.learning_path.grammar.update-level')}}"
     ></grammar-reviews>
 @endsection

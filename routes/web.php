@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("/get-notified", "EmailListController@add");
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::name('frontpage.')->group(function(){
     Route::get('/', 'FrontPageController@home')->name('home');
@@ -31,6 +31,8 @@ Route::name('frontpage.')->group(function(){
 
 
 Route::middleware('auth')->group(function(){
+    Route::post('resend-verifications', 'AccountController@resendConfirmation')->name('resend_confirmation');
+
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     // Users

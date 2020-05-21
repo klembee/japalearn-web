@@ -167,4 +167,9 @@ class AccountController extends Controller
     public function unsubscribeIndex(Request $request){
         return view('app.account.unsubscribe');
     }
+
+    public function resendConfirmation(Request $request){
+        $request->user()->sendEmailVerificationNotification();
+        return redirect()->route('dashboard');
+    }
 }

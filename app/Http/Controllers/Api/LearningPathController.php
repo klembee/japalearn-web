@@ -110,12 +110,13 @@ class LearningPathController extends Controller
         $mnemonic = $request->input('meaning_mnemonic');
         $examples = $request->input('examples');
         $meanings = $request->input('meanings');
-        $readings = $request->input('readings');
+        $onReadings = $request->input('onReadings');
+        $kunReadings = $request->input('kunReadings');
         $level = $request->input('level');
 
 
         try {
-            DB::transaction(function() use(&$item, $word, $wordTypeId, $mnemonic, $meanings, $readings, $examples, $level){
+            DB::transaction(function() use(&$item, $word, $wordTypeId, $mnemonic, $meanings, $onReadings, $kunReadings, $examples, $level){
                 $item->word = $word;
                 $item->word_type_id = $wordTypeId;
                 $item->meaning_mnemonic = $mnemonic;
@@ -136,16 +137,33 @@ class LearningPathController extends Controller
                 foreach($meanings as $meaning){
                     // If the id is not present, it means its a new meaning
                     $item->meanings()->create([
-                        'meaning' => $meaning['meaning']
+                        'meaning' => $meaning['meaning'],
+                        'is_main' => $meaning['is_main']
                     ]);
                 }
 
-                $item->readings()->delete();
-                foreach($readings as $reading){
-                    $item->readings()->create([
-                        'reading' => $reading['reading']
+                $item->onReadings()->delete();
+                foreach($onReadings as $reading){
+                    $item->onReadings()->create([
+                        'reading' => $reading['reading'],
+                        'is_main' => $reading['is_main']
                     ]);
                 }
+
+                $item->kunReadings()->delete();
+                foreach($kunReadings as $reading){
+                    $item->kunReadings()->create([
+                        'reading' => $reading['reading'],
+                        'is_main' => $reading['is_main']
+                    ]);
+                }
+
+//                $item->readings()->delete();
+//                foreach($readings as $reading){
+//                    $item->readings()->create([
+//                        'reading' => $reading['reading']
+//                    ]);
+//                }
 
                 $item->save();
             });

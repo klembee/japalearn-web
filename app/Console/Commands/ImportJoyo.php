@@ -39,15 +39,43 @@ class ImportJoyo extends Command
      */
     public function handle()
     {
-        $data = json_decode(file_get_contents("storage/scripts/mnemonics.json"));
-        foreach ($data as $kanji => $mnemonic){
+        $data = json_decode(file_get_contents("storage/scripts/mnemonics.json"), true);
+        foreach ($data as $kanji => $data){
             $kanjiItem = VocabLearningPath::query()
                 ->where('word_type_id', WordType::kanji()->id)
                 ->where('word', $kanji)->first();
 
             if($kanjiItem){
-                $kanjiItem->meaning_mnemonic = $mnemonic;
+                $kanjiItem->meaning_mnemonic = $data['mnemonic'];
                 $kanjiItem->save();
+
+                $kanjiItem->meanings()->delete();
+                $kanjiItem->readings()->delete();
+                $kanjiItem->onReadings()->delete();
+                $kanjiItem->kunReadings()->delete();
+
+                foreach($data['on'] as $onReading){
+                    if(mb_strlen($onReading) > 0) {
+                        $kanjiItem->onReadings()->create([
+                            'reading' => $onReading
+                        ]);
+                    }
+                }
+
+                foreach($data['kun'] as $kunReading){
+                    if(mb_strlen($kunReading) > 0) {
+                        $kanjiItem->kunReadings()->create([
+                            'reading' => $kunReading
+                        ]);
+                    }
+                }
+
+                foreach($data['meanings'] as $meaning){
+                    $kanjiItem->meanings()->create([
+                        'meaning' => $meaning
+                    ]);
+                }
+
             }
         }
     }

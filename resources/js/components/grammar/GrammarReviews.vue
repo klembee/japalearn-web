@@ -4,7 +4,7 @@
             <div class="question" v-html="formatedQuestion"></div>
             <md-field :class="{error: showInvalid, animate__headShake: showInvalid || showWrongAnswer}" class="animate__animated">
                 <label for="answer">Answer</label>
-                <md-input  v-on:keyup.enter="submitAnswer" id="answer" v-model="answer"/>
+                <md-input @input="changeToHiraganaIfNeeded"  v-on:keyup.enter="submitAnswer" id="answer" v-model="answer"/>
                 <md-button @click="submitAnswer" class="md-icon-button">
                     <md-icon>send</md-icon>
                 </md-button>
@@ -49,6 +49,8 @@
 <script>
     import BackDrop from "../BackDrop";
     import Marked from "marked"
+    import {toKana, isRomaji, isKana} from '../../wanakana';
+
     export default {
         name: "GrammarReviews",
         components: {BackDrop},
@@ -62,6 +64,10 @@
             },
             lastLessonUrl: {
                 type: String
+            },
+            updateGrammarLevelEndpoint: {
+                type: String,
+                required: true
             }
         },
         data: function(){
@@ -90,7 +96,7 @@
                 return "";
             },
             hasNextQuestion(){
-                return this.currentQuestion + 1 <= 5;
+                return this.currentQuestion + 1 <= 5 && this.currentQuestion + 1 < this.questions.length;
             },
             isGoodAnswer(){
                 return this.question.answers.includes(this.answer)
@@ -115,6 +121,7 @@
                             this.showWrongAnswer = true;
                         }
                     } else {
+                        this.updateLevel();
                         this.lessonFinished = true;
                     }
                 }else{
@@ -138,6 +145,27 @@
                 if(this.nextLessonUrl){
                     window.location.href = this.nextLessonUrl;
                 }
+            },
+            changeToHiraganaIfNeeded(){
+                if(isKana(this.question.answers[0])){
+                    //Transform answer to kana
+                    this.answer = toKana(this.answer);
+                }
+            },
+            updateLevel(){
+                let payload = {
+                    grammar_id: this.questions[0].grammar_item_id
+                };
+
+                axios.post(this.updateGrammarLevelEndpoint, payload)
+                    .then(function(response){
+                        if(!response.data.success){
+                            console.log("Failed to update level of grammar item")
+                        }
+                    })
+                    .catch(function(error){
+                        console.log("Failed to update level of grammar item")
+                    })
             }
         },
         mounted() {

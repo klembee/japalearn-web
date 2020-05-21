@@ -5,6 +5,18 @@
 
 @section('content')
     <div>
+        @if(Auth::user()->email_verified_at == null)
+            <div class="alert alert-danger d-flex justify-content-between align-items-center">
+                <p class="m-0">Please verify your email address.</p>
+
+                <form method="POST" action="{{route('resend_confirmation')}}">
+                    @csrf
+                    <md-button type="submit" class="md-raised md-accent">Resend confirmation</md-button>
+                </form>
+
+            </div>
+        @endif
+
         <learning-journey
             :done-basic-kanas="{{$doneBasicKanas ? 'true' : 'false'}}"
             kana-url="{{route('kanas.index')}}"

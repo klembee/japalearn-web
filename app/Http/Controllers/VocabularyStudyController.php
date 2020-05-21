@@ -37,7 +37,7 @@ class VocabularyStudyController extends Controller
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
             ->orderBy('word')
-            ->limit(30)->get()
+            ->limit(30)->with(['onReadings', 'kunReadings'])->get()
             ->toArray();
 
 
@@ -76,7 +76,7 @@ class VocabularyStudyController extends Controller
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
             ->orderBy('word')
-            ->limit(30)->get()
+            ->limit(30)->with(['onReadings', 'kunReadings'])->get()
             ->toArray();
 
         $helper = new SRSHelper($allVocabItems, $vocabUser->toArray());

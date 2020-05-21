@@ -24,6 +24,14 @@ class VocabLearningPath extends Model
         return $this->belongsTo(Vocabulary::class);
     }
 
+    public function onReadings(){
+        return $this->hasMany(KanjiOnReading::class, 'kanji_id');
+    }
+
+    public function kunReadings(){
+        return $this->hasMany(KanjiKunReading::class, 'kanji_id');
+    }
+
     public function readings(){
         return $this->hasMany(VocabLearningPathReadings::class, 'vocab_learning_path_item_id');
     }
@@ -51,7 +59,7 @@ class VocabLearningPath extends Model
         }else{
             return [
                 'meanings' => $this->meanings->pluck('meaning'),
-                'readings' => $this->readings->pluck('reading')
+                'readings' => $this->onReadings->pluck('reading')->concat($this->kunReadings->pluck('reading'))
             ];
         }
     }

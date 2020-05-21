@@ -1,6 +1,7 @@
 <template>
     <div>
         <md-content v-if="currentItem">
+            <h1 class="text-capitalize"><span :class="{meaning: currentItem.answer_type === 'meaning', reading: currentItem.answer_type === 'reading'}">{{currentItem.answer_type}}</span> of:</h1>
             <div class="item-word">
                 <p>{{currentItem.question}}</p>
             </div>
@@ -16,7 +17,7 @@
             <div v-else-if="currentItem.answer_type === 'reading'">
                 <md-field :class="{error: hasError}">
                     <label>What is the reading ?</label>
-                    <md-input @input="transformToKana" v-on:keyup.enter="submitAnswer" v-model="answer"/>
+                    <md-input @input="transformToKana()" v-on:keyup.enter="submitAnswer" v-model="answer"/>
                     <md-button @click="submitAnswer" class="md-icon-button">
                         <md-icon>send</md-icon>
                     </md-button>
@@ -55,7 +56,7 @@
 
 <script>
     import BackDrop from "../../BackDrop";
-    import {toKana, isRomaji} from '../../../wanakana';
+    import {toKana, isRomaji, isKana, toKatakana} from '../../../wanakana';
     import VocabItemContent from "./item_content/VocabItemContent";
     export default {
         name: "VocabReviewPanel",
@@ -85,6 +86,7 @@
             return {
                 currentItemIndex: 0,
                 answer: "",
+                romajiAnswer: "",
                 items: [],
                 good: [],
                 wrong: [],
@@ -107,6 +109,10 @@
         },
         methods: {
             submitAnswer(){
+                if(this.currentItem.answer_type === 'reading') {
+                    this.answer = toKana(this.answer);
+                }
+
                 if(this.showAnswer){
                     this.nextQuestion();
                     this.showAnswer = false;
@@ -190,9 +196,9 @@
                     this.$emit('review-end')
                 }
             },
-            transformToKana(){
+            transformToKana: _.debounce(function(){
                 this.answer = toKana(this.answer)
-            },
+            }, 330),
             answerIsCorrect(){
                 let allAnswersToCheck = [
                     this.answer,
@@ -200,6 +206,10 @@
                     this.answer.replace('-', ''),
                     this.answer.replace('-', '').replace(' ', '')
                 ];
+
+                if(isKana(this.answer)){
+                    allAnswersToCheck.push(toKatakana(this.answer))
+                }
 
                 let rightAnswers = [];
 
@@ -247,7 +257,8 @@
                         meanings: item.meanings,
                         meaning_mnemonic: item.meaning_mnemonic,
                         reading_mnemonic: item.reading_mnemonic,
-                        readings: item.readings,
+                        on_readings: item.on_readings,
+                        kun_readings: item.kun_readings,
                         word_type_id: item.word_type_id,
                         id: item.id,
                     });
@@ -260,7 +271,8 @@
                         meanings: item.meanings,
                         meaning_mnemonic: item.meaning_mnemonic,
                         reading_mnemonic: item.reading_mnemonic,
-                        readings: item.readings,
+                        on_readings: item.on_readings,
+                        kun_readings: item.kun_readings,
                         word_type_id: item.word_type_id,
                         id: item.id,
                     });
@@ -274,5 +286,12 @@
 </script>
 
 <style scoped>
-
+    .meaning{
+        background-color: #d9363626;
+        padding: 5px 10px 5px 10px;
+    }
+    .reading{
+        background-color: #32525926;
+        padding: 5px 10px 5px 10px;
+    }
 </style>

@@ -25,7 +25,7 @@ class StudentInfo extends Model
     }
 
     public function grammarItemsDone(){
-        return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'grammar_item_id','student_info_id');
+        return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'student_info_id','grammar_item_id');
     }
 
     public function activity(){

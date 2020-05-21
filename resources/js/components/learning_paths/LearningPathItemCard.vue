@@ -39,38 +39,140 @@
 
                 <div class="mb-3">
                     <p>Meanings: </p>
-                    <Multiselect
-                        v-model="update.meanings"
-                        :options="[]"
-                        label="meaning"
-                        :allow-empty="true"
-                        tag-placeholder="Add meaning"
-                        placeholder="Add meaning"
-                        track-by="meaning"
-                        :taggable="true"
-                        :multiple="true"
-                        @tag="addMeaning"
 
-                    >
-                    </Multiselect>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Meaning</th>
+                            <th>Is main ?</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(meaning, index) in update.meanings" :key="meaning.meaning">
+                            <td>{{meaning.meaning}}</td>
+                            <td>
+                                <input type="checkbox" v-model="meaning.is_main"/>
+
+                            </td>
+                            <td>
+                                <md-button @click="removeMeaning(meaning)">
+                                    <md-icon>
+                                        delete
+                                    </md-icon>
+                                </md-button>
+
+                            </td>
+                        </tr>
+                        <md-field>
+                            <label>Meaning</label>
+                            <md-input v-model="newMeaning"/>
+                        </md-field>
+                        <md-button @click="addMeaning" class="md-raised md-accent">Add</md-button>
+                        </tbody>
+                    </table>
+
                 </div>
 
-                <div class="mb-3">
-                    <p>Readings: </p>
-                    <Multiselect
-                        v-model="update.readings"
-                        :options="[]"
-                        label="reading"
-                        :allow-empty="true"
-                        tag-placeholder="Add reading"
-                        placeholder="Add reading"
-                        track-by="reading"
-                        :taggable="true"
-                        :multiple="true"
-                        @tag="addReading"
-                    >
-                    </Multiselect>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <p>On readings: </p>
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Reading</th>
+                                <th>Is main ?</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(reading, index) in update.onReadings" :key="reading.reading">
+                                <td>{{reading.reading}}</td>
+                                <td>
+                                    <input type="checkbox" v-model="reading.is_main"/>
+
+                                </td>
+                                <td>
+                                    <md-button @click="removeOnReading(reading)">
+                                        <md-icon>
+                                            delete
+                                        </md-icon>
+                                    </md-button>
+
+                                </td>
+                            </tr>
+                            <md-field>
+                                <label>Reading</label>
+                                <md-input v-model="newOnReading"/>
+                            </md-field>
+                            <md-button @click="addOnReading" class="md-raised md-accent">Add</md-button>
+                            </tbody>
+                        </table>
+
+<!--                        <Multiselect-->
+<!--                            v-model="update.onReadings"-->
+<!--                            :options="[]"-->
+<!--                            :allow-empty="true"-->
+<!--                            tag-placeholder="Add reading"-->
+<!--                            placeholder="Add reading"-->
+<!--                            :taggable="true"-->
+<!--                            :multiple="true"-->
+<!--                            @tag="addOnReading"-->
+<!--                        >-->
+<!--                        </Multiselect>-->
+                    </div>
+
+                    <div class="col-6">
+                        <p>Kun readings: </p>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Reading</th>
+                                    <th>Is main ?</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="reading in update.kunReadings" :key="reading.reading">
+                                    <td>{{reading.reading}}</td>
+                                    <td>
+                                        <input v-model="reading.is_main" type="checkbox"/>
+
+                                    </td>
+                                    <td>
+                                        <md-button @click="removeKunReading(reading)">
+                                            <md-icon>
+                                                delete
+                                            </md-icon>
+                                        </md-button>
+
+                                    </td>
+                                </tr>
+                                <md-field>
+                                    <label>Reading</label>
+                                    <md-input v-model="newKunReading"/>
+                                </md-field>
+                                <md-button @click="addKunReading" class="md-raised md-accent">Add</md-button>
+                            </tbody>
+                        </table>
+
+<!--                        <Multiselect-->
+<!--                            v-model="update.kunReadings"-->
+<!--                            :options="[]"-->
+<!--                            :allow-empty="true"-->
+<!--                            tag-placeholder="Add reading"-->
+<!--                            placeholder="Add reading"-->
+<!--                            :taggable="true"-->
+<!--                            :multiple="true"-->
+<!--                            @tag="addKunReading"-->
+<!--                        >-->
+<!--                        </Multiselect>-->
+                    </div>
                 </div>
+
+
 
                 <!-- Mnemonic -->
                 <md-field>
@@ -185,7 +287,8 @@
                     word: "",
                     wordTypeId: 0,
                     meanings: [],
-                    readings: [],
+                    onReadings: [],
+                    kunReadings: [],
                     meaning_mnemonic: "",
                     reading_mnemonic: "",
                     examples: [],
@@ -194,7 +297,10 @@
                     example: "",
                     translation: "",
                     type: "phrase"
-                }
+                },
+                newKunReading: "",
+                newOnReading: "",
+                newMeaning: ""
             }
         },
         methods: {
@@ -227,7 +333,8 @@
                     reading_mnemonic: this.update.reading_mnemonic,
                     examples: this.update.examples,
                     meanings: this.update.meanings,
-                    readings: this.update.readings,
+                    onReadings: this.update.onReadings,
+                    kunReadings: this.update.kunReadings,
                     level: this.update.level
                 };
 
@@ -246,11 +353,27 @@
                         toastr.error("Error while updating item");
                     });
             },
-            addMeaning(meaning){
-                this.update.meanings.push({meaning: meaning});
+            addMeaning(){
+                this.update.meanings.push({
+                    meaning: this.newMeaning,
+                    is_main: 0
+                });
             },
-            addReading(reading){
-                this.update.readings.push({reading: reading});
+            addOnReading(){
+                this.update.onReadings.push({
+                    reading: this.newOnReading,
+                    is_main: 0
+                });
+
+                this.newOnReading = "";
+            },
+            addKunReading(){
+                this.update.kunReadings.push({
+                    reading: this.newKunReading,
+                    is_main: 0
+                });
+
+                this.newKunReading = "";
             },
             addExample(){
                 this.update.examples.push({
@@ -265,6 +388,15 @@
                     translation: "",
                     type: "phrase"
                 };
+            },
+            removeOnReading(reading){
+                this.update.onReadings = this.update.onReadings.filter(item => item !== reading)
+            },
+            removeKunReading(reading){
+                this.update.kunReadings = this.update.kunReadings.filter(item => item !== reading)
+            },
+            removeMeaning(meaning){
+                this.update.meanings = this.update.meanings.filter(item => item !== meaning)
             }
         },
         mounted() {
@@ -274,7 +406,8 @@
             this.update.word = this.item.word;
             this.update.wordTypeId = this.item.word_type_id;
             this.update.meanings = this.item.meanings;
-            this.update.readings = this.item.readings;
+            this.update.kunReadings = this.item.kun_readings;
+            this.update.onReadings = this.item.on_readings;
             this.update.meaning_mnemonic = this.item.meaning_mnemonic;
             this.update.reading_mnemonic = this.item.reading_mnemonic;
             this.update.examples = this.item.examples;
