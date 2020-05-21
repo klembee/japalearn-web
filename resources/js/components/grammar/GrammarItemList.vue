@@ -22,7 +22,7 @@
                         <md-empty-state
                             md-icon="spellcheck"
                             md-label="Grammar items"
-                            md-description="Sorry ! We haven't wrote the grammar items in this category yet.">
+                            md-description="Sorry ! We haven't written the grammar items in this category yet.">
                         </md-empty-state>
                     </div>
 

@@ -32,6 +32,7 @@ class VocabularyStudyController extends Controller
 
         $vocabUser = $user->info->information->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
+            ->where('word_type_id', "!=", WordType::radical()->id)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
@@ -63,12 +64,14 @@ class VocabularyStudyController extends Controller
      * before reviewing again. This is the principle of spaced repetition
      *
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function vocabularyReview(Request $request){
         $user = $request->user();
 
         $vocabUser = $user->info->information->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
+            ->where('word_type_id', "!=", WordType::radical()->id)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
