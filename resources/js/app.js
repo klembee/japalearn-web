@@ -62,6 +62,8 @@ Vue.component('ViewGrammarItem', require('./components/grammar/ViewGrammarItem.v
 Vue.component('FrontPageToolbar', require('./components/FrontPageToolbar.vue').default);
 Vue.component('LatestArticles', require('./components/frontpage/LatestArticles.vue').default);
 Vue.component('RandomGrammar', require('./components/frontpage/RandomGrammar.vue').default);
+Vue.component('KanjiCurrentLevelOverview', require('./components/kanji_vocabulary/KanjiCurrentLevelOverview.vue').default);
+
 
 /**
  * Material Design Components

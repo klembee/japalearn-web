@@ -40,8 +40,10 @@ class StudentInfo extends Model
     public function getNextWeekVocabReviews(){
         // Get the vocab review for the week
         $nextWeek = Carbon::now()->addWeek();
-        $vocabsNextWeek = $this->vocabLearningPathStats->filter(function($obj, $key) use($nextWeek){
-            return $obj->next_review->lte($nextWeek);
+        $now = Carbon::now();
+
+        $vocabsNextWeek = $this->vocabLearningPathStats->filter(function($obj, $key) use($nextWeek, $now){
+            return $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) ;
         });
 
         // Sort them by review date

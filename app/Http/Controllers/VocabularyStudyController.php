@@ -32,7 +32,8 @@ class VocabularyStudyController extends Controller
 
         $vocabUser = $user->info->information->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
-            ->where('word_type_id', "!=", WordType::radical()->id)
+            ->where('word_type_id', WordType::kanji()->id)
+            ->where('level', $user->info->information->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
@@ -71,7 +72,8 @@ class VocabularyStudyController extends Controller
 
         $vocabUser = $user->info->information->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
-            ->where('word_type_id', "!=", WordType::radical()->id)
+            ->where('word_type_id', WordType::kanji()->id)
+            ->where('level', $user->info->information->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')

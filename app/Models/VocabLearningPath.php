@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Interfaces\Learnable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class VocabLearningPath extends Model
 {
@@ -13,7 +14,8 @@ class VocabLearningPath extends Model
     protected $fillable = ['word', 'level', 'word_type_id', 'mnemonic'];
     protected $appends = [
         'answers',
-        'type'
+        'type',
+        'student_level'
     ];
 
     public function getTypeAttribute(){
@@ -51,6 +53,26 @@ class VocabLearningPath extends Model
         }
 
         return $this->belongsToMany(Radical::class, 'kanji_radical', 'kanji_id', 'radical_id');
+    }
+
+    public function getStudentLeveLAttribute(){
+        if(!Auth::user() or !Auth::user()->isStudent()){
+            return 0;
+        }else{
+            $user = Auth::user();
+
+            $stat = VocabLearningPathItemStats::query()
+                ->where('student_info_id', $user->info->information->id)
+                ->where('learning_path_item_id', $this->id)->first();
+
+            if($stat && $stat->exists()){
+//                error_log("STATS FOUND");
+                return $stat->nb_right;
+            }else{
+//                error_log("No stats found");
+                return 0;
+            }
+        }
     }
 
     public function getAnswersAttribute(){

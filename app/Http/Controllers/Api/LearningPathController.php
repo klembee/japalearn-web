@@ -4,8 +4,10 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Events\KanjiLeveledUp;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityType;
+use App\Models\GrammarLearningPathItem;
 use App\Models\StudentActivity;
 use App\Models\VocabLearningPath;
 use App\Models\VocabLearningPathExample;
@@ -307,8 +309,50 @@ class LearningPathController extends Controller
 
         }
 
+
+        // Check if the student leveled up
+        $currentKanjiLevel = $user->info->information->kanji_level;
+        $levelUp = true;
+        $kanjisThisLevel = VocabLearningPath::query()
+            ->where('word_type_id', WordType::kanji()->id)
+            ->where('level', $currentKanjiLevel)->get();
+
+        $itemsDones = $user->info->information->vocabLearningPathStats->pluck('learning_path_item_id')->toArray();
+
+        foreach($kanjisThisLevel as $kanji){
+            if($kanji->student_level < 5){
+                $levelUp = false;
+                break;
+            }
+            if(!in_array($kanji->id, $itemsDones)){
+                $levelUp = false;
+                break;
+            }
+        }
+
+        if($levelUp){
+            // Sent event
+            $userInfo = $user->info->information;
+            $userInfo->kanji_level += 1;
+            $userInfo->save();
+
+            event(new KanjiLeveledUp($user, $currentKanjiLevel + 1));
+        }
+
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    public function getLevelOverview(Request $request){
+        $user = $request->user();
+        $kanjis = VocabLearningPath::query()
+            ->where('level', $user->info->information->kanji_level)
+            ->where('word_type_id', WordType::kanji()->id)->get()->sortByDesc('student_level')->toArray();
+
+        return \response()->json([
+            'success' => true,
+            'kanjis' => array_values($kanjis)
         ]);
     }
 }

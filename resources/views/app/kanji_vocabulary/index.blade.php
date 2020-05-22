@@ -51,6 +51,15 @@
                 </div>
 
                 <div class="mt-3">
+                    <kanji-current-level-overview
+                        fetch-data-endpoint="{{route('api.learning_path.kanji.items.level_overview')}}"
+                        :level="{{Auth::user()->info->information->kanji_level}}"
+                    >
+
+                    </kanji-current-level-overview>
+                </div>
+
+                <div class="mt-3">
                     <vocab-size-per-day-graph
                         data-endpoint="{{route('api.dashboard.vocab_size')}}"
                     ></vocab-size-per-day-graph>

@@ -120,14 +120,6 @@ class KanjiLearningPathController extends Controller
             ->where('level', $level)
             ->with('meanings', 'onReadings', 'kunReadings', 'examples')->get()->toArray();
 
-
-//        $kanjis = array_map(function($item){
-//            $item['on_readings'] = array_column($item['on_readings'], 'reading');
-//            $item['kun_readings'] = array_column($item['kun_readings'], 'reading');
-//
-//            return $item;
-//        }, $kanjis);
-
         $vocabulary = VocabLearningPath::query()
             ->where('word_type_id', WordType::vocabulary()->id)
             ->where('level', $level)

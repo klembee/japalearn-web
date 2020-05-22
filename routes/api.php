@@ -60,9 +60,11 @@ Route::middleware('auth:api')->name('api.')->group(function(){
                 Route::post('{item}/delete', 'Api\LearningPathController@deleteItem')->middleware('isRole:admin')->name('delete');
                 Route::post('{item}/update', 'Api\LearningPathController@updateItem')->middleware('isRole:admin')->name('update');
 
-                Route::name('review.')->prefix('review')->group(function(){
+                Route::name('review.')->prefix('review')->middleware('isRole:student')->group(function(){
                     Route::post('update_level', 'Api\LearningPathController@updateLevel')->name('update_level');
                 });
+
+                Route::get('level-overview', 'Api\LearningPathController@getLevelOverview')->middleware('isRole:student')->name('level_overview');
             });
         });
 

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\GrammarLearningPathItem;
+use App\Models\WordType;
 use Illuminate\Http\Request;
 
 class GrammarLessonController extends Controller
