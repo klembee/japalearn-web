@@ -32,6 +32,11 @@ class StudentInfo extends Model
         return $this->hasMany(StudentActivity::class);
     }
 
+    public function firstStepsDone(){
+        return $this->belongsToMany(AccountFirstStep::class, 'student_first_steps', 'first_step_id', 'student_info_id');
+    }
+
+
     public function getCurrentGrammarCategoryAttribute(){
         foreach(GrammarLearningPathCategory::all() as $category){
             if($category->number_items_done < $category->number_items){
