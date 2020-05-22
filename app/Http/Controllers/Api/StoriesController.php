@@ -40,8 +40,12 @@ class StoriesController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'keywords' => $request->input('keywords'),
-                'slug' => Slugger::slugify($request->input('title'))
+                'slug' => Slugger::slugify($request->input('title')),
             ]);
+
+            if($request->has('translated_content')){
+                $story->translated_content = $request->input('translated_content');
+            }
 
             $story->save();
         }else{
@@ -53,31 +57,35 @@ class StoriesController extends Controller
                 'keywords' => $request->input('keywords'),
             ]);
 
+            if($request->has('translated_content')){
+                $story->translated_content = $request->input('translated_content');
+            }
+
             $story->save();
 
             // Save the translations
-            if($request->has('translations')){
-                $story->translations()->delete();
-
-                foreach($request->input('translations') as $translation){
-                    $story->translations()->save(new StoryTranslation([
-                        'japanese' => $translation['japanese'],
-                        'lang' => $translation['lang'] ?: 'en',
-                        'translation' => $translation['translation'] ?: ""
-                    ]));
-                }
-            }
+//            if($request->has('translations')){
+//                $story->translations()->delete();
+//
+//                foreach($request->input('translations') as $translation){
+//                    $story->translations()->save(new StoryTranslation([
+//                        'japanese' => $translation['japanese'],
+//                        'lang' => $translation['lang'] ?: 'en',
+//                        'translation' => $translation['translation'] ?: ""
+//                    ]));
+//                }
+//            }
 
             // Add the new phrases as empty translations
-            if($request->has('new_phrases')){
-                foreach($request->input('new_phrases') as $phrase){
-                    $story->translations()->save(new StoryTranslation([
-                        'japanese' => $phrase,
-                        'lang' => 'en',
-                        'translation' => ""
-                    ]));
-                }
-            }
+//            if($request->has('new_phrases')){
+//                foreach($request->input('new_phrases') as $phrase){
+//                    $story->translations()->save(new StoryTranslation([
+//                        'japanese' => $phrase,
+//                        'lang' => 'en',
+//                        'translation' => ""
+//                    ]));
+//                }
+//            }
         }
 
         // If file uploaded, attach it to the story

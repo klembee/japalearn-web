@@ -27,49 +27,9 @@
                 </md-tab>
                 <!-- Translation tab -->
                 <md-tab md-label="English">
-                    <h5>Save the story before editing the translations</h5>
-                    <table class="table">
-                        <colgroup>
-                            <col style="width:30%">
-                            <col style="width:70%">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>Japanese</th>
-                                <th>English</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-<!--                            <tr v-for="phrase in phrasesNotTranslated" :key="phrase.index">-->
-<!--                                <td>-->
-<!--                                    <p>{{phrase.japanese}}</p>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <md-field>-->
-<!--                                        <label>Translation</label>-->
-<!--                                        <md-input v-model="newTranslations[phrase.index].translation" />-->
-<!--                                    </md-field>-->
-<!--                                </td>-->
-<!--                            </tr>-->
+                    <textarea id="translation-editor">
 
-<!--                            <hr />-->
-<!--                            <h2>Already translated</h2>-->
-
-                            <tr v-for="(translation, i) in story.translations">
-                                <td>
-                                    <p>{{translation.japanese}}</p>
-                                </td>
-                                <td>
-                                    <md-field>
-                                        <label>Translation</label>
-                                        <md-input v-model="story.translations[i].translation" />
-                                    </md-field>
-                                </td>
-                            </tr>
-
-
-                        </tbody>
-                    </table>
+                    </textarea>
                 </md-tab>
             </md-tabs>
 
@@ -103,23 +63,20 @@
         data: function(){
             return {
                 markdownEditor: {},
+                translationEditor: {},
                 parsedContent: "",
                 phrases: [],
                 story: {
                     id: -1,
                     title: "",
                     content: "",
+                    translated_content: "",
                     keywords: "",
                     imageData: "",
-                    translations: []
                 },
-                newTranslations: []
             }
         },
         computed: {
-            newPhrases: function(){
-                return this.phrases.filter(p => !(this.story.translations.map(translation => translation.japanese).includes(p.japanese))).map(phrase => phrase.japanese);
-            }
         },
         methods: {
             save(){
@@ -129,8 +86,7 @@
                     content: this.story.content,
                     keywords: this.story.keywords,
                     image_data: this.story.imageData,
-                    translations: this.story.translations,
-                    new_phrases: this.newPhrases
+                    translated_content: this.story.translated_content,
                 };
 
                 axios.post(this.saveEndpoint, payload)
@@ -149,39 +105,31 @@
             imageChanged(dataurl){
                 this.story.imageData = dataurl;
             },
-            setPhrases(parsedContent){
-                let soup = new JSSoup(parsedContent);
-                let paragraphes = soup.findAll('p');
-                var phrases = [];
-
-                for(var i = 0; i < paragraphes.length ; i++){
-                    if(paragraphes[i].text.length > 0) {
-                        phrases.push({
-                            index: i,
-                            japanese: paragraphes[i].text,
-                        });
-                    }
-                }
-
-                this.phrases = phrases;
-            }
         },
         mounted() {
-            if(this.storyProp){
+            if (this.storyProp) {
                 this.story = _.clone(this.storyProp);
             }
 
             this.markdownEditor = new SimpleMDE();
             this.markdownEditor.value(this.story.content);
 
+            this.translationEditor = new SimpleMDE({element: document.getElementById("translation-editor")});
+
+            if (this.story.translated_content){
+                this.translationEditor.value(this.story.translated_content);
+            }
+
             this.parsedContent = marked(this.markdownEditor.value());
-            this.setPhrases(this.parsedContent);
 
             let self = this;
             this.markdownEditor.codemirror.on("change", function(){
                 self.parsedContent = marked(self.markdownEditor.value());
                 self.story.content = self.markdownEditor.value();
-                self.setPhrases(self.parsedContent);
+            });
+
+            this.translationEditor.codemirror.on("change", function(){
+                self.story.translated_content = self.translationEditor.value();
             });
 
 

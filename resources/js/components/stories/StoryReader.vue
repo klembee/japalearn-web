@@ -5,7 +5,14 @@
         </div>
         <div class="story">
             <h1 class="text-center mb-4">{{story.title}}</h1>
-            <div class="story-text" v-html="formatedContent">
+<!--            <div class="story-text" v-html="formatedContent">-->
+
+<!--            </div>-->
+            <div class="story-text">
+                <span v-for="i in phrases.length">
+                    <span v-html="phrases[i - 1]" :id="'phrase-'+(i-1)" class="phrase"></span>
+                    <span v-if="i <= translatedPhrases.length" v-html="translatedPhrases[i - 1]" :id="'translation-'+(i-1)" class="translation" style="display: none;"></span>
+                </span>
 
             </div>
         </div>
@@ -24,7 +31,9 @@
         },
         data: function(){
             return {
-                formatedContent: ""
+                formatedContent: "",
+                phrases: [],
+                translatedPhrases: [],
             }
         },
         methods:{
@@ -34,39 +43,51 @@
         },
         mounted() {
             this.formatedContent = marked(this.story.content);
+            this.phrases = this.formatedContent.split('\n');
+
+            if(this.story.translated_content) {
+                let formatedTranslation = marked(this.story.translated_content);
+                this.translatedPhrases = formatedTranslation.split('\n');
+                this.translatedPhrases = this.translatedPhrases.filter(phrase => phrase !== '')
+            }
 
             // Setup the click to get translation feature
             let self = this;
 
-            $("body").delegate(".story-text p", 'click', function(){
-                $("#translation").remove();
-                // $('p[is-showing-translation="true"]').removeAttr("is-showing-translation");
+            $("body").delegate(".phrase p", 'click', function() {
+                let phrase_id = $(this).closest('span').attr('id');
+                let index = parseInt(phrase_id.split('-')[1]);
 
-                // if($(this).attr('is-showing-translation') && $(this).attr('is-showing-translation') === "true"){
-                //     $(this).attr('is-showing-translation', "false");
-                // }else{
-                    let translation = self.translate($(this).text());
-                    if(translation !== "") {
-
-                        $(this).attr('is-showing-translation', "true");
-
-                        let offset = $(this).offset();
-
-                        // Show the translation on top of the phrase
-                        $(this).append("<p id='translation'>" + translation + "</p>");
-
-                        offset.left -= $(this).width();
-                        // For some reason I have to remove the height of the image
-                        offset.top -= $(".story-image").height();
-
-                        let fontSize = parseFloat(getComputedStyle(this).fontSize);
-                        offset.top -= fontSize;
-
-                        offset.top -= $("#translation").height();
-                        $("#translation").css(offset);
-                    }
-                // }
+                $("#translation-" + index).toggle()
             });
+            //     $("#translation").remove();
+            //     // $('p[is-showing-translation="true"]').removeAttr("is-showing-translation");
+            //
+            //     // if($(this).attr('is-showing-translation') && $(this).attr('is-showing-translation') === "true"){
+            //     //     $(this).attr('is-showing-translation', "false");
+            //     // }else{
+            //         let translation = self.translate($(this).text());
+            //         if(translation !== "") {
+            //
+            //             $(this).attr('is-showing-translation', "true");
+            //
+            //             let offset = $(this).offset();
+            //
+            //             // Show the translation on top of the phrase
+            //             $(this).append("<p id='translation'>" + translation + "</p>");
+            //
+            //             offset.left -= $(this).width();
+            //             // For some reason I have to remove the height of the image
+            //             offset.top -= $(".story-image").height();
+            //
+            //             let fontSize = parseFloat(getComputedStyle(this).fontSize);
+            //             offset.top -= fontSize;
+            //
+            //             offset.top -= $("#translation").height();
+            //             $("#translation").css(offset);
+            //         }
+            //     // }
+            // });
         }
     }
 </script>
@@ -87,12 +108,20 @@
         width:100%;
     }
 
-    /deep/ #translation{
-        position: absolute;
-        width:75%;
-        background-color: whitesmoke;
+    /deep/ .phrase{
+        cursor: pointer;
+    }
+
+    /deep/ .translation{
+        width: 100%;
+        height: fit-content;
+        background-color: #f2f2f2;
+        color: #325259;
+        display: block;
         padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #dedede;
+    }
+
+    /deep/ .translation p{
+        margin:0;
     }
 </style>

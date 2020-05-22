@@ -38,7 +38,7 @@ class StoriesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, Story $story){
-        $story = $story->load('translations');
+//        $story = $story->load('translations');
         return view('app.admin.stories.edit', compact('story'));
     }
 
@@ -65,8 +65,12 @@ class StoriesController extends Controller
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($story->content);
 
-        $story = $story->load('translations');
+        $parsedTranslation = null;
 
-        return view('app.stories.read', compact('story', 'parsedContent'));
+        if($story->translated_content) {
+            $parsedTranslation = $markdownParser->text($story->translated_content);
+        }
+
+        return view('app.stories.read', compact('story', 'parsedContent', $parsedTranslation));
     }
 }

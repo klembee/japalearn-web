@@ -27,9 +27,9 @@ class Story extends Model
         return $this->belongsTo(Author::class);
     }
 
-    public function translations(){
-        return $this->hasMany(StoryTranslation::class, 'story_id');
-    }
+//    public function translations(){
+//        return $this->hasMany(StoryTranslation::class, 'story_id');
+//    }
 
     public function setFrontImage(UploadedFile $file){
         $savedFile = $file->store('public/stories');
