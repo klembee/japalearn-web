@@ -11,7 +11,11 @@
             <div class="story-text">
                 <span v-for="i in phrases.length">
                     <span v-html="phrases[i - 1]" :id="'phrase-'+(i-1)" class="phrase"></span>
-                    <span v-if="i <= translatedPhrases.length" v-html="translatedPhrases[i - 1]" :id="'translation-'+(i-1)" class="translation" style="display: none;"></span>
+                    <div v-if="i <= translatedPhrases.length" :id="'translation-'+(i-1)" style="display: none;"  class="translation">
+                        <md-icon>arrow_upward</md-icon>
+                        <span v-html="translatedPhrases[i - 1]"></span>
+                    </div>
+
                 </span>
 
             </div>
@@ -119,9 +123,11 @@
         color: #325259;
         display: block;
         padding: 10px;
+        margin-bottom: 15px;
     }
 
     /deep/ .translation p{
         margin:0;
+        display:inline-block;
     }
 </style>

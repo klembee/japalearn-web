@@ -51,9 +51,7 @@ class FrontPageController extends Controller
     }
 
     public function readStory(Request $request, Story $story){
-        $story = $story->load('translations');
-
-        if($story->id >= 3){
+        if($story->id >= 3 && env('APP_ENV') === 'production'){
             return redirect()->back();
         }
 
