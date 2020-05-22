@@ -24,6 +24,20 @@
                         @image-changed="imageChanged">
 
                     </image-selector>
+
+                    <md-field>
+                        <label>Description</label>
+                        <md-textarea v-model="story.description">
+
+                        </md-textarea>
+                    </md-field>
+
+                    <md-field>
+                        <label>META Description</label>
+                        <md-textarea v-model="story.meta_description">
+
+                        </md-textarea>
+                    </md-field>
                 </md-tab>
                 <!-- Translation tab -->
                 <md-tab md-label="English">
@@ -73,6 +87,8 @@
                     translated_content: "",
                     keywords: "",
                     imageData: "",
+                    description: "",
+                    meta_description: "",
                 },
             }
         },
@@ -87,6 +103,8 @@
                     keywords: this.story.keywords,
                     image_data: this.story.imageData,
                     translated_content: this.story.translated_content,
+                    description: this.story.description,
+                    meta_description: this.story.meta_description
                 };
 
                 axios.post(this.saveEndpoint, payload)

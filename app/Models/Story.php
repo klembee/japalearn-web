@@ -16,7 +16,9 @@ class Story extends Model
         'keywords',
         'front_image_url',
         'meta_description',
-        'slug'
+        'slug',
+        'description',
+        'meta_description'
     ];
 
     public function questions(){

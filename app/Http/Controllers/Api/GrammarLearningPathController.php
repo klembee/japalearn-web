@@ -31,7 +31,7 @@ class GrammarLearningPathController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'category_id' => $request->input('category_id'),
-            'slug' => Slugger::slugify($request->input('title'))
+            'slug' => Slugger::slugify($request->input('title')),
         ]);
         $item->save();
 
@@ -59,6 +59,7 @@ class GrammarLearningPathController extends Controller
         try {
             $item->title = $request->input('title');
             $item->content = $request->input('content');
+
             $item->save();
 
             // Delete the questions before recreating them

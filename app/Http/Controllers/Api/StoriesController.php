@@ -47,6 +47,14 @@ class StoriesController extends Controller
                 $story->translated_content = $request->input('translated_content');
             }
 
+            if($request->has('description')){
+                $story->description = $request->input('description');
+            }
+
+            if($request->has('meta_description')){
+                $story->meta_description = $request->input('meta_description');
+            }
+
             $story->save();
         }else{
             // Update existing one
@@ -59,6 +67,14 @@ class StoriesController extends Controller
 
             if($request->has('translated_content')){
                 $story->translated_content = $request->input('translated_content');
+            }
+
+            if($request->has('description')){
+                $story->description = $request->input('description');
+            }
+
+            if($request->has('meta_description')){
+                $story->meta_description = $request->input('meta_description');
             }
 
             $story->save();

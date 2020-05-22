@@ -5,9 +5,9 @@
         </div>
         <div class="story">
             <h1 class="text-center mb-4">{{story.title}}</h1>
-<!--            <div class="story-text" v-html="formatedContent">-->
-
-<!--            </div>-->
+            <div v-if="story.description" class="description">
+                {{story.description}}
+            </div>
             <div class="story-text">
                 <span v-for="i in phrases.length">
                     <span v-html="phrases[i - 1]" :id="'phrase-'+(i-1)" class="phrase"></span>
@@ -106,6 +106,13 @@
         font-size:1.6em;
         font-family: notosans, "Nunito", sans-serif;
         letter-spacing: 2px;
+    }
+
+    .description{
+        border-bottom: 1px solid #325259;
+        padding: 0px 20px 20px 20px;
+        font-size: 1.3em;
+        margin-bottom: 20px;
     }
 
     /deep/ .story-text img{
