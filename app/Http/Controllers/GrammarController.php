@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GrammarLearningPathCategory;
 use App\Models\GrammarLearningPathItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GrammarController extends Controller
 {
@@ -22,7 +23,9 @@ class GrammarController extends Controller
         $categories = GrammarLearningPathCategory::query()->orderBy('order')->get();
         $nextItem = GrammarHelper::getNextItem();
 
-        return view('app.grammar.index', compact('categories', 'nextItem'));
+        $currentCategory = Auth::user()->info->information->current_grammar_category;
+
+        return view('app.grammar.index', compact('categories', 'nextItem', 'currentCategory'));
     }
 
 

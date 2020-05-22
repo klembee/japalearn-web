@@ -19,6 +19,8 @@ class GrammarLearningPathItem extends Model
         'slug'
     ];
 
+    protected $appends = ['abstract'];
+
     /**
      * The category of this learning path item
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -39,6 +41,13 @@ class GrammarLearningPathItem extends Model
         $user = Auth::user();
         $itemsDone = $user->info->information->grammarItemsDone->pluck('id');
         return $query->whereNotIn('id', $itemsDone);
+    }
+
+    public function getAbstractAttribute(){
+        $markdownParser = new \Parsedown();
+        $parsedContent = strip_tags(str_replace('</', '. </', $markdownParser->text($this->content)));
+
+        return mb_substr($parsedContent, 0, 100) . "...";
     }
 
     public function getRouteKeyName()

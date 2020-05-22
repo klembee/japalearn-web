@@ -15,12 +15,37 @@
         </div>
         <hr />
 
-        @if($nextItem)
-            <div>
-                <h3>{{__('Continue where you left')}}: <b>{{$nextItem->title}}</b></h3>
-                <p>{{substr($nextItem->content, 0, 20)}}...</p>
-                <md-button href="{{route('grammar.learn', $nextItem)}}" class="md-primary md-raised">Continue learning</md-button>
+        <div class="row m-0">
+            <div class="col-12 col-md-8">
+                @if($nextItem)
+                    <div>
+                        <h3>{{__('Continue where you left')}}: <b>{{$nextItem->title}}</b></h3>
+                        <p>{{substr($nextItem->content, 0, 20)}}...</p>
+                        <md-button href="{{route('grammar.learn', $nextItem)}}" class="md-primary md-raised">Continue learning</md-button>
+                    </div>
+                @endif
             </div>
-        @endif
+            <div class="col-12 col-md-4 order-first order-md-last">
+                @if($currentCategory)
+                    <h2>Grammar lessons in {{$currentCategory->category}}</h2>
+                    @foreach($currentCategory->items as $item)
+                        <md-card class="mt-3">
+                            <md-card-header>
+                                <h3>{{$item->title}}</h3>
+                            </md-card-header>
+                            <md-card-content>
+                                <p>{{$item->abstract}}</p>
+                            </md-card-content>
+                            <md-card-actions>
+                                <md-button class="md-raised md-accent">Read</md-button>
+                            </md-card-actions>
+                        </md-card>
+                    @endforeach
+                @else
+                    <p>Congratulations ! You did all the grammar lessons.</p>
+                @endif
+            </div>
+        </div>
+
     </div>
 @endsection

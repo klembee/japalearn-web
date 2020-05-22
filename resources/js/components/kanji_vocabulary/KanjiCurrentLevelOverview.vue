@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div v-show="isLoading" class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
         <div>
             <h2 class="mb-3">Level {{level}} progress</h2>
+            <div v-show="isLoading" class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
             <md-card v-for="kanji in kanjis" :key="kanji.id" class="kanji-card mb-2">
                 <h2 class="word">{{kanji.word}}</h2>
                 <level-indicator :nb-levels="5" :level="kanji.student_level"></level-indicator>

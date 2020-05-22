@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudentInfo extends Model
 {
     protected $table = "student_info";
-//    protected $appends = ['number_reviews', 'number_lessons'];
+    protected $appends = ['current_grammar_category'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -30,6 +30,17 @@ class StudentInfo extends Model
 
     public function activity(){
         return $this->hasMany(StudentActivity::class);
+    }
+
+    public function getCurrentGrammarCategoryAttribute(){
+        foreach(GrammarLearningPathCategory::all() as $category){
+            if($category->number_items_done < $category->number_items){
+                return $category;
+            }
+        }
+
+        // User did all grammar items
+        return null;
     }
 
     /**
