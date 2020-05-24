@@ -9,7 +9,7 @@
                             <h2>{{item.title}}</h2>
                         </md-card-header>
                         <md-card-content>
-
+                            <p>{{item.abstract}}</p>
                         </md-card-content>
                         <md-card-actions>
                             <md-button :href="viewUrl.replace(':id', item.slug)" class="md-raised md-accent">Learn</md-button>
