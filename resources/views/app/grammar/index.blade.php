@@ -37,7 +37,7 @@
                                 <p>{{$item->abstract}}</p>
                             </md-card-content>
                             <md-card-actions>
-                                <md-button class="md-raised md-accent">Read</md-button>
+                                <md-button href="{{route('grammar.learn', $item)}}" class="md-raised md-accent">Read</md-button>
                             </md-card-actions>
                         </md-card>
                     @endforeach

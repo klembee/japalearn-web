@@ -33,6 +33,11 @@ class GrammarLearningPathController extends Controller
             'category_id' => $request->input('category_id'),
             'slug' => Slugger::slugify($request->input('title')),
         ]);
+
+        if($request->has('meta_description')){
+            $item->meta_description = $request->input('meta_description');
+        }
+
         $item->save();
 
 
@@ -59,6 +64,10 @@ class GrammarLearningPathController extends Controller
         try {
             $item->title = $request->input('title');
             $item->content = $request->input('content');
+
+            if($request->has('meta_description')){
+                $item->meta_description = $request->input('meta_description');
+            }
 
             $item->save();
 

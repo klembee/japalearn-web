@@ -19,6 +19,13 @@
 <!--                </md-field>-->
             </div>
 
+            <md-field>
+                <label>Meta description</label>
+                <md-textarea v-model="item.meta_description">
+
+                </md-textarea>
+            </md-field>
+
             <hr />
 
             <div>
@@ -128,7 +135,8 @@
                     title: "",
                     content: "",
                     slug: "",
-                    questions: []
+                    questions: [],
+                    meta_description: ""
                 },
                 newQuestion: {
                     question: "",
@@ -150,6 +158,7 @@
                     title: this.item.title,
                     content: this.markdownEditor.value(),
                     questions: this.item.questions,
+                    meta_description: this.item.meta_description
                 };
 
                 axios.post(this.saveEndpoint, payload)

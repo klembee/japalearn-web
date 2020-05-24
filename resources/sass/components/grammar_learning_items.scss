@@ -7,15 +7,37 @@
     box-shadow: -1px 7px 20px 0px #dedede;
 }
 
+.grammar-card{
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+
+@media screen and (max-width: 1250px) {
+    //.grammar-card{
+    //    padding-left: 5rem;
+    //    padding-right: 5rem;
+    //}
+}
+
 @media screen and (max-width: 1000px) {
     .grammar-item-content{
         width:75%;
+    }
+
+    .grammar-card{
+        padding-left: 5rem;
+        padding-right: 5rem;
     }
 }
 
 @media screen and (max-width: 600px) {
     .grammar-item-content{
         width:100%;
+    }
+
+    .grammar-card{
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }
 

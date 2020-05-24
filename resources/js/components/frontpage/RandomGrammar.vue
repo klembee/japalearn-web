@@ -68,5 +68,6 @@
     .article-item{
         padding: 15px 30px 15px 30px;
         border-bottom: 2px solid #f5f5f5;
+        cursor: pointer;
     }
 </style>

@@ -1,9 +1,9 @@
 <template>
-    <div class="row w-100 m-0">
-        <div class="content col-lg-7 col-md-9 col-12">
+    <div>
+        <div class="content">
 
             <md-button @click="goBack" class="md-raised md-accent back-button">Back to lesson list</md-button>
-            <md-card>
+            <md-card class="grammar-card">
                 <md-card-content>
                     <h1 class="title">{{item.title}}</h1>
 
@@ -13,7 +13,15 @@
 
                     <hr />
 
-                    <p>Login to practice this grammar lesson !</p>
+                    <div v-if="practiceUrl">
+                        <div v-if="item.questions && item.questions.length > 0">
+                            <md-button :href="practiceUrl" class="md-primary md-raised">Practice</md-button>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <p>Login to practice this grammar lesson !</p>
+                    </div>
+
                 </md-card-content>
             </md-card>
 
@@ -31,6 +39,14 @@
             item: {
                 type: Object,
                 required: true
+            },
+            backUrl: {
+                type: String,
+                required: true
+            },
+            practiceUrl: {
+                type: String,
+                default: null
             }
         },
         data: function(){
@@ -40,7 +56,7 @@
         },
         methods: {
             goBack(){
-                window.history.back();
+                window.location.href = this.backUrl;
             }
         },
         mounted() {
@@ -59,5 +75,23 @@
     }
     .content{
         margin:auto;
+    }
+
+    /deep/ table{
+        width:fit-content;
+        margin:auto;
+        font-size:1.3em;
+
+        max-width: 100%;
+        overflow-x: scroll;
+        display: block;
+    }
+
+    /deep/ table th{
+        border-bottom:2px solid #325259;
+        color:#325259;
+    }
+    /deep/ table td{
+        padding:8px;
     }
 </style>
