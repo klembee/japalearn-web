@@ -21,9 +21,14 @@ class FrontPageController extends Controller
     }
 
     public function randomGrammarLessons(Request $request){
+
+        $items = GrammarLearningPathItem::query()->get();
+        $nb = min($items->count(), 3);
+
+
         return response()->json([
             'success' => true,
-            'items' => GrammarLearningPathItem::query()->get()->random(3)
+            'items' => $items->random($nb)
         ]);
     }
 
