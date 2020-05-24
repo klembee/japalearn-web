@@ -83,7 +83,7 @@
         font-size:1.3em;
 
         max-width: 100%;
-        overflow-x: scroll;
+        overflow-x: auto;
         display: block;
     }
 
