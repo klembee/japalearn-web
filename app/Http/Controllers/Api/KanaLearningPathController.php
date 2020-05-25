@@ -72,6 +72,7 @@ class KanaLearningPathController extends Controller
                     ->where('kana_id', $good['id'])->firstOrFail();
 
                 $stat->number_right += 1;
+                $stat->nb_tries += 1;
                 $stat->last_review = now();
                 $stat->save();
 
@@ -122,6 +123,9 @@ class KanaLearningPathController extends Controller
                 if($stat->numberRight < 1){
                     $stat->number_right = 1;
                 }
+
+                $stat->nb_tries += 1;
+
                 $stat->last_review = now();
                 $stat->save();
             }

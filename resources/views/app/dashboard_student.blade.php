@@ -17,10 +17,10 @@
             </div>
         @endif
 
-        <learning-journey
-            :done-basic-kanas="{{$doneBasicKanas ? 'true' : 'false'}}"
-            kana-url="{{route('kanas.index')}}"
-        ></learning-journey>
+{{--        <learning-journey--}}
+{{--            :done-basic-kanas="{{$doneBasicKanas ? 'true' : 'false'}}"--}}
+{{--            kana-url="{{route('kanas.index')}}"--}}
+{{--        ></learning-journey>--}}
 
         <div class="dashboard-content">
             <div class="row mt-4">
@@ -34,6 +34,87 @@
                 </div>
 
                 <md-content class="col-12 col-lg-5 h-fit">
+
+                    <!-- Get started -->
+                    @if(!$user->info->information->did_all_first_steps)
+                    <md-card class="get-started-card mb-3">
+                        <md-card-header>
+                            <h2>Get started</h2>
+                        </md-card-header>
+                        <md-card-content>
+                            <a href="{{route('grammar.learn', \App\Models\GrammarLearningPathItem::query()->first())}}">
+                                <div class="get-started-item clickable">
+                                    <div>
+                                        @if(!$user->info->information->tookFirstGrammarLesson())
+                                            <md-icon>check_circle_outline</md-icon>
+                                        @else
+                                            <md-icon>check_circle</md-icon>
+                                        @endif
+                                    </div>
+                                    <p>Take your first grammar lesson</p>
+                                </div>
+                            </a>
+
+                            <a href="{{route('kanas.index')}}">
+                                <div class="get-started-item clickable">
+                                    <div>
+                                        @if(!$user->info->information->learnedFirst10Kanas())
+                                            <md-icon>check_circle_outline</md-icon>
+                                        @else
+                                            <md-icon>check_circle</md-icon>
+                                        @endif
+                                    </div>
+
+                                    <p>Learn the first ten kanas</p>
+                                </div>
+                            </a>
+
+                            <a href="{{route('kanji_vocabulary.index')}}">
+                                <div class="get-started-item clickable">
+                                    <div>
+                                        @if(!$user->info->information->learnedFirstKanji())
+                                            <md-icon>check_circle_outline</md-icon>
+                                        @else
+                                            <md-icon>check_circle</md-icon>
+                                        @endif
+                                    </div>
+
+                                    <p>Learn your first kanji</p>
+                                </div>
+                            </a>
+
+                            <a href="{{route('kanas.index')}}">
+                                <div class="get-started-item clickable">
+                                    <div>
+                                        @if(!$user->info->information->didFirstKanaReview())
+                                            <md-icon>check_circle_outline</md-icon>
+                                        @else
+                                            <md-icon>check_circle</md-icon>
+                                        @endif
+                                    </div>
+
+                                    <p>Wait and do your kana reviews</p>
+                                </div>
+                            </a>
+
+                            <a href="{{route('kanji_vocabulary.index')}}">
+                                <div class="get-started-item clickable">
+                                    <div>
+                                        @if(!$user->info->information->didFirstKanjiReviews())
+                                            <md-icon>check_circle_outline</md-icon>
+                                        @else
+                                            <md-icon>check_circle</md-icon>
+                                        @endif
+                                    </div>
+
+                                    <p>Wait and do your kanji reviews</p>
+                                </div>
+                            </a>
+                        </md-card-content>
+                    </md-card>
+                    @endif
+
+
                     <latest-activity-widget
                         latest-activity-api="{{route('api.dashboard.latest_activity')}}"
                         class="md-elevation-3 p-3"

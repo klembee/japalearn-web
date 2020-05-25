@@ -15,6 +15,7 @@
 {{--        </div>--}}
 
         <view-grammar-item
+            mark-as-done-url="{{route('api.learning_path.grammar.update-level')}}"
             :item="{{json_encode($item)}}"
             back-url="{{route('grammar.index')}}"
             practice-url="{{route('study.grammar.review', $item)}}"

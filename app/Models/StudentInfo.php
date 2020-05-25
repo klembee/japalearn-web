@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 class StudentInfo extends Model
 {
     protected $table = "student_info";
-    protected $appends = ['current_grammar_category'];
+    protected $appends = [
+        'current_grammar_category',
+        'did_all_first_steps'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -67,6 +70,40 @@ class StudentInfo extends Model
             return $obj->next_review->addHour()->format("Y-m-d H:00:00");
         });
         return $vocabsNextWeekTimes->countBy()->all();
+    }
+
+    public function tookFirstGrammarLesson(){
+        return $this->grammarItemsDone()->count() > 0;
+    }
+
+    public function learnedFirst10Kanas(){
+        error_log($this->kanaLearningPathStats()->count());
+
+        return $this->kanaLearningPathStats()->count() >= 10;
+    }
+
+    public function learnedFirstKanji(){
+        return $this->vocabLearningPathStats()->count() > 0;
+    }
+
+    public function didFirstKanaReview(){
+        return $this->whereHas('kanaLearningPathStats', function($query){
+            return $query->where('nb_tries', '>', 1);
+        })->count() > 0;
+    }
+
+    public function didFirstKanjiReviews(){
+        return $this->whereHas('vocabLearningPathStats', function($query){
+                return $query->where('nb_tries', '>', 1);
+            })->count() > 0;
+    }
+
+    public function getDidAllFirstStepsAttribute(){
+        return $this->tookFirstGrammarLesson() &&
+            $this->learnedFirst10Kanas() &&
+            $this->learnedFirstKanji() &&
+            $this->didFirstKanaReview() &&
+            $this->didFirstKanjiReviews();
     }
 
     public function finishedKanas(){

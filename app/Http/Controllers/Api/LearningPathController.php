@@ -243,9 +243,6 @@ class LearningPathController extends Controller
             try {
                 $item = VocabLearningPath::query()->where('word', $word)->where('word_type_id', $type->id)->firstOrFail();
 
-
-                error_log($itemStats->count());
-
                 if ($itemStats->count() > 0) {
                     // Edit
                     $stat = VocabLearningPathItemStats::query()
@@ -253,6 +250,7 @@ class LearningPathController extends Controller
                         ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
                     $stat->nb_right += 1;
+                    $stat->nb_tries += 1;
                     $stat->last_study_date = now();
 
                     $stat->save();
@@ -294,16 +292,13 @@ class LearningPathController extends Controller
 
         // Go Through each items that the user got wrong and update the study date to now
         foreach($wrongItems as $wrong) {
-//            $word = $wrong['question'];
-//            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word){
-//                return $query->where('word', $word);
-//            })->get();
 
             $stat = VocabLearningPathItemStats::query()
                 ->where('learning_path_item_id', $wrong['id'])
                 ->where('student_info_id', $user->info->information->id)->firstOrFail();
 
             $stat->last_study_date = now();
+            $stat->nb_tries += 1;
 
             $stat->save();
 
