@@ -26,6 +26,16 @@
                 </md-textarea>
             </md-field>
 
+            <h3>Image:</h3>
+            <image-selector
+                :aspect-ratio="16/9"
+                @image-changed="imageChanged">
+
+            </image-selector>
+            <md-field>
+                <label>Image alt</label>
+                <md-input v-model="item.front_image_alt"/>
+            </md-field>
             <hr />
 
             <div>
@@ -136,7 +146,9 @@
                     content: "",
                     slug: "",
                     questions: [],
-                    meta_description: ""
+                    meta_description: "",
+                    image_data: "",
+                    front_image_alt: "",
                 },
                 newQuestion: {
                     question: "",
@@ -158,7 +170,9 @@
                     title: this.item.title,
                     content: this.markdownEditor.value(),
                     questions: this.item.questions,
-                    meta_description: this.item.meta_description
+                    meta_description: this.item.meta_description,
+                    image_data: this.item.image_data,
+                    front_image_alt: this.item.front_image_alt,
                 };
 
                 axios.post(this.saveEndpoint, payload)
@@ -201,7 +215,10 @@
                     }],
                     indication: ""
                 }
-            }
+            },
+            imageChanged(dataurl){
+                this.item.image_data = dataurl;
+            },
         },
         mounted() {
             this.item = _.clone(this.itemProp);

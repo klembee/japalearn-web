@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Helpers\PictureUploaderHelper;
 use App\Helpers\Slugger;
 use App\Http\Controllers\Controller;
 use App\Models\GrammarLearningPathAnswer;
@@ -38,6 +39,15 @@ class GrammarLearningPathController extends Controller
             $item->meta_description = $request->input('meta_description');
         }
 
+        if($request->has('image_data')){
+            if($request->has('front_image_alt')){
+                $item->front_image_alt = $request->input('front_image_alt');
+            }
+
+            $image = PictureUploaderHelper::uploadFile($request->input('image_data'));
+            $item->setImage($image);
+        }
+
         $item->save();
 
 
@@ -67,6 +77,15 @@ class GrammarLearningPathController extends Controller
 
             if($request->has('meta_description')){
                 $item->meta_description = $request->input('meta_description');
+            }
+
+            if($request->has('image_data')){
+                if($request->has('front_image_alt')){
+                    $item->front_image_alt = $request->input('front_image_alt');
+                }
+
+                $image = PictureUploaderHelper::uploadFile($request->input('image_data'));
+                $item->setImage($image);
             }
 
             $item->save();

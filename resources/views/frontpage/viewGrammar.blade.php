@@ -1,7 +1,11 @@
 @extends('layouts.notLoggedIn')
 
 @section('seo_info')
-    <meta property="og:image" content="/images/facebook-share.jpg">
+    @if($item->front_image_url)
+        <meta property="og:image" content="/storage/{{$item->front_image_url}}">
+    @else
+        <meta property="og:image" content="/images/facebook-share.jpg">
+    @endif
     <title>Grammar: {{$item->title}}</title>
     @if($item->meta_description)
         <meta name="description" content="{{$item->meta_description}}">

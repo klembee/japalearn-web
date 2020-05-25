@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 
 class GrammarLearningPathItem extends Model
@@ -48,6 +49,15 @@ class GrammarLearningPathItem extends Model
         $parsedContent = strip_tags(str_replace('</', '. </', $markdownParser->text($this->content)));
 
         return mb_substr($parsedContent, 0, 100) . "...";
+    }
+
+    public function setImage(UploadedFile $file){
+        $savedFile = $file->store('public/grammar');
+
+        // Remove the "/public/" part before save in database
+        $path = substr($savedFile, strpos($savedFile, "/") + 1);
+        $this->front_image_url = $path;
+        $this->save();
     }
 
     public function getRouteKeyName()
