@@ -139,7 +139,7 @@
 
                 if(this.answerIsCorrect()){
                     //Good answer
-                    if(this.removeWrong || !this.wrong.includes(this.currentItem)) {
+                    if(this.removeWrong || this.wrong.filter(item => item.question === this.currentItem.question).length === 0) {
 
                         let alreadyGood = this.good.filter(item => item.question === this.currentItem.question).length > 0;
                         if(!alreadyGood) {
@@ -161,7 +161,7 @@
                     }
 
                     if(!this.removeWrong) {
-                        this.right = this.right.filter(item => item != this.currentItem);
+                        this.good = this.good.filter(item => item != this.currentItem);
                     }
 
                     this.showAnswer = true

@@ -48,7 +48,7 @@
 {{--        These are mainly used to represent words imported from other countries.</p>--}}
 
     <div class="row">
-        <div class="col-md-8 col-12">
+        <div class="col-md-8 col-12 mb-3">
             <h2>Hiragana</h2>
             <hiragana-table
                 :kanas="{{json_encode($allKanas)}}"
