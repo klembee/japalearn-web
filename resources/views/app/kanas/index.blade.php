@@ -9,7 +9,7 @@
 
 @section('content')
 
-    <div class="row">
+    <div class="row mb-5">
         <md-card class="col-lg-3 col-md-4 col-12 mb-3 mb-md-0 ml-0 ml-md-4">
             <md-card-header>
                 <h1>{{__('Items to learn')}}</h1>
@@ -41,7 +41,6 @@
             </md-card-actions>
         </md-card>
     </div>
-    <hr />
 
 
 {{--    <p>The Japanese language consists of two scripts known as "kanas". The first one is the hiraganas.--}}
@@ -49,18 +48,26 @@
 {{--        These are mainly used to represent words imported from other countries.</p>--}}
 
     <div class="row">
-        <div class="col-xl-6 col-12">
+        <div class="col-md-8 col-12">
             <h2>Hiragana</h2>
             <hiragana-table
                 :kanas="{{json_encode($allKanas)}}"
             ></hiragana-table>
-        </div>
-        <div class="col-xl-6 col-12">
+
             <h2>Katakana</h2>
             <hiragana-table
                 :kanas="{{json_encode($allKanas)}}"
                 :is-katakana="true"
             ></hiragana-table>
+        </div>
+        <div class="col-md-4 col-12 order-first order-md-last">
+            <h1>Reviews this week</h1>
+
+            <review-forecast
+                :number-reviews-per-day="{{json_encode($nextWeekKanaReview)}}"
+            >
+
+            </review-forecast>
         </div>
     </div>
 

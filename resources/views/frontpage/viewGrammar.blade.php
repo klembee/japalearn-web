@@ -23,8 +23,6 @@
                     ></view-grammar-item>
                 </div>
             </div>
-
-
         </div>
     </div>
 @endsection

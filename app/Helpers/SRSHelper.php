@@ -31,13 +31,15 @@ class SRSHelper
 
     private $levelBeforeNewItems;
     private $numberItemsAtATime;
+    private $maxLevel;
 
-    public function  __construct($allObjects, $objectUser, $levelBeforeNewItems = 4, $numberItemsAtATime = 30)
+    public function  __construct($allObjects, $objectUser, $levelBeforeNewItems = 4, $numberItemsAtATime = 30, $maxLevel = 8)
     {
         $this->allObjects = $allObjects;
         $this->objectUser = $objectUser;
         $this->levelBeforeNewItems = $levelBeforeNewItems;
         $this->numberItemsAtATime = $numberItemsAtATime;
+        $this->maxLevel = $maxLevel;
     }
 
 
@@ -64,6 +66,10 @@ class SRSHelper
      * @return bool
      */
     private function itemNeedReview($item){
+        if($item['level'] > $this->maxLevel){
+            return false;
+        }
+
         return Carbon::now()->gte($item['next_review']);
     }
 

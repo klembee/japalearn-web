@@ -51,6 +51,7 @@ class StudentInfo extends Model
         return null;
     }
 
+
     /**
      * Get the date and time that the user will have
      * reviews for the next week. It is used to the review forecast component
@@ -62,7 +63,7 @@ class StudentInfo extends Model
         $now = Carbon::now();
 
         $vocabsNextWeek = $this->vocabLearningPathStats->filter(function($obj, $key) use($nextWeek, $now){
-            return $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) ;
+            return $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) && $obj->level < 8 ;
         });
 
         // Sort them by review date
@@ -70,6 +71,23 @@ class StudentInfo extends Model
             return $obj->next_review->addHour()->format("Y-m-d H:00:00");
         });
         return $vocabsNextWeekTimes->countBy()->all();
+    }
+
+    public function getNextWeekKanaReviews(){
+        // Get the kana review for the week
+        $nextWeek = Carbon::now()->addWeek();
+        $now = Carbon::now();
+
+        $kanaNextWeek = $this->kanaLearningPathStats->filter(function($obj, $key) use($nextWeek, $now){
+            return $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) && $obj->level < 5 ;
+        });
+
+        // Sort them by review date
+        $kanaNextWeekTimes = $kanaNextWeek->map(function($obj, $key){
+            return $obj->next_review->addHour()->format("Y-m-d H:00:00");
+        });
+
+        return $kanaNextWeekTimes->countBy()->all();
     }
 
     public function tookFirstGrammarLesson(){
