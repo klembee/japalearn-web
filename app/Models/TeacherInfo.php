@@ -14,4 +14,13 @@ use Illuminate\Database\Eloquent\Model;
 class TeacherInfo extends Model
 {
     public $table = "teacher_info";
+
+    public function user(){
+        return $this->hasOneThrough(User::class, UserInformation::class, 'information_id', 'id', 'id', 'user_id');
+    }
+
+    public function appointments(){
+        return $this->hasMany(Appointment::class, 'teacher_info_id');
+    }
+
 }

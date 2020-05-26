@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-6 col-xs-12">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <h2>Next video lessons</h2>
                     <table class="table">
                         <thead>
@@ -20,21 +20,24 @@
                                 <td>{{__('Date')}}</td>
                             </tr>
                         </thead>
-                        <!-- Todo: Ajouter next lessons -->
+                        <tbody>
+                            @foreach($commingLessons as $lesson)
+                            <tr>
+                                <td>{{$lesson->studentInfo->user->name}}</td>
+                                <td>{{$lesson->date}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     <h2>Lessons to confirm</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <td>{{__('Student')}}</td>
-                                <td>{{__('Date')}}</td>
-                                <td>{{__('Action')}}</td>
-                            </tr>
-                        </thead>
-                        <!-- todo: Pouvoir accepter ou refuser des rendez-vous -->
-                    </table>
+                    <lessons-to-confirm-table
+                        confirm-lesson-endpoint="{{route('api.video_lesson.confirm', ['lesson' => ':appointment_id'])}}"
+                        :unconfirmed-lessons="{{json_encode($unconfirmedLessons)}}"
+                    >
+
+                    </lessons-to-confirm-table>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\VideoConferenceHelper;
 use App\Models\User;
 use Aws\Chime\ChimeClient;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
@@ -50,7 +51,9 @@ class DashboardController extends Controller
 
     public function index_Student(User $user, Request $request){
         $doneBasicKanas = $user->info->information->finishedKanas();
+        $nextAppointments = $user->info->information->appointments()
+            ->where('date', '>=', Carbon::now())->get();
 
-        return view("app.dashboard_student", compact('user', 'doneBasicKanas'));
+        return view("app.dashboard_student", compact('user', 'doneBasicKanas', 'nextAppointments'));
     }
 }

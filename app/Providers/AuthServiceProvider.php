@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Appointment;
 use App\Models\Message;
 use App\Models\StudentInvitation;
 use App\Models\TeacherAvailability;
 use App\Models\User;
 use App\Models\Vocabulary;
+use App\Policies\AppointmentPolicy;
 use App\Policies\MessagesPolicy;
 use App\Policies\StudentInvitationPolicy;
 use App\Policies\UsersPolicy;
@@ -27,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         StudentInvitation::class => StudentInvitationPolicy::class,
         Vocabulary::class => VocabularyPolicy::class,
         Message::class => MessagesPolicy::class,
-        TeacherAvailability::class => \App\Policies\TeacherAvailability::class
+        TeacherAvailability::class => \App\Policies\TeacherAvailability::class,
+        Appointment::class => AppointmentPolicy::class
     ];
 
     /**

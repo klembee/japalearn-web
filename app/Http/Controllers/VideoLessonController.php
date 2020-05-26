@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -28,7 +29,16 @@ class VideoLessonController extends Controller
             return response()->make("Error", 403);
         }
 
-        return view('app.video_lessons.index');
+        $user = $request->user();
+        $unconfirmedLessons = $user->info->information->appointments()->with(['studentInfo', 'studentInfo.user'])->where('confirmed', false)->get();
+        $commingLessons = $user->info->information->appointments()
+            ->with(['studentInfo', 'studentInfo.user'])
+            ->where('confirmed', true)
+            ->where('date', '>=', Carbon::now())->get();
+
+        error_log($commingLessons->count());
+
+        return view('app.video_lessons.index', compact('unconfirmedLessons', 'commingLessons'));
     }
 
     /**
@@ -54,7 +64,20 @@ class VideoLessonController extends Controller
 
         //todo: Validate that the user can schedule lesson with this teacher.
 
-        return view('app.video_lessons.schedule', compact('teacher'));
+        $stripeIntent = $request->user()->createSetupIntent()->client_secret;
+        $creditCardsStripe = $request->user()->paymentMethods()->toArray();
+        $creditCards = [];
+        foreach($creditCardsStripe as $creditCard){
+            $creditCards[] = [
+                'id' => $creditCard->id,
+                'last4' => $creditCard->card->last4,
+                'exp_month' => $creditCard->card->exp_month,
+                'exp_year' => $creditCard->card->exp_year
+            ];
+
+        }
+
+        return view('app.video_lessons.schedule', compact('teacher', 'stripeIntent', 'creditCards'));
     }
 
     public function updateInformation(Request $request){

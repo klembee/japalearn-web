@@ -42,7 +42,18 @@
                             </tr>
                         </table>
 
-                        <md-button v-show="time" @click="schedule()">Schedule lesson and pay</md-button>
+                        <credit-card-chooser
+                            :user-email="userEmail"
+                            :credit-cards="creditCards"
+                            :amount="totalCost"
+                            :save-method-endpoint="savePaymentMethodEndpoint"
+                            :stripe-key="stripeKey"
+                            :client-secret="clientSecret"
+                            @card-selected="methodSelected"
+                            @card-unselected="selectedCard = null"
+                        ></credit-card-chooser>
+
+                        <md-button :disabled="loading" v-show="isFormValid" @click="schedule()" class="md-accent md-raised">Schedule lesson and pay</md-button>
                     </div>
 
                 </form>
@@ -76,15 +87,40 @@
 </template>
 
 <script>
+    import CreditCardChooser from "../CreditCardChooser";
     export default {
         name: "ScheduleForm",
+        components: {CreditCardChooser},
         props: {
+            scheduleEndpoint: {
+                type: String,
+                required: true
+            },
             availableTimesEndpoint: {
                 type: String,
                 required: true
             },
             teacher: {
                 type: Object,
+                required: true
+            },
+            stripeKey: {
+                type: String,
+                required: true
+            },
+            clientSecret: {
+                type: String,
+                required: true
+            },
+            savePaymentMethodEndpoint: {
+                type: String,
+                required: true
+            },
+            creditCards: {
+                type: Array,
+            },
+            userEmail: {
+                type: String,
                 required: true
             }
         },
@@ -94,6 +130,8 @@
                 time: "",
                 duration: 30,
                 availableTimes: [],
+                selectedCard: null,
+                loading: false
             }
         },
         computed: {
@@ -111,6 +149,9 @@
             },
             totalCost(){
                 return this.subtotal + this.taxes;
+            },
+            isFormValid(){
+                return this.time && this.selectedCard;
             }
         },
         methods: {
@@ -139,12 +180,44 @@
                 }
             },
             schedule(){
-                console.log("Scheduling...")
+                if(this.isFormValid) {
+                    this.loading = true;
+
+                    let payload = {
+                        teacher_id: this.teacher.id,
+                        date: this.date,
+                        time: this.time,
+                        duration: this.duration,
+                        total: this.totalCost,
+                        card: this.selectedCard,
+                    };
+
+
+                    let self = this;
+                    axios.post(this.scheduleEndpoint, payload)
+                        .then(function(response){
+                            if(response.data.success){
+                                window.location.href = response.data.redirect_url;
+                            }else{
+                                toastr.error("Error while scheduling lesson. Try again later.")
+                            }
+                        })
+                        .catch(function(error){
+                            toastr.error("Error while scheduling lesson. Try again later.")
+                            self.loading = false;
+                        });
+                }else{
+                    toastr.error("You have to select a credit card.")
+                    self.loading = false;
+                }
             },
             dateChanged(){
                 this.availableTimes = [];
                 this.time = "";
                 this.getAvailableTimesForDate();
+            },
+            methodSelected(method){
+                this.selectedCard = method;
             }
         },
         mounted() {

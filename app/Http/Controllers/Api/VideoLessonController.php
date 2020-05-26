@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Mail\AppointmentConfirmed;
+use App\Models\Appointment;
 use App\Models\Role;
 use App\Models\TeacherAvailability;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Laravel\Cashier\Payment;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class VideoLessonController extends Controller
 {
@@ -143,6 +149,110 @@ class VideoLessonController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    public function confirmLesson(Request $request, Appointment $lesson){
+        $this->authorize('confirm', $lesson);
+
+        $lesson->confirmed = true;
+        $lesson->save();
+
+        // Capture the payment
+        try {
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $payment = PaymentIntent::retrieve($lesson->payment_stripe_id);
+            $payment->capture();
+
+            // Send email to student
+            $teacher = $lesson->teacherInfo->user;
+            Mail::to($lesson->studentInfo->user->email)->send(new AppointmentConfirmed($teacher, $lesson));
+        }catch (\Exception $e){
+            error_log($e->getMessage());
+
+
+            return response()->json([
+                'success' => false,
+                'message' => "Error while capturing payment"
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => ""
+        ]);
+    }
+
+    /**
+     * Schedule a lesson with a teacher.
+     * Apply a payment to the user
+     * @param Request $request
+     * @return string
+     * @throws ValidationException
+     */
+    public function scheduleWithTeacher(Request $request){
+        $this->validate($request, [
+            'teacher_id' => 'required',
+            'date' => 'required|date|date_format:Y-m-d',
+            'time' => 'required|date_format:H:i',
+            'duration' => 'required',
+            'total' => 'required',
+            'card' => 'required'
+        ]);
+
+        $user = $request->user();
+
+        if(!$user->stripe_id){
+            $user->createAsStripeCustomer();
+        }
+
+        $total = round($request->input('total') * 100);
+        $cardId = $request->input('card');
+        $date = $request->input('date');
+        $time = $request->input('time');
+        $duration = $request->input('duration');
+
+        $teacher = User::query()->where('role_id', Role::teacher()->id)
+            ->where('id', $request->input('teacher_id'))->first();
+
+        if(!$teacher){
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to find specified teacher.'
+            ]);
+        }
+
+        // Make the payment on the credit card
+        try {
+            $payment = $user->charge($total, $cardId, [
+                'receipt_email' => $user->email,
+                'capture_method' => 'manual'
+            ]);
+
+            // Add the scheduled meeting in database and send email to both users
+            $appointment = new Appointment([
+                'date' => $date . " " . $time,
+                'duration_minute' => $duration,
+                'cost_total' => $total,
+                'payment_stripe_id' => $payment->id,
+            ]);
+            $appointment->student_info_id = $user->info->information->id;
+            $appointment->teacher_info_id = $teacher->info->information->id;
+
+            $appointment->save();
+
+        }catch(\Exception $e){
+            error_log($e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => "Failed to apply payment on credit card."
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('dashboard')
         ]);
     }
 

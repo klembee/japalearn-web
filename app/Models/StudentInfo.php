@@ -16,7 +16,7 @@ class StudentInfo extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->hasOneThrough(User::class, UserInformation::class, 'information_id', 'id', 'id', 'user_id');
     }
 
     public function vocabLearningPathStats(){
@@ -37,6 +37,10 @@ class StudentInfo extends Model
 
     public function firstStepsDone(){
         return $this->belongsToMany(AccountFirstStep::class, 'student_first_steps', 'first_step_id', 'student_info_id');
+    }
+
+    public function appointments(){
+        return $this->hasMany(Appointment::class, 'student_info_id');
     }
 
 

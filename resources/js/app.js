@@ -34,7 +34,7 @@ Vue.component('vocab-review-window', require('./components/learning_paths/VocabR
 Vue.component('vocab-size-per-day-graph', require('./components/dashboard/VocabSizePerDayGraph.vue').default);
 Vue.component('learning-path-item-card', require('./components/learning_paths/LearningPathItemCard.vue').default);
 Vue.component('image-selector', require('./components/ImageSelector.vue').default);
-Vue.component('availability_selector', require('./components/video_lesson/availability_selector.vue').default);
+Vue.component('availability_selector', require('./components/video_lesson/teacher/availability_selector.vue').default);
 Vue.component("schedule_form", require('./components/video_lesson/ScheduleForm.vue').default);
 Vue.component("new-payment-method-form", require('./components/stripe/NewPaymentMethodForm.vue').default);
 Vue.component('delete-payment-method-button', require('./components/stripe/DeletePaymentMethodButton.vue').default);
@@ -63,6 +63,7 @@ Vue.component('FrontPageToolbar', require('./components/FrontPageToolbar.vue').d
 Vue.component('LatestArticles', require('./components/frontpage/LatestArticles.vue').default);
 Vue.component('RandomGrammar', require('./components/frontpage/RandomGrammar.vue').default);
 Vue.component('KanjiCurrentLevelOverview', require('./components/kanji_vocabulary/KanjiCurrentLevelOverview.vue').default);
+Vue.component('LessonsToConfirmTable', require('./components/video_lesson/teacher/LessonsToConfirmTable.vue').default);
 
 
 /**

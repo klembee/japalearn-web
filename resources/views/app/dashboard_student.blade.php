@@ -35,6 +35,43 @@
 
                 <md-content class="col-12 col-lg-5 h-fit">
 
+                    @if($nextAppointments->count() > 0)
+                        <md-card class="mb-4">
+                            <md-card-header>
+                                <h2>Your scheduled lessons</h2>
+                            </md-card-header>
+                            <md-card-content>
+                                <table class="table">
+                                    <thead>
+                                        <th>Teacher</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </thead>
+                                    @foreach($nextAppointments as $appointment)
+                                        <tr>
+                                            <td>{{$appointment->teacherInfo->user->name}}</td>
+                                            <td>{{$appointment->date->format('Y-m-d H:i')}}</td>
+                                            <td>
+                                                @if(!$appointment->ready_to_join)
+                                                    <div>
+                                                        <md-button disabled class="md-raised md-accent">Join lesson</md-button>
+                                                        <md-tooltip md-direction="top">You can join the lesson 15 minutes before it starts</md-tooltip>
+                                                    </div>
+                                                @else
+                                                    <div>
+                                                        <md-button class="md-raised md-accent">Join lesson</md-button>
+                                                    </div>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </md-card-content>
+                        </md-card>
+
+                    @endif
+
                     <!-- Get started -->
                     @if(!$user->info->information->did_all_first_steps)
                     <md-card class="get-started-card mb-3">
