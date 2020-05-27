@@ -23,4 +23,9 @@ class TeacherInfo extends Model
         return $this->hasMany(Appointment::class, 'teacher_info_id');
     }
 
+    public function newStripeState(){
+        $this->stripe_state = bin2hex(random_bytes(25));
+        $this->save();
+    }
+
 }

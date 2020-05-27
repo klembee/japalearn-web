@@ -44,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'firstname',
+        'lastname'
+    ];
+
     public function hasRole($role){
         return strtolower($this->role->name) === strtolower($role);
     }
@@ -78,6 +83,19 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isModerator(){
         return $this->role_id === Role::moderator()->id;
+    }
+
+    public function getFirstnameAttribute(){
+        return explode(' ', $this->name)[0];
+    }
+
+    public function getLastnameAttribute(){
+        $lastname = explode(' ', $this->name);
+        if(count($lastname) > 1){
+            return implode(' ', array_splice($lastname, 1));
+        }else{
+            return "";
+        }
     }
 
     /**

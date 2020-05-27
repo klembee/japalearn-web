@@ -26,6 +26,6 @@ class AppointmentConfirmed extends Mailable
     public function build(){
         return $this->subject('Video lesson confirmed')
             ->from('hello@japalearn.com')
-            ->markdown('emails.appointmentConfirmed');
+            ->markdown('emails.toStudent.appointmentConfirmed');
     }
 }

@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Just for testing purposes
+Route::get('mailable', function () {
+    return new \App\Mail\SendAppointmentConfirmationLinkToTeacher(\App\Models\User::query()->where('role_id', \App\Models\Role::student()->id)->first(), \App\Models\Appointment::query()->first());
+});
+
 Route::post("/get-notified", "EmailListController@add");
 
 Auth::routes(['verify' => true]);
@@ -103,11 +108,23 @@ Route::middleware('auth')->group(function(){
         Route::post('subscription/', 'AccountController@updateSubscription')->middleware('isRole:student')->name('subscription.update');
 
         Route::get('unsubscribe/', 'AccountController@unsubscribeIndex')->middleware('isRole:student')->name('unsubscribe');
+
+
+        // ------- Teachers
+        Route::get('get-paid', 'AccountController@getPaidIndex')->middleware('isRole:teacher')->name('getpaid.index');
+        Route::post('get-paid', 'AccountController@updateGetPaid')->middleware('isRole:teacher')->name('getpaid.update');
+    });
+
+    Route::prefix('stripe/')->name('stripe.')->middleware('isRole:teacher')->group(function(){
+        Route::get('teacher_redirect', 'StripeController@teacherSetupRedirect');
     });
 
     Route::prefix('video_lesson/')->name('video_lesson.')->group(function(){
         Route::get("/", "VideoLessonController@index")->middleware('isRole:teacher')->name('index');
         Route::post("/update-info", "VideoLessonController@updateInformation")->middleware("isRole:teacher")->name('updateInfo');
+        Route::get('refuse/{appointment}', 'VideoLessonController@teacherRefuseAppointment')->middleware('isRole:teacher')->name('refuse');
+        Route::get('confirm/{appointment}', 'VideoLessonController@teacherConfirmAppointment')->middleware('isRole:teacher')->name('confirm');
+
         Route::get('/schedule', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
         Route::post('/schedule', "VideoLessonController@scheduleLessonSave")->middleware('isRole:student')->name('schedule.save');
     });

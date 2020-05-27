@@ -1,9 +1,9 @@
-@component('mail::panel')
+@component('mail::message')
 # {{$name}} contacted you on JapaLearn !
-@endcomponent
 
 @component('mail::panel')
-> {{$message}}
+{{$message}}
+@endcomponent
 
 Email: {{$email}}
 @endcomponent

@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\AppointmentHelper;
+use App\Models\Appointment;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -45,7 +47,7 @@ class VideoLessonController extends Controller
      * Displays a form allowing a student to schedule a
      * view lesson from a certain teacher at a certain time
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\View\View
      * @throws \Illuminate\Validation\ValidationException
      */
     public function scheduleLesson(Request $request){
@@ -61,6 +63,12 @@ class VideoLessonController extends Controller
         $teacher = User::query()->with('info', 'info.information')
             ->where('role_id', Role::teacher()->id)
             ->where('id', $request->query('teacher'))->firstOrFail();
+
+        // Check if the teacher have setup his/her stripe account
+        if(!$teacher->info->information->stripe_account_id){
+            $request->session()->flash('error', 'This teacher cannot accept appointments.');
+            return redirect()->back();
+        }
 
         //todo: Validate that the user can schedule lesson with this teacher.
 
@@ -100,5 +108,23 @@ class VideoLessonController extends Controller
      */
     public function scheduleLessonSave(Request $request){
 
+    }
+
+    public function teacherConfirmAppointment(Request $request, Appointment $appointment){
+        $this->authorize('confirm', $appointment);
+        AppointmentHelper::confirm($appointment);
+
+        $request->session()->flash('success', 'Appointment confirmed with student');
+
+        return redirect()->route('dashboard');
+    }
+
+    public function teacherRefuseAppointment(Request $request, Appointment $appointment){
+        $this->authorize('confirm', $appointment);
+        AppointmentHelper::refuse($appointment);
+
+        $request->session()->flash('success', 'Appointment refused');
+
+        return redirect()->route('dashboard');
     }
 }

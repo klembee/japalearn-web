@@ -172,4 +172,27 @@ class AccountController extends Controller
         $request->user()->sendEmailVerificationNotification();
         return redirect()->route('dashboard');
     }
+
+    /**
+     * Show a form allowing a teacher to setup
+     * stripe account
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getPaidIndex(Request $request){
+        $user = $request->user();
+
+        $user->info->information->newStripeState();
+        $stripeSettedUp = $user->info->information->stripe_account_id != null;
+
+        return view('app.account.settings.teacher.getPaid', compact(
+            'user',
+            'stripeState',
+            'stripeSettedUp'
+        ));
+    }
+
+    public function updateGetPaid(Request $request){
+        return redirect()->back();
+    }
 }

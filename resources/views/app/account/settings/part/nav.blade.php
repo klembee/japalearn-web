@@ -6,4 +6,8 @@
         <md-tab href="{{route('account.payment.index')}}" md-label="{{__('Payments')}}"></md-tab>
         <md-tab href="{{route('account.subscription.index')}}" md-label="{{__('Subscription')}}"></md-tab>
     @endif
+
+    @if(Auth::user()->isTeacher())
+        <md-tab href="{{route('account.getpaid.index')}}" md-label="{{__('Get paid')}}"></md-tab>
+    @endif
 </md-tabs>

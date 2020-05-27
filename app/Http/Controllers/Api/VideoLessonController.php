@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Helpers\AppointmentHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\AppointmentConfirmed;
 use App\Models\Appointment;
@@ -153,34 +154,7 @@ class VideoLessonController extends Controller
     }
 
     public function confirmLesson(Request $request, Appointment $lesson){
-        $this->authorize('confirm', $lesson);
-
-        $lesson->confirmed = true;
-        $lesson->save();
-
-        // Capture the payment
-        try {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
-            $payment = PaymentIntent::retrieve($lesson->payment_stripe_id);
-            $payment->capture();
-
-            // Send email to student
-            $teacher = $lesson->teacherInfo->user;
-            Mail::to($lesson->studentInfo->user->email)->send(new AppointmentConfirmed($teacher, $lesson));
-        }catch (\Exception $e){
-            error_log($e->getMessage());
-
-
-            return response()->json([
-                'success' => false,
-                'message' => "Error while capturing payment"
-            ]);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => ""
-        ]);
+        return AppointmentHelper::confirm($lesson);
     }
 
     /**
@@ -222,11 +196,21 @@ class VideoLessonController extends Controller
             ]);
         }
 
+        // Check if the teacher have setup his/her stripe account
+        if(!$teacher->info->information->stripe_account_id){
+            $request->session()->flash('error', 'This teacher cannot accept appointments.');
+            return redirect()->back();
+        }
+
+        $teacher_account_id = $teacher->info->information->stripe_account_id;
+
         // Make the payment on the credit card
         try {
             $payment = $user->charge($total, $cardId, [
                 'receipt_email' => $user->email,
-                'capture_method' => 'manual'
+                'capture_method' => 'manual',
+                'application_fee_amount' => 0.10 * $total, //todo: Check with comptable taxes
+                'on_behalf_of' => $teacher_account_id
             ]);
 
             // Add the scheduled meeting in database and send email to both users

@@ -2,27 +2,31 @@
 
 namespace App\Mail;
 
+use App\Models\Appointment;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class LevelUpNotification extends Mailable
+class AppointmentRefused extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $itemType;
-    public $newLevel;
+
+
+    public $teacher;
+    public $lesson;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($itemType, $newLevel)
+    public function __construct(User $teacher, Appointment $lesson)
     {
-        $this->itemType = $itemType;
-        $this->newLevel = $newLevel;
+        $this->teacher = $teacher;
+        $this->lesson = $lesson;
     }
 
     /**
@@ -32,6 +36,6 @@ class LevelUpNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Level up !')->from('hello@japalearn.com')->markdown('emails.toStudent.levelUp');
+        return $this->markdown('view.name');
     }
 }
