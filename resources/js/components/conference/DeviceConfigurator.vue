@@ -66,6 +66,8 @@
                         self.audioInputDevices = audioInputs;
                         if(audioInputs.length > 0) {
                             self.selectedAudioInput = audioInputs[0].deviceId;
+                            self.audioInputDone = true;
+                            self.checkIfDoneSetup();
                         }
                     })
                     .catch(function(error){
@@ -77,6 +79,8 @@
                         self.audioOutputDevices = audioOutputs;
                         if(audioOutputs.length > 0) {
                             self.selectedAudioOutput = audioOutputs[0].deviceId;
+                            self.audioOutputDone = true;
+                            self.checkIfDoneSetup();
                         }
                     })
                     .catch(function(error){
@@ -89,6 +93,8 @@
 
                         if(videoInputs.length > 0) {
                             self.selectedVideoInput = videoInputs[0].deviceId;
+                            self.videoInputDone = true;
+                            self.checkIfDoneSetup();
                         }
                     })
                     .catch(function(error){
