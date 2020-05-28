@@ -97,12 +97,9 @@ class RegisterController extends Controller
 
             $studentInfo->save();
 
-            $informationUser = new UserInformation();
-            $informationUser->user_id = $user->id;
-            $informationUser->information_id = $studentInfo->id;
-            $informationUser->information_type = StudentInfo::class;
-            $informationUser->save();
-
+            $user->information_id = $studentInfo->id;
+            $user->information_type = StudentInfo::class;
+            $user->save();
 
 
             $objects = null;
@@ -136,11 +133,9 @@ class RegisterController extends Controller
             $teacherInfo = new TeacherInfo();
             $teacherInfo->save();
 
-            $informationUser = new UserInformation();
-            $informationUser->user_id = $user->id;
-            $informationUser->information_id = $teacherInfo->id;
-            $informationUser->information_type = TeacherInfo::class;
-            $informationUser->save();
+            $user->information_id = $teacherInfo->id;
+            $user->information_type = TeacherInfo::class;
+            $user->save();
         }
 
         return $user;
