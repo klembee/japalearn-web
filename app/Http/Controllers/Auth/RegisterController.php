@@ -75,7 +75,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        $user = new User([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -99,7 +99,6 @@ class RegisterController extends Controller
 
             $user->information_id = $studentInfo->id;
             $user->information_type = StudentInfo::class;
-            $user->save();
 
 
             $objects = null;
@@ -135,8 +134,9 @@ class RegisterController extends Controller
 
             $user->information_id = $teacherInfo->id;
             $user->information_type = TeacherInfo::class;
-            $user->save();
         }
+
+        $user->save();
 
         return $user;
     }
