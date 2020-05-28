@@ -33,15 +33,20 @@ class StartAndStopAWSMeetings
         }
 
         // Stop the meetings that lasted 1 hour after the appointment end
-        $meetings = Meeting::all();
-        foreach ($meetings as $meeting){
-            $appointment = $meeting->appointment;
-            $meetingEnd = $appointment->date->addMinutes($appointment->duration_minute)->addHour();
-            error_log($meetingEnd);
-            if(Carbon::now()->greaterThan($meetingEnd)){
-                VideoConferenceHelper::stopMeeting($meeting);
+
+        if(env('APP_ENV') == 'production'){
+            $meetings = Meeting::all();
+            foreach ($meetings as $meeting){
+                $appointment = $meeting->appointment;
+                $meetingEnd = $appointment->date->addMinutes($appointment->duration_minute)->addHour();
+                error_log($meetingEnd);
+                if(Carbon::now()->greaterThan($meetingEnd)){
+                    VideoConferenceHelper::stopMeeting($meeting);
+                }
             }
         }
+
+
 
 
     }
