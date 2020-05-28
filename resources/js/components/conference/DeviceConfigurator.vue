@@ -48,6 +48,9 @@
                 audioInputDevices: [],
                 audioOutputDevices: [],
                 videoInputDevices: [],
+                audioInputDone: false,
+                audioOutputDone: false,
+                videoInputDone: false,
                 selectedAudioInput: "",
                 selectedAudioOutput: "",
                 selectedVideoInput: "",
@@ -61,6 +64,7 @@
                 this.meetingSession.audioVideo.listAudioInputDevices()
                     .then(function(audioInputs){
                         self.audioInputDevices = audioInputs;
+                        self.audioInputDone = true;
                         if(audioInputs.length > 0) {
                             self.selectedAudioInput = audioInputs[0].deviceId;
                         }
@@ -72,6 +76,7 @@
                 this.meetingSession.audioVideo.listAudioOutputDevices()
                     .then(function(audioOutputs){
                         self.audioOutputDevices = audioOutputs;
+                        self.audioOutputDone = true;
                         if(audioOutputs.length > 0) {
                             self.selectedAudioOutput = audioOutputs[0].deviceId;
                         }
@@ -83,6 +88,7 @@
                 this.meetingSession.audioVideo.listVideoInputDevices()
                     .then(function(videoInputs){
                         self.videoInputDevices = videoInputs;
+                        self.videoInputDone = true;
                         if(videoInputs.length > 0) {
                             self.selectedVideoInput = videoInputs[0].deviceId;
                         }
@@ -136,6 +142,11 @@
                 }
 
                 this.videoSelected(this.selectedVideoInput);
+            },
+            checkIfDoneSetup(){
+                if(this.videoInputDone && this.audioInputDone && this.audioOutputDone){
+                    this.$emit('setup-done');
+                }
             }
 
         },

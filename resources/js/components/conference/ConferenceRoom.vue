@@ -3,7 +3,9 @@
         <div class="conference-container">
             <device-configurator
                 v-if="meetingSession"
-                :meeting-session="meetingSession">
+                :meeting-session="meetingSession"
+                @setup-done="startSession"
+            >
 
             </device-configurator>
 
