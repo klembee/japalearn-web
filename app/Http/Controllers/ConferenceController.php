@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\VideoConferenceHelper;
+use App\Models\Appointment;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,10 +15,13 @@ class ConferenceController extends Controller
     public function index(Request $request){
         $user = $request->user();
 
-        $meeting = VideoConferenceHelper::createMeeting();
+        $meeting = VideoConferenceHelper::createMeeting(
+            Appointment::query()->first()
+            );
         $attendee = VideoConferenceHelper::joinMeeting($meeting['MeetingId'], $user);
 
-        error_log($meeting['MeetingId']);
+
+        error_log(print_r($meeting, true));
 
         return view('app.conference.index', compact('meeting', 'attendee'));
     }

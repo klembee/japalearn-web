@@ -67,7 +67,7 @@
         },
         methods: {
             setup(){
-                this.logger = new ConsoleLogger('logger2', LogLevel.INFO);
+                this.logger = new ConsoleLogger('logger2', LogLevel.ERROR);
 
                 this.deviceController = new DefaultDeviceController(this.logger);
                 this.configuration = new MeetingSessionConfiguration(this.meetingResponse, this.attendeesResponse);

@@ -139,7 +139,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function info(){
-        return $this->hasOne(UserInformation::class);
+//        return $this->hasOne(UserInformation::class);
+        return $this->morphTo("information");
     }
 
 

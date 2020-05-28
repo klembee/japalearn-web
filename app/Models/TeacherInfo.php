@@ -16,7 +16,7 @@ class TeacherInfo extends Model
     public $table = "teacher_info";
 
     public function user(){
-        return $this->hasOneThrough(User::class, UserInformation::class, 'information_id', 'id', 'id', 'user_id');
+        return $this->morphOne(User::class, 'information');
     }
 
     public function appointments(){
