@@ -32,8 +32,8 @@ class VideoLessonController extends Controller
         }
 
         $user = $request->user();
-        $unconfirmedLessons = $user->info->information->appointments()->with(['studentInfo', 'studentInfo.user'])->where('confirmed', false)->get();
-        $commingLessons = $user->info->information->appointments()
+        $unconfirmedLessons = $user->info->appointments()->with(['studentInfo', 'studentInfo.user'])->where('confirmed', false)->get();
+        $commingLessons = $user->info->appointments()
             ->with(['studentInfo', 'studentInfo.user'])
             ->where('confirmed', true)
             ->where('date', '>=', Carbon::now())->get();
@@ -60,12 +60,12 @@ class VideoLessonController extends Controller
         ]);
 
 
-        $teacher = User::query()->with('info', 'info.information')
+        $teacher = User::query()
             ->where('role_id', Role::teacher()->id)
             ->where('id', $request->query('teacher'))->firstOrFail();
 
         // Check if the teacher have setup his/her stripe account
-        if(!$teacher->info->information->stripe_account_id){
+        if(!$teacher->info->stripe_account_id){
             $request->session()->flash('error', 'This teacher cannot accept appointments.');
             return redirect()->back();
         }
@@ -95,7 +95,7 @@ class VideoLessonController extends Controller
 
         $teacher = $request->user();
 
-        $info = $teacher->info->information;
+        $info = $teacher->info;
         $info->video_lesson_price_hour = $request->input('pricing_hour') * 100;
         $info->save();
 

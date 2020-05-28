@@ -22,7 +22,7 @@ class KanaStudyController extends Controller
     public function lesson(Request $request){
         $user = $request->user();
 
-        $kanaUser = $user->info->information->kanaLearningPathStats;
+        $kanaUser = $user->info->kanaLearningPathStats;
         $allKanas = Kana::query()->whereNotIn('id', $kanaUser->pluck('kana_id'))->limit(10)->get()->toArray();
 
         $helper = new SRSHelper($allKanas, $kanaUser->toArray(), 3, 10);
@@ -48,7 +48,7 @@ class KanaStudyController extends Controller
     public function review(Request $request){
         $user = $request->user();
         $allKanas = Kana::all()->toArray();
-        $kanaUser = $user->info->information->kanaLearningPathStats->toArray();
+        $kanaUser = $user->info->kanaLearningPathStats->toArray();
 
         $helper = new SRSHelper($allKanas, $kanaUser);
         $reviews = $helper->reviewsAvailable();

@@ -40,7 +40,7 @@ class DashboardController extends Controller
                 $vocabSizePerDay[$dateFormated] = 0;
             }
 
-            $vocabSizePerDay[$dateFormated] = $user->info->information->vocabLearningPathStats->where('created_at', '<=', $date)->count();
+            $vocabSizePerDay[$dateFormated] = $user->info->vocabLearningPathStats->where('created_at', '<=', $date)->count();
             $date->addDay();
         }
 
@@ -52,7 +52,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => $user->info->information->activity()->orderBy('created_at', 'desc')->limit(5)->get()
+            'activity' => $user->info->activity()->orderBy('created_at', 'desc')->limit(5)->get()
         ]);
     }
 

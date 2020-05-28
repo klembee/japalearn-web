@@ -182,8 +182,8 @@ class AccountController extends Controller
     public function getPaidIndex(Request $request){
         $user = $request->user();
 
-        $user->info->information->newStripeState();
-        $stripeSettedUp = $user->info->information->stripe_account_id != null;
+        $user->info->newStripeState();
+        $stripeSettedUp = $user->info->stripe_account_id != null;
 
         return view('app.account.settings.teacher.getPaid', compact(
             'user',

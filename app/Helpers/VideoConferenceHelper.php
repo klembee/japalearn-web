@@ -45,13 +45,14 @@ class VideoConferenceHelper
         $user1 = $appointment->teacherInfo->user;
         $user2 = $appointment->studentInfo->user;
 
-        return DB::transaction(function() use($user1, $user2){
+        return DB::transaction(function() use($user1, $user2, $appointment){
             $chimeClient = VideoConferenceHelper::getClient();
 
             $meeting = new Meeting([
                 'region' => "ca-central-1",
                 "client_request_token" => Uuid::uuid4()
             ]);
+            $meeting->appointment_id = $appointment->id;
             $meeting->save();
 
             // Create the meeting
@@ -91,6 +92,9 @@ class VideoConferenceHelper
             $meetingUser2->user_id = $user2->id;
             $meetingUser2->save();
 
+            // Send emails to the teacher and student with link to join the meeting
+            //todo
+
             return $awsMeeting['Meeting'];
         });
     }
@@ -98,12 +102,15 @@ class VideoConferenceHelper
     /**
      * Stop the specified meeting
      * @param $meetingId
+     * @throws \Exception
      */
-    public static function stopMeeting($meetingId){
+    public static function stopMeeting(Meeting $meeting){
         $chimeClient = VideoConferenceHelper::getClient();
         $chimeClient->deleteMeeting([
-            'meetingId' => $meetingId
+            'MeetingId' => $meeting->aws_meeting_id
         ]);
+
+        $meeting->delete();
     }
 
     public static function getMeeting($meetingId){

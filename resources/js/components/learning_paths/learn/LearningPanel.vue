@@ -133,7 +133,7 @@
         },
         methods: {
             nextItem: function(){
-                if(this.numberItemsDone + 1 >= this.numberItemsBeforeReview){
+                if(this.numberItemsDone + 1 >=  Math.min(this.numberItemsBeforeReview, this.items[this.currentChunk].length)){
                     this.readyForReview = true
                 }else{
                     this.currentItemIndex++;

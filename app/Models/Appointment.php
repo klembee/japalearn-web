@@ -39,6 +39,10 @@ class Appointment extends Model
         return $this->belongsTo(TeacherInfo::class, 'teacher_info_id');
     }
 
+    public function meeting(){
+        return $this->hasOne(Meeting::class);
+    }
+
     /**
      * Check if the lesson is joinable.
      * The users can join the lesson 15 minutes before it starts

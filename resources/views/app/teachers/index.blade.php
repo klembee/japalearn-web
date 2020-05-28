@@ -15,7 +15,7 @@
                 <md-table-cell>{{$teacher->name}}</md-table-cell>
                 <md-table-cell>{{$teacher->email}}</md-table-cell>
                 <md-table-cell>
-                    @if($teacher->info->information->stripe_account_id)
+                    @if($teacher->info->stripe_account_id)
                         <md-button href="{{route('video_lesson.schedule.index', ['teacher' => $teacher->id])}}" class="md-raised md-primary">{{__('Schedule lesson')}}</md-button>
                     @else
                         <md-button disabled class="md-raised md-primary">{{__('Schedule lesson')}}</md-button>

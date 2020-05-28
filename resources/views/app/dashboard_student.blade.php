@@ -73,7 +73,7 @@
                     @endif
 
                     <!-- Get started -->
-                    @if(!$user->info->information->did_all_first_steps)
+                    @if(!$user->info->did_all_first_steps)
                     <md-card class="get-started-card mb-3">
                         <md-card-header>
                             <h2>Get started</h2>
@@ -82,7 +82,7 @@
                             <a href="{{route('grammar.learn', \App\Models\GrammarLearningPathItem::query()->first())}}">
                                 <div class="get-started-item clickable">
                                     <div>
-                                        @if(!$user->info->information->tookFirstGrammarLesson())
+                                        @if(!$user->info->tookFirstGrammarLesson())
                                             <md-icon>check_circle_outline</md-icon>
                                         @else
                                             <md-icon>check_circle</md-icon>
@@ -95,7 +95,7 @@
                             <a href="{{route('kanas.index')}}">
                                 <div class="get-started-item clickable">
                                     <div>
-                                        @if(!$user->info->information->learnedFirst10Kanas())
+                                        @if(!$user->info->learnedFirst10Kanas())
                                             <md-icon>check_circle_outline</md-icon>
                                         @else
                                             <md-icon>check_circle</md-icon>
@@ -109,7 +109,7 @@
                             <a href="{{route('kanji_vocabulary.index')}}">
                                 <div class="get-started-item clickable">
                                     <div>
-                                        @if(!$user->info->information->learnedFirstKanji())
+                                        @if(!$user->info->learnedFirstKanji())
                                             <md-icon>check_circle_outline</md-icon>
                                         @else
                                             <md-icon>check_circle</md-icon>
@@ -123,7 +123,7 @@
                             <a href="{{route('kanas.index')}}">
                                 <div class="get-started-item clickable">
                                     <div>
-                                        @if(!$user->info->information->didFirstKanaReview())
+                                        @if(!$user->info->didFirstKanaReview())
                                             <md-icon>check_circle_outline</md-icon>
                                         @else
                                             <md-icon>check_circle</md-icon>
@@ -137,7 +137,7 @@
                             <a href="{{route('kanji_vocabulary.index')}}">
                                 <div class="get-started-item clickable">
                                     <div>
-                                        @if(!$user->info->information->didFirstKanjiReviews())
+                                        @if(!$user->info->didFirstKanjiReviews())
                                             <md-icon>check_circle_outline</md-icon>
                                         @else
                                             <md-icon>check_circle</md-icon>

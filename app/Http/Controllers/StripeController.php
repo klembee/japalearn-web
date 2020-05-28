@@ -24,7 +24,7 @@ class StripeController extends Controller
         ]);
 
         $user = $request->user();
-        if($user->info->information->stripe_state == $request->get('state')){
+        if($user->info->stripe_state == $request->get('state')){
             $code = $request->query('code');
 
             Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -42,8 +42,8 @@ class StripeController extends Controller
             }
 
             $connectedAccountId = $stripeResponse->stripe_user_id;
-            $user->info->information->stripe_account_id = $connectedAccountId;
-            $user->info->information->save();
+            $user->info->stripe_account_id = $connectedAccountId;
+            $user->info->save();
         }else{
             $request->session()->flash('error', 'The state does not match.');
         }

@@ -22,7 +22,7 @@ class GrammarLearningPathCategory extends Model
             return 0;
         }
 
-        return $user->info->information->grammarItemsDone()->whereHas('category', function($query){
+        return $user->info->grammarItemsDone()->whereHas('category', function($query){
             $query->where('id', $this->id);
         })->count();
     }

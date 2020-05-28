@@ -19,7 +19,7 @@ class GrammarLessonController extends Controller
         $grammar_item = GrammarLearningPathItem::query()->where('id', $request->input('grammar_id'))->firstOrFail();
         $user = $request->user();
 
-        $user->info->information->grammarItemsDone()->attach($grammar_item->id, [
+        $user->info->grammarItemsDone()->attach($grammar_item->id, [
             'date_done' => now()
         ]);
 

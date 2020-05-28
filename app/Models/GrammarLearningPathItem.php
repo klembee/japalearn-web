@@ -40,7 +40,7 @@ class GrammarLearningPathItem extends Model
 
     public function scopeNotDone(Builder $query){
         $user = Auth::user();
-        $itemsDone = $user->info->information->grammarItemsDone->pluck('id');
+        $itemsDone = $user->info->grammarItemsDone->pluck('id');
         return $query->whereNotIn('id', $itemsDone);
     }
 

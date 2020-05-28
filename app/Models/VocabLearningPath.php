@@ -62,7 +62,7 @@ class VocabLearningPath extends Model
             $user = Auth::user();
 
             $stat = VocabLearningPathItemStats::query()
-                ->where('student_info_id', $user->info->information->id)
+                ->where('student_info_id', $user->info->id)
                 ->where('learning_path_item_id', $this->id)->first();
 
             if($stat && $stat->exists()){

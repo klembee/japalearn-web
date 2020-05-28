@@ -236,7 +236,7 @@ class LearningPathController extends Controller
             $word = $good['question'];
             $type = WordType::query()->where('name', $good['type'])->firstOrFail();
 
-            $itemStats = $user->info->information->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word, $type){
+            $itemStats = $user->info->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word, $type){
                 return $query->where('word', $word)->where('word_type_id', $type->id);
             })->get();
 
@@ -247,7 +247,7 @@ class LearningPathController extends Controller
                     // Edit
                     $stat = VocabLearningPathItemStats::query()
                         ->where('learning_path_item_id', $item->id)
-                        ->where('student_info_id', $user->info->information->id)->firstOrFail();
+                        ->where('student_info_id', $user->info->id)->firstOrFail();
 
                     $stat->nb_right += 1;
                     $stat->nb_tries += 1;
@@ -259,7 +259,7 @@ class LearningPathController extends Controller
                     // Create new item stat
                     $stat = new VocabLearningPathItemStats;
                     $stat->learning_path_item_id = $item->id;
-                    $stat->student_info_id = $user->info->information->id;
+                    $stat->student_info_id = $user->info->id;
 
                     $stat->nb_right = 1;
                     $stat->last_study_date = now();
@@ -272,7 +272,7 @@ class LearningPathController extends Controller
             }
         }
 
-        $studentInformation = $user->info->information;
+        $studentInformation = $user->info;
         if($nbReviewedItems > 0){
             $studentActivity = new StudentActivity([
                 'nb_items' => $nbReviewedItems
@@ -295,7 +295,7 @@ class LearningPathController extends Controller
 
             $stat = VocabLearningPathItemStats::query()
                 ->where('learning_path_item_id', $wrong['id'])
-                ->where('student_info_id', $user->info->information->id)->firstOrFail();
+                ->where('student_info_id', $user->info->id)->firstOrFail();
 
             $stat->last_study_date = now();
             $stat->nb_tries += 1;
@@ -306,13 +306,13 @@ class LearningPathController extends Controller
 
 
         // Check if the student leveled up
-        $currentKanjiLevel = $user->info->information->kanji_level;
+        $currentKanjiLevel = $user->info->kanji_level;
         $levelUp = true;
         $kanjisThisLevel = VocabLearningPath::query()
             ->where('word_type_id', WordType::kanji()->id)
             ->where('level', $currentKanjiLevel)->get();
 
-        $itemsDones = $user->info->information->vocabLearningPathStats->pluck('learning_path_item_id')->toArray();
+        $itemsDones = $user->info->vocabLearningPathStats->pluck('learning_path_item_id')->toArray();
 
         foreach($kanjisThisLevel as $kanji){
             if($kanji->student_level < 5){
@@ -327,7 +327,7 @@ class LearningPathController extends Controller
 
         if($levelUp){
             // Sent event
-            $userInfo = $user->info->information;
+            $userInfo = $user->info;
             $userInfo->kanji_level += 1;
             $userInfo->save();
 
@@ -342,7 +342,7 @@ class LearningPathController extends Controller
     public function getLevelOverview(Request $request){
         $user = $request->user();
         $kanjis = VocabLearningPath::query()
-            ->where('level', $user->info->information->kanji_level)
+            ->where('level', $user->info->kanji_level)
             ->where('word_type_id', WordType::kanji()->id)->get()->sortByDesc('student_level')->toArray();
 
         return \response()->json([

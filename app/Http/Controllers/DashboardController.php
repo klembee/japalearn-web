@@ -50,8 +50,8 @@ class DashboardController extends Controller
     }
 
     public function index_Student(User $user, Request $request){
-        $doneBasicKanas = $user->info->information->finishedKanas();
-        $nextAppointments = $user->info->information->appointments()
+        $doneBasicKanas = $user->info->finishedKanas();
+        $nextAppointments = $user->info->appointments()
             ->where('date', '>=', Carbon::now())->get();
 
         return view("app.dashboard_student", compact('user', 'doneBasicKanas', 'nextAppointments'));

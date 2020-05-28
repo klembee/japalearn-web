@@ -57,7 +57,7 @@ class KanaLearningPathController extends Controller
             'wrong' => 'present|array'
         ]);
 
-        $studentInformation = $user->info->information;
+        $studentInformation = $user->info;
 
         $nbNewlyLearned = 0;
         $nbLevelUpped = 0;
@@ -117,7 +117,7 @@ class KanaLearningPathController extends Controller
                 // Increase the level
                 $stat = KanaLearningStats::query()
                     ->where('student_info_id', $studentInformation->id)
-                    ->where('kana_id', $good['id'])->firstOrFail();
+                    ->where('kana_id', $wrong['id'])->firstOrFail();
 
                 $stat->number_right -= 1;
                 if($stat->numberRight < 1){

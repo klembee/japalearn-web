@@ -77,7 +77,7 @@ class Kana extends Model
         }
 
         try {
-            return $user->info->information->kanaLearningPathStats()->where('kana_id', $this->id)->firstOrFail()->number_right;
+            return $user->info->kanaLearningPathStats()->where('kana_id', $this->id)->firstOrFail()->number_right;
         }catch (\Exception $e){
             return 0;
         }

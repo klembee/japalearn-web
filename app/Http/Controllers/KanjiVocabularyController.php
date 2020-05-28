@@ -22,12 +22,12 @@ class KanjiVocabularyController extends Controller
     public function index(Request $request){
         $user = $request->user();
 
-        $userLearnedKanas = $user->info->information->finishedKanas();
+        $userLearnedKanas = $user->info->finishedKanas();
 
-        $vocabUser = $user->info->information->vocabLearningPathStats;
+        $vocabUser = $user->info->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
             ->where('word_type_id', WordType::kanji()->id)
-            ->where('level', $user->info->information->kanji_level)
+            ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
@@ -39,7 +39,7 @@ class KanjiVocabularyController extends Controller
         $itemsToLearn = $helper->toLearnAvailable();
         $itemsToReview = $helper->reviewsAvailable();
 
-        $nextWeekVocabReview = $user->info->information->getNextWeekVocabReviews();
+        $nextWeekVocabReview = $user->info->getNextWeekVocabReviews();
 
         return view('app.kanji_vocabulary.index', compact(
             'user',

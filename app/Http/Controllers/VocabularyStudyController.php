@@ -30,10 +30,10 @@ class VocabularyStudyController extends Controller
     public function vocabularyLesson(Request $request){
         $user = $request->user();
 
-        $vocabUser = $user->info->information->vocabLearningPathStats;
+        $vocabUser = $user->info->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
             ->where('word_type_id', WordType::kanji()->id)
-            ->where('level', $user->info->information->kanji_level)
+            ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
@@ -70,10 +70,10 @@ class VocabularyStudyController extends Controller
     public function vocabularyReview(Request $request){
         $user = $request->user();
 
-        $vocabUser = $user->info->information->vocabLearningPathStats;
+        $vocabUser = $user->info->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
             ->where('word_type_id', WordType::kanji()->id)
-            ->where('level', $user->info->information->kanji_level)
+            ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')

@@ -53,7 +53,7 @@
                 <div class="mt-3">
                     <kanji-current-level-overview
                         fetch-data-endpoint="{{route('api.learning_path.kanji.items.level_overview')}}"
-                        :level="{{Auth::user()->info->information->kanji_level}}"
+                        :level="{{Auth::user()->info->kanji_level}}"
                     >
 
                     </kanji-current-level-overview>
@@ -76,7 +76,7 @@
 
         </div>
 {{--        <div class="row mb-4">--}}
-{{--            @foreach($user->info->information->itemsPerHumanLevel() as $humanLevel => $nbItems)--}}
+{{--            @foreach($user->info->itemsPerHumanLevel() as $humanLevel => $nbItems)--}}
 {{--                <md-card class="md-2">--}}
 {{--                    <md-card-header>--}}
 {{--                        <h3>{{$humanLevel}}</h3>--}}

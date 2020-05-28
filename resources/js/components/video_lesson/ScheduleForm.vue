@@ -69,7 +69,7 @@
                 <table class="table">
                     <tr>
                         <td>Cost per hour</td>
-                        <td>{{(teacher.info.information.video_lesson_price_hour / 100).toFixed(2)}} $</td>
+                        <td>{{(teacher.info.video_lesson_price_hour / 100).toFixed(2)}} $</td>
                     </tr>
                     <tr>
                         <td>Number of students</td>
@@ -142,7 +142,7 @@
                 return moment(this.date).isValid();
             },
             subtotal(){
-                return (this.teacher.info.information.video_lesson_price_hour / 100) * (this.duration / 60.0)
+                return (this.teacher.info.video_lesson_price_hour / 100) * (this.duration / 60.0)
             },
             taxes(){
                 return 0.14975 * this.subtotal;

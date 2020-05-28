@@ -197,20 +197,20 @@ class VideoLessonController extends Controller
         }
 
         // Check if the teacher have setup his/her stripe account
-        if(!$teacher->info->information->stripe_account_id){
+        if(!$teacher->info->stripe_account_id){
             $request->session()->flash('error', 'This teacher cannot accept appointments.');
             return redirect()->back();
         }
 
-        $teacher_account_id = $teacher->info->information->stripe_account_id;
+        $teacher_account_id = $teacher->info->stripe_account_id;
 
         // Make the payment on the credit card
         try {
             $payment = $user->charge($total, $cardId, [
                 'receipt_email' => $user->email,
                 'capture_method' => 'manual',
-                'application_fee_amount' => 0.10 * $total, //todo: Check with comptable taxes
-                'on_behalf_of' => $teacher_account_id
+//                'application_fee_amount' => round(0.10 * $total), //todo: Check with comptable taxes
+//                'on_behalf_of' => $teacher_account_id
             ]);
 
             // Add the scheduled meeting in database and send email to both users
@@ -220,8 +220,8 @@ class VideoLessonController extends Controller
                 'cost_total' => $total,
                 'payment_stripe_id' => $payment->id,
             ]);
-            $appointment->student_info_id = $user->info->information->id;
-            $appointment->teacher_info_id = $teacher->info->information->id;
+            $appointment->student_info_id = $user->info->id;
+            $appointment->teacher_info_id = $teacher->info->id;
 
             $appointment->save();
 
