@@ -66,8 +66,6 @@
                         self.audioInputDevices = audioInputs;
                         if(audioInputs.length > 0) {
                             self.selectedAudioInput = audioInputs[0].deviceId;
-                            self.audioInputDone = true;
-                            self.checkIfDoneSetup();
                         }
                     })
                     .catch(function(error){
@@ -79,8 +77,6 @@
                         self.audioOutputDevices = audioOutputs;
                         if(audioOutputs.length > 0) {
                             self.selectedAudioOutput = audioOutputs[0].deviceId;
-                            self.audioOutputDone = true;
-                            self.checkIfDoneSetup();
                         }
                     })
                     .catch(function(error){
@@ -93,8 +89,6 @@
 
                         if(videoInputs.length > 0) {
                             self.selectedVideoInput = videoInputs[0].deviceId;
-                            self.videoInputDone = true;
-                            self.checkIfDoneSetup();
                         }
                     })
                     .catch(function(error){
@@ -102,22 +96,25 @@
                     });
             },
             audioInputSelected(deviceId){
+                let self = this;
+
                 this.meetingSession.audioVideo.chooseAudioInputDevice(deviceId)
                     .then(function(result){
+                        console.log("Audio input selected")
                         self.audioInputDone = true;
                         self.checkIfDoneSetup();
-                        console.log("Audio input selected")
                     })
                     .catch(function(error){
                         console.log("Failed to select audio input")
                     });
             },
             audioOutputSelected(deviceId){
+                let self = this;
                 this.meetingSession.audioVideo.chooseAudioOutputDevice(deviceId)
                     .then(function(result){
+                        console.log("Audio output selected")
                         self.audioOutputDone = true;
                         self.checkIfDoneSetup();
-                        console.log("Audio output selected")
                     })
                     .catch(function(error){
                         console.log("Failed to select audio output")
@@ -127,9 +124,9 @@
                 let self = this;
                 this.meetingSession.audioVideo.chooseVideoInputDevice(deviceId)
                     .then(function(result){
+                        console.log("Video source selected");
                         self.videoInputDone = true;
                         self.checkIfDoneSetup();
-                        console.log("Video source selected");
                     })
                     .catch(function(error){
                         console.log("Failed to select video source")

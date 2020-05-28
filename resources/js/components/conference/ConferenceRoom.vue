@@ -2,7 +2,7 @@
     <div>
         <div class="conference-container">
             <device-configurator
-                v-if="meetingSession"
+                v-if="meetingSession && setupDone"
                 :meeting-session="meetingSession"
                 @setup-done="startSession"
             >
@@ -58,6 +58,7 @@
         },
         data: function(){
             return {
+                setupDone: false,
                 started: false,
                 configuration: {},
                 logger: {},
@@ -107,7 +108,7 @@
                 };
 
                 this.meetingSession.audioVideo.addObserver(observer);
-
+                this.setupDone = true;
             },
             startSession(){
                 if(!this.started) {
