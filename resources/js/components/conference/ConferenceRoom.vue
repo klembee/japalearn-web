@@ -129,7 +129,6 @@
         },
         mounted() {
             this.setup();
-            this.startSession();
         }
     }
 </script>
