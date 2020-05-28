@@ -24,6 +24,7 @@ class StartAndStopAWSMeetings
             ->where('confirmed', true)
             ->where('canceled', false)
             ->where('date', '<=', $nowIn15Minutes)
+            ->where('date', '>', Carbon::now())
             ->whereDoesntHave('meeting')->get();
 
         foreach ($appointments as $appointment){
