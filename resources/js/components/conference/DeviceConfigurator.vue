@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h2>Select your devices</h2>
+    <div class="settings_menu">
         <md-field>
             <label>Audio input device</label>
             <md-select @md-selected="audioInputSelected" v-model="selectedAudioInput">
@@ -62,6 +61,9 @@
                 this.meetingSession.audioVideo.listAudioInputDevices()
                     .then(function(audioInputs){
                         self.audioInputDevices = audioInputs;
+                        if(audioInputs.length > 0) {
+                            self.selectedAudioInput = audioInputs[0].deviceId;
+                        }
                     })
                     .catch(function(error){
                         console.log("Error while retrieving audio input devices: " + error);
@@ -70,6 +72,9 @@
                 this.meetingSession.audioVideo.listAudioOutputDevices()
                     .then(function(audioOutputs){
                         self.audioOutputDevices = audioOutputs;
+                        if(audioOutputs.length > 0) {
+                            self.selectedAudioOutput = audioOutputs[0].deviceId;
+                        }
                     })
                     .catch(function(error){
                         console.log("Error while retrieving audio output devices: " + error);
@@ -78,6 +83,9 @@
                 this.meetingSession.audioVideo.listVideoInputDevices()
                     .then(function(videoInputs){
                         self.videoInputDevices = videoInputs;
+                        if(videoInputs.length > 0) {
+                            self.selectedVideoInput = videoInputs[0].deviceId;
+                        }
                     })
                     .catch(function(error){
                         console.log("Error while retrieving video input devices: " + error);
@@ -138,5 +146,12 @@
 </script>
 
 <style scoped>
-
+    .settings_menu{
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width:300px;
+        background-color: #313131;
+        padding:20px;
+    }
 </style>

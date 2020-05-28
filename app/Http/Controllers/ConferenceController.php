@@ -14,16 +14,14 @@ use Illuminate\Http\Request;
 
 class ConferenceController extends Controller
 {
-    public function index(Request $request, Meeting $meeting){
+    public function index(Request $request){
         $user = $request->user();
 
         $awsMeeting = VideoConferenceHelper::createMeeting(
             Appointment::query()->first()
             );
-        $awsAttendee = VideoConferenceHelper::joinMeeting($meeting['MeetingId'], $user);
 
-
-        error_log(print_r($meeting, true));
+        $awsAttendee = VideoConferenceHelper::joinMeeting($awsMeeting['MeetingId'], $user);
 
         return view('app.conference.index', compact('awsMeeting', 'awsAttendee'));
     }

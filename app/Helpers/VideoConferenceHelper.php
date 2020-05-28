@@ -135,10 +135,11 @@ class VideoConferenceHelper
         ])['Attendee'];
     }
 
-    public static function joinMeeting($meeting, User $user){
+    public static function joinMeeting($meetingId, User $user){
         $chimeClient = VideoConferenceHelper::getClient();
+
         $attendee = $chimeClient->createAttendee([
-                "MeetingId" => $meeting,
+                "MeetingId" => $meetingId,
                 "ExternalUserId" => "user_" . $user->id
             ]);
 

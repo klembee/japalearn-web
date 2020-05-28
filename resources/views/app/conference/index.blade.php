@@ -1,4 +1,4 @@
-@extends('layouts.theApp')
+@extends('layouts.video_lesson')
 @section('title')
     {{__('Conference')}}
 @endsection

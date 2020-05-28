@@ -1,16 +1,13 @@
 <template>
     <div>
-        <div class="row">
+        <div class="conference-container">
             <device-configurator
                 v-if="meetingSession"
-                :meeting-session="meetingSession"
-                class="col-md-3 col-12">
+                :meeting-session="meetingSession">
 
             </device-configurator>
 
-            <div class="col-md-9 col-12">
-                <button @click="startSession">Start session</button>
-                <button @click="stopSession">Stop session</button>
+            <div class="video-container">
                 <audio id="audioElement">
 
                 </audio>
@@ -77,8 +74,6 @@
                     this.deviceController
                 );
 
-                console.log(this.deviceController);
-
                 let self = this;
                 const observer = {
                     videoTileDidUpdate(tileState) {
@@ -131,7 +126,8 @@
             },
         },
         mounted() {
-            this.setup()
+            this.setup();
+            this.startSession();
         }
     }
 </script>
@@ -142,8 +138,17 @@
         width: 20%;
         right: 0;
         border: 2px solid black;
+        z-index:10;
     }
     .video{
+        width:100%;
+    }
+
+    .conference-container{
+        display:flex;
+    }
+
+    .video-container{
         width:100%;
     }
 </style>
