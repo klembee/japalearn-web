@@ -38,7 +38,6 @@ class StartAndStopAWSMeetings
             $meetingEnd = $appointment->date->addMinutes($appointment->duration_minute)->addHour();
             error_log($meetingEnd);
             if(Carbon::now()->greaterThan($meetingEnd)){
-                error_log("GREATER");
                 VideoConferenceHelper::stopMeeting($meeting);
             }
         }

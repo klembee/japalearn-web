@@ -4,12 +4,14 @@
 namespace App\Helpers;
 
 
+use App\Mail\AppointmentStartsIn15Minutes;
 use App\Models\Appointment;
 use App\Models\Meeting;
 use App\Models\MeetingUser;
 use App\Models\User;
 use Aws\Chime\ChimeClient;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -93,7 +95,9 @@ class VideoConferenceHelper
             $meetingUser2->save();
 
             // Send emails to the teacher and student with link to join the meeting
-            //todo
+
+            Mail::to($user1->email)->send(new AppointmentStartsIn15Minutes($appointment, $meeting));
+            Mail::to($user2->email)->send(new AppointmentStartsIn15Minutes($appointment, $meeting));
 
             return $awsMeeting['Meeting'];
         });
@@ -118,6 +122,17 @@ class VideoConferenceHelper
         return $chimeClient->getMeeting([
             'MeetingId' => $meetingId
         ])['Meeting'];
+    }
+
+    public static function getAttendee(User $user, Meeting $meeting){
+        $chimeClient = VideoConferenceHelper::getClient();
+
+        $attendeeId = $meeting->users()->where('user_id', $user->id)->firstOrFail()->aws_attendee_id;
+
+        return $chimeClient->getAttendee([
+            'AttendeeId' => $attendeeId,
+            'MeetingId' => $meeting->aws_meeting_id
+        ])['Attendee'];
     }
 
     public static function joinMeeting($meeting, User $user){

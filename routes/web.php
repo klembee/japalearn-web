@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Just for testing purposes
 Route::get('mailable', function () {
-    return new \App\Mail\SendAppointmentConfirmationLinkToTeacher(\App\Models\User::query()->where('role_id', \App\Models\Role::student()->id)->first(), \App\Models\Appointment::query()->first());
+    return new \App\Mail\AppointmentStartsIn15Minutes(\App\Models\Appointment::query()->first(), \App\Models\Meeting::query()->first());
 });
 
 Route::post("/get-notified", "EmailListController@add");
@@ -162,7 +162,7 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix("conference/")->name('conference.')->group(function(){
         Route::get('/', 'ConferenceController@index')->name('index');
-        Route::get('/{meetingId}', 'ConferenceController@join')->name('join');
+        Route::get('/{meeting}', 'ConferenceController@join')->name('join');
     });
 
     // Study section

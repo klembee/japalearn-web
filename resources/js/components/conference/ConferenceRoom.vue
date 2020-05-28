@@ -77,6 +77,8 @@
                     this.deviceController
                 );
 
+                console.log(this.deviceController);
+
                 let self = this;
                 const observer = {
                     videoTileDidUpdate(tileState) {

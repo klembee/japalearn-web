@@ -5,7 +5,7 @@
 
 @section('content')
     <conference-room
-        :meeting-response="{{json_encode($meeting)}}"
-        :attendees-response="{{json_encode($attendee)}}"
+        :meeting-response="{{json_encode($awsMeeting)}}"
+        :attendees-response="{{json_encode($awsAttendee)}}"
     ></conference-room>
 @endsection
