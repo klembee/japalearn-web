@@ -3,13 +3,20 @@
         <div class="conference-container">
             <device-configurator
                 v-if="meetingSession && setupDone"
+                v-show="showSettings"
                 :meeting-session="meetingSession"
                 @setup-done="startSession"
+                class="settings"
             >
 
             </device-configurator>
 
             <div class="video-container">
+                <md-button class="toggle-settings md-icon-button" @click="showSettings = !showSettings">
+                    <md-icon v-if="showSettings">keyboard_arrow_left</md-icon>
+                    <md-icon v-else>keyboard_arrow_right</md-icon>
+                </md-button>
+
                 <audio id="audioElement">
 
                 </audio>
@@ -27,6 +34,24 @@
                         </video>
                     </div>
                 </div>
+
+                <div class="chatbox">
+                    <div class="messages">
+
+                    </div>
+                    <div class="field">
+                        <md-field class="m-0 chat-field">
+                            <label>Message</label>
+                            <md-input v-on:keyup.enter="sendMesssage" v-model="messageToSend"/>
+                            <md-button @click="sendMesssage" class="md-icon-button">
+                                <md-icon>send</md-icon>
+                            </md-button>
+
+                        </md-field>
+                    </div>
+                </div>
+
+
 
             </div>
         </div>
@@ -63,7 +88,9 @@
                 configuration: {},
                 logger: {},
                 deviceController: {},
-                meetingSession: null
+                meetingSession: null,
+                showSettings: false,
+                messageToSend: ""
             }
         },
         methods: {
@@ -131,6 +158,9 @@
             stopSession(){
                 this.meetingSession.audioVideo.stop();
             },
+            sendMesssage(){
+                this.messageToSend = "";
+            }
         },
         mounted() {
             this.setup();
@@ -141,13 +171,28 @@
 <style scoped>
     .local-video-container{
         position: absolute;
-        width: 20%;
+        width: 13%;
         right: 0;
         border: 2px solid black;
         z-index:10;
+        margin-right: 20px;
     }
     .video{
+        position:fixed;
         width:100%;
+        max-height:100%;
+    }
+
+    #tileArea{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #tile-1{
+        width:100vw;
     }
 
     .conference-container{
@@ -156,5 +201,27 @@
 
     .video-container{
         width:100%;
+        height:100vh;
+    }
+
+    .chatbox{
+        background-color: #3c3c3c;
+        width: 25%;
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        z-index:0;
+    }
+
+    .messages{
+        flex-grow: 1;
+    }
+
+    .settings{
+        z-index:1;
     }
 </style>
