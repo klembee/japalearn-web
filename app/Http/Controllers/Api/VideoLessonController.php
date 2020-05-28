@@ -209,8 +209,8 @@ class VideoLessonController extends Controller
             $payment = $user->charge($total, $cardId, [
                 'receipt_email' => $user->email,
                 'capture_method' => 'manual',
-                'application_fee_amount' => round(0.10 * $total), //todo: Check with comptable taxes
-                'on_behalf_of' => $teacher_account_id
+//                'application_fee_amount' => round(0.10 * $total), //todo: Check with comptable taxes
+//                'on_behalf_of' => $teacher_account_id
             ]);
 
             // Add the scheduled meeting in database and send email to both users
