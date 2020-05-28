@@ -64,7 +64,6 @@
                 this.meetingSession.audioVideo.listAudioInputDevices()
                     .then(function(audioInputs){
                         self.audioInputDevices = audioInputs;
-                        self.audioInputDone = true;
                         if(audioInputs.length > 0) {
                             self.selectedAudioInput = audioInputs[0].deviceId;
                         }
@@ -76,7 +75,6 @@
                 this.meetingSession.audioVideo.listAudioOutputDevices()
                     .then(function(audioOutputs){
                         self.audioOutputDevices = audioOutputs;
-                        self.audioOutputDone = true;
                         if(audioOutputs.length > 0) {
                             self.selectedAudioOutput = audioOutputs[0].deviceId;
                         }
@@ -88,7 +86,7 @@
                 this.meetingSession.audioVideo.listVideoInputDevices()
                     .then(function(videoInputs){
                         self.videoInputDevices = videoInputs;
-                        self.videoInputDone = true;
+
                         if(videoInputs.length > 0) {
                             self.selectedVideoInput = videoInputs[0].deviceId;
                         }
@@ -100,6 +98,8 @@
             audioInputSelected(deviceId){
                 this.meetingSession.audioVideo.chooseAudioInputDevice(deviceId)
                     .then(function(result){
+                        self.audioInputDone = true;
+                        self.checkIfDoneSetup();
                         console.log("Audio input selected")
                     })
                     .catch(function(error){
@@ -109,6 +109,8 @@
             audioOutputSelected(deviceId){
                 this.meetingSession.audioVideo.chooseAudioOutputDevice(deviceId)
                     .then(function(result){
+                        self.audioOutputDone = true;
+                        self.checkIfDoneSetup();
                         console.log("Audio output selected")
                     })
                     .catch(function(error){
@@ -119,6 +121,8 @@
                 let self = this;
                 this.meetingSession.audioVideo.chooseVideoInputDevice(deviceId)
                     .then(function(result){
+                        self.videoInputDone = true;
+                        self.checkIfDoneSetup();
                         console.log("Video source selected");
                     })
                     .catch(function(error){

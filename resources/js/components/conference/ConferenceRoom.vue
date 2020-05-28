@@ -58,6 +58,7 @@
         },
         data: function(){
             return {
+                started: false,
                 configuration: {},
                 logger: {},
                 deviceController: {},
@@ -109,19 +110,22 @@
 
             },
             startSession(){
-                const audioElement = document.getElementById('audioElement');
-                this.meetingSession.audioVideo.bindAudioElement(audioElement);
+                if(!this.started) {
+                    const audioElement = document.getElementById('audioElement');
+                    this.meetingSession.audioVideo.bindAudioElement(audioElement);
 
-                let self = this;
-                const observer = {
-                    audioVideoDidStart() {
-                        console.log("STARTED !!");
-                        self.meetingSession.audioVideo.startLocalVideoTile();
-                    }
-                };
+                    let self = this;
+                    const observer = {
+                        audioVideoDidStart() {
+                            console.log("STARTED !!");
+                            self.meetingSession.audioVideo.startLocalVideoTile();
+                        }
+                    };
 
-                this.meetingSession.audioVideo.addObserver(observer);
-                this.meetingSession.audioVideo.start();
+                    this.meetingSession.audioVideo.addObserver(observer);
+                    this.meetingSession.audioVideo.start();
+                    this.started = true;
+                }
             },
             stopSession(){
                 this.meetingSession.audioVideo.stop();
