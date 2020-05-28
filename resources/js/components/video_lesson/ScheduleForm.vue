@@ -196,10 +196,11 @@
                     let self = this;
                     axios.post(this.scheduleEndpoint, payload)
                         .then(function(response){
+                            console.log(response);
                             if(response.data.success){
                                 window.location.href = response.data.redirect_url;
                             }else{
-                                toastr.error("Error while scheduling lesson. Try again later.")
+                                toastr.error("Error while scheduling lesson. Try again later..")
                             }
                         })
                         .catch(function(error){
