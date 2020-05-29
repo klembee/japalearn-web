@@ -5,7 +5,8 @@
                 <li v-for="message in messages" :key="message.id">
                     <div class="message_item" :class="{'flex-row-reverse': message.from.id === ownId}">
                         <md-avatar class="m-0">
-                            <img :src="'/storage/' + message.from.picture_path"/>
+                            <img v-if="message.from.picture_path" :src="'/storage/' + message.from.picture_path"/>
+                            <img v-else src="/images/no_profile_image.png" />
                         </md-avatar>
                         <p>{{message.message}}</p>
                     </div>
@@ -49,6 +50,7 @@
                 messages: [],
                 messageToSend: "",
                 sendingMessage: false,
+                newMessageSound: new Audio("/sound/message-notification.wav")
             }
         },
         methods: {
@@ -98,6 +100,7 @@
                 .listen('MessageSent', (e) => {
                     self.messages.push(e.message);
                     self.scrollToBottom();
+                    self.newMessageSound.play();
                 });
         }
     }
