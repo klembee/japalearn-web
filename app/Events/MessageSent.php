@@ -41,7 +41,7 @@ class MessageSent implements ShouldBroadcast
     {
         $this->from = $from;
         $this->to = $to;
-        $this->message = $message;
+        $this->message = $message->load(['from', 'to']);
     }
 
     /**

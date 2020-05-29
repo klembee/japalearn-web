@@ -23,7 +23,15 @@ class ConferenceController extends Controller
 
         $awsAttendee = VideoConferenceHelper::joinMeeting($awsMeeting['MeetingId'], $user);
 
-        return view('app.conference.index', compact('awsMeeting', 'awsAttendee'));
+        $meeting = Meeting::query()->where('aws_meeting_id', $awsMeeting['MeetingId'])->firstOrFail();
+        $people = $meeting->users->pluck('user_id');
+        $messages = $meeting->users()->where('user_id', '!=', $user->id)->firstOrFail()->user->messages()->load(['from', 'to'])
+            ->whereIn('from_id', $people)
+            ->whereIn('to_id', $people);
+
+        $otherId = $meeting->users()->where('user_id', '!=', $user->id)->firstOrFail()->user->id;
+
+        return view('app.conference.index', compact('awsMeeting', 'awsAttendee', 'messages', 'otherId'));
     }
 
     public function join(Request $request, Meeting $meeting)
@@ -34,7 +42,13 @@ class ConferenceController extends Controller
             $awsMeeting = VideoConferenceHelper::getMeeting($meeting->aws_meeting_id);
             $awsAttendee = VideoConferenceHelper::getAttendee($user, $meeting);
 
-            return view('app.conference.index', compact('awsMeeting', 'awsAttendee'));
+            $people = $meeting->users->pluck('user_id');
+            $messages = $meeting->users()->where('user_id', '!=', $user->id)->firstOrFail()->user->messages()->load(['from', 'to'])
+                ->whereIn('from_id', $people)
+                ->whereIn('to_id', $people);
+            $otherId = $meeting->users()->where('user_id', '!=', $user->id)->firstOrFail()->user->id;
+
+            return view('app.conference.index', compact('awsMeeting', 'awsAttendee', 'messages', 'otherId'));
 
         }catch(ChimeException $e){
             $request->session()->flash('error', 'This meeting has ended');

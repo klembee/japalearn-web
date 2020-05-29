@@ -33,6 +33,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
         'created_at',
         'modified_at',
+        'card_brand',
+        'card_last_four',
+
     ];
 
     /**

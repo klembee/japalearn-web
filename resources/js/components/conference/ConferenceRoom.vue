@@ -35,21 +35,15 @@
                     </div>
                 </div>
 
-                <div class="chatbox">
-                    <div class="messages">
+                <chat-box
+                    :messages-prop="messages"
+                    :own-id="ownId"
+                    :other-id="otherId"
+                    :send-message-endpoint="sendMessageEndpoint"
+                    class="chatbox"
+                >
 
-                    </div>
-                    <div class="field">
-                        <md-field class="m-0 chat-field">
-                            <label>Message</label>
-                            <md-input v-on:keyup.enter="sendMesssage" v-model="messageToSend"/>
-                            <md-button @click="sendMesssage" class="md-icon-button">
-                                <md-icon>send</md-icon>
-                            </md-button>
-
-                        </md-field>
-                    </div>
-                </div>
+                </chat-box>
 
 
 
@@ -67,17 +61,33 @@
         LogLevel,
         MeetingSessionConfiguration
     } from "amazon-chime-sdk-js";
+    import ChatBox from "./ChatBox";
 
     export default {
         name: "ConferenceRoom",
-        components: {DeviceConfigurator},
+        components: {ChatBox, DeviceConfigurator},
         props: {
+            sendMessageEndpoint: {
+                type: String,
+                required: true
+            },
             meetingResponse: {
                 type: Object,
                 required: true
             },
             attendeesResponse: {
                 type: Object,
+                required: true
+            },
+            messages: {
+                type: Array
+            },
+            ownId: {
+                type: Number,
+                required: true,
+            },
+            otherId: {
+                type: Number,
                 required: true
             }
         },
@@ -90,7 +100,6 @@
                 deviceController: {},
                 meetingSession: null,
                 showSettings: false,
-                messageToSend: ""
             }
         },
         methods: {
@@ -158,9 +167,6 @@
             stopSession(){
                 this.meetingSession.audioVideo.stop();
             },
-            sendMesssage(){
-                this.messageToSend = "";
-            }
         },
         mounted() {
             this.setup();
@@ -180,7 +186,6 @@
     .video{
         position:fixed;
         width:100%;
-        max-height:100%;
     }
 
     #tileArea{
@@ -205,20 +210,17 @@
     }
 
     .chatbox{
-        background-color: #3c3c3c;
+        background-color: #2929299e;
         width: 25%;
         position: fixed;
         bottom: 1rem;
+        left: 1rem;
         left: 1rem;
         height: 50%;
         display: flex;
         flex-direction: column;
         padding: 20px;
         z-index:0;
-    }
-
-    .messages{
-        flex-grow: 1;
     }
 
     .settings{
