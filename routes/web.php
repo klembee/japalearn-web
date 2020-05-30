@@ -122,7 +122,7 @@ Route::middleware('auth')->group(function(){
         Route::get('refuse/{appointment}', 'VideoLessonController@teacherRefuseAppointment')->middleware('isRole:teacher')->name('refuse');
         Route::get('confirm/{appointment}', 'VideoLessonController@teacherConfirmAppointment')->middleware('isRole:teacher')->name('confirm');
 
-        Route::get('/schedule', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
+        Route::get('/schedule/{teacher}', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
         Route::post('/schedule', "VideoLessonController@scheduleLessonSave")->middleware('isRole:student')->name('schedule.save');
 
         Route::get('/rate-video-lesson/{appointment}', 'VideoLessonController@rateLesson')->middleware('isRole:student')->name('rate_appointment');

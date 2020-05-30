@@ -50,19 +50,10 @@ class VideoLessonController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\View\View
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function scheduleLesson(Request $request){
+    public function scheduleLesson(Request $request, User $teacher){
         if(!$request->user()->isStudent()){
             return response()->make("Error", 403);
         }
-
-        $this->validate($request, [
-            'teacher' => 'required'
-        ]);
-
-
-        $teacher = User::query()
-            ->where('role_id', Role::teacher()->id)
-            ->where('id', $request->query('teacher'))->firstOrFail();
 
         // Check if the teacher have setup his/her stripe account
         if(!$teacher->info->stripe_account_id){

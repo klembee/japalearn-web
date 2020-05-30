@@ -14,10 +14,10 @@
                 <td>{{lesson.student_info.user.name}}</td>
                 <td>{{lesson.date}}</td>
                 <td>
-                    <md-button @click="confirmLesson(lesson)" class="md-icon-button">
+                    <md-button :href="confirmLessonUrl.replace(':appointment_id', lesson.id)" class="md-icon-button">
                         <md-icon>done</md-icon>
                     </md-button>
-                    <md-button class="md-icon-button">
+                    <md-button :href="refuseLessonUrl.replace(':appointment_id', lesson.id)" class="md-icon-button">
                         <md-icon>delete</md-icon>
                     </md-button>
                 </td>
@@ -38,11 +38,11 @@
     export default {
         name: "LessonsToConfirmTable",
         props: {
-            confirmLessonEndpoint: {
+            confirmLessonUrl: {
                 type: String,
                 required: true
             },
-            deleteLessonEndpoint: {
+            refuseLessonUrl: {
                 type: String,
                 required: true
             },

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
@@ -31,7 +33,7 @@ class TeachersController extends Controller
      * connected with
      */
     public function index(Request $request){
-        $teachers = $request->user()->teachers;
+        $teachers = User::query()->where('role_id', Role::teacher()->id)->with('info')->get();
 
         return view('app.teachers.index', compact('teachers'));
     }

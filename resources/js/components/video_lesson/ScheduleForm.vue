@@ -148,8 +148,11 @@
             subtotal(){
                 return (this.teacher.info.video_lesson_price_hour / 100) * (this.duration / 60.0)
             },
+            applicationFee(){
+                return 0.10 * this.subtotal;
+            },
             taxes(){
-                return 0.14975 * this.subtotal;
+                return 0.14975 * this.applicationFee;
             },
             totalCost(){
                 return this.subtotal + this.taxes;
@@ -192,7 +195,7 @@
                         date: this.date,
                         time: this.time,
                         duration: this.duration,
-                        total: this.totalCost,
+                        before_tax: this.subtotal,
                         card: this.selectedCard,
                     };
 

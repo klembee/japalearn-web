@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 class TeacherInfo extends Model
 {
     public $table = "teacher_info";
+    protected $appends = [
+        'average_rating'
+    ];
 
     public function user(){
         return $this->morphOne(User::class, 'information');
@@ -23,6 +26,10 @@ class TeacherInfo extends Model
         return $this->hasMany(Appointment::class, 'teacher_info_id');
     }
 
+    public function ratings(){
+        return $this->hasMany(TeacherRating::class, 'teacher_info_id');
+    }
+
     public function getStripeCreateAccountUrl(){
         $this->newStripeState();
         $client_id = env('STRIPE_ACCOUNT_CLIENT_ID');
@@ -30,6 +37,10 @@ class TeacherInfo extends Model
         $user = $this->user;
 
         return "https://connect.stripe.com/express/oauth/authorize?client_id=$client_id&state=$state&suggested_capabilities[]=transfers&stripe_user[email]=$user->email&stripe_user[country]=CA&stripe_user[first_name]=$user->firstname&stripe_user[last_name]=$user->lastname&stripe_user[currency]=cad";
+    }
+
+    public function getAverageRatingAttribute(){
+        return round($this->ratings()->average('rating'));
     }
 
     public function newStripeState(){

@@ -16,7 +16,8 @@
         <div class="col-12 col-md-6">
             <h2>Lessons to confirm</h2>
             <lessons-to-confirm-table
-                confirm-lesson-endpoint="{{route('api.video_lesson.confirm', ['lesson' => ':appointment_id'])}}"
+                refuse-lesson-url="{{route('video_lesson.refuse', ['appointment' => ":appointment_id"])}}"
+                confirm-lesson-url="{{route('video_lesson.confirm', ['appointment' => ":appointment_id"])}}"
                 :unconfirmed-lessons="{{json_encode($unconfirmedLessons)}}"
             >
 

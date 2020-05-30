@@ -187,7 +187,7 @@ class VideoLessonController extends Controller
             'date' => 'required|date|date_format:Y-m-d',
             'time' => 'required|date_format:H:i',
             'duration' => 'required',
-            'total' => 'required',
+            'before_tax' => 'required',
             'card' => 'required'
         ]);
 
@@ -197,7 +197,7 @@ class VideoLessonController extends Controller
             $user->createAsStripeCustomer();
         }
 
-        $total = round($request->input('total') * 100);
+        $beforeTaxes = round($request->input('before_tax') * 100);
         $cardId = $request->input('card');
         $date = $request->input('date');
         $time = $request->input('time');
@@ -220,13 +220,22 @@ class VideoLessonController extends Controller
         }
 
         $teacher_account_id = $teacher->info->stripe_account_id;
+        $applicationFee = round(0.10 * $beforeTaxes);
+        $tax = round($applicationFee * 0.14975); // Tax only apply to application fee
+        $total = $beforeTaxes + $tax;
 
         // Make the payment on the credit card
         try {
             $payment = $user->charge($total, $cardId, [
                 'receipt_email' => $user->email,
                 'capture_method' => 'manual',
-//                'application_fee_amount' => round(0.10 * $total), //todo: Check with comptable taxes
+                'transfer_data' => [
+                    'destination' => $teacher_account_id,
+                ],
+                'metadata' => [
+                    'taxes' => ($tax / 100) . "$"
+                ],
+                'application_fee_amount' => $applicationFee + $tax,
 //                'on_behalf_of' => $teacher_account_id
             ]);
 

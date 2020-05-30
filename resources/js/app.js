@@ -64,7 +64,8 @@ Vue.component('LatestArticles', require('./components/frontpage/LatestArticles.v
 Vue.component('RandomGrammar', require('./components/frontpage/RandomGrammar.vue').default);
 Vue.component('KanjiCurrentLevelOverview', require('./components/kanji_vocabulary/KanjiCurrentLevelOverview.vue').default);
 Vue.component('LessonsToConfirmTable', require('./components/video_lesson/teacher/LessonsToConfirmTable.vue').default);
-
+Vue.component('StarRating', require('./components/StarRating.vue').default);
+Vue.component('TeacherCard', require('./components/teachers/TeacherCard').default);
 
 /**
  * Material Design Components
