@@ -2,7 +2,8 @@
     <md-card class="col-12 col-md-6 mx-auto">
         <div class="teacherCard">
             <div class="teacher_picture">
-                <img :src="'/storage/' + teacher.picture_path"/>
+                <img v-if="teacher.picture_path" :src="'/storage/' + teacher.picture_path"/>
+                <img v-else src="/images/no_profile_image.png"/>
             </div>
             <div>
                 <h2>{{teacher.name}}</h2>
@@ -50,5 +51,6 @@
     }
     .teacher_picture img{
         border-radius:20px;
+        max-width: 200px;
     }
 </style>
