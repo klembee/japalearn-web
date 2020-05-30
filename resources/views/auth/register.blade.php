@@ -13,7 +13,7 @@
 
                         <p>{{__('Do you want to learn japanese or teach it ?')}}</p>
                         <div class="row text-center mb-4">
-                            <div class="col-6">
+                            <div class="col-6 p-0">
                                 <md-card >
                                     <md-card-content>
 
@@ -28,7 +28,7 @@
                                     </md-card-content>
                                 </md-card>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 p-0">
                                 <md-card>
                                     <md-card-content>
                                         <div>

@@ -35,6 +35,11 @@ class StripeController extends Controller
                     'grant_type' => 'authorization_code',
                     'code' => $code
                 ]);
+
+                $connectedAccountId = $stripeResponse->stripe_user_id;
+                $user->info->stripe_account_id = $connectedAccountId;
+                $user->info->save();
+
             }catch(InvalidGrantException $e){
                 $request->session()->flash('error', 'Invalid authorization code. Please try again');
                 return redirect()->route('account.getpaid.index');
@@ -42,10 +47,6 @@ class StripeController extends Controller
                 $request->session()->flash('error', 'An error occurred. Please try again later.');
                 return redirect()->route('account.getpaid.index');
             }
-
-            $connectedAccountId = $stripeResponse->stripe_user_id;
-            $user->info->stripe_account_id = $connectedAccountId;
-            $user->info->save();
         }else{
             $request->session()->flash('error', 'The state does not match.');
         }

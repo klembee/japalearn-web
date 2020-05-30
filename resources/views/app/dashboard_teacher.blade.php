@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <h2>Lessons to confirm</h2>
             <lessons-to-confirm-table
                 confirm-lesson-endpoint="{{route('api.video_lesson.confirm', ['lesson' => ':appointment_id'])}}"
@@ -23,7 +23,7 @@
             </lessons-to-confirm-table>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <h2>Next video lessons</h2>
             @if(count($commingLessons) > 0)
                 <table class="table">
