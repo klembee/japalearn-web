@@ -29,7 +29,7 @@ class TeacherInfo extends Model
         $state = $this->stripe_state;
         $user = $this->user;
 
-        return "https://connect.stripe.com/express/oauth/authorize?client_id=$client_id&state=$state&suggested_capabilities[]=transfers&stripe_user[email]=$user->email&stripe_user[country]=CA&stripe_user[first_name]=$user->firstname&stripe_user[first_name]=$user->lastname&stripe_user[currency]=cad";
+        return "https://connect.stripe.com/express/oauth/authorize?client_id=$client_id&state=$state&suggested_capabilities[]=transfers&stripe_user[email]=$user->email&stripe_user[country]=CA&stripe_user[first_name]=$user->firstname&stripe_user[last_name]=$user->lastname&stripe_user[currency]=cad";
     }
 
     public function newStripeState(){

@@ -25,10 +25,12 @@ class StripeController extends Controller
 
         $user = $request->user();
         if($user->info->stripe_state == $request->get('state')){
-            $code = $request->query('code');
+            $code = $request->get('code');
 
             Stripe::setApiKey(env('STRIPE_SECRET'));
             try {
+                error_log("CALLING OAUTH !");
+
                 $stripeResponse = OAuth::token([
                     'grant_type' => 'authorization_code',
                     'code' => $code
