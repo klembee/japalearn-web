@@ -54,6 +54,14 @@ class AccountController extends Controller
         return redirect()->back();
     }
 
+    public function emailPreferences(Request $request){
+        return view('app.account.settings.email');
+    }
+
+    public function updateEmailPreferences(Request $request){
+
+    }
+
     /**
      * Show a form allowing the user to modify its profile information
      * @param Request $request

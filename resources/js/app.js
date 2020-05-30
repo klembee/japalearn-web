@@ -94,6 +94,7 @@ import {MdApp,
     MdSubheader,
     MdTooltip,
     MdEmptyState,
+    MdCheckbox,
     } from 'vue-material/dist/components'
 
 Vue.use(MdApp);
@@ -120,6 +121,7 @@ Vue.use(MdRipple);
 Vue.use(MdSubheader);
 Vue.use(MdTooltip);
 Vue.use(MdEmptyState);
+Vue.use(MdCheckbox);
 
 
 import { BootstrapVue } from 'bootstrap-vue'

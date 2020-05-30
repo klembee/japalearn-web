@@ -98,6 +98,9 @@ Route::middleware('auth')->group(function(){
         Route::get('profile/', 'AccountController@profile')->name('profile.index');
         Route::post('profile/', 'AccountController@updateProfile')->name('profile.update');
 
+        Route::get('email_preferences/', 'AccountController@emailPreferences')->name('emails.index');
+        Route::post('email_preferences/', 'AccountController@updateEmailPreferences')->name('emails.update');
+
         Route::get('learning/', 'AccountController@learning')->middleware('isRole:student')->name('learning.index');
         Route::get('payment/', 'AccountController@payment')->middleware('isRole:student')->name('payment.index');
 

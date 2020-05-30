@@ -10,7 +10,12 @@
                 Average rating:
                 <star-rating
                     :rating="teacher.information.average_rating"
+                    class="d-inline-block"
                 ></star-rating>
+
+                <p>
+                    {{teacher.information.description}}
+                </p>
             </div>
 
         </div>

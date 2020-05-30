@@ -81,13 +81,20 @@ class VideoLessonController extends Controller
 
     public function updateInformation(Request $request){
         $this->validate($request, [
-            'pricing_hour' => "required"
+            'pricing_hour' => "required",
         ]);
 
         $teacher = $request->user();
 
         $info = $teacher->info;
         $info->video_lesson_price_hour = $request->input('pricing_hour') * 100;
+
+        if($request->has('description')){
+            $info->description = $request->input('description');
+        }
+
+        $info->offer_free_trial = $request->has('offer_free_trial');
+
         $info->save();
 
         return redirect()->back();
