@@ -10,37 +10,6 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-xs-12">
-            <div class="row">
-                <div class="col-12">
-                    <h2>Next video lessons</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <td>{{__('Student')}}</td>
-                                <td>{{__('Date')}}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($commingLessons as $lesson)
-                            <tr>
-                                <td>{{$lesson->studentInfo->user->name}}</td>
-                                <td>{{$lesson->date}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-12">
-                    <h2>Lessons to confirm</h2>
-                    <lessons-to-confirm-table
-                        confirm-lesson-endpoint="{{route('api.video_lesson.confirm', ['lesson' => ':appointment_id'])}}"
-                        :unconfirmed-lessons="{{json_encode($unconfirmedLessons)}}"
-                    >
-
-                    </lessons-to-confirm-table>
-                </div>
-            </div>
-
             <div>
                 <h2>{{__('Configuration')}}</h2>
                 <form method="post" action="{{route('video_lesson.updateInfo')}}"> <!-- Todo: Save -->

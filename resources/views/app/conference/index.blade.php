@@ -5,6 +5,7 @@
 
 @section('content')
     <conference-room
+        dashboard-url="{{route('dashboard')}}"
         send-message-endpoint="{{route('api.chat.send')}}"
         :own-id="{{Auth::user()->id}}"
         :other-id="{{$otherId}}"

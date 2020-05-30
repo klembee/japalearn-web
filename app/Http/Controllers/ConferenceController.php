@@ -37,6 +37,7 @@ class ConferenceController extends Controller
     public function join(Request $request, Meeting $meeting)
     {
         $user = $request->user();
+        $this->authorize('join', $meeting);
 
         try{
             $awsMeeting = VideoConferenceHelper::getMeeting($meeting->aws_meeting_id);

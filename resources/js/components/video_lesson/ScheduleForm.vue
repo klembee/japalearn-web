@@ -9,52 +9,56 @@
                     </md-field>
                     <span class="md-error" v-show="!dateIsValid">Date is not valid</span>
 
-                    <md-field v-show="date && availableTimes">
-                        <label>Time</label>
-                        <md-select v-model="time">
-                            <md-option v-for="(time, index) in availableTimes" :key="index" :value="time">{{time}}</md-option>
-                        </md-select>
-                    </md-field>
+                    <div v-if="availableTimes.length > 0">
+                        <md-field v-show="date && availableTimes">
+                            <label>Time</label>
+                            <md-select v-model="time">
+                                <md-option v-for="(time, index) in availableTimes" :key="index" :value="time">{{time}}</md-option>
+                            </md-select>
+                        </md-field>
 
-                    <md-field>
-                        <label>How long do you want your lesson ?</label>
-                        <md-select v-model="duration">
-                            <md-option value="30">30 minutes</md-option>
-                            <md-option value="60">60 minutes</md-option>
-                            <md-option value="90">90 minutes</md-option>
-                        </md-select>
-                    </md-field>
+                        <md-field>
+                            <label>How long do you want your lesson ?</label>
+                            <md-select v-model="duration">
+                                <md-option value="30">30 minutes</md-option>
+                                <md-option value="60">60 minutes</md-option>
+                                <md-option value="90">90 minutes</md-option>
+                            </md-select>
+                        </md-field>
 
-                    <div>
-                        <!-- Payment summary -->
-                        <table class="table">
-                            <tr>
-                                <td>Subtotal</td>
-                                <td>{{subtotal.toFixed(2)}} $</td>
-                            </tr>
-                            <tr>
-                                <td>Taxes</td>
-                                <td>{{taxes.toFixed(2)}} $</td>
-                            </tr>
-                            <tr>
-                                <td>Total</td>
-                                <td>{{totalCost.toFixed(2)}} $</td>
-                            </tr>
-                        </table>
+                        <div>
+                            <!-- Payment summary -->
+                            <table class="table">
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td>{{subtotal.toFixed(2)}} $</td>
+                                </tr>
+                                <tr>
+                                    <td>Taxes</td>
+                                    <td>{{taxes.toFixed(2)}} $</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{{totalCost.toFixed(2)}} $</td>
+                                </tr>
+                            </table>
 
-                        <credit-card-chooser
-                            :user-email="userEmail"
-                            :credit-cards="creditCards"
-                            :amount="totalCost"
-                            :save-method-endpoint="savePaymentMethodEndpoint"
-                            :stripe-key="stripeKey"
-                            :client-secret="clientSecret"
-                            @card-selected="methodSelected"
-                            @card-unselected="selectedCard = null"
-                        ></credit-card-chooser>
+                            <credit-card-chooser
+                                :user-email="userEmail"
+                                :credit-cards="creditCards"
+                                :amount="totalCost"
+                                :save-method-endpoint="savePaymentMethodEndpoint"
+                                :stripe-key="stripeKey"
+                                :client-secret="clientSecret"
+                                @card-selected="methodSelected"
+                                @card-unselected="selectedCard = null"
+                            ></credit-card-chooser>
 
-                        <md-button :disabled="loading" v-show="isFormValid" @click="schedule()" class="md-accent md-raised">Schedule lesson and pay</md-button>
+                            <md-button :disabled="loading" v-show="isFormValid" @click="schedule()" class="md-accent md-raised">Schedule lesson and pay</md-button>
+                        </div>
                     </div>
+                    <p v-else>{{teacher.name}} is not available on that day.</p>
+
 
                 </form>
             </div>

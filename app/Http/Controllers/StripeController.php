@@ -48,6 +48,6 @@ class StripeController extends Controller
             $request->session()->flash('error', 'The state does not match.');
         }
 
-        return redirect()->route('account.getpaid.index');
+        return redirect()->route('dashboard');
     }
 }

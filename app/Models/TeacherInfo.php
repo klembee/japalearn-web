@@ -23,6 +23,15 @@ class TeacherInfo extends Model
         return $this->hasMany(Appointment::class, 'teacher_info_id');
     }
 
+    public function getStripeCreateAccountUrl(){
+        $this->newStripeState();
+        $client_id = env('STRIPE_ACCOUNT_CLIENT_ID');
+        $state = $this->stripe_state;
+        $user = $this->user;
+
+        return "https://connect.stripe.com/express/oauth/authorize?client_id=$client_id&state=$state&suggested_capabilities[]=transfers&stripe_user[email]=$user->email&stripe_user[country]=CA&stripe_user[first_name]=$user->firstname&stripe_user[first_name]=$user->lastname&stripe_user[currency]=cad";
+    }
+
     public function newStripeState(){
         $this->stripe_state = bin2hex(random_bytes(25));
         $this->save();

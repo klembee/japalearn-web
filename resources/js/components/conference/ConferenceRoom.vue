@@ -21,11 +21,16 @@
 
                 </audio>
 
-                <div class="local-video-container">
-                    <video id="localVideo">
+                <div class="top-right">
+                    <md-button :href="dashboardUrl" class="md-raised md-primary float-right">Exit call</md-button>
 
-                    </video>
+                    <div class="local-video-container">
+                        <video id="localVideo">
+
+                        </video>
+                    </div>
                 </div>
+
 
                 <div id="tileArea">
                     <div id="tile-1">
@@ -67,6 +72,10 @@
         name: "ConferenceRoom",
         components: {ChatBox, DeviceConfigurator},
         props: {
+            dashboardUrl: {
+                type: String,
+                required: true
+            },
             sendMessageEndpoint: {
                 type: String,
                 required: true
@@ -175,14 +184,22 @@
 </script>
 
 <style scoped>
-    .local-video-container{
+    .top-right{
         position: absolute;
-        width: 13%;
         right: 0;
-        border: 2px solid black;
-        z-index:10;
         margin-right: 20px;
     }
+
+
+    .local-video-container{
+        /*border: 2px solid #303030;*/
+        z-index:10;
+    }
+
+    #localVideo{
+        width:250px;
+    }
+
     .video{
         position:fixed;
         width:100%;
@@ -194,6 +211,10 @@
         top: 0;
         height: 100vh;
         width: 100vw;
+    }
+
+    .toggle-settings{
+        position:absolute;
     }
 
     #tile-1{

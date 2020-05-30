@@ -89,6 +89,23 @@ class VideoLessonController extends Controller
             ->where('teacher_id', $teacher->id)
             ->where('week_day', $scheduleDayOfWeek)->get()->pluck('hour');
 
+
+        error_log(json_encode($times));
+
+        // Remove the hours where the teacher already have a lesson with a student
+        $teacherAppointmentsThatDay = $teacher->info->appointments()->whereDate('date', '=', $date->toDateString())->get();
+        $times = $times->filter(function($hour) use ($teacherAppointmentsThatDay){
+            foreach ($teacherAppointmentsThatDay as $appointment){
+                $appointmentHour = $appointment->date->format("H:i");
+                error_log($appointmentHour . "    " . $hour);
+                if($appointmentHour == $hour){
+                    return false;
+                }
+            }
+            return true;
+        });
+
+
         //todo: Remove the hours that already have a scheduled lesson
 
         return response()->json([

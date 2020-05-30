@@ -110,6 +110,14 @@ class VideoLessonController extends Controller
 
     }
 
+    public function rateLesson(Request $request, Appointment $appointment){
+        $this->authorize('rate', $appointment);
+
+        $teacher = $appointment->teacherInfo->user;
+
+        return view('app.video_lessons.rateLesson', compact('appointment', 'teacher'));
+    }
+
     public function teacherConfirmAppointment(Request $request, Appointment $appointment){
         $this->authorize('confirm', $appointment);
         AppointmentHelper::confirm($appointment);

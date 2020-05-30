@@ -46,7 +46,17 @@ class DashboardController extends Controller
     }
 
     public function index_teacher(User $user, Request $request){
-        return view("app.dashboard_teacher", compact('user'));
+        $unconfirmedLessons = $user->info->appointments()->with(['studentInfo', 'studentInfo.user'])->where('confirmed', false)->get();
+        $commingLessons = $user->info->appointments()
+            ->with(['studentInfo', 'studentInfo.user'])
+            ->where('confirmed', true)
+            ->where('date', '>=', Carbon::now())->get();
+
+        return view("app.dashboard_teacher", compact(
+            'user',
+            'unconfirmedLessons',
+            'commingLessons'
+        ));
     }
 
     public function index_Student(User $user, Request $request){

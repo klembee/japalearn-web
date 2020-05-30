@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Just for testing purposes
 Route::get('mailable', function () {
-    return new \App\Mail\AppointmentStartsIn15Minutes(\App\Models\Appointment::query()->first(), \App\Models\Meeting::query()->first());
+    return new \App\Mail\AskStudentForTeacherRecommendation(\App\Models\Appointment::query()->first());
 });
 
 Route::post("/get-notified", "EmailListController@add");
@@ -33,8 +33,6 @@ Route::name('frontpage.')->group(function(){
     Route::get('/blog/{post}', 'FrontPageController@viewArticle')->name('blog.view');
 });
 
-
-
 Route::middleware('auth')->group(function(){
     Route::post('resend-verifications', 'AccountController@resendConfirmation')->name('resend_confirmation');
 
@@ -46,7 +44,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/create', 'UsersController@create')->name('users.create');
         Route::post('/create', 'UsersController@store')->name('users.store');
     });
-
 
 // Students
     Route::get('/students', 'StudentsController@index')->name('students.index');
@@ -127,6 +124,8 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/schedule', "VideoLessonController@scheduleLesson")->middleware('isRole:student')->name('schedule.index');
         Route::post('/schedule', "VideoLessonController@scheduleLessonSave")->middleware('isRole:student')->name('schedule.save');
+
+        Route::get('/rate-video-lesson/{appointment}', 'VideoLessonController@rateLesson')->middleware('isRole:student')->name('rate_appointment');
     });
 
 // Kanas

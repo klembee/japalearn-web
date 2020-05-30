@@ -1,14 +1,15 @@
 <template>
-    <table class="table">
-        <thead>
-        <tr>
-            <td>Student</td>
-            <td>Date</td>
-            <td>Action</td>
-        </tr>
-        </thead>
+    <div>
+        <table v-if="unconfirmedLessons.length > 0" class="table">
+            <thead>
+            <tr>
+                <td>Student</td>
+                <td>Date</td>
+                <td>Action</td>
+            </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
             <tr v-for="lesson in unconfirmedLessons">
                 <td>{{lesson.student_info.user.name}}</td>
                 <td>{{lesson.date}}</td>
@@ -21,8 +22,16 @@
                     </md-button>
                 </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <md-empty-state
+            v-else
+            md-icon="person_add"
+            md-label="Unconfirmed lessons"
+            md-description="When a student asks for a video lesson, it will appear here.">
+        </md-empty-state>
+    </div>
+
 </template>
 
 <script>

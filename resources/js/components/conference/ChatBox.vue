@@ -135,6 +135,7 @@
         margin-left: 10px;
         margin-right: 20px;
         border-radius: 10px;
+        word-break: break-word;
     }
 
     /* width */
