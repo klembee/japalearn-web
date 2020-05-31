@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\AppointmentHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\AppointmentConfirmed;
+use App\Mail\SendAppointmentConfirmationLinkToTeacher;
 use App\Models\Appointment;
 use App\Models\Role;
 use App\Models\TeacherAvailability;
@@ -250,6 +251,9 @@ class VideoLessonController extends Controller
             $appointment->teacher_info_id = $teacher->info->id;
 
             $appointment->save();
+
+            //Send email to teacher
+            Mail::to($teacher->email)->send(new SendAppointmentConfirmationLinkToTeacher($user, $appointment));
 
         }catch(\Exception $e){
             error_log($e->getMessage());
