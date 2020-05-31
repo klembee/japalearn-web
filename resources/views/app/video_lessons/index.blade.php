@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-4 col-xs-12">
             <div>
                 <h2>{{__('Configuration')}}</h2>
                 <form method="post" action="{{route('video_lesson.updateInfo')}}"> <!-- Todo: Save -->
@@ -38,7 +38,7 @@
             </div>
 
         </div>
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-8 col-xs-12">
             <availability_selector
                 save-availability-endpoint="{{route('api.video_lesson.updateAvailability')}}"
                 fetch-availability-endpoint="{{route('api.video_lesson.fetchAvailability')}}"

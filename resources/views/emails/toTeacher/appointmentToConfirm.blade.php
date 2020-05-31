@@ -5,6 +5,8 @@
 Date: {{$appointment->date->format("Y-m-d")}}
 
 Hour: {{$appointment->date->format('H:i')}}
+
+Duration: {{$appointment->duration_minute}} minutes
 @endcomponent
 
 Do you want to accept this opportunity?

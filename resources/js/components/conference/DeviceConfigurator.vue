@@ -3,21 +3,42 @@
         <md-field>
             <label>Audio input device</label>
             <md-select @md-selected="audioInputSelected" v-model="selectedAudioInput">
-                <md-option v-for="audioInput in audioInputDevices" :key="audioInput.deviceId" :value="audioInput.deviceId">{{audioInput.label}}</md-option>
+                <md-option v-for="audioInput in audioInputDevices" :key="audioInput.deviceId" :value="audioInput.deviceId">
+                    <span v-if="audioInput.label">
+                        {{audioInput.label}}
+                    </span>
+                    <span v-else>
+                        {{audioInput.deviceId}}
+                    </span>
+                </md-option>
             </md-select>
         </md-field>
 
         <md-field>
             <label>Audio output device</label>
             <md-select @md-selected="audioOutputSelected" v-model="selectedAudioOutput">
-                <md-option v-for="audioOutput in audioOutputDevices" :key="audioOutput.deviceId" :value="audioOutput.deviceId">{{audioOutput.label}}</md-option>
+                <md-option v-for="audioOutput in audioOutputDevices" :key="audioOutput.deviceId" :value="audioOutput.deviceId">
+                    <span v-if="audioOutput.label">
+                        {{audioOutput.label}}
+                    </span>
+                    <span v-else>
+                        {{audioOutput.deviceId}}
+                    </span>
+                </md-option>
             </md-select>
         </md-field>
 
         <md-field>
             <label>Video device</label>
             <md-select @md-selected="videoSelected" v-model="selectedVideoInput">
-                <md-option v-for="videoInput in videoInputDevices" :key="videoInput.deviceId" :value="videoInput.deviceId">{{videoInput.label}}</md-option>
+                <md-option v-for="videoInput in videoInputDevices" :key="videoInput.deviceId" :value="videoInput.deviceId">
+                    <span v-if="videoInput.label">
+                        {{videoInput.label}}
+                    </span>
+                    <span v-else>
+                        {{videoInput.deviceId}}
+                    </span>
+                </md-option>
             </md-select>
         </md-field>
 

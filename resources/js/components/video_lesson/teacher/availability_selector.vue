@@ -1,8 +1,9 @@
 <template>
     <div>
         <h2>Your availability</h2>
-        <table class="table">
-            <thead>
+        <div class="table-container">
+            <table class="table">
+                <thead>
                 <tr>
                     <td></td>
                     <td>Monday</td>
@@ -13,10 +14,10 @@
                     <td>Saturday</td>
                     <td>Sunday</td>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr v-for="hour in hours" :key="hour">
-                    <td>{{hour}}</td>
+                    <td class="headcol">{{hour}}</td>
                     <td class="clickable" @click="toggleAvailability(availability.monday, unsavedAvailability.monday, hour)" :class="tableItemClass(availability.monday, unsavedAvailability.monday, hour)"></td>
                     <td class="clickable" @click="toggleAvailability(availability.tuesday, unsavedAvailability.tuesday, hour)" :class="tableItemClass(availability.tuesday, unsavedAvailability.tuesday, hour)"></td>
                     <td class="clickable" @click="toggleAvailability(availability.wednesday, unsavedAvailability.wednesday, hour)" :class="tableItemClass(availability.wednesday, unsavedAvailability.wednesday, hour)"></td>
@@ -25,8 +26,10 @@
                     <td class="clickable" @click="toggleAvailability(availability.saturday, unsavedAvailability.saturday, hour)" :class="tableItemClass(availability.saturday, unsavedAvailability.saturday, hour)"></td>
                     <td class="clickable" @click="toggleAvailability(availability.sunday, unsavedAvailability.sunday, hour)" :class="tableItemClass(availability.sunday, unsavedAvailability.sunday, hour)"></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </template>
 
@@ -217,4 +220,26 @@
     td.available.saved{
         background-color: #75a675;
     }
+
+    td{
+        padding:20px;
+    }
+
+    .headcol{
+        position: absolute;
+        left: 0;
+        top: auto;
+        border-top-width: 1px;
+        /*only relevant for first row*/
+        padding:0;
+        background-color:white;
+        height:100%;
+        /*border-right: 1px solid black*/
+    }
+
+    .table-container{
+        width:100%;
+        overflow-x: auto;
+    }
+
 </style>
