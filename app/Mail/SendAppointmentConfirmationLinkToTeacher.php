@@ -35,6 +35,6 @@ class SendAppointmentConfirmationLinkToTeacher extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.toTeacher.appointmentToConfirm');
+        return $this->subject('New appointment to confirm')->markdown('emails.toTeacher.appointmentToConfirm');
     }
 }
