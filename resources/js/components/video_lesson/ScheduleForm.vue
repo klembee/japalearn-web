@@ -5,7 +5,8 @@
                 <form>
                     <label for="date">Date (*You can only schedule lesson one week in advance)</label>
                     <md-field>
-                        <md-input @input="dateChanged" v-model="date" :min="dateInOneWeek" type="date" id="date"/>
+<!--                        <md-input @input="dateChanged" v-model="date" :min="dateInOneWeek" type="date" id="date"/>-->
+                        <md-input @input="dateChanged" v-model="date" type="date" id="date"/>
                     </md-field>
                     <span class="md-error" v-show="!dateIsValid">Date is not valid</span>
 

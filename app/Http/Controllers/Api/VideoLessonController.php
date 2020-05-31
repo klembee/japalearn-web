@@ -77,12 +77,12 @@ class VideoLessonController extends Controller
 
         $date = Carbon::createFromFormat("Y-m-d", $request->input('date'));
 
-        if($date->isBefore(Carbon::now()->addWeek()->startOfDay())){
-            return response()->json([
-                'success' => false,
-                'message' => "You can only schedule a lesson one week in advance !"
-            ]);
-        }
+//        if($date->isBefore(Carbon::now()->addWeek()->startOfDay())){
+//            return response()->json([
+//                'success' => false,
+//                'message' => "You can only schedule a lesson one week in advance !"
+//            ]);
+//        }
         $scheduleDayOfWeek = strtolower($date->dayName);
 
         $times = TeacherAvailability::query()
