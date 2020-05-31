@@ -4,12 +4,7 @@
             <label>Audio input device</label>
             <md-select @md-selected="audioInputSelected" v-model="selectedAudioInput">
                 <md-option v-for="audioInput in audioInputDevices" :key="audioInput.deviceId" :value="audioInput.deviceId">
-                    <span v-if="audioInput.label">
-                        {{audioInput.label}}
-                    </span>
-                    <span v-else>
-                        {{audioInput.deviceId}}
-                    </span>
+                    {{audioInputDeviceName(audioInput)}}
                 </md-option>
             </md-select>
         </md-field>
@@ -18,12 +13,7 @@
             <label>Audio output device</label>
             <md-select @md-selected="audioOutputSelected" v-model="selectedAudioOutput">
                 <md-option v-for="audioOutput in audioOutputDevices" :key="audioOutput.deviceId" :value="audioOutput.deviceId">
-                    <span v-if="audioOutput.label">
-                        {{audioOutput.label}}
-                    </span>
-                    <span v-else>
-                        {{audioOutput.deviceId}}
-                    </span>
+                    {{audioOutputDeviceName(audioOutput)}}
                 </md-option>
             </md-select>
         </md-field>
@@ -32,12 +22,7 @@
             <label>Video device</label>
             <md-select @md-selected="videoSelected" v-model="selectedVideoInput">
                 <md-option v-for="videoInput in videoInputDevices" :key="videoInput.deviceId" :value="videoInput.deviceId">
-                    <span v-if="videoInput.label">
-                        {{videoInput.label}}
-                    </span>
-                    <span v-else>
-                        {{videoInput.deviceId}}
-                    </span>
+                    {{videoInputDeviceName(videoInput)}}
                 </md-option>
             </md-select>
         </md-field>
@@ -175,6 +160,24 @@
                 if(this.videoInputDone && this.audioInputDone && this.audioOutputDone){
                     this.$emit('setup-done');
                 }
+            },
+            videoInputDeviceName: function(videoInput){
+                if(videoInput.label){
+                    return videoInput.label;
+                }
+                return videoInput.deviceId;
+            },
+            audioInputDeviceName: function(audioInput){
+                if(audioInput.label){
+                    return audioInput.label;
+                }
+                return audioInput.deviceId;
+            },
+            audioOutputDeviceName: function(audioOutput){
+                if(audioOutput.label){
+                    return audioOutput.label;
+                }
+                return audioOutput.deviceId;
             }
 
         },
