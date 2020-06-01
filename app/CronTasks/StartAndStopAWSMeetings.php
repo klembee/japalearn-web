@@ -18,19 +18,19 @@ class StartAndStopAWSMeetings
     public function __invoke()
     {
         // Create a meeting for all the appointments starting in less than 15 minutes
-        $nowIn15Minutes = Carbon::now()->addMinutes(15);
-
-        $appointments = Appointment::query()
-            ->where('confirmed', true)
-            ->where('canceled', false)
-            ->where('date', '<=', $nowIn15Minutes)
-            ->where('date', '>', Carbon::now())
-            ->whereDoesntHave('meeting')->get();
-
-        foreach ($appointments as $appointment){
-            // Create a new meeting
-            VideoConferenceHelper::createMeeting($appointment);
-        }
+//        $nowIn15Minutes = Carbon::now()->addMinutes(15);
+//
+//        $appointments = Appointment::query()
+//            ->where('confirmed', true)
+//            ->where('canceled', false)
+//            ->where('date', '<=', $nowIn15Minutes)
+//            ->where('date', '>', Carbon::now())
+//            ->whereDoesntHave('meeting')->get();
+//
+//        foreach ($appointments as $appointment){
+//            // Create a new meeting
+//            VideoConferenceHelper::createMeeting($appointment);
+//        }
 
         // Stop the meetings that lasted 1 hour after the appointment end
 

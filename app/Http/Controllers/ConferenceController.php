@@ -10,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\Role;
 use App\Models\User;
 use Aws\Chime\Exception\ChimeException;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ConferenceController extends Controller
@@ -34,10 +35,27 @@ class ConferenceController extends Controller
         return view('app.conference.index', compact('awsMeeting', 'awsAttendee', 'messages', 'otherId'));
     }
 
-    public function join(Request $request, Meeting $meeting)
+    public function join(Request $request, Appointment $appointment)
     {
         $user = $request->user();
-        $this->authorize('join', $meeting);
+        $this->authorize('join', $appointment);
+
+        // Check that the meeting can be joined
+        $start = $appointment->date->subMinutes(15);
+        $end = $appointment->date->addMinutes($appointment->duration_minute);
+        if(!Carbon::now()->between($start, $end)){
+            $request->session()->flash('error', 'This meeting is not joinable at this time');
+            return redirect()->route('dashboard');
+        }
+
+        $meeting = $appointment->meeting;
+
+        //The first person that enters the meeting, creates it
+        if(!$meeting || VideoConferenceHelper::meetingDoesntExists($meeting)){
+            // Create the meeting
+            Meeting::query()->where('appointment_id', $appointment->id)->delete();
+            $meeting = VideoConferenceHelper::createMeeting($appointment);
+        }
 
         try{
             $awsMeeting = VideoConferenceHelper::getMeeting($meeting->aws_meeting_id);
@@ -52,6 +70,7 @@ class ConferenceController extends Controller
             return view('app.conference.index', compact('awsMeeting', 'awsAttendee', 'messages', 'otherId'));
 
         }catch(ChimeException $e){
+            error_log($e->getMessage());
             $request->session()->flash('error', 'This meeting has ended');
             return redirect()->route('dashboard');
         }

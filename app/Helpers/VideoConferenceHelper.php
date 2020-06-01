@@ -10,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\MeetingUser;
 use App\Models\User;
 use Aws\Chime\ChimeClient;
+use Aws\Chime\Exception\ChimeException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Ramsey\Uuid\Uuid;
@@ -99,8 +100,21 @@ class VideoConferenceHelper
             Mail::to($user1->email)->send(new AppointmentStartsIn15Minutes($appointment, $meeting));
             Mail::to($user2->email)->send(new AppointmentStartsIn15Minutes($appointment, $meeting));
 
-            return $awsMeeting['Meeting'];
+            return $meeting;
         });
+    }
+
+    public static function meetingDoesntExists(Meeting $meeting){
+        $chimeClient = VideoConferenceHelper::getClient();
+        try {
+            $chimeClient->getMeeting([
+                'MeetingId' => $meeting->aws_meeting_id
+            ]);
+        }catch(ChimeException $e){
+            return true;
+        }
+
+        return false;
     }
 
     /**

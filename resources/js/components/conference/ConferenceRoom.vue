@@ -170,6 +170,7 @@
 
                     this.meetingSession.audioVideo.addObserver(observer);
                     this.meetingSession.audioVideo.start();
+                    console.log("STARTED !");
                     this.started = true;
                 }
             },

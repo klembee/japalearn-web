@@ -22,9 +22,4 @@ class Meeting extends Model
     public function appointment(){
         return $this->belongsTo(Appointment::class);
     }
-
-    public function getRouteKeyName()
-    {
-        return "aws_meeting_id";
-    }
 }

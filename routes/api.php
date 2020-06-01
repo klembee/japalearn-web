@@ -109,6 +109,10 @@ Route::middleware('auth:api')->name('api.')->group(function(){
         Route::post('schedule', 'Api\VideoLessonController@scheduleWithTeacher')->middleware('isRole:student')->name('schedule');
     });
 
+    Route::name('appointment.')->prefix('appointment')->group(function(){
+        Route::get('upcoming_appointments', 'Api\AppointmentController@listUpcomingAppointments')->name('upcoming');
+    });
+
     Route::name('payment.')->prefix('payment')->middleware('isRole:student')->group(function(){
         Route::post('add-payment-method', 'Api\PaymentController@addPaymentMethod')->name('add-payment-method');
         Route::post('delete-payment-method', 'Api\PaymentController@deletePaymentMethod')->name('delete-payment-method');

@@ -164,7 +164,7 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix("conference/")->name('conference.')->group(function(){
         Route::get('/', 'ConferenceController@index')->name('index');
-        Route::get('/{meeting}', 'ConferenceController@join')->name('join');
+        Route::get('/join/{appointment}', 'ConferenceController@join')->name('join');
     });
 
     // Study section

@@ -13,6 +13,10 @@ class AppointmentPolicy
         return $user->info->id == $appointment->teacher_info_id;
     }
 
+    public function join(User $user, Appointment $appointment){
+        return $user->info->id == $appointment->teacher_info_id || $user->info->id == $appointment->student_info_id;
+    }
+
     public function rate(User $user, Appointment $appointment){
         return $user->info->id == $appointment->student_info_id;
     }
