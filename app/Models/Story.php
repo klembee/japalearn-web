@@ -29,6 +29,10 @@ class Story extends Model
         return $this->belongsTo(Author::class);
     }
 
+    public function vocab(){
+        return $this->hasMany(StoryVocab::class, 'story_id');
+    }
+
 //    public function translations(){
 //        return $this->hasMany(StoryTranslation::class, 'story_id');
 //    }

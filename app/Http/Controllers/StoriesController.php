@@ -39,6 +39,8 @@ class StoriesController extends Controller
      */
     public function edit(Request $request, Story $story){
 //        $story = $story->load('translations');
+        $story = $story->load('vocab');
+
         return view('app.admin.stories.edit', compact('story'));
     }
 
@@ -70,6 +72,8 @@ class StoriesController extends Controller
         if($story->translated_content) {
             $parsedTranslation = $markdownParser->text($story->translated_content);
         }
+
+        $story = $story->load('vocab');
 
         return view('app.stories.read', compact('story', 'parsedContent', $parsedTranslation));
     }

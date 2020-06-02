@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="story-image">
-            <img :src="'/storage/' + story.front_image_url"/>
+            <img v-if="story.front_image_url" :src="'/storage/' + story.front_image_url"/>
         </div>
         <div class="story">
             <h1 class="text-center mb-4">{{story.title}}</h1>
@@ -18,6 +18,29 @@
 
                 </span>
 
+            </div>
+
+
+            <div v-if="story.vocab.length > 0">
+                <h3>Vocabulary in this story</h3>
+                <table class="table vocab-table">
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Meaning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="vocab in story.vocab" :key="vocab.id">
+                            <td>
+                                <ruby>{{vocab.word}}<rt>{{vocab.reading}}</rt></ruby>
+                            </td>
+                            <td>
+                                {{vocab.meaning}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -136,5 +159,17 @@
     /deep/ .translation p{
         margin:0;
         display:inline-block;
+    }
+
+    .vocab-table{
+        border-collapse:collapse;
+    }
+
+    .vocab-table td{
+        font-size:1.5em;
+    }
+
+    .vocab-table td:first-child {
+        padding-top:30px;
     }
 </style>

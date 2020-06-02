@@ -90,6 +90,10 @@
                 items: [],
                 good: [],
                 wrong: [],
+                toSave: {
+                    good: [],
+                    wrong: []
+                },
                 readyForLearn: false,
                 showAnswer: false,
                 hasError: false
@@ -144,6 +148,12 @@
                         let alreadyGood = this.good.filter(item => item.question === this.currentItem.question).length > 0;
                         if(!alreadyGood) {
                             this.good.push(this.currentItem);
+
+                            if(this.wrong.filter(item => item.question === this.currentItem.question).length === 0){
+                                //If the item was wrong, dont save it as good
+                                this.toSave.good.push(this.currentItem);
+                            }
+
                         }
                     }
                     if(this.removeWrong){
@@ -156,16 +166,21 @@
                     //Add the item at the end of the list
                     this.items.push(this.currentItem);
 
-                    if(!this.wrong.includes(this.currentItem)) {
-                        this.wrong.push(this.currentItem);
+                    if(!this.removeWrong) {
+                        if (this.wrong.filter(item => item.question === this.currentItem.question).length === 0) {
+                            this.wrong.push(this.currentItem);
+                        }
+                        this.toSave.wrong.push(this.currentItem)
                     }
 
-                    if(!this.removeWrong) {
-                        this.good = this.good.filter(item => item != this.currentItem);
-                    }
+                    // if(!this.removeWrong) {
+                    //     this.good = this.good.filter(item => item != this.currentItem);
+                    // }
 
                     this.showAnswer = true
                 }
+
+                this.saveResults();
 
                 return true;
             },
@@ -185,14 +200,16 @@
             },
             saveResults(){
                 let data = {
-                    good: this.good,
-                    wrong: this.wrong
+                    good: this.toSave.good,
+                    wrong: this.toSave.wrong
                 };
 
                 let self = this;
                 axios.post(this.updateLevelsEndpoint, data)
                     .then(function(response){
                         console.log(response)
+                        self.toSave.good = [];
+                        self.toSave.wrong = [];
                     })
                     .catch(function(error){
                         toastr.error("Error while saving level");

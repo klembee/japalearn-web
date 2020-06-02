@@ -55,6 +55,16 @@ class StoriesController extends Controller
                 $story->meta_description = $request->input('meta_description');
             }
 
+            if($request->has('vocab')){
+                foreach($request->input('vocab') as $vocab){
+                    $story->vocab()->create([
+                        'word' => $vocab['word'],
+                        'reading' => $vocab['reading'],
+                        'meaning' => $vocab['meaning']
+                    ]);
+                }
+            }
+
             $story->save();
         }else{
             // Update existing one
@@ -75,6 +85,18 @@ class StoriesController extends Controller
 
             if($request->has('meta_description')){
                 $story->meta_description = $request->input('meta_description');
+            }
+
+            if($request->has('vocab')){
+                $story->vocab()->delete();
+
+                foreach($request->input('vocab') as $vocab){
+                    $story->vocab()->create([
+                        'word' => $vocab['word'],
+                        'reading' => $vocab['reading'],
+                        'meaning' => $vocab['meaning']
+                    ]);
+                }
             }
 
             $story->save();

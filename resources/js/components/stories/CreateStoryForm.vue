@@ -38,6 +38,61 @@
 
                         </md-textarea>
                     </md-field>
+
+                    <hr />
+                    <h2>Vocab</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Reading</th>
+                            <th>Meaning</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(vocab, idx) in story.vocab" :key="vocab.word">
+                            <td>
+                                <p>{{vocab.word}}</p>
+                            </td>
+                            <td>
+                                <p>{{vocab.reading}}</p>
+                            </td>
+                            <td>
+                                <p>{{vocab.meaning}}</p>
+                            </td>
+                            <td>
+                                <md-button @click="deleteVocab(idx)" class="md-icon-button">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <md-field>
+                                    <label>Word</label>
+                                    <md-input v-model="newVocab.word"/>
+                                </md-field>
+                            </td>
+                            <td>
+                                <md-field>
+                                    <label>Reading</label>
+                                    <md-input v-model="newVocab.reading"/>
+                                </md-field>
+                            </td>
+                            <td>
+                                <md-field>
+                                    <label>Meaning</label>
+                                    <md-input v-model="newVocab.meaning"/>
+                                </md-field>
+                            </td>
+                            <td>
+                                <md-button @click="addVocab" class="md-raised md-accent">Add</md-button>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
                 </md-tab>
                 <!-- Translation tab -->
                 <md-tab md-label="English">
@@ -89,7 +144,13 @@
                     imageData: "",
                     description: "",
                     meta_description: "",
+                    vocab: []
                 },
+                newVocab: {
+                    word: "",
+                    reading: "",
+                    meaning: ""
+                }
             }
         },
         computed: {
@@ -104,7 +165,8 @@
                     image_data: this.story.imageData,
                     translated_content: this.story.translated_content,
                     description: this.story.description,
-                    meta_description: this.story.meta_description
+                    meta_description: this.story.meta_description,
+                    vocab: this.story.vocab
                 };
 
                 axios.post(this.saveEndpoint, payload)
@@ -123,6 +185,20 @@
             imageChanged(dataurl){
                 this.story.imageData = dataurl;
             },
+            addVocab(){
+                this.story.vocab.push({
+                    word: this.newVocab.word,
+                    reading: this.newVocab.reading,
+                    meaning: this.newVocab.meaning
+                });
+
+                this.newVocab.word = "";
+                this.newVocab.reading = "";
+                this.newVocab.meaning = "";
+            },
+            deleteVocab(idx){
+                this.$delete(this.story.vocab, idx)
+            }
         },
         mounted() {
             if (this.storyProp) {

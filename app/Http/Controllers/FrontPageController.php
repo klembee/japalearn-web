@@ -55,6 +55,8 @@ class FrontPageController extends Controller
             return redirect()->back();
         }
 
+        $story = $story->load('vocab');
+
 
         return view('frontpage.viewStory', compact('story'));
     }

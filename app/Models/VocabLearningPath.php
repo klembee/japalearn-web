@@ -44,6 +44,10 @@ class VocabLearningPath extends Model
         return $this->hasMany(VocabLearningPathMeanings::class, 'vocab_learning_path_item_id');
     }
 
+    public function otherMeanings(){
+        return $this->hasMany(KanjiAlternativeMeaning::class, 'kanji_id');
+    }
+
     public function examples(){
         return $this->hasMany(VocabLearningPathExample::class, "vocab_learning_path_item_id");
     }

@@ -295,12 +295,19 @@ class LearningPathController extends Controller
 
             $stat = VocabLearningPathItemStats::query()
                 ->where('learning_path_item_id', $wrong['id'])
-                ->where('student_info_id', $user->info->id)->firstOrFail();
+                ->where('student_info_id', $user->info->id);
 
-            $stat->last_study_date = now();
-            $stat->nb_tries += 1;
+            if($stat->exists()) {
+                $stat = $stat->firstOrFail();
+                $stat->last_study_date = now();
+                $stat->nb_tries += 1;
 
-            $stat->save();
+                if($stat->nb_right > 0){
+                    $stat->nb_right -= 1;
+                }
+
+                $stat->save();
+            }
 
         }
 
