@@ -17,7 +17,7 @@ class KanaController extends Controller
         $kanaUser = $user->info->kanaLearningPathStats;
         $allKanasNotDone = Kana::query()->whereNotIn('id', $kanaUser->pluck('kana_id'))->limit(10)->get()->toArray();
 
-        $helper = new SRSHelper($allKanasNotDone, $kanaUser->toArray(), 3, 10);
+        $helper = new SRSHelper($allKanasNotDone, $kanaUser->toArray(), 3, 10, 5);
         $itemsToLearn = $helper->toLearnAvailable();
         $itemsToReview = $helper->reviewsAvailable();
 

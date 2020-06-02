@@ -18,6 +18,8 @@ class VocabLearningPath extends Model
         'student_level'
     ];
 
+
+
     public function getTypeAttribute(){
         return WordType::query()->where('id', $this->word_type_id)->firstOrFail()->name;
     }

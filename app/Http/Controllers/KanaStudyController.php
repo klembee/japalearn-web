@@ -50,7 +50,7 @@ class KanaStudyController extends Controller
         $allKanas = Kana::all()->toArray();
         $kanaUser = $user->info->kanaLearningPathStats->toArray();
 
-        $helper = new SRSHelper($allKanas, $kanaUser);
+        $helper = new SRSHelper($allKanas, $kanaUser, 3, 10, 5);
         $reviews = $helper->reviewsAvailable();
 
 

@@ -21,7 +21,10 @@ class VocabLearningPathItemStats extends Model implements Learnable
         'next_review',
 //        'on_reading',
 //        'kun_reading'
+        'level_interval'
     ];
+
+    public static $LEVELS_INTERVAL = [0, 4, 8, 24, 72, 168, 336, 720, 2880]; # In hours
 
     protected $dates = [
         'last_study_date'];
@@ -35,7 +38,7 @@ class VocabLearningPathItemStats extends Model implements Learnable
     }
 
     public function getNextReviewAttribute(){
-        return $this->last_study_date->addHours(SRSHelper::$LEVELS_INTERVAL[$this->nb_right]);
+        return $this->last_study_date->addHours(VocabLearningPathItemStats::$LEVELS_INTERVAL[$this->nb_right]);
     }
 
     public function getLastReviewDateAttribute()
@@ -88,5 +91,10 @@ class VocabLearningPathItemStats extends Model implements Learnable
     public function getObjectIdAttribute()
     {
         return "vocab_learning_path_item";
+    }
+
+    public function getLevelIntervalAttribute()
+    {
+        return VocabLearningPathItemStats::$LEVELS_INTERVAL;
     }
 }

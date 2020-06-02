@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class SRSHelper
 {
-    public static $LEVELS_INTERVAL = [0, 4, 8, 24, 72, 168, 336, 720, 2880]; # In hours
-
     /**
      * @var array
      */
@@ -66,7 +64,7 @@ class SRSHelper
      * @return bool
      */
     private function itemNeedReview($item){
-        if($item['level'] > $this->maxLevel){
+        if($item['level'] >= $this->maxLevel){
             return false;
         }
 

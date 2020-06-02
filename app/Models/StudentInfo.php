@@ -83,7 +83,7 @@ class StudentInfo extends Model
         $now = Carbon::now();
 
         $kanaNextWeek = $this->kanaLearningPathStats->filter(function($obj, $key) use($nextWeek, $now){
-            return $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) && $obj->level < 5 ;
+            return $obj->level < 5 && $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) ;
         });
 
         // Sort them by review date

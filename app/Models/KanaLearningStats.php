@@ -32,6 +32,8 @@ class KanaLearningStats extends Model implements Learnable
         'last_review'
     ];
 
+    public static $LEVELS_INTERVAL = [0, 2, 4, 10, 15]; # In hours
+
     public function student(){
         return $this->belongsTo(User::class, 'student_id');
     }
@@ -66,6 +68,15 @@ class KanaLearningStats extends Model implements Learnable
 
     public function getNextReviewAttribute()
     {
-        return $this->last_review->addHours(SRSHelper::$LEVELS_INTERVAL[$this->number_right]);
+        if($this->number_right >= 5){
+            return null;
+        }
+
+        return $this->last_review->addHours(KanaLearningStats::$LEVELS_INTERVAL[$this->number_right]);
+    }
+
+    public function getLevelIntervalAttribute()
+    {
+        return KanaLearningStats::$LEVELS_INTERVAL;
     }
 }

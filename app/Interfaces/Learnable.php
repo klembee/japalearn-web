@@ -18,6 +18,8 @@ interface Learnable
 
     public function getHumanLevelAttribute();
 
+    public function getLevelIntervalAttribute();
+
     public function getObjectIdAttribute();
 
 //    public function getAnswersAttribute();
