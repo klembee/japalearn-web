@@ -62,7 +62,7 @@ class FrontPageController extends Controller
     }
 
     public function blog(Request $request){
-        $posts = BlogPost::query()->paginate(5);
+        $posts = BlogPost::query()->orderBy('created_at', 'desc')->paginate(5);
 
         return view('frontpage.blog', compact('posts'));
     }

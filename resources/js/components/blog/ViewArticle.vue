@@ -4,7 +4,7 @@
             <img :src="'/storage/' + article.image_url"/>
         </div>
         <div class="row w-100 m-0">
-            <div class="content col-11 col-sm-9 col-md-8">
+            <div class="content col-11 col-sm-9 col-md-6">
                 <h1>{{article.title}}</h1>
                 <div v-html="parsedContent">
 
@@ -60,5 +60,11 @@
 
     .content h1{
         text-align: center;
+    }
+
+    /deep/ .content img {
+        margin:auto;
+        width:70%;
+        display:block;
     }
 </style>
