@@ -2,7 +2,10 @@
     <div>
         <ul class="list-unstyled">
             <li @click="readArticle(article)" v-for="article in articles" :key="article.id" class="article-item d-flex">
-                <img :src="'/storage/' + article.image_url" class="article-img"/>
+                <div>
+                    <img :src="'/storage/' + article.image_url" class="article-img"/>
+                </div>
+
                 <div class="article-content">
                     <h4>{{article.title}}</h4>
                     <p>{{getAbstract(article)}}</p>
@@ -72,10 +75,6 @@
     .article-item{
         padding: 15px 30px 15px 30px;
         border-bottom: 2px solid #f5f5f5;
-    }
-
-    .article-img{
-        max-width: 20%;
     }
 
     .article-content{
