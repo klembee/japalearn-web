@@ -9,6 +9,29 @@
                 <div class="article-text" v-html="parsedContent">
 
                 </div>
+
+                <hr />
+
+                <div class="under-post">
+                    <h3>Comments</h3>
+                    <div v-for="comment in comments" :key="comment.id" class="comment-container">
+                        <div class="comment-header">
+                            <p><span class="comment_author_name">{{comment.author_name}}</span> <span>wrote:</span></p>
+                            <p>{{comment.parsed_date}}</p>
+                        </div>
+
+                        <p>{{comment.comment}}</p>
+                    </div>
+
+                    <hr />
+
+                    <leave-comment
+                        :leave-comment-endpoint="leaveCommentEndpoint"
+                    >
+
+                    </leave-comment>
+                </div>
+
             </div>
         </div>
 
@@ -17,22 +40,47 @@
 
 <script>
     import Marked from "marked";
+    import LeaveComment from "./LeaveComment";
 
     export default {
         name: "ViewArticle",
+        components: {LeaveComment},
         props: {
             article: {
                 type: Object,
+                required: true
+            },
+            fetchCommentsEndpoint: {
+                type: String,
+                required: true
+            },
+            leaveCommentEndpoint: {
+                type: String,
                 required: true
             }
         },
         data: function(){
             return {
-                parsedContent: ""
+                parsedContent: "",
+                comments: []
+            }
+        },
+        methods: {
+            fetchComments(page = 1){
+                let self = this
+                axios.get(this.fetchCommentsEndpoint + '?page=' + page)
+                    .then(function(response){
+                        console.log(response);
+                        self.comments = self.comments.concat(response.data.data)
+                    })
+                    .catch(function(error){
+                        console.log("Failed to fetch comments.")
+                    })
             }
         },
         mounted() {
             this.parsedContent = Marked(this.article.content);
+            this.fetchComments();
         }
     }
 </script>
@@ -66,6 +114,29 @@
         padding-left: 50px;
         padding-right: 50px;
         margin-top: 20px;
+    }
+
+    .comment_author_name{
+        font-size:1.3em;
+        font-weight: bold;
+    }
+
+    .comment-container{
+        background-color: white;
+        padding: 20px 20px 5px 20px;
+        margin-bottom: 10px;
+        box-shadow: -2px 2px 6px 1px #32525987;
+    }
+
+    .comment-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .under-post{
+        width:60%;
+        margin:auto;
     }
 
     /deep/ .content img {

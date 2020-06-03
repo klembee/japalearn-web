@@ -23,6 +23,8 @@
 @import "~toastr/toastr";
 @import "mobile";
 
+.grecaptcha-badge { visibility: hidden; }
+
 .clickable{
     cursor:pointer;
 }

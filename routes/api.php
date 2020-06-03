@@ -25,6 +25,8 @@ Route::post('email-list/add', 'Api\EmailListController@add')->name('email-list.a
 
 Route::prefix('frontpage')->name('api.frontpage.')->group(function(){
     Route::get('latest-articles', 'Api\FrontPageController@latestArticles')->name('latest.articles');
+    Route::post('/post/{post}/add_comment', 'Api\BlogController@leaveComment')->name('article.comment');
+    Route::get('/post/{post}/comments', 'Api\BlogController@fetchComments')->name('article.fetch_comments');
     Route::get('random-grammar-items', 'Api\FrontPageController@randomGrammarLessons')->name('random.grammar');
     Route::post('contact-us', 'Api\FrontPageController@contactUs')->name('contactus');
 });

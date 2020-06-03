@@ -13,6 +13,8 @@
         </script>
     @endif
 
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcmAwAVAAAAAAnM-_UF8eg6L_YMNCj67S_2FHKu"></script>
+
     <meta name="fragment" content="!">
     @yield('seo_info')
     @include('layouts.header')

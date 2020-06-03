@@ -18,6 +18,8 @@
 
 @section('content')
     <view-article
+        fetch-comments-endpoint="{{route('api.frontpage.article.fetch_comments', ['post' => $post])}}"
         :article="{{json_encode($post)}}"
+        leave-comment-endpoint="{{route('api.frontpage.article.comment', ['post' => $post])}}"
     ></view-article>
 @endsection
