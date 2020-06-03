@@ -116,6 +116,32 @@
         margin-top: 20px;
     }
 
+    /deep/ .content img {
+        margin:auto;
+        width:70%;
+        display:block;
+    }
+
+    .under-post{
+        width:60%;
+        margin:auto;
+    }
+
+    @media screen and (max-width: 600px){
+        .article-text{
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /deep/ .content img {
+            width:100%;
+        }
+
+        .under-post {
+            width:100%;
+        }
+    }
+
     .comment_author_name{
         font-size:1.3em;
         font-weight: bold;
@@ -134,14 +160,5 @@
         align-items: center;
     }
 
-    .under-post{
-        width:60%;
-        margin:auto;
-    }
 
-    /deep/ .content img {
-        margin:auto;
-        width:70%;
-        display:block;
-    }
 </style>
