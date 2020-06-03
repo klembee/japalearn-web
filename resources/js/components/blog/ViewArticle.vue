@@ -6,7 +6,7 @@
         <div class="row w-100 m-0">
             <div class="content col-11 col-sm-9 col-md-6">
                 <h1>{{article.title}}</h1>
-                <div v-html="parsedContent">
+                <div class="article-text" v-html="parsedContent">
 
                 </div>
             </div>
@@ -60,6 +60,12 @@
 
     .content h1{
         text-align: center;
+    }
+
+    .article-text{
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-top: 20px;
     }
 
     /deep/ .content img {
