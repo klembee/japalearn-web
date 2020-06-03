@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul class="list-unstyled">
-            <li @click="readArticle(article)" v-for="article in articles" :key="article.id" class="article-item d-flex">
-                <div>
+            <li @click="readArticle(article)" v-for="article in articles" :key="article.id" class="article-item">
+                <div class="article-img-container">
                     <img :src="'/storage/' + article.image_url" class="article-img"/>
                 </div>
 
@@ -75,11 +75,31 @@
     .article-item{
         padding: 15px 30px 15px 30px;
         border-bottom: 2px solid #f5f5f5;
+        display:flex;
     }
 
     .article-content{
         flex-grow: 1;
         padding-left:20px;
+    }
+
+    .article-img-container{
+        width:fit-content;
+    }
+
+    .article-img{
+        width: 30vh;
+    }
+
+    @media screen and (max-width: 600px){
+        .article-img{
+            width: 30vh;
+        }
+
+        .article-item{
+            padding: 0;
+            padding-bottom:15px;
+        }
     }
 
     li{
