@@ -92,11 +92,15 @@
     }
 
     @media screen and (max-width: 600px){
-        .article-img{
-            width: 30vh;
+
+        .article-img-container{
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .article-item{
+            flex-direction: column;
             padding: 0;
             padding-bottom:15px;
         }
