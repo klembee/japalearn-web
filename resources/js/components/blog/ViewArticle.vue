@@ -13,11 +13,11 @@
                 <hr />
                 <div v-if="article.author" class="author-section">
                     <h3>About the author</h3>
-                    <div>
-                        <md-avatar class="m-0 d-inline-block author_image md-avatar-icon md-large">
+                    <div class="author-info">
+                        <md-avatar class="m-0 author_image md-avatar-icon md-large">
                             <img :src="'/storage/' + article.author.profile_picture_url" alt="Author picture"/>
                         </md-avatar>
-                        <div class="d-inline-block author-right">
+                        <div class="author-right">
                             <p class="author_name">{{article.author.name}}</p>
                             <p>{{article.author.bio}}</p>
                         </div>
@@ -198,6 +198,10 @@
 
     .author_image{
         vertical-align: top;
+    }
+
+    .author-info{
+        display:flex;
     }
 
 
