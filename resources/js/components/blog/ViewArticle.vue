@@ -11,6 +11,22 @@
                 </div>
 
                 <hr />
+                <div v-if="article.author" class="author-section">
+                    <h3>About the author</h3>
+                    <div>
+                        <md-avatar class="m-0 d-inline-block author_image md-avatar-icon md-large">
+                            <img :src="'/storage/' + article.author.profile_picture_url" alt="Author picture"/>
+                        </md-avatar>
+                        <div class="d-inline-block author-right">
+                            <p class="author_name">{{article.author.name}}</p>
+                            <p>{{article.author.bio}}</p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <hr />
 
                 <div class="under-post">
                     <h3>Comments</h3>
@@ -116,7 +132,7 @@
         margin-top: 20px;
     }
 
-    /deep/ .content img {
+    /deep/ .article-text img {
         margin:auto;
         width:70%;
         display:block;
@@ -127,18 +143,28 @@
         margin:auto;
     }
 
+    .author-section{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
     @media screen and (max-width: 600px){
         .article-text{
             padding-left: 20px;
             padding-right: 20px;
         }
 
-        /deep/ .content img {
+        /deep/ .article-text img {
             width:100%;
         }
 
         .under-post {
             width:100%;
+        }
+
+        .author-section{
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 
@@ -158,6 +184,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .author_name{
+        font-size: 1.5em;
+        text-decoration: underline;
+        margin-bottom: 2px;
+    }
+
+    .author-right{
+        margin-left: 20px;
+    }
+
+    .author_image{
+        vertical-align: top;
     }
 
 

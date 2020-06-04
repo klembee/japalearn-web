@@ -21,6 +21,12 @@
                 <label>Meta description</label>
                 <md-input v-model="post.meta_description"/>
             </md-field>
+
+            <div v-if="authors.length > 0">
+                <select v-model="post.author_id">
+                    <option :value="author.id" v-for="author in authors" :key="author.id">{{author.name}}</option>
+                </select>
+            </div>
         </div>
         <div class="col-6">
             <h1>{{post.title}}</h1>
@@ -50,6 +56,10 @@
             viewArticleUrl: {
                 type: String,
                 required: true
+            },
+            authors: {
+                type: Array,
+                required: false
             }
         },
         data: function(){
@@ -59,7 +69,8 @@
                     title: "",
                     content: "",
                     imageData: "",
-                    meta_description: ""
+                    meta_description: "",
+                    author_id: null
                 },
                 markdownEditor: {},
                 parsedContent: "",
@@ -77,7 +88,8 @@
                     title: this.post.title,
                     content: this.post.content,
                     image_data: this.post.imageData,
-                    meta_description: this.post.meta_description
+                    meta_description: this.post.meta_description,
+                    author_id: this.post.author_id
                 };
 
                 console.log(payload);

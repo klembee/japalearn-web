@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Author;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -26,11 +27,15 @@ class BlogController extends Controller
      * @param Request $request
      */
     public function create(Request $request){
-        return view('app.admin.blog.create');
+        $authors = Author::all();
+
+        return view('app.admin.blog.create', compact('authors'));
     }
 
     public function edit(Request $request, BlogPost $post){
-        return view('app.admin.blog.create', compact('post'));
+        $authors = Author::all();
+
+        return view('app.admin.blog.create', compact('post', 'authors'));
     }
 
 }

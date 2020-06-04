@@ -17,12 +17,14 @@
         @if(isset($post))
             <create-article-form
                 :post-prop="{{json_encode($post)}}"
+                :authors="{{json_encode($authors)}}"
                 save-endpoint="{{route('api.blog.save')}}"
                 view-article-url="{{route('frontpage.blog.view', ['post' => ':id'])}}"
             ></create-article-form>
         @else
             <create-article-form
                 save-endpoint="{{route('api.blog.save')}}"
+                :authors="{{json_encode($authors)}}"
                 view-article-url="{{route('frontpage.blog.view', ['post' => ':id'])}}"
             ></create-article-form>
         @endif

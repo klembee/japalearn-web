@@ -22,6 +22,7 @@ class BlogController extends Controller
         $postId = $request->input('post_id');
         $title = $request->input('title');
         $content = $request->input('content');
+        $authorId = $request->input('author_id');
 
         if($postId == -1){
             //Create a new post
@@ -29,8 +30,12 @@ class BlogController extends Controller
                 'title' => $title,
                 'content' => $content,
                 'meta_description' => $request->input('meta_description'),
-                'slug' => Slugger::slugify($title)
+                'slug' => Slugger::slugify($title),
             ]);
+
+            if($authorId){
+                $blogArticle->author_id = $authorId;
+            }
 
             $blogArticle->save();
 
@@ -42,6 +47,11 @@ class BlogController extends Controller
                 'content' => $content,
                 'meta_description' => $request->input('meta_description')
             ]);
+
+            if($authorId){
+                $blogArticle->author_id = $authorId;
+            }
+
             $blogArticle->save();
 
         }

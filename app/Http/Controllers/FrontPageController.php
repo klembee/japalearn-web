@@ -68,6 +68,9 @@ class FrontPageController extends Controller
     }
 
     public function viewArticle(Request $request, BlogPost $post){
+
+        $post = $post->load('author');
+
         return view('frontpage.viewArticle', compact('post'));
     }
 }

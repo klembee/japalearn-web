@@ -16,6 +16,7 @@ class BlogPost extends Model
         'content',
         'meta_description',
         'slug',
+        'author_id'
     ];
 
     public function author(){
