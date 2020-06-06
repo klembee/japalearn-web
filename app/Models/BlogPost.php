@@ -19,6 +19,11 @@ class BlogPost extends Model
         'author_id'
     ];
 
+    protected $appends = [
+        'url',
+        'abstract'
+    ];
+
     public function author(){
         return $this->belongsTo(Author::class);
     }
@@ -42,6 +47,17 @@ class BlogPost extends Model
         $path = substr($savedFile, strpos($savedFile, "/") + 1);
         $this->image_url = $path;
         $this->save();
+    }
+
+    public function getAbstractAttribute(){
+        $markdownParser = new \Parsedown();
+        $parsedContent = strip_tags(str_replace('</', '. </', $markdownParser->text($this->content)));
+
+        return mb_substr($parsedContent, 0, 100) . "...";
+    }
+
+    public function getUrlAttribute(){
+        return route('frontpage.blog.view', $this);
     }
 
     public function getRouteKeyName()

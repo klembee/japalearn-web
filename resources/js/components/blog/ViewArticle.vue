@@ -28,6 +28,17 @@
 
                 <hr />
 
+                <!-- Other articles -->
+                <div>
+                    <other-articles
+                        :articles="otherArticles"
+                    >
+
+                    </other-articles>
+                </div>
+
+                <hr />
+
                 <div class="under-post">
                     <h3>Comments</h3>
                     <div v-for="comment in comments" :key="comment.id" class="comment-container">
@@ -57,10 +68,11 @@
 <script>
     import Marked from "marked";
     import LeaveComment from "./LeaveComment";
+    import OtherArticles from "./OtherArticles";
 
     export default {
         name: "ViewArticle",
-        components: {LeaveComment},
+        components: {OtherArticles, LeaveComment},
         props: {
             article: {
                 type: Object,
@@ -72,6 +84,10 @@
             },
             leaveCommentEndpoint: {
                 type: String,
+                required: true
+            },
+            otherArticles: {
+                type: Array,
                 required: true
             }
         },

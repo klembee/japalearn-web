@@ -35,7 +35,7 @@ class Story extends Model
 
 //    public function translations(){
 //        return $this->hasMany(StoryTranslation::class, 'story_id');
-//    }
+//    }ge
 
     public function setFrontImage(UploadedFile $file){
         $savedFile = $file->store('public/stories');

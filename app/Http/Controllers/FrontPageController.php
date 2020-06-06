@@ -71,6 +71,10 @@ class FrontPageController extends Controller
 
         $post = $post->load('author');
 
-        return view('frontpage.viewArticle', compact('post'));
+        $otherArticles = BlogPost::query()->where('id', '!=', $post->id)->get();
+        $nbOther = min(count($otherArticles), 3);
+        $otherArticles = $otherArticles->random($nbOther);
+
+        return view('frontpage.viewArticle', compact('post', 'otherArticles'));
     }
 }
