@@ -154,6 +154,10 @@
         display:block;
     }
 
+    .article-text{
+        font-size: 1.3em;
+    }
+
     .under-post{
         width:60%;
         margin:auto;
