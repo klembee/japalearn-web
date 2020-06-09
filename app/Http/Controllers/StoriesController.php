@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\SubscriptionHelper;
 use App\Models\Author;
 use App\Models\Story;
 use Illuminate\Http\Request;
@@ -64,6 +65,14 @@ class StoriesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function read(Request $request, Story $story){
+        if($story->subscriber_only){
+            if(!SubscriptionHelper::isSubscribed($request)){
+                // This user is not a paying customer...
+                return redirect()->route('account.subscription.index');
+            }
+        }
+
+
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($story->content);
 

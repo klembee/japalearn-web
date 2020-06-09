@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\GrammarHelper;
+use App\Helpers\SubscriptionHelper;
 use App\Http\Controllers\Controller;
 use App\Models\GrammarLearningPathCategory;
 use App\Models\GrammarLearningPathItem;
@@ -30,6 +31,13 @@ class GrammarController extends Controller
 
 
     public function learn(Request $request, GrammarLearningPathItem $item){
+        if($item->subscriber_only){
+            if(!SubscriptionHelper::isSubscribed($request)){
+                // This user is not a paying customer...
+                return redirect()->route('account.subscription.index');
+            }
+        }
+
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($item->content);
 
@@ -37,6 +45,13 @@ class GrammarController extends Controller
     }
 
     public function review(Request $request, GrammarLearningPathItem $grammarlesson){
+        if($grammarlesson->subscriber_only){
+            if(!SubscriptionHelper::isSubscribed($request)){
+                // This user is not a paying customer...
+                return redirect()->route('account.subscription.index');
+            }
+        }
+
 
         $questions = $grammarlesson->questions()->with('answers')->get()->toArray();
 

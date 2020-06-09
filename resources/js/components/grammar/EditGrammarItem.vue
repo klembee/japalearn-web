@@ -8,6 +8,13 @@
                     <md-input id="title" v-model="item.title"/>
                 </md-field>
 
+                <div class="mb-3">
+                    <input type="checkbox" v-model="item.subscriber_only" />
+                    Subscriber only
+                </div>
+
+
+
                 <label for="content">Content</label>
                 <textarea id="content">
 
@@ -149,6 +156,7 @@
                     meta_description: "",
                     image_data: "",
                     front_image_alt: "",
+                    subscriber_only: true
                 },
                 newQuestion: {
                     question: "",
@@ -174,6 +182,10 @@
                     image_data: this.item.image_data,
                     front_image_alt: this.item.front_image_alt,
                 };
+
+                if(this.item.subscriber_only ){
+                    payload['subscriber_only'] = this.item.subscriber_only;
+                }
 
                 axios.post(this.saveEndpoint, payload)
                     .then(function(response){

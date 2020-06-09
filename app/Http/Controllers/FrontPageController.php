@@ -23,6 +23,7 @@ class FrontPageController extends Controller
 
     public function grammarCategory(Request $request, GrammarLearningPathCategory $category){
         $items = GrammarLearningPathItem::query()
+            ->where('subscriber_only', false)
             ->where('category_id', $category->id)->with('category')->paginate(5);
         $categories = GrammarLearningPathCategory::all();
         $currentCategoryId = $category->id;
@@ -31,6 +32,8 @@ class FrontPageController extends Controller
     }
 
     public function viewGrammar(Request $request, GrammarLearningPathItem $item){
+        // Todo check that user is subscribed and can read item
+
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($item->content);
 
@@ -39,7 +42,7 @@ class FrontPageController extends Controller
 
     public function stories(Request $request){
         // Show only 2 stories to free users
-        $stories = Story::query()->limit(2)->get()->toArray();
+        $stories = Story::query()->where('subscriber_only', false)->limit(2)->get()->toArray();
         $stories = new LengthAwarePaginator(
             $stories,
             count($stories),

@@ -18,7 +18,8 @@ class Story extends Model
         'meta_description',
         'slug',
         'description',
-        'meta_description'
+        'meta_description',
+        'subscriber_only'
     ];
 
     public function questions(){

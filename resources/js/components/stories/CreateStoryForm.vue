@@ -10,6 +10,11 @@
                         <md-input id="title" v-model="story.title"/>
                     </md-field>
 
+                    <div class="mb-3">
+                        <input type="checkbox" v-model="story.subscriber_only" />
+                        Subscriber only
+                    </div>
+
                     <textarea>
 
                     </textarea>
@@ -144,7 +149,8 @@
                     imageData: "",
                     description: "",
                     meta_description: "",
-                    vocab: []
+                    vocab: [],
+                    subscriber_only: true
                 },
                 newVocab: {
                     word: "",
@@ -168,6 +174,10 @@
                     meta_description: this.story.meta_description,
                     vocab: this.story.vocab
                 };
+
+                if(this.story.subscriber_only ){
+                    payload['subscriber_only'] = this.story.subscriber_only;
+                }
 
                 axios.post(this.saveEndpoint, payload)
                     .then(function(response){

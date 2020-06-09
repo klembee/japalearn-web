@@ -48,6 +48,8 @@ class GrammarLearningPathController extends Controller
             $item->setImage($image);
         }
 
+        $item->subscriber_only = $request->has('subscriber_only');
+
         $item->save();
 
 
@@ -71,9 +73,11 @@ class GrammarLearningPathController extends Controller
             'questions' => 'nullable|array'
         ]);
 
+
         try {
             $item->title = $request->input('title');
             $item->content = $request->input('content');
+            $item->subscriber_only = $request->has('subscriber_only');
 
             if($request->has('meta_description')){
                 $item->meta_description = $request->input('meta_description');

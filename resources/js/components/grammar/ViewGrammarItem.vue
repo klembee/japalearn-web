@@ -94,7 +94,7 @@
 
 <style scoped>
     .grammar-content{
-        font-size: 1.4em;
+        font-size: 1.3em;
     }
 
     .back-button{

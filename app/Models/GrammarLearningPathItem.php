@@ -17,7 +17,8 @@ class GrammarLearningPathItem extends Model
         'content',
         'category_id',
         'meta_description',
-        'slug'
+        'slug',
+        'subscriber_only'
     ];
 
     protected $appends = ['abstract'];

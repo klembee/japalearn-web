@@ -43,6 +43,8 @@ class StoriesController extends Controller
                 'slug' => Slugger::slugify($request->input('title')),
             ]);
 
+            $story->subscriber_only = $request->has('subscriber_only');
+
             if($request->has('translated_content')){
                 $story->translated_content = $request->input('translated_content');
             }
@@ -74,6 +76,8 @@ class StoriesController extends Controller
                 'content' => $request->input('content'),
                 'keywords' => $request->input('keywords'),
             ]);
+
+            $story->subscriber_only = $request->has('subscriber_only');
 
             if($request->has('translated_content')){
                 $story->translated_content = $request->input('translated_content');
