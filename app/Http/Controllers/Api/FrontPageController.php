@@ -44,7 +44,7 @@ class FrontPageController extends Controller
         $message = $request->input('message');
 
         // Send email
-        Mail::send(new ContactUs($name, $email, $message));
+        Mail::to('info@japalearn.com')->send(new ContactUs($name, $email, $message));
 
 //        $request->session()->flash('message', 'We will get back to you shortly !');
 
