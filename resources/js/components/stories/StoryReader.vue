@@ -21,7 +21,7 @@
             </div>
 
 
-            <div v-if="story.vocab.length > 0">
+            <div v-if="story.vocab.length > 0" class="vocab-container">
                 <h3>Vocabulary in this story</h3>
                 <table class="table vocab-table">
                     <thead>

@@ -7,7 +7,7 @@
                 <md-card-content>
                     <h1 class="title">{{item.title}}</h1>
 
-                    <div v-html="parsedContent">
+                    <div v-html="parsedContent" class="grammar-content">
 
                     </div>
 
@@ -93,6 +93,10 @@
 </script>
 
 <style scoped>
+    .grammar-content{
+        font-size: 1.4em;
+    }
+
     .back-button{
         margin-left:16px;
         margin-bottom:10px;
