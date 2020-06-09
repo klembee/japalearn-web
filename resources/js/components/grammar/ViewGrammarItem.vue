@@ -108,6 +108,10 @@
         margin:auto;
     }
 
+    /deep/ blockquote {
+        font-size: 1.2em;
+    }
+
     /deep/ table{
         width:fit-content;
         margin:auto;
