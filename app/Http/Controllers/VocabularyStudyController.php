@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\SRSHelper;
+use App\Helpers\SubscriptionHelper;
 use App\Models\VocabLearningPath;
 use App\Models\WordType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 /**
@@ -20,6 +22,16 @@ use Illuminate\Http\Request;
 class VocabularyStudyController extends Controller
 {
 
+    private function checkSubscribed(Request $request){
+        if($request->user()->info->kanji_level >= 4){
+            if(!SubscriptionHelper::isSubscribed($request)){
+                return redirect()->route('account.subscription.index');
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Get the vocabulary (radical, kanji, vocab) that the logged in
      * user can learn now. Redirect to learning view where user can learn the new items
@@ -29,6 +41,11 @@ class VocabularyStudyController extends Controller
      */
     public function vocabularyLesson(Request $request){
         $user = $request->user();
+
+        $notSubscribed = $this->checkSubscribed($request);
+        if($notSubscribed !== true){
+            return $notSubscribed;
+        }
 
         $vocabUser = $user->info->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
@@ -69,6 +86,11 @@ class VocabularyStudyController extends Controller
      */
     public function vocabularyReview(Request $request){
         $user = $request->user();
+
+        $notSubscribed = $this->checkSubscribed($request);
+        if($notSubscribed !== true){
+            return $notSubscribed;
+        }
 
         $vocabUser = $user->info->vocabLearningPathStats;
         $allVocabItems = VocabLearningPath::query()
