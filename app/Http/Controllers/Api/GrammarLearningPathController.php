@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\PictureUploaderHelper;
 use App\Helpers\Slugger;
 use App\Http\Controllers\Controller;
+use App\Models\GrammarItemWord;
 use App\Models\GrammarLearningPathAnswer;
 use App\Models\GrammarLearningPathItem;
 use App\Models\GrammarLearningPathQuestion;
@@ -108,6 +109,19 @@ class GrammarLearningPathController extends Controller
                     $a->question_id = $q->id;
                     $a->save();
                 }
+            }
+
+            //Set the vocabs
+            $item->vocab()->delete();
+
+            foreach ($request->input('vocab') as $vocab){
+                $q = new GrammarItemWord([
+                    'word' => $vocab['word'],
+                    'reading' => $vocab['reading'],
+                    'meaning' => $vocab['meaning']
+                ]);
+                $q->grammar_item_id = $item->id;
+                $q->save();
             }
         }catch (\Exception $e){
             return response()->json([

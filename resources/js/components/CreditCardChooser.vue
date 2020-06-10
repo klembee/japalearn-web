@@ -1,5 +1,5 @@
 <template>
-    <md-card>
+    <md-card class="m-0">
         <md-card-header>
             <h3>Choose a card</h3>
         </md-card-header>
@@ -18,7 +18,7 @@
                         <tr v-if="selectedCard">
                             <td colspan="2">Selected Card</td>
                             <td>
-                                <md-button @click="paymentMethodUnselected" class="md-primary md-raised">Unselect</md-button>
+                                <md-button @click="paymentMethodUnselected" class="md-accent md-raised">Unselect</md-button>
                             </td>
 
                         </tr>
@@ -26,7 +26,7 @@
                             <td>**** **** **** {{card.last4}}</td>
                             <td>{{card.exp_month}}/{{card.exp_year}}</td>
                             <td>
-                                <md-button @click="paymentMethodSelected(card.id)" class="md-primary md-raised">Select</md-button>
+                                <md-button @click="paymentMethodSelected(card.id)" class="md-accent md-raised">Select</md-button>
                             </td>
                         </tr>
                         </tbody>

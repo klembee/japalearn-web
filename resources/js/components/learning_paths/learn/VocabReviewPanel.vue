@@ -1,36 +1,42 @@
 <template>
     <div>
         <md-content v-if="currentItem">
-            <h1 class="text-capitalize"><span :class="{meaning: currentItem.answer_type === 'meaning', reading: currentItem.answer_type === 'reading'}">{{currentItem.answer_type}}</span> of:</h1>
-            <div class="item-word">
-                <p>{{currentItem.question}}</p>
-            </div>
-            <div v-if="currentItem.answer_type === 'meaning'">
-                <md-field :class="{error: hasError}">
-                    <label>What is the meaning ?</label>
-                    <md-input v-on:keyup.enter="submitAnswer" v-model="answer"/>
-                    <md-button @click="submitAnswer" class="md-icon-button">
-                        <md-icon>send</md-icon>
-                    </md-button>
-                </md-field>
-            </div>
-            <div v-else-if="currentItem.answer_type === 'reading'">
-                <md-field :class="{error: hasError}">
-                    <label>What is the reading ?</label>
-                    <md-input @input="transformToKana()" v-on:keyup.enter="submitAnswer" v-model="answer"/>
-                    <md-button @click="submitAnswer" class="md-icon-button">
-                        <md-icon>send</md-icon>
-                    </md-button>
-                </md-field>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" :style="{width: (good.length/initialNbItems) * 100 + '%'}" :aria-valuenow="good.length" aria-valuemin="0" :aria-valuemax="initialNbItems"></div>
             </div>
 
-            <!-- Answer -->
-            <div v-if="showAnswer">
-                <vocab-item-content
-                    :item="currentItem"
-                >
+            <div class="mt-4">
+                <h1 class="text-capitalize"><span :class="{meaning: currentItem.answer_type === 'meaning', reading: currentItem.answer_type === 'reading'}">{{currentItem.answer_type}}</span> of:</h1>
+                <div class="item-word">
+                    <p>{{currentItem.question}}</p>
+                </div>
+                <div v-if="currentItem.answer_type === 'meaning'">
+                    <md-field :class="{error: hasError}">
+                        <label>What is the meaning ?</label>
+                        <md-input v-on:keyup.enter="submitAnswer" v-model="answer"/>
+                        <md-button @click="submitAnswer" class="md-icon-button">
+                            <md-icon>send</md-icon>
+                        </md-button>
+                    </md-field>
+                </div>
+                <div v-else-if="currentItem.answer_type === 'reading'">
+                    <md-field :class="{error: hasError}">
+                        <label>What is the reading ?</label>
+                        <md-input @input="transformToKana()" v-on:keyup.enter="submitAnswer" v-model="answer"/>
+                        <md-button @click="submitAnswer" class="md-icon-button">
+                            <md-icon>send</md-icon>
+                        </md-button>
+                    </md-field>
+                </div>
 
-                </vocab-item-content>
+                <!-- Answer -->
+                <div v-if="showAnswer">
+                    <vocab-item-content
+                        :item="currentItem"
+                    >
+
+                    </vocab-item-content>
+                </div>
             </div>
 
         </md-content>
@@ -94,6 +100,7 @@
                     good: [],
                     wrong: []
                 },
+                initialNbItems: 0,
                 readyForLearn: false,
                 showAnswer: false,
                 hasError: false
@@ -222,9 +229,19 @@
                     this.$emit('review-end')
                 }
             },
-            transformToKana: _.debounce(function(){
-                this.answer = toKana(this.answer)
-            }, 330),
+            transformToKana: function(){
+                if(this.answer[this.answer.length - 1] !== 'n') {
+                    if(this.answer[this.answer.length - 1] !== 'y') {
+                        this.answer = toKana(this.answer)
+                    }
+                }else{
+                    if(this.answer[this.answer.length - 2] === 'n'){
+                        // Last two characters are n. Remove the last one and switch to ん
+                        this.answer = this.answer.slice(0, this.answer.length - 1);
+                        this.answer = toKana(this.answer)
+                    }
+                }
+            },
             answerIsCorrect(){
                 let allAnswersToCheck = [
                     this.answer,
@@ -306,6 +323,7 @@
             });
 
             this.items = _.shuffle(this.items);
+            this.initialNbItems = this.items.length;
 
         }
     }
@@ -319,5 +337,12 @@
     .reading{
         background-color: #32525926;
         padding: 5px 10px 5px 10px;
+    }
+
+    .progress{
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
     }
 </style>

@@ -37,6 +37,8 @@ class FrontPageController extends Controller
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($item->content);
 
+        $item = $item->load('vocab');
+
         return view('frontpage.viewGrammar', compact('item', 'parsedContent'));
     }
 

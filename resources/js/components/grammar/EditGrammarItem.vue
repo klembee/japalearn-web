@@ -45,6 +45,42 @@
             </md-field>
             <hr />
 
+            <h3>Vocabulary</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Word</th>
+                        <th>Reading</th>
+                        <th>Meaning</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="vocab in item.vocab" :key="vocab.id">
+                        <td>{{vocab.word}}</td>
+                        <td>{{vocab.reading}}</td>
+                        <td>{{vocab.meaning}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input v-model="newVocab.word"/>
+                        </td>
+                        <td>
+                            <input v-model="newVocab.reading"/>
+                        </td>
+                        <td>
+                            <input v-model="newVocab.meaning"/>
+                        </td>
+                        <td>
+                            <md-button @click="addVocab">Add</md-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr />
+
             <div>
                 <h2>Add a question: </h2>
                 <h3>Question</h3>
@@ -165,6 +201,11 @@
                     }],
                     indication: ""
                 },
+                newVocab: {
+                    word: "",
+                    reading: "",
+                    meaning: ""
+                },
                 markdownEditor: {},
                 parsedContent: ""
             }
@@ -178,6 +219,7 @@
                     title: this.item.title,
                     content: this.markdownEditor.value(),
                     questions: this.item.questions,
+                    vocab: this.item.vocab,
                     meta_description: this.item.meta_description,
                     image_data: this.item.image_data,
                     front_image_alt: this.item.front_image_alt,
@@ -226,6 +268,14 @@
                         answer: ""
                     }],
                     indication: ""
+                }
+            },
+            addVocab(){
+                this.item.vocab.push(_.clone(this.newVocab));
+                this.newVocab = {
+                    word: "",
+                    reading: "",
+                    meaning: ""
                 }
             },
             imageChanged(dataurl){

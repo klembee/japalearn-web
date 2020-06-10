@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\SRSHelper;
+use App\Helpers\SubscriptionHelper;
 use App\Models\VocabLearningPath;
 use App\Models\VocabLearningPathItemStats;
 use App\Models\WordType;
@@ -13,6 +14,17 @@ use Illuminate\Http\Request;
 
 class KanjiVocabularyController extends Controller
 {
+
+    private function checkSubscribed(Request $request){
+        if($request->user()->info->kanji_level >= 4){
+            if(!SubscriptionHelper::isSubscribed($request)){
+                return redirect()->route('account.subscription.index');
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Displays to the student a dashboard showing the lessons
      * and reviews available and stats about learning
@@ -31,8 +43,15 @@ class KanjiVocabularyController extends Controller
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
             ->orderBy('word_type_id', 'asc')
-            ->orderBy('word')
-            ->limit(30)->get()
+            ->orderBy('word');
+
+
+        $subscribed = $this->checkSubscribed($request);
+        if($subscribed !== true){
+            $allVocabItems = $allVocabItems->where('level', '<', 4);
+        }
+
+        $allVocabItems = $allVocabItems->limit(30)->get()
             ->toArray();
 
         $helper = new SRSHelper($allVocabItems, $vocabUser->toArray());

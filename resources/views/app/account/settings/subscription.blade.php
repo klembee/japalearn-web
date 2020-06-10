@@ -58,9 +58,8 @@
             stripe-key="{{env('STRIPE_KEY')}}"
             client-secret="{{$stripeIntent}}"
         >
+
+        </subscription-page>
     @endif
-
-
-    </subscription-page>
 
 @endsection

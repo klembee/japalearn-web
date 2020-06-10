@@ -1,90 +1,101 @@
 <template>
-    <div class="mt-3">
-        <h2>Please select a plan</h2>
-        <div class="all-plan-container">
-            <div class="row justify-content-center">
-                <div class="col-md-3 plan-container">
-                    <div class="content">
-                        <div class="plan-header">
-                            <h3>Month</h3>
-                            <div>
-                                <p class="pricing">${{month.amount / 100}} CAD</p>
+    <div class="row m-0 mt-3">
+        <div class="col-xl-8 col-12">
+            <h2>Please select a plan</h2>
+            <div class="all-plan-container">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-2">
+                        <div class="plan-container">
+                            <div class="content">
+                                <div class="plan-header">
+                                    <h3>Month</h3>
+                                    <div>
+                                        <p class="pricing">${{month.amount / 100}} CAD</p>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
+                                <hr />
+                                <p class="small">Recurring charge every month <sup>1</sup></p>
                             </div>
+
+                            <button @click="selectedPlan = month" class="select-plan">Select</button>
                         </div>
-
-                        <hr />
-                        <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
-                        <hr />
-                        <p>Recurring charge every month <sup>1</sup></p>
                     </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="plan-container">
+                            <div class="content">
+                                <div class="plan-header">
+                                    <h3>Three months</h3>
+                                    <div>
+                                        <p class="pricing">${{trimonth.amount / 100}} CAD</p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
+                                <hr />
+                                <p class="small">Recurring charge every three months <sup>1</sup></p>
+                            </div>
 
-                    <button @click="selectedPlan = month" class="select-plan">Select</button>
+
+                            <button @click="selectedPlan = trimonth" class="select-plan">Select</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="plan-container">
+                            <div class="content">
+                                <div class="plan-header">
+                                    <h3>Annual</h3>
+                                    <div>
+                                        <p class="pricing">${{year.amount / 100}} CAD</p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
+                                <hr />
+                                <p class="small">Recurring charge every year <sup>1</sup></p>
+                            </div>
+
+                            <button @click="selectedPlan = year" class="select-plan">Select</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3 offset-md-1 plan-container">
-                    <div class="content">
-                        <div class="plan-header">
-                            <h3>Three months</h3>
-                            <div>
-                                <p class="pricing">${{trimonth.amount / 100}} CAD</p>
-                            </div>
-                        </div>
-                        <hr />
-                        <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
-                        <hr />
-                        <p>Recurring charge every three months <sup>1</sup></p>
-                    </div>
+            </div>
 
+            <ol>
+                <li>
+                    <p>JapaLearn will charge you at the beginning of a subscription period. A period begins on the date when a subscription is added and ends a month, three month or one year after the date depending on the selected plan.</p>
+                    <p>You can cancel your subscription any time.</p>
+                </li>
+            </ol>
+        </div>
 
-                    <button @click="selectedPlan = trimonth" class="select-plan">Select</button>
-                </div>
-                <div class="col-md-3 offset-md-1 plan-container">
-                    <div class="content">
-                        <div class="plan-header">
-                            <h3>Annual</h3>
-                            <div>
-                                <p class="pricing">${{year.amount / 100}} CAD</p>
-                            </div>
-                        </div>
-                        <hr />
-                        <p>Access to all the kanjis and vocabulary, all stories available and test your skills when learning the grammar.</p>
-                        <hr />
-                        <p>Recurring charge every year <sup>1</sup></p>
-                    </div>
+        <div class="col-xl-4 col-12">
+            <div v-if="selectedPlan">
+                <h2>Payment</h2>
 
-                    <button @click="selectedPlan = year" class="select-plan">Select</button>
+                <credit-card-chooser
+                    :user-email="userEmail"
+                    :credit-cards="creditCards"
+                    :amount="selectedPlan.amount"
+                    :save-method-endpoint="saveMethodEndpoint"
+                    :stripe-key="stripeKey"
+                    :client-secret="clientSecret"
+                    @card-selected="methodSelected"
+                    @card-unselected="selectedCard = null"
+                    class="mb-3"
+                >
+
+                </credit-card-chooser>
+
+                <div v-if="selectedCard">
+                    <p>You will be charged ${{selectedPlan.amount / 100}} CAD when you proceed with the payment.</p>
+                    <md-button @click="pay" :disabled="isSubscribing"  class="md-raised md-primary">Proceed to payment</md-button>
                 </div>
             </div>
         </div>
 
-        <ol>
-            <li>
-                <p>JapaLearn will charge you at the beginning of a subscription period. A period begins on the date when a subscription is added and ends a month, three month or one year after the date depending on the selected plan.</p>
-                <p>You can cancel your subscription any time.</p>
-            </li>
-        </ol>
-
-        <div v-if="selectedPlan">
-            <h2>Payment</h2>
-            <p class="h3">How do you want to pay ?</p>
-
-            <credit-card-chooser
-                :user-email="userEmail"
-                :credit-cards="creditCards"
-                :amount="selectedPlan.amount"
-                :save-method-endpoint="saveMethodEndpoint"
-                :stripe-key="stripeKey"
-                :client-secret="clientSecret"
-                @card-selected="methodSelected"
-                @card-unselected="selectedCard = null"
-            >
-
-            </credit-card-chooser>
-
-            <div v-if="selectedCard">
-                <p>You will be charged ${{selectedPlan.amount / 100}} CAD when you proceed with the payment.</p>
-                <md-button @click="pay" :disabled="isSubscribing"  class="md-raised md-primary">Proceed to payment</md-button>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -175,8 +186,7 @@
 
 <style scoped>
     .all-plan-container{
-        width:80%;
-        margin: 30px auto;
+        margin-bottom: 30px;
     }
 
     .plan-container{
@@ -204,7 +214,8 @@
     }
 
     .select-plan{
-        background-color: #d6d6ef;
+        background-color: #325259;
+        color: white;
         border: none;
         width: 100%;
         border-bottom-left-radius: 13px;

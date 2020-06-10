@@ -10,6 +10,8 @@
                 <story-list-item-card
                     :story="{{json_encode($story)}}"
                     read-url="{{route('stories.read', ['story' => ':story_id'])}}"
+                    subscribe-url="{{route('account.subscription.index')}}"
+                    :user-subscribed="{{Auth::user()->subscribed() ? 'true' : 'false'}}"
                 >
 
                 </story-list-item-card>

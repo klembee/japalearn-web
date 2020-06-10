@@ -41,6 +41,8 @@ class GrammarController extends Controller
         $markdownParser = new \Parsedown();
         $parsedContent = $markdownParser->text($item->content);
 
+        $item = $item->load('vocab');
+
         return view('app.grammar.learn', compact('item', 'parsedContent'));
     }
 

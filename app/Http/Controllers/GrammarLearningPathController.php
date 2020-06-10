@@ -23,7 +23,7 @@ class GrammarLearningPathController extends Controller
      * @param GrammarLearningPathItem $item
      */
     public function edit(Request $request, GrammarLearningPathItem $item){
-        $item = $item->load('questions', 'questions.answers');
+        $item = $item->load('questions', 'questions.answers', 'vocab');
 
         return view('app.admin.grammar_learning_path.edit', compact('item'));
     }
