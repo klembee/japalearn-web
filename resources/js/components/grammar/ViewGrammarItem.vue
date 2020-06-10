@@ -14,7 +14,7 @@
                     <hr />
 
                     <div class="row m-0">
-                        <div class="col-md-8 col-12">
+                        <div v-if="item.vocab.length > 0" class="col-md-8 col-12">
                             <!-- Vocab -->
                             <div>
                                 <h3>Vocabulary used in the examples</h3>
@@ -137,6 +137,8 @@
 
     /deep/ blockquote {
         font-size: 1.2em;
+        background-color: #f9f9f9;
+        padding: 10px;
     }
 
     /deep/ .grammar-content table{
