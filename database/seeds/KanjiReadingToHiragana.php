@@ -39,6 +39,20 @@ class KanjiReadingToHiragana extends \Illuminate\Database\Seeder
             }
 
 
+            // Change katakana to hiragana in meaning mnemonic
+            $newMnemonic = "";
+            foreach(mb_str_split($kanji->meaning_mnemonic) as $character){
+                if(\IntlChar::ord($character) >= 12449 && \IntlChar::ord($character) <= 12538){
+                    $codePoint = \IntlChar::ord($character);
+                    $newMnemonic .= \IntlChar::chr($codePoint - 96);
+                }else{
+                    $newMnemonic .= $character;
+                }
+            }
+
+            $kanji->meaning_mnemonic = $newMnemonic;
+            $kanji->save();
+
 
         }
     }
