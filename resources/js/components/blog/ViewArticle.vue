@@ -162,6 +162,10 @@
         margin-top: 20px;
     }
 
+    /deep/ .article-text li{
+        margin-bottom: 10px;
+    }
+
     /deep/ .article-text img {
         margin:auto;
         width:70%;

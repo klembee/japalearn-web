@@ -14,7 +14,7 @@
                     <hr/>
                     <h3>Meanings</h3>
                     <ul>
-                        <li :class="{'isMain': meaning.is_main}" v-for="meaning in item.meanings" :key="meaning.id" class="text-capitalize">{{meaning.meaning}}</li>
+                        <li :class="{'isMain': meaning.is_main}" v-for="meaning in sortedMeanings" :key="meaning.id" class="text-capitalize">{{meaning.meaning}}</li>
                     </ul>
                     <hr />
                     <h3>Readings</h3>
@@ -76,6 +76,15 @@
             }
         },
         computed: {
+            sortedMeanings(){
+                // show main meaning first
+                return this.item.meanings.sort(function(a, b){
+                    if(a.is_main){
+                        return -1;
+                    }
+                    return 1;
+                });
+            },
             meaningMnemonic(){
                 if(this.item.meaning_mnemonic) {
                     return marked(this.item.meaning_mnemonic);
