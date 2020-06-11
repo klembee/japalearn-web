@@ -24,10 +24,22 @@ class KanjiReadingToHiragana extends \Illuminate\Database\Seeder
             }
 
             // Remove the -... in the kun readings example: おなーじ　→　おな
+            $readingsToKeep = [];
+
             foreach($kanji->kunReadings as $reading){
                 $reading->reading = explode("-", $reading->reading)[0];
                 $reading->save();
+
+                // Remove duplicate readings
+                if(!in_array($reading->reading, $readingsToKeep)){
+                    $readingsToKeep[] = $reading->reading;
+                }else{
+                    $reading->delete();
+                }
             }
+
+
+
         }
     }
 }
