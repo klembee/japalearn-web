@@ -153,6 +153,7 @@
     }
     .article-header .title{
         flex-grow:1;
+        padding-right: 40px;
     }
 
     .article-text{
@@ -184,6 +185,9 @@
     @media screen and (max-width: 600px){
         .article-header {
             display: block;
+        }
+        .article-header .title{
+            padding-right: 0;
         }
 
         .article-text{
