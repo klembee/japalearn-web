@@ -21,7 +21,8 @@ class BlogPost extends Model
 
     protected $appends = [
         'url',
-        'abstract'
+        'abstract',
+        'formated_date'
     ];
 
     public function author(){
@@ -34,6 +35,10 @@ class BlogPost extends Model
 
     public function keywords(){
         return $this->hasMany(BlogPostKeyword::class);
+    }
+
+    public function getFormatedDateAttribute(){
+        return $this->created_at->format('F jS Y');
     }
 
     /**

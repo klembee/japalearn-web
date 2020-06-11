@@ -5,7 +5,13 @@
         </div>
         <div class="row w-100 m-0">
             <div class="content col-11 col-sm-9 col-md-6">
-                <h1>{{article.title}}</h1>
+                <div class="article-header">
+                    <h1 class="title">{{article.title}}</h1>
+                    <p class="published_at">Published on {{article.formated_date}}</p>
+                </div>
+
+
+
                 <div class="article-text" v-html="parsedContent">
 
                 </div>
@@ -138,8 +144,15 @@
         border: 2px solid #325259;
     }
 
-    .content h1{
-        text-align: center;
+    .article-header{
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-bottom: 1px solid #b4c0c3;
+    }
+    .article-header .title{
+        flex-grow:1;
     }
 
     .article-text{
@@ -169,6 +182,10 @@
     }
 
     @media screen and (max-width: 600px){
+        .article-header {
+            display: block;
+        }
+
         .article-text{
             padding-left: 20px;
             padding-right: 20px;

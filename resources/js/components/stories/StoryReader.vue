@@ -20,28 +20,32 @@
 
             </div>
 
-
             <div v-if="story.vocab.length > 0" class="vocab-container">
                 <h3>Vocabulary in this story</h3>
                 <table class="table vocab-table">
                     <thead>
-                        <tr>
-                            <th>Word</th>
-                            <th>Meaning</th>
-                        </tr>
+                    <tr>
+                        <th>Word</th>
+                        <th>Reading</th>
+                        <th>Meaning</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="vocab in story.vocab" :key="vocab.id">
-                            <td>
-                                <ruby>{{vocab.word}}<rt>{{vocab.reading}}</rt></ruby>
-                            </td>
-                            <td>
-                                {{vocab.meaning}}
-                            </td>
-                        </tr>
+                    <tr v-for="vocab in story.vocab" :key="vocab.id">
+                        <td>
+                            {{vocab.word}}
+                        </td>
+                        <td>
+                            {{vocab.reading}}
+                        </td>
+                        <td>
+                            {{vocab.meaning}}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </template>
@@ -167,9 +171,5 @@
 
     .vocab-table td{
         font-size:1.5em;
-    }
-
-    .vocab-table td:first-child {
-        padding-top:30px;
     }
 </style>
