@@ -27,8 +27,8 @@ class KanjiReadingToHiragana extends \Illuminate\Database\Seeder
             $readingsToKeep = [];
 
             foreach($kanji->kunReadings as $reading){
-                $reading->reading = explode("-", $reading->reading)[0];
-                $reading->save();
+//                $reading->reading = explode("-", $reading->reading)[0];
+//                $reading->save();
 
                 // Remove duplicate readings
                 if(!in_array($reading->reading, $readingsToKeep)){
