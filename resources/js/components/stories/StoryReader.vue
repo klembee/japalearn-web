@@ -89,36 +89,14 @@
                 let phrase_id = $(this).closest('span').attr('id');
                 let index = parseInt(phrase_id.split('-')[1]);
 
-                $("#translation-" + index).toggle()
+                // If the content of the translation is [image], dont display it.
+
+                let translation = $("#translation-" + index);
+                console.log(translation.text());
+                if(!translation.text().includes('[image]')) {
+                    translation.toggle()
+                }
             });
-            //     $("#translation").remove();
-            //     // $('p[is-showing-translation="true"]').removeAttr("is-showing-translation");
-            //
-            //     // if($(this).attr('is-showing-translation') && $(this).attr('is-showing-translation') === "true"){
-            //     //     $(this).attr('is-showing-translation', "false");
-            //     // }else{
-            //         let translation = self.translate($(this).text());
-            //         if(translation !== "") {
-            //
-            //             $(this).attr('is-showing-translation', "true");
-            //
-            //             let offset = $(this).offset();
-            //
-            //             // Show the translation on top of the phrase
-            //             $(this).append("<p id='translation'>" + translation + "</p>");
-            //
-            //             offset.left -= $(this).width();
-            //             // For some reason I have to remove the height of the image
-            //             offset.top -= $(".story-image").height();
-            //
-            //             let fontSize = parseFloat(getComputedStyle(this).fontSize);
-            //             offset.top -= fontSize;
-            //
-            //             offset.top -= $("#translation").height();
-            //             $("#translation").css(offset);
-            //         }
-            //     // }
-            // });
         }
     }
 </script>
