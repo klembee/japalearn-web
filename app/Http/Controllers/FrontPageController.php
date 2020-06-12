@@ -42,6 +42,14 @@ class FrontPageController extends Controller
         return view('frontpage.viewGrammar', compact('item', 'parsedContent'));
     }
 
+    public function privacyPolicy(Request $request){
+        return view('frontpage.privacyPolicy');
+    }
+
+    public function termsConditions(Request $request){
+        return view('frontpage.termsAndConditions');
+    }
+
     public function stories(Request $request){
         // Show only 2 stories to free users
         $stories = Story::query()->where('subscriber_only', false)->limit(2)->get()->toArray();

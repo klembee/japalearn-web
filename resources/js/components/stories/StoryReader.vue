@@ -4,6 +4,7 @@
             <img v-if="story.front_image_url" :src="'/storage/' + story.front_image_url"/>
         </div>
         <div class="story">
+            <p class="small">Click on a sentence to get the translation.</p>
             <h1 class="text-center mb-4">{{story.title}}</h1>
             <div v-if="story.description" class="description">
                 {{story.description}}

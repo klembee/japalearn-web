@@ -31,6 +31,9 @@ Route::name('frontpage.')->group(function(){
     Route::get('/stories/read/{story}', 'FrontPageController@readStory')->name('story.read');
     Route::get('/blog', 'FrontPageController@blog')->name('blog');
     Route::get('/blog/{post}', 'FrontPageController@viewArticle')->name('blog.view');
+
+    Route::get('/privacy-policy', 'FrontPageController@privacyPolicy')->name('privacyPolicy');
+    Route::get('/terms-and-conditions', 'FrontPageController@termsConditions')->name('termsAndConditions');
 });
 
 Route::middleware('auth')->group(function(){

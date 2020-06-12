@@ -55,6 +55,7 @@
 
                         <p>{{comment.comment}}</p>
                     </div>
+                    <p v-if="comments.length === 0">No comments yet. Why not write one ?</p>
 
                     <hr />
 

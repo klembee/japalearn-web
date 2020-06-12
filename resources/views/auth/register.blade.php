@@ -135,6 +135,7 @@
                                 <md-button type="submit" class="md-accent md-raised">
                                     {{ __('Register') }}
                                 </md-button>
+                                <p>By creating an account, you accept our <a href="{{route('frontpage.privacyPolicy')}}">privacy policy</a> and <a href="{{route('frontpage.termsAndConditions')}}">terms and conditions</a></p>
                             </div>
                         </div>
                     </form>
