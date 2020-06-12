@@ -11,6 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.babelConfig({
+    plugins: ['@babel/plugin-syntax-dynamic-import'],
+});
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/dark_app.scss', 'public/css')
