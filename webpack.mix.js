@@ -12,12 +12,23 @@ const mix = require('laravel-mix');
  */
 
 mix.babelConfig({
-    plugins: ['@babel/plugin-syntax-dynamic-import'],
+    "presets": [["@babel/env", { "modules": "commonjs" }]],
+    "plugins": ["add-module-exports"]
 });
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/dark_app.scss', 'public/css')
    .sass('resources/sass/app.scss', 'public/css')
-    .version();
+
+if(mix.inProduction()){
+    mix.version();
+}
 
 mix.sass('node_modules/cropperjs/src/css/cropper.scss', 'public/css');
+
+mix.webpackConfig({
+    output: {
+        chunkFilename: 'js/chunks/[name].[hash].js',
+        publicPath: '/'
+    }
+});

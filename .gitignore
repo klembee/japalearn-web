@@ -4,6 +4,7 @@
 /public/sitemap.xml
 /public/mix-manifest.json
 /public/*.js
+/public/js/chunks
 /storage/*.key
 /vendor
 .env
