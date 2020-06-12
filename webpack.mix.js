@@ -11,39 +11,11 @@ const mix = require('laravel-mix');
  |
  */
 
-// mix.babelConfig({
-//     // "presets": [["@babel/env", { "modules": "commonjs" }]],
-//     "plugins": ["add-module-exports"]
-// });
-
-module.exports = {
-    module: {
-        rules: [
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    // Creates `style` nodes from JS strings
-                    'style-loader',
-                    // Translates CSS into CommonJS
-                    'css-loader',
-                    // Compiles Sass to CSS
-                    'sass-loader',
-                ],
-            },
-        ],
-    },
-};
-
-mix.webpackConfig({
-    output: {
-        chunkFilename: 'js/chunks/[name].js',
-        publicPath: '/'
-    }
-});
-
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/dark_app.scss', 'public/css')
-   .sass('resources/sass/app.scss', 'public/css')
+   .sass('resources/sass/app.scss', 'public/css');
+
+// mix.minify('public/js/app.js');
 
 if(mix.inProduction()){
     mix.version();
