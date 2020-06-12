@@ -21,6 +21,62 @@ window._ = require('lodash');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+/**
+ * Material Design Components
+ */
+import {MdApp,
+    MdToolbar,
+    MdDrawer,
+    MdButton,
+    MdContent,
+    MdTabs,
+    MdIcon,
+    MdList,
+    MdCard,
+    MdAvatar,
+    MdDivider,
+    MdTable,
+    MdField,
+    MdDialog,
+    MdProgress,
+    MdSnackbar,
+    MdAutocomplete,
+    MdSpeedDial,
+    MdMenu,
+    MdSwitch,
+    MdRipple,
+    MdSubheader,
+    MdTooltip,
+    MdEmptyState,
+    MdCheckbox,
+} from 'vue-material/dist/components'
+
+Vue.use(MdApp);
+Vue.use(MdToolbar);
+Vue.use(MdDrawer);
+Vue.use(MdButton);
+Vue.use(MdContent);
+Vue.use(MdTabs);
+Vue.use(MdIcon);
+Vue.use(MdList);
+Vue.use(MdCard);
+Vue.use(MdAvatar);
+Vue.use(MdDivider);
+Vue.use(MdTable);
+Vue.use(MdField);
+Vue.use(MdDialog);
+Vue.use(MdProgress);
+Vue.use(MdSnackbar);
+Vue.use(MdAutocomplete);
+Vue.use(MdSpeedDial);
+Vue.use(MdMenu);
+Vue.use(MdSwitch);
+Vue.use(MdRipple);
+Vue.use(MdSubheader);
+Vue.use(MdTooltip);
+Vue.use(MdEmptyState);
+Vue.use(MdCheckbox);
+
 Vue.component('example-component', () => import('./components/ExampleComponent.vue'));
 Vue.component('dashboard', () => import('./components/Dashboard.vue'));
 Vue.component('student-invitation-dialog', () => import('./components/teachers/StudentInvitationDialog.vue'));
@@ -66,62 +122,6 @@ Vue.component('KanjiCurrentLevelOverview', () => import('./components/kanji_voca
 Vue.component('LessonsToConfirmTable', () => import('./components/video_lesson/teacher/LessonsToConfirmTable.vue'));
 Vue.component('StarRating', () => import('./components/StarRating.vue'));
 Vue.component('TeacherCard', () => import('./components/teachers/TeacherCard'));
-
-/**
- * Material Design Components
- */
-import {MdApp,
-    MdToolbar,
-    MdDrawer,
-    MdButton,
-    MdContent,
-    MdTabs,
-    MdIcon,
-    MdList,
-    MdCard,
-    MdAvatar,
-    MdDivider,
-    MdTable,
-    MdField,
-    MdDialog,
-    MdProgress,
-    MdSnackbar,
-    MdAutocomplete,
-    MdSpeedDial,
-    MdMenu,
-    MdSwitch,
-    MdRipple,
-    MdSubheader,
-    MdTooltip,
-    MdEmptyState,
-    MdCheckbox,
-    } from 'vue-material/dist/components'
-
-Vue.use(MdApp);
-Vue.use(MdToolbar);
-Vue.use(MdDrawer);
-Vue.use(MdButton);
-Vue.use(MdContent);
-Vue.use(MdTabs);
-Vue.use(MdIcon);
-Vue.use(MdList);
-Vue.use(MdCard);
-Vue.use(MdAvatar);
-Vue.use(MdDivider);
-Vue.use(MdTable);
-Vue.use(MdField);
-Vue.use(MdDialog);
-Vue.use(MdProgress);
-Vue.use(MdSnackbar);
-Vue.use(MdAutocomplete);
-Vue.use(MdSpeedDial);
-Vue.use(MdMenu);
-Vue.use(MdSwitch);
-Vue.use(MdRipple);
-Vue.use(MdSubheader);
-Vue.use(MdTooltip);
-Vue.use(MdEmptyState);
-Vue.use(MdCheckbox);
 
 
 import { BootstrapVue } from 'bootstrap-vue'
