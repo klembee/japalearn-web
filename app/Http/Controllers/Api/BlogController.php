@@ -31,6 +31,8 @@ class BlogController extends Controller
                 'content' => $content,
                 'meta_description' => $request->input('meta_description'),
                 'slug' => Slugger::slugify($title),
+                'image_url' => $request->input('image_url'),
+                'small_image_url' => $request->input('small_image_url'),
             ]);
 
             if($authorId){
@@ -45,7 +47,9 @@ class BlogController extends Controller
             $blogArticle->fill([
                 'title' => $title,
                 'content' => $content,
-                'meta_description' => $request->input('meta_description')
+                'meta_description' => $request->input('meta_description'),
+                'image_url' => $request->input('image_url'),
+                'small_image_url' => $request->input('small_image_url'),
             ]);
 
             if($authorId){
@@ -56,10 +60,10 @@ class BlogController extends Controller
 
         }
 
-        if($request->has('image_data')) {
-            $file = PictureUploaderHelper::uploadFile($request->input('image_data'));
-            $blogArticle->attachPicture($file);
-        }
+//        if($request->has('image_data')) {
+//            $file = PictureUploaderHelper::uploadFile($request->input('image_data'));
+//            $blogArticle->attachPicture($file);
+//        }
 
         return response()->json([
             'success' => true,

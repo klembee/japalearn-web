@@ -3,7 +3,7 @@
         <ul class="list-unstyled">
             <li @click="readArticle(article)" v-for="article in articles" :key="article.id" class="article-item">
                 <div class="article-img-container">
-                    <img :src="'/storage/' + article.image_url" class="article-img"/>
+                    <img :src="article.small_image_url" class="article-img"/>
                 </div>
 
                 <div class="article-content">
@@ -88,7 +88,9 @@
     }
 
     .article-img{
-        width: 30vh;
+        min-width: 180px;
+        max-width:180px;
+        height: auto;
     }
 
     @media screen and (max-width: 600px){

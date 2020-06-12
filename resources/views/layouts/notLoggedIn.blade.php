@@ -147,6 +147,7 @@
 
             <div class="copyright">
                 <p>© Copyright {{now()->format("Y")}}, JapaLearn</p>
+                <p><a href="{{route('frontpage.privacyPolicy')}}">privacy policy</a>. <a href="{{route('frontpage.termsAndConditions')}}">terms and conditions</a></p>
             </div>
         </footer>
     </div>

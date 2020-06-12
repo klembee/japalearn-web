@@ -16,7 +16,9 @@ class BlogPost extends Model
         'content',
         'meta_description',
         'slug',
-        'author_id'
+        'author_id',
+        'image_url',
+        'small_image_url'
     ];
 
     protected $appends = [

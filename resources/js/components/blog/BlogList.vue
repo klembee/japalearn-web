@@ -4,7 +4,7 @@
             <md-card class="post-card" v-for="post in paginatedPosts.data" :key="post.id">
                 <md-card-header>
                     <div class="image-container">
-                        <img class="post_image" v-if="post.image_url" :src="'/storage/' + post.image_url"/>
+                        <img class="post_image" v-if="post.image_url" :src="post.image_url"/>
                     </div>
 
                     <div class="post-header">

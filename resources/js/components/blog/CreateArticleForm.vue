@@ -11,11 +11,21 @@
 
             </textarea>
 
-            <image-selector
-                :aspect-ratio="16/9"
-                @image-changed="imageChanged">
+<!--            <image-selector-->
+<!--                :aspect-ratio="16/9"-->
+<!--                @image-changed="imageChanged">-->
 
-            </image-selector>
+<!--            </image-selector>-->
+
+            <md-field>
+                <label>Front image url (16/9 ratio)</label>
+                <md-input v-model="post.image_url"/>
+            </md-field>
+
+            <md-field>
+                <label>Small front image url</label>
+                <md-input v-model="post.small_image_url"/>
+            </md-field>
 
             <md-field>
                 <label>Meta description</label>
@@ -68,7 +78,8 @@
                     id: -1,
                     title: "",
                     content: "",
-                    imageData: "",
+                    image_url: "",
+                    small_image_url: "",
                     meta_description: "",
                     author_id: null
                 },
@@ -87,7 +98,8 @@
                     post_id: this.post.id,
                     title: this.post.title,
                     content: this.post.content,
-                    image_data: this.post.imageData,
+                    image_url: this.post.image_url,
+                    small_image_url: this.post.small_image_url,
                     meta_description: this.post.meta_description,
                     author_id: this.post.author_id
                 };
