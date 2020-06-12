@@ -96,7 +96,7 @@
 .cropper-center::before,
 .cropper-center::after {
   background-color: #eee;
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
 }
@@ -250,7 +250,7 @@
 .cropper-point.point-se::before {
   background-color: #39f;
   bottom: -50%;
-  content: " ";
+  content: ' ';
   display: block;
   height: 200%;
   opacity: 0;

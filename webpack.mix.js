@@ -11,9 +11,34 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.babelConfig({
-    "presets": [["@babel/env", { "modules": "commonjs" }]],
-    "plugins": ["add-module-exports"]
+// mix.babelConfig({
+//     // "presets": [["@babel/env", { "modules": "commonjs" }]],
+//     "plugins": ["add-module-exports"]
+// });
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                ],
+            },
+        ],
+    },
+};
+
+mix.webpackConfig({
+    output: {
+        chunkFilename: 'js/chunks/[name].js',
+        publicPath: '/'
+    }
 });
 
 mix.js('resources/js/app.js', 'public/js')
@@ -25,10 +50,3 @@ if(mix.inProduction()){
 }
 
 mix.sass('node_modules/cropperjs/src/css/cropper.scss', 'public/css');
-
-mix.webpackConfig({
-    output: {
-        chunkFilename: 'js/chunks/[name].[hash].js',
-        publicPath: '/'
-    }
-});
