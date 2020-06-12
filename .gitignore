@@ -3,6 +3,7 @@
 /public/storage
 /public/sitemap.xml
 /public/mix-manifest.json
+/public/*.js
 /storage/*.key
 /vendor
 .env
