@@ -168,8 +168,12 @@
                     .then(function(response){
                         if(response.data.success){
                             toastr.success(response.data.message);
-                            ga('send', 'event', 'subscription', 'subscribed', 'subscribed', self.electedPlan.amount / 100);
-                            window.location.href = self.redirectUrl;
+                            ga('send', 'event', 'subscription', 'subscribed', 'subscribed', self.electedPlan.amount / 100, {
+                                hitCallback: function(){
+                                    window.location.href = self.redirectUrl;
+                                }
+                            });
+
                         }else{
                             toastr.error("Error while subscribing: " + response.data.message);
                             self.isSubscribing = false;
