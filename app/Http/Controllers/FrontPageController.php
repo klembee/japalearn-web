@@ -90,4 +90,17 @@ class FrontPageController extends Controller
 
         return view('frontpage.viewArticle', compact('post', 'otherArticles'));
     }
+
+    public function viewArticleAMP(Request $request, BlogPost $post){
+        $post = $post->load('author');
+
+        $otherArticles = BlogPost::query()->where('id', '!=', $post->id)->get();
+        $nbOther = min(count($otherArticles), 3);
+        $otherArticles = $otherArticles->random($nbOther);
+
+        $markdownParser = new \Parsedown();
+        $parsedContent = str_replace('<img', '<amp-img width="300" height="200" layout="responsive" ', $markdownParser->text($post->content));
+
+        return view('frontpage.amp.viewArticle', compact('post', 'otherArticles', 'parsedContent'));
+    }
 }

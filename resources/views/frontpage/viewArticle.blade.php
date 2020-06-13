@@ -8,6 +8,9 @@
     <meta property="og:title" content="{{$post->title}}" />
     <meta property="og:image" content="{{env('APP_URL')}}/storage/{{$post->image_url}}" />
 
+    <!-- amp -->
+    <link rel="amphtml" href="{{route('frontpage.blog.view.amp', $post)}}">
+
     @if($post->meta_description)
         <meta name="description" content="{{$post->meta_description}}">
         <meta property="og:description" content="{{$post->meta_description}}" />
