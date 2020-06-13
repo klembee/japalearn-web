@@ -132,7 +132,9 @@
 
                         <div class="form-group mb-0">
                             <div>
-                                <md-button type="submit" class="md-accent md-raised">
+                                <md-button type="submit" class="md-accent md-raised"
+                                    onclick="ga('send', 'event', 'register', 'button_click', 'registered', 1);"
+                                    >
                                     {{ __('Register') }}
                                 </md-button>
                                 <p>By creating an account, you accept our <a href="{{route('frontpage.privacyPolicy')}}">privacy policy</a> and <a href="{{route('frontpage.termsAndConditions')}}">terms and conditions</a></p>

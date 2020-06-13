@@ -19,8 +19,7 @@
                                 <hr />
                                 <p class="small">Recurring charge every month <sup>1</sup></p>
                             </div>
-
-                            <button @click="selectedPlan = month" class="select-plan">Select</button>
+                            <button @click="selectMonth" class="select-plan">Select</button>
                         </div>
                     </div>
                     <div class="col-md-4 mb-2">
@@ -39,7 +38,7 @@
                             </div>
 
 
-                            <button @click="selectedPlan = trimonth" class="select-plan">Select</button>
+                            <button @click="selectTriMonth" class="select-plan">Select</button>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -57,7 +56,7 @@
                                 <p class="small">Recurring charge every year <sup>1</sup></p>
                             </div>
 
-                            <button @click="selectedPlan = year" class="select-plan">Select</button>
+                            <button @click="selectYear" class="select-plan">Select</button>
                         </div>
                     </div>
                 </div>
@@ -169,6 +168,7 @@
                     .then(function(response){
                         if(response.data.success){
                             toastr.success(response.data.message);
+                            ga('send', 'event', 'subscription', 'subscribed', 'subscribed', self.electedPlan.amount / 100);
                             window.location.href = self.redirectUrl;
                         }else{
                             toastr.error("Error while subscribing: " + response.data.message);
@@ -179,6 +179,18 @@
                         toastr.error("Error while subscribing");
                         self.isSubscribing = false;
                     })
+            },
+            selectMonth(){
+                this.selectedPlan = this.month;
+                ga('send', 'event', 'subscription', 'selected', 'selected', 2);
+            },
+            selectTriMonth(){
+                this.selectedPlan = this.trimonth;
+                ga('send', 'event', 'subscription', 'selected', 'selected', 6);
+            },
+            selectYear(){
+                this.selectedPlan = this.year;
+                ga('send', 'event', 'subscription', 'selected', 'selected', 10);
             }
         }
     }

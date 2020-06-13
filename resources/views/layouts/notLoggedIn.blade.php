@@ -132,7 +132,9 @@
                                 <md-textarea name="message" required></md-textarea>
                             </md-field>
 
-                            <md-button type="submit" class="md-raised md-primary">Send</md-button>
+                            <md-button type="submit" class="md-raised md-primary"
+                                       onclick="ga('send', 'event', 'contact', 'button_click', 'contact_us', 1);"
+                            >Send</md-button>
                         </form>
                     </md-card>
 
