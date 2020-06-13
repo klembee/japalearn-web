@@ -5,6 +5,12 @@
 
     @include('layouts.header')
     @yield('scripts')
+
+    @if(env('APP_ENV') == "production")
+        @include('layouts.parts.analytics')
+        <script src="https://www.google.com/recaptcha/api.js?render=6LcmAwAVAAAAAAnM-_UF8eg6L_YMNCj67S_2FHKu"></script>
+        @include('layouts.parts.pixel')
+    @endif
 </head>
 <body>
     <div id="app" class="page-container md-layout-column">

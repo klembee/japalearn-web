@@ -1,24 +1,18 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @if(env('APP_ENV') == "production")
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165388196-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'UA-165388196-1');
-        </script>
-    @endif
-
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcmAwAVAAAAAAnM-_UF8eg6L_YMNCj67S_2FHKu"></script>
-
     <meta name="fragment" content="!">
     @yield('seo_info')
     @include('layouts.header')
     @yield('scripts')
+
+
+    @if(env('APP_ENV') == "production")
+        @include('layouts.parts.analytics')
+        <script src="https://www.google.com/recaptcha/api.js?render=6LcmAwAVAAAAAAnM-_UF8eg6L_YMNCj67S_2FHKu"></script>
+        @include('layouts.parts.pixel')
+    @endif
+
 </head>
 <body>
     <div id="app" class="page-container md-layout-column">
@@ -151,10 +145,5 @@
             </div>
         </footer>
     </div>
-
-
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>

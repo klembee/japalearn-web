@@ -9,6 +9,12 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
     />
+
+    @if(env('APP_ENV') == "production")
+        @include('layouts.parts.analytics')
+        <script src="https://www.google.com/recaptcha/api.js?render=6LcmAwAVAAAAAAnM-_UF8eg6L_YMNCj67S_2FHKu"></script>
+        @include('layouts.parts.pixel')
+    @endif
 </head>
 <body>
 <div id="app" class="page-container md-layout-column">
