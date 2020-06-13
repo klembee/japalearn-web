@@ -24,7 +24,8 @@ class BlogPost extends Model
     protected $appends = [
         'url',
         'abstract',
-        'formated_date'
+        'formated_date',
+        'formated_content'
     ];
 
     public function author(){
@@ -41,6 +42,12 @@ class BlogPost extends Model
 
     public function getFormatedDateAttribute(){
         return $this->created_at->format('F jS Y');
+    }
+
+    public function getFormatedContentAttribute(){
+        $markdownParser = new \Parsedown();
+        $parsedContent = $markdownParser->text($this->content);
+        return $parsedContent;
     }
 
     /**

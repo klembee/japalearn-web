@@ -35,6 +35,10 @@ Route::name('frontpage.')->group(function(){
 
     Route::get('/privacy-policy', 'FrontPageController@privacyPolicy')->name('privacyPolicy');
     Route::get('/terms-and-conditions', 'FrontPageController@termsConditions')->name('termsAndConditions');
+
+    Route::get('/rss', function(){
+        return view('frontpage.rss');
+    });
 });
 
 Route::middleware('auth')->group(function(){
