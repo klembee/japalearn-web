@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="1.0">
     <channel>
         <title>JapaLearn</title>
         <link>https://japalearn.com</link>

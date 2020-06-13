@@ -37,7 +37,7 @@ Route::name('frontpage.')->group(function(){
     Route::get('/terms-and-conditions', 'FrontPageController@termsConditions')->name('termsAndConditions');
 
     Route::get('/rss', function(){
-        return view('frontpage.rss');
+        return response()->view('frontpage.rss')->header('Content-Type', 'text/xml');
     });
 });
 
