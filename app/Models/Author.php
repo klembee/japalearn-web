@@ -32,8 +32,6 @@ class Author extends Model
 
         Image::make($image->getPathname())->fit(128, 128)->save($saveUrl);
 
-
-        // Remove the "/public/" part before save in database
         $this->profile_picture_url = $urlToSave;
         $this->save();
     }
