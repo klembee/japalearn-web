@@ -40,14 +40,16 @@ class GrammarLearningPathController extends Controller
             $item->meta_description = $request->input('meta_description');
         }
 
-        if($request->has('image_data')){
-            if($request->has('front_image_alt')){
-                $item->front_image_alt = $request->input('front_image_alt');
-            }
+        $item->front_image_url = $request->input('front_image_url');
 
-            $image = PictureUploaderHelper::uploadFile($request->input('image_data'));
-            $item->setImage($image);
-        }
+//        if($request->has('image_data')){
+//            if($request->has('front_image_alt')){
+//                $item->front_image_alt = $request->input('front_image_alt');
+//            }
+//
+//            $image = PictureUploaderHelper::uploadFile($request->input('image_data'));
+//            $item->setImage($image);
+//        }
 
         $item->subscriber_only = $request->has('subscriber_only');
 
@@ -84,14 +86,16 @@ class GrammarLearningPathController extends Controller
                 $item->meta_description = $request->input('meta_description');
             }
 
-            if($request->has('image_data')){
-                if($request->has('front_image_alt')){
-                    $item->front_image_alt = $request->input('front_image_alt');
-                }
+            $item->front_image_url = $request->input('front_image_url');
 
-                $image = PictureUploaderHelper::uploadFile($request->input('image_data'));
-                $item->setImage($image);
-            }
+//            if($request->has('image_data')){
+//                if($request->has('front_image_alt')){
+//                    $item->front_image_alt = $request->input('front_image_alt');
+//                }
+//
+//                $image = PictureUploaderHelper::uploadFile($request->input('image_data'));
+//                $item->setImage($image);
+//            }
 
             $item->save();
 

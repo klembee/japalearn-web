@@ -34,11 +34,15 @@
             </md-field>
 
             <h3>Image:</h3>
-            <image-selector
-                :aspect-ratio="16/9"
-                @image-changed="imageChanged">
+<!--            <image-selector-->
+<!--                :aspect-ratio="16/9"-->
+<!--                @image-changed="imageChanged">-->
 
-            </image-selector>
+<!--            </image-selector>-->
+            <md-field>
+                <label>Image</label>
+                <md-input v-model="item.front_image_url"/>
+            </md-field>
             <md-field>
                 <label>Image alt</label>
                 <md-input v-model="item.front_image_alt"/>
@@ -190,7 +194,7 @@
                     slug: "",
                     questions: [],
                     meta_description: "",
-                    image_data: "",
+                    front_image_url: "",
                     front_image_alt: "",
                     subscriber_only: true
                 },
@@ -221,7 +225,7 @@
                     questions: this.item.questions,
                     vocab: this.item.vocab,
                     meta_description: this.item.meta_description,
-                    image_data: this.item.image_data,
+                    front_image_url: this.item.front_image_url,
                     front_image_alt: this.item.front_image_alt,
                 };
 

@@ -2,7 +2,7 @@
 
 @section('seo_info')
     @if($item->front_image_url)
-        <meta property="og:image" content="/storage/{{$item->front_image_url}}">
+        <meta property="og:image" content="{{$item->front_image_url}}">
     @else
         <meta property="og:image" content="/images/facebook-share.jpg">
     @endif
