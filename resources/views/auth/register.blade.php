@@ -1,5 +1,18 @@
 @extends('layouts.notLoggedIn')
 
+<script>
+    function fireRegisterEvent() {
+        ga('send', 'event', 'register', 'button_click', 'registered', 1, {
+            hitCallback: function(){
+                var form = document.getElementById("register-form")
+                if(form.reportValidity()) {
+                    form.submit();
+                }
+            }
+        });
+    }
+</script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -9,18 +22,7 @@
 
                 <div class="card-body">
 
-                    <script>
-                        function fireRegisterEvent() {
-                            ga('send', 'event', 'register', 'button_click', 'registered', 1, {
-                                hitCallback: function(){
-                                    var form = document.getElementById("register-form")
-                                    form.submit();
-                                }
-                            });
-                        }
-                    </script>
-
-                    <form method="POST" action="{{ route('register') }}" class="register-form">
+                    <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
 
                         <p>{{__('Do you want to learn japanese or teach it ?')}}</p>

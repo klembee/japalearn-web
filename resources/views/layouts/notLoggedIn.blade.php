@@ -120,8 +120,10 @@
                             function fireContactEvent() {
                                 ga('send', 'event', 'contact', 'button_click', 'contact_us', 1, {
                                     hitCallback: function(){
-                                        var form = document.getElementById("contact-form")
-                                        form.submit();
+                                        var form = document.getElementById("contact-form");
+                                        if(form.reportValidity()) {
+                                            form.submit();
+                                        }
                                     }
                                 });
                             }
