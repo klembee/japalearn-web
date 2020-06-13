@@ -9,7 +9,7 @@
             <item>
                 <title>{!! $post->title !!}</title>
                 <link>{{ route('frontpage.blog.view', $post) }}</link>
-                <media:content url="{{$post->image_url}}" medium="image">
+                <media:content url="{{$post->image_url}}" medium="image" />
                 <description>{!! $post->meta_description !!}</description>
                 <pubDate>{{ $post->created_at->format(DateTime::RSS) }}</pubDate>
             </item>
