@@ -8,7 +8,19 @@
 {{--                <div class="card-header">{{ __('Register') }}</div>--}}
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+
+                    <script>
+                        function fireRegisterEvent() {
+                            ga('send', 'event', 'register', 'button_click', 'registered', 1, {
+                                hitCallback: function(){
+                                    var form = document.getElementById("register-form")
+                                    form.submit();
+                                }
+                            });
+                        }
+                    </script>
+
+                    <form method="POST" action="{{ route('register') }}" class="register-form">
                         @csrf
 
                         <p>{{__('Do you want to learn japanese or teach it ?')}}</p>
@@ -133,7 +145,7 @@
                         <div class="form-group mb-0">
                             <div>
                                 <md-button type="submit" class="md-accent md-raised"
-                                    onclick="ga('send', 'event', 'register', 'button_click', 'registered', 1);"
+                                           onclick="event.preventDefault();fireRegisterEvent()"
                                     >
                                     {{ __('Register') }}
                                 </md-button>
