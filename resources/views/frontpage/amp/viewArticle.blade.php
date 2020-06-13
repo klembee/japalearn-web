@@ -30,8 +30,16 @@
 
         .author-image{
             width:64px;
-            border-radius: 100%;
+            height:64px;
             margin-right:10px;
+        }
+
+        .author-image img {
+            border-radius: 100%;
+        }
+
+        .author-bio{
+            margin-top:0;
         }
 
         .author{
@@ -107,9 +115,12 @@
     <hr />
     <h2>About the author</h2>
     <div class="author">
-        <amp-img width="64" height="64" class="author-image" src="/storage/{{$post->author->profile_picture_url}}">
+        <div class="author-image">
+            <amp-img width="64" height="64" src="/storage/{{$post->author->profile_picture_url}}">
 
-        </amp-img>
+            </amp-img>
+        </div>
+
         <p class="author-bio">{{$post->author->bio}}</p>
     </div>
 </div>
