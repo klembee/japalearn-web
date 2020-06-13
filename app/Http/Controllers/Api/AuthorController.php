@@ -26,6 +26,7 @@ class AuthorController extends Controller
         if($request->has('imageData')){
             $base64image = $request->input('imageData');
             $imageFile = PictureUploaderHelper::uploadFile($base64image);
+
             $author->setProfileImage($imageFile);
         }
 

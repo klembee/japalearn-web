@@ -11,6 +11,7 @@
         "php": "^7.2.5",
         "ext-intl": "*",
         "ext-json": "*",
+        "ext-mcrypt": "*",
         "algolia/algoliasearch-client-php": "2.2",
         "aws/aws-sdk-php": "^3.137",
         "doctrine/dbal": "^2.10",
@@ -18,6 +19,7 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "intervention/image": "^2.5",
         "laravel/cashier": "^11.2",
         "laravel/framework": "^7.0",
         "laravel/passport": "^8.4",
@@ -25,8 +27,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "pusher/pusher-php-server": "^4.1",
-        "ramsey/uuid": "^4.0",
-      "ext-mcrypt": "*"
+        "ramsey/uuid": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

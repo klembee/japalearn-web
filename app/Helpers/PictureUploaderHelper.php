@@ -21,11 +21,17 @@ class PictureUploaderHelper
         $tmpFilePath = sys_get_temp_dir() . "/" . Str::uuid()->toString();
         file_put_contents($tmpFilePath, $fileData);
 
+        // Add extension
+        $tmpFile = new File($tmpFilePath);
+        $ext = explode('/', $tmpFile->getMimeType())[1];
+
+        $tmpFilePath = sys_get_temp_dir() . "/" . Str::uuid()->toString() . "." . $ext;
+        file_put_contents($tmpFilePath, $fileData);
         $tmpFile = new File($tmpFilePath);
 
         return new UploadedFile(
             $tmpFile->getPathname(),
-            $tmpFile->getFilename(),
+            $tmpFile->getFilename() . "." . $ext,
             $tmpFile->getMimeType(),
             0,
             true

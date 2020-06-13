@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\Facades\Image;
 
 class Author extends Model
 {
@@ -24,12 +25,16 @@ class Author extends Model
      * @param UploadedFile $image
      */
     public function setProfileImage(UploadedFile $image){
-        $savedFile = $image->store('public/authors');
+        // Resize image
+
+        $urlToSave = 'authors/' . $image->getFilename();
+        $saveUrl = storage_path('app/public/' . $urlToSave);
+
+        Image::make($image->getPathname())->fit(128, 128)->save($saveUrl);
+
 
         // Remove the "/public/" part before save in database
-        $path = substr($savedFile, strpos($savedFile, "/") + 1);
-
-        $this->profile_picture_url = $path;
+        $this->profile_picture_url = $urlToSave;
         $this->save();
     }
 }
