@@ -115,6 +115,18 @@
                 <div class="col-12 col-lg-4">
                     <h3 class="h2">Contact us</h3>
                     <md-card>
+
+                        <script>
+                            function fireContactEvent() {
+                                ga('send', 'event', 'contact', 'button_click', 'contact_us', 1, {
+                                    hitCallback: function(){
+                                        var form = document.getElementById("contact-form")
+                                        form.submit();
+                                    }
+                                });
+                            }
+                        </script>
+
                         <form method="POST" action="{{route('api.frontpage.contactus')}}" class="contact-form" id="contact-form">
                             @csrf
                             <md-field>
@@ -132,20 +144,8 @@
                                 <md-textarea name="message" required></md-textarea>
                             </md-field>
 
-                            <md-button type="submit" class="md-raised md-primary">Send</md-button>
+                            <md-button onclick="event.preventDefault();fireContactEvent()" type="submit" class="md-raised md-primary">Send</md-button>
                         </form>
-
-                        <script>
-                            var form = document.getElementById("contact-form");
-                            form.addEventListener('submit', function(event){
-                                event.preventDefault();
-                                ga('send', 'event', 'contact', 'button_click', 'contact_us', 1, {
-                                    hitCallback: function(){
-                                        form.submit();
-                                    }
-                                });
-                            });
-                        </script>
                     </md-card>
 
                 </div>
