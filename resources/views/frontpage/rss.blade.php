@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="1.0">
+<rss version="1.0" xmlns:media="http://search.yahoo.com/mrss/">
     <channel>
         <title>JapaLearn</title>
         <link>https://japalearn.com</link>
