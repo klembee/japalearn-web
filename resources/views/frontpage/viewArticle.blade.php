@@ -6,7 +6,7 @@
     <meta property="og:url"  content="{{route('frontpage.blog.view', $post)}}" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{$post->title}}" />
-    <meta property="og:image" content="{{env('APP_URL')}}/storage/{{$post->image_url}}" />
+    <meta property="og:image" content="{{$post->image_url}}" />
 
     <!-- amp -->
     <link rel="amphtml" href="{{route('frontpage.blog.view.amp', $post)}}">
