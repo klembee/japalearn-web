@@ -10,7 +10,7 @@
 
     <md-list-item href="{{route('kanji_vocabulary.index')}}">
         <md-icon>translate</md-icon>
-        <span class="md-list-item-text">{{__('Kanji and vocabulary')}}</span>
+        <span class="md-list-item-text">{{__('Kanji')}}</span>
     </md-list-item>
 
     <md-list-item href="{{route('grammar.index')}}" exact>

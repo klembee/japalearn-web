@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use App\Models\WordType;
 use Illuminate\Console\Command;
 
@@ -41,7 +41,7 @@ class ImportJoyo extends Command
     {
         $data = json_decode(file_get_contents("storage/scripts/mnemonics.json"), true);
         foreach ($data as $kanji => $data){
-            $kanjiItem = VocabLearningPath::query()
+            $kanjiItem = KanjiLearningPath::query()
                 ->where('word_type_id', WordType::kanji()->id)
                 ->where('word', $kanji)->first();
 

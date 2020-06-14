@@ -1,5 +1,8 @@
 @extends('layouts.notLoggedIn')
 
+@section('seo_info')
+    <title>JapaLearn - Login</title>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

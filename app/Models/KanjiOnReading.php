@@ -16,6 +16,6 @@ class KanjiOnReading extends Model
     ];
 
     public function kanji(){
-        return $this->belongsTo(VocabLearningPath::class, 'kanji_id');
+        return $this->belongsTo(KanjiLearningPath::class, 'kanji_id');
     }
 }

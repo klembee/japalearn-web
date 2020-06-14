@@ -4,7 +4,7 @@
 class KanjiReadingToHiragana extends \Illuminate\Database\Seeder
 {
     public function run(){
-        foreach (\App\Models\VocabLearningPath::all() as $kanji){
+        foreach (\App\Models\KanjiLearningPath::all() as $kanji){
             // Transform to hiragana
             foreach ($kanji->onReadings as $reading){
                 $katakana = $reading->reading;

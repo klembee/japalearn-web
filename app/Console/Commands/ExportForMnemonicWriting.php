@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use App\Models\WordType;
 use Illuminate\Console\Command;
 
@@ -41,7 +41,7 @@ class ExportForMnemonicWriting extends Command
     {
         $level = $this->argument('level');
 
-        $learning_path_items = VocabLearningPath::query()
+        $learning_path_items = KanjiLearningPath::query()
             ->where('level', $level)
             ->where('word_type_id', '!=', WordType::vocabulary()->id)->get()->groupBy('level');
 

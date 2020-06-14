@@ -9,10 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Models\ActivityType;
 use App\Models\GrammarLearningPathItem;
 use App\Models\StudentActivity;
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use App\Models\VocabLearningPathExample;
-use App\Models\VocabLearningPathItemStats;
-use App\Models\VocabLearningPathMeanings;
+use App\Models\KanjiLearningPathItemStats;
+use App\Models\KanjiLearningPathMeanings;
 use App\Models\Vocabulary;
 use App\Models\WordType;
 use http\Client\Response;
@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\DB;
  * Api controller that controls learning path controller related stuff.
  * Like creating a new item or leveling up the item attached to a user
  *
- * Class KanjiLearningPathController
+ * Class KanjiAdminController
  * @package App\Http\Controllers\Api
  */
 class LearningPathController extends Controller
@@ -56,7 +56,7 @@ class LearningPathController extends Controller
         $meanings = $request->input('meanings');
         $readings = $request->input('readings');
 
-        $vocabLearningPathItem = new VocabLearningPath([
+        $vocabLearningPathItem = new KanjiLearningPath([
             'word' => $word,
             'level' => $level,
             'word_type_id' => WordType::query()->where('name', $wordType)->firstOrFail()->id,
@@ -97,10 +97,10 @@ class LearningPathController extends Controller
     /**
      * Update an existing vocab learning path item
      * @param Request $request
-     * @param VocabLearningPath $item
+     * @param KanjiLearningPath $item
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateItem(Request $request, VocabLearningPath $item){
+    public function updateItem(Request $request, KanjiLearningPath $item){
 
         $this->validate($request, [
             'word' => "required",
@@ -126,13 +126,13 @@ class LearningPathController extends Controller
 
                 $item->examples()->delete();
                 foreach($examples as $example){
-                    $exampleModel = new VocabLearningPathExample();
-
-                    $exampleModel->vocab_learning_path_item_id = $item->id;
-                    $exampleModel->example = $example['example'];
-                    $exampleModel->translation = $example['translation'];
-                    $exampleModel->type = $example['type'];
-                    $exampleModel->save();
+//                    $exampleModel = new VocabLearningPathExample();
+//
+//                    $exampleModel->vocab_learning_path_item_id = $item->id;
+//                    $exampleModel->example = $example['example'];
+//                    $exampleModel->translation = $example['translation'];
+//                    $exampleModel->type = $example['type'];
+//                    $exampleModel->save();
                 }
 
                 $item->meanings()->delete();
@@ -186,10 +186,10 @@ class LearningPathController extends Controller
     /**
      * Delete a specific vocab learning path item
      * @param Request $request
-     * @param VocabLearningPath $item
+     * @param KanjiLearningPath $item
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteItem(Request $request, VocabLearningPath $item){
+    public function deleteItem(Request $request, KanjiLearningPath $item){
         try {
             $item->delete();
         }catch (\Exception $e){
@@ -234,18 +234,17 @@ class LearningPathController extends Controller
         // Go through each items that the user got right and increase the level
         foreach($goodItems as $good){
             $word = $good['question'];
-            $type = WordType::query()->where('name', $good['type'])->firstOrFail();
 
-            $itemStats = $user->info->vocabLearningPathStats()->whereHas('vocabLearningPathItem', function($query) use($word, $type){
-                return $query->where('word', $word)->where('word_type_id', $type->id);
+            $itemStats = $user->info->kanjiLearningPathStats()->whereHas('kanjiLearningPathItem', function($query) use($word){
+                return $query->where('word', $word);
             })->get();
 
             try {
-                $item = VocabLearningPath::query()->where('word', $word)->where('word_type_id', $type->id)->firstOrFail();
+                $item = KanjiLearningPath::query()->where('word', $word)->firstOrFail();
 
                 if ($itemStats->count() > 0) {
                     // Edit
-                    $stat = VocabLearningPathItemStats::query()
+                    $stat = KanjiLearningPathItemStats::query()
                         ->where('learning_path_item_id', $item->id)
                         ->where('student_info_id', $user->info->id)->firstOrFail();
 
@@ -257,7 +256,7 @@ class LearningPathController extends Controller
                     $nbReviewedItems += 1;
                 } else {
                     // Create new item stat
-                    $stat = new VocabLearningPathItemStats;
+                    $stat = new KanjiLearningPathItemStats;
                     $stat->learning_path_item_id = $item->id;
                     $stat->student_info_id = $user->info->id;
 
@@ -293,7 +292,7 @@ class LearningPathController extends Controller
         // Go Through each items that the user got wrong and update the study date to now
         foreach($wrongItems as $wrong) {
 
-            $stat = VocabLearningPathItemStats::query()
+            $stat = KanjiLearningPathItemStats::query()
                 ->where('learning_path_item_id', $wrong['id'])
                 ->where('student_info_id', $user->info->id);
 
@@ -315,11 +314,10 @@ class LearningPathController extends Controller
         // Check if the student leveled up
         $currentKanjiLevel = $user->info->kanji_level;
         $levelUp = true;
-        $kanjisThisLevel = VocabLearningPath::query()
-            ->where('word_type_id', WordType::kanji()->id)
+        $kanjisThisLevel = KanjiLearningPath::query()
             ->where('level', $currentKanjiLevel)->get();
 
-        $itemsDones = $user->info->vocabLearningPathStats->pluck('learning_path_item_id')->toArray();
+        $itemsDones = $user->info->kanjiLearningPathStats->pluck('learning_path_item_id')->toArray();
 
         foreach($kanjisThisLevel as $kanji){
             if($kanji->student_level < 5){
@@ -348,9 +346,8 @@ class LearningPathController extends Controller
 
     public function getLevelOverview(Request $request){
         $user = $request->user();
-        $kanjis = VocabLearningPath::query()
-            ->where('level', $user->info->kanji_level)
-            ->where('word_type_id', WordType::kanji()->id)->get()->sortByDesc('student_level')->toArray();
+        $kanjis = KanjiLearningPath::query()
+            ->where('level', $user->info->kanji_level)->get()->sortByDesc('student_level')->toArray();
 
         return \response()->json([
             'success' => true,

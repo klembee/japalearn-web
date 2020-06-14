@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Kana;
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 

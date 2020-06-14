@@ -6,7 +6,7 @@ namespace App\Helpers;
 use App\Interfaces\Learnable;
 use App\Models\Kana;
 use App\Models\KanaLearningStats;
-use App\Models\VocabLearningPathItemStats;
+use App\Models\KanjiLearningPathItemStats;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 

@@ -3,10 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\Kana;
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use App\Models\VocabLearningPathExample;
-use App\Models\VocabLearningPathMeanings;
-use App\Models\VocabLearningPathReadings;
+use App\Models\KanjiLearningPathMeanings;
+use App\Models\KanjiLearningPathReadings;
 use App\Models\WordType;
 use Illuminate\Console\Command;
 
@@ -52,7 +52,7 @@ class ImportKanjis extends Command
 
         foreach ($kanjis as $kanji) {
 
-            $existingKanji = VocabLearningPath::query()
+            $existingKanji = KanjiLearningPath::query()
                 ->where('word', $kanji['word'])
                 ->where('word_type_id', $kanji['word_type_id'])
                 ->where('level', $kanji['level']);
@@ -78,7 +78,7 @@ class ImportKanjis extends Command
 
             }else{
                 // Create new one
-                $newItem = new VocabLearningPath([
+                $newItem = new KanjiLearningPath([
                     'word' => $kanji['word'],
                     'meaning_mnemonic' => $kanji['meaning_mnemonic'],
                     'word_type_id' => WordType::query()->where('name', $kanji['type'])->firstOrFail()->id,
@@ -102,7 +102,7 @@ class ImportKanjis extends Command
     }
 
 
-    private function updateExamples(VocabLearningPath $kanji, $examples){
+    private function updateExamples(KanjiLearningPath $kanji, $examples){
 
         foreach($examples as $example){
             $existing = VocabLearningPathExample::query()
@@ -129,9 +129,9 @@ class ImportKanjis extends Command
         }
     }
 
-    private function updateMeanings(VocabLearningPath $kanji, $meanings){
+    private function updateMeanings(KanjiLearningPath $kanji, $meanings){
         foreach($meanings as $meaning){
-            $existing = VocabLearningPathMeanings::query()
+            $existing = KanjiLearningPathMeanings::query()
                 ->where('vocab_learning_path_item_id', $kanji->id)
                 ->where('meaning', $meaning['meaning']);
 
@@ -144,16 +144,16 @@ class ImportKanjis extends Command
                 $existing->save();
             }else{
                 // Create a new one
-                $kanji->meanings()->save(new VocabLearningPathMeanings([
+                $kanji->meanings()->save(new KanjiLearningPathMeanings([
                     'meaning' => $meaning['meaning']
                 ]));
             }
         }
     }
 
-    private function updateReadings(VocabLearningPath $kanji, $readings){
+    private function updateReadings(KanjiLearningPath $kanji, $readings){
         foreach($readings as $reading){
-            $existing = VocabLearningPathReadings::query()
+            $existing = KanjiLearningPathReadings::query()
                 ->where('vocab_learning_path_item_id', $kanji->id)
                 ->where('reading', $reading['reading']);
 
@@ -166,7 +166,7 @@ class ImportKanjis extends Command
                 $existing->save();
             }else{
                 // Create a new one
-                $kanji->readings()->save(new VocabLearningPathReadings([
+                $kanji->readings()->save(new KanjiLearningPathReadings([
                     'reading' => $reading['reading']
                 ]));
             }

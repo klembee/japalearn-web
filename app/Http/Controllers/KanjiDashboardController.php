@@ -6,13 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\SRSHelper;
 use App\Helpers\SubscriptionHelper;
-use App\Models\VocabLearningPath;
-use App\Models\VocabLearningPathItemStats;
+use App\Models\KanjiLearningPath;
+use App\Models\KanjiLearningPathItemStats;
 use App\Models\WordType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class KanjiVocabularyController extends Controller
+class KanjiDashboardController extends Controller
 {
 
     private function checkSubscribed(Request $request){
@@ -36,13 +36,11 @@ class KanjiVocabularyController extends Controller
 
         $userLearnedKanas = $user->info->finishedKanas();
 
-        $vocabUser = $user->info->vocabLearningPathStats;
-        $allVocabItems = VocabLearningPath::query()
-            ->where('word_type_id', WordType::kanji()->id)
+        $vocabUser = $user->info->kanjiLearningPathStats;
+        $allVocabItems = KanjiLearningPath::query()
             ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
-            ->orderBy('word_type_id', 'asc')
             ->orderBy('word');
 
 

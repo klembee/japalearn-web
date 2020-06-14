@@ -19,8 +19,8 @@ class StudentInfo extends Model
         return $this->morphOne(User::class, 'information');
     }
 
-    public function vocabLearningPathStats(){
-        return $this->hasMany(VocabLearningPathItemStats::class, 'student_info_id');
+    public function kanjiLearningPathStats(){
+        return $this->hasMany(KanjiLearningPathItemStats::class, 'student_info_id');
     }
 
     public function kanaLearningPathStats(){
@@ -66,7 +66,7 @@ class StudentInfo extends Model
         $nextWeek = Carbon::now()->addWeek();
         $now = Carbon::now();
 
-        $vocabsNextWeek = $this->vocabLearningPathStats->filter(function($obj, $key) use($nextWeek, $now){
+        $vocabsNextWeek = $this->kanjiLearningPathStats->filter(function($obj, $key) use($nextWeek, $now){
             return $obj->next_review->lte($nextWeek) && $obj->next_review->gte($now) && $obj->level < 8 ;
         });
 
@@ -105,7 +105,7 @@ class StudentInfo extends Model
     }
 
     public function learnedFirstKanji(){
-        return $this->vocabLearningPathStats()->count() > 0;
+        return $this->kanjiLearningPathStats()->count() > 0;
     }
 
     public function didFirstKanaReview(){
@@ -115,7 +115,7 @@ class StudentInfo extends Model
     }
 
     public function didFirstKanjiReviews(){
-        return $this->whereHas('vocabLearningPathStats', function($query){
+        return $this->whereHas('kanjiLearningPathStats', function($query){
                 return $query->where('nb_tries', '>', 1);
             })->count() > 0;
     }

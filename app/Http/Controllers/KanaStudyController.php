@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\SRSHelper;
 use App\Models\Kana;
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use Illuminate\Http\Request;
 
 /**

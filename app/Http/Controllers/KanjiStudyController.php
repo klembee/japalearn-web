@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\SRSHelper;
 use App\Helpers\SubscriptionHelper;
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use App\Models\WordType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Class that controls all the study related stuff
  *
- * Class VocabularyStudyController
+ * Class KanjiStudyController
  * @package App\Http\Controllers
  */
-class VocabularyStudyController extends Controller
+class KanjiStudyController extends Controller
 {
 
     private function checkSubscribed(Request $request){
@@ -33,7 +33,7 @@ class VocabularyStudyController extends Controller
     }
 
     /**
-     * Get the vocabulary (radical, kanji, vocab) that the logged in
+     * Get the kanjis that the logged in
      * user can learn now. Redirect to learning view where user can learn the new items
      *
      * @param Request $request
@@ -42,13 +42,11 @@ class VocabularyStudyController extends Controller
     public function vocabularyLesson(Request $request){
         $user = $request->user();
 
-        $vocabUser = $user->info->vocabLearningPathStats;
-        $allVocabItems = VocabLearningPath::query()
-            ->where('word_type_id', WordType::kanji()->id)
+        $vocabUser = $user->info->kanjiLearningPathStats;
+        $allVocabItems = KanjiLearningPath::query()
             ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
-            ->orderBy('word_type_id', 'asc')
             ->orderBy('word');
 
         $subscribed = $this->checkSubscribed($request);
@@ -87,13 +85,11 @@ class VocabularyStudyController extends Controller
     public function vocabularyReview(Request $request){
         $user = $request->user();
 
-        $vocabUser = $user->info->vocabLearningPathStats;
-        $allVocabItems = VocabLearningPath::query()
-            ->where('word_type_id', WordType::kanji()->id)
+        $vocabUser = $user->info->kanjiLearningPathStats;
+        $allVocabItems = KanjiLearningPath::query()
             ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))
             ->orderBy('level', 'asc')
-            ->orderBy('word_type_id', 'asc')
             ->orderBy('word');
 
         $subscribed = $this->checkSubscribed($request);

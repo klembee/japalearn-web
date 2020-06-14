@@ -8,7 +8,7 @@ class AttachRadicalsToKanjisSeeder extends \Illuminate\Database\Seeder
         $kanjiRadical = json_decode($file);
 
         foreach($kanjiRadical as $kanji => $radicals){
-            $kanjiItem = \App\Models\VocabLearningPath::query()
+            $kanjiItem = \App\Models\KanjiLearningPath::query()
                 ->where('word_type_id', \App\Models\WordType::kanji()->id)
                 ->where('word', $kanji)->first();
 

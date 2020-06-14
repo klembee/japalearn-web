@@ -17,7 +17,7 @@ class BlogController extends Controller
      */
     public function index(Request $request){
 
-        $posts = BlogPost::query()->paginate(5);
+        $posts = BlogPost::query()->orderBy('created_at', 'desc')->paginate(5);
 
         return view('app.admin.blog.index', compact('posts'));
     }

@@ -14,6 +14,6 @@ class Radical extends Model
     ];
 
     public function kanjis(){
-        return $this->belongsToMany(VocabLearningPath::class, 'kanji_radical', 'radical_id', 'kanji_id');
+        return $this->belongsToMany(KanjiLearningPath::class, 'kanji_radical', 'radical_id', 'kanji_id');
     }
 }

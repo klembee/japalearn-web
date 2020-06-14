@@ -4,8 +4,8 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\VocabLearningPath;
-use App\Models\VocabLearningPathMeanings;
+use App\Models\KanjiLearningPath;
+use App\Models\KanjiLearningPathMeanings;
 use App\Models\WordType;
 use Illuminate\Http\Request;
 
@@ -16,15 +16,15 @@ use Illuminate\Http\Request;
  *
  * Only admins have access to this section.
  *
- * Class KanjiLearningPathController
+ * Class KanjiAdminController
  * @package App\Http\Controllers
  */
-class KanjiLearningPathController extends Controller
+class KanjiAdminController extends Controller
 {
 
     /**
      * Checks that the user accessing this section is an admin
-     * KanjiLearningPathController constructor.
+     * KanjiAdminController constructor.
      */
     public function __construct()
     {
@@ -40,7 +40,7 @@ class KanjiLearningPathController extends Controller
      */
     public function index(Request $request){
 
-        $itemsByLevel = VocabLearningPath::query()->with('vocabulary')->get()->groupBy('level');
+        $itemsByLevel = KanjiLearningPath::query()->with('vocabulary')->get()->groupBy('level');
 
         return view('app.admin.kanji_learning_path.index', compact('itemsByLevel'));
     }
@@ -49,7 +49,7 @@ class KanjiLearningPathController extends Controller
      * @param Request $request
      */
     public function export(Request $request){
-        return VocabLearningPath::query()->with('readings', 'meanings', 'examples')->get()->toJson();
+        return KanjiLearningPath::query()->with('readings', 'meanings', 'examples')->get()->toJson();
     }
 
     public function import(Request $request){
@@ -66,13 +66,13 @@ class KanjiLearningPathController extends Controller
             $examples = $item->examples;
 
             // Try to find existing data
-            $itemModel = VocabLearningPath::query()
+            $itemModel = KanjiLearningPath::query()
                 ->where('word', $item->word)
                 ->where('level', $item->level)
                 ->where('word_type_id', $item->word_type_id)->first();
 
             if(!$itemModel){
-                $itemModel = new VocabLearningPath();
+                $itemModel = new KanjiLearningPath();
                 $itemModel->word = $item->word;
                 $itemModel->level = $item->level;
                 $itemModel->word_type_id = $item->word_type_id;
@@ -82,8 +82,8 @@ class KanjiLearningPathController extends Controller
             $itemModel->save();
 
             foreach($meanings as $meaning){
-                $meaningModel = VocabLearningPathMeanings::query()
-                    ->where("vocab_learning_path_item_id", $itemModel->id)
+                $meaningModel = KanjiLearningPathMeanings::query()
+                    ->where("kanji_id", $itemModel->id)
                     ->where('meaning');
             }
 
@@ -110,17 +110,17 @@ class KanjiLearningPathController extends Controller
      */
     public function viewLevel(Request $request, int $level){
 
-        $radicals = VocabLearningPath::query()
+        $radicals = KanjiLearningPath::query()
             ->where('word_type_id', WordType::radical()->id)
             ->where('level', $level)
             ->with('meanings', 'readings', 'examples')->get();
 
-        $kanjis = VocabLearningPath::query()
+        $kanjis = KanjiLearningPath::query()
             ->where('word_type_id', WordType::kanji()->id)
             ->where('level', $level)
             ->with('meanings', 'onReadings', 'kunReadings', 'examples')->get()->toArray();
 
-        $vocabulary = VocabLearningPath::query()
+        $vocabulary = KanjiLearningPath::query()
             ->where('word_type_id', WordType::vocabulary()->id)
             ->where('level', $level)
             ->with('meanings', 'readings', 'examples')->orderBy('word')->get();

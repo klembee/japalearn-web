@@ -1,5 +1,9 @@
 @extends('layouts.notLoggedIn')
 
+@section('seo_info')
+    <title>JapaLearn - Create free account</title>
+@endsection
+
 <script>
     function fireRegisterEvent() {
         ga('send', 'event', 'register', 'button_click', 'registered', 1, {

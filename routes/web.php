@@ -85,10 +85,10 @@ Route::middleware('auth')->group(function(){
         });
 
         Route::prefix('vocab/')->name('vocab.')->group(function(){
-            Route::get('', 'KanjiLearningPathController@index')->name('index');
-            Route::get('/{level}/edit', 'KanjiLearningPathController@viewLevel')->name('edit');
+            Route::get('', 'KanjiAdminController@index')->name('index');
+            Route::get('/{level}/edit', 'KanjiAdminController@viewLevel')->name('edit');
 
-            Route::get('export', "KanjiLearningPathController@export")->name('export');
+            Route::get('export', "KanjiAdminController@export")->name('export');
         });
 
         Route::prefix('grammar/')->name('grammar.')->group(function(){
@@ -146,7 +146,7 @@ Route::middleware('auth')->group(function(){
 
 // Kanji and vocabulary
     Route::prefix('kanji_vocabulary/')->name('kanji_vocabulary.')->group(function(){
-        Route::get('/', "KanjiVocabularyController@index")->name('index');
+        Route::get('/', "KanjiDashboardController@index")->name('index');
     });
 
 // Grammar
@@ -182,8 +182,8 @@ Route::middleware('auth')->group(function(){
         Route::get('kana_review', 'KanaStudyController@review')->name('kana.review');
 
         // Vocab
-        Route::get('vocabulary_lesson', "VocabularyStudyController@vocabularyLesson")->name('vocab.lesson');
-        Route::get('vocabulary_review', 'VocabularyStudyController@vocabularyReview')->name('vocab.review');
+        Route::get('vocabulary_lesson', "KanjiStudyController@vocabularyLesson")->name('vocab.lesson');
+        Route::get('vocabulary_review', 'KanjiStudyController@vocabularyReview')->name('vocab.review');
 
         // Grammar
         Route::get('grammar_lesson/{grammarlesson}', "GrammarController@review")->name('grammar.review');

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\VocabLearningPath;
+use App\Models\KanjiLearningPath;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -39,7 +39,7 @@ class ExportVocabKanjisRadical extends Command
      */
     public function handle()
     {
-        $json = VocabLearningPath::query()->with('examples')->get()->toJson();
+        $json = KanjiLearningPath::query()->with('examples')->get()->toJson();
         $date = Carbon::now()->format("Y-m-d-h-i-s");
         $file = "storage/exports/kanjis-$date.json";
         file_put_contents($file, $json);

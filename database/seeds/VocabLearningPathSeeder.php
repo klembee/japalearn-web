@@ -15,7 +15,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 
         foreach($kanjis as $levelCount => $level){
             foreach ($level as $kanji){
-                $item = new \App\Models\VocabLearningPath([
+                $item = new \App\Models\KanjiLearningPath([
                     'level' => $levelCount + 1,
                     'word' => $kanji['kanji'],
                     'word_type_id' => \App\Models\WordType::kanji()->id
@@ -24,7 +24,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
                 $item->save();
 
                 foreach($kanji['meanings'] as $meaning){
-                    $meaningItem = new \App\Models\VocabLearningPathMeanings([
+                    $meaningItem = new \App\Models\KanjiLearningPathMeanings([
                         'vocab_learning_path_item_id' => $item->id,
                         'meaning' => $meaning
                     ]);
@@ -33,7 +33,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
                 }
 
                 foreach($kanji['on_readings'] as $reading){
-                    $readingItem = new \App\Models\VocabLearningPathReadings([
+                    $readingItem = new \App\Models\KanjiLearningPathReadings([
                         'vocab_learning_path_item_id' => $item->id,
                         'reading' => $reading
                     ]);
@@ -49,7 +49,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 
         foreach($vocab as $levelCount => $level){
             foreach($level as $vocabulary){
-                $item = new \App\Models\VocabLearningPath([
+                $item = new \App\Models\KanjiLearningPath([
                     'level' => $levelCount + 1,
                     'word' => $vocabulary['word'],
                     'word_type_id' => \App\Models\WordType::vocabulary()->id
@@ -58,7 +58,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
                 $item->save();
 
                 foreach($vocabulary['meanings'] as $meaning){
-                    $meaningItem = new \App\Models\VocabLearningPathMeanings([
+                    $meaningItem = new \App\Models\KanjiLearningPathMeanings([
                         'vocab_learning_path_item_id' => $item->id,
                         'meaning' => $meaning
                     ]);
@@ -66,7 +66,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
                     $meaningItem->save();
                 }
 
-                $readingItem = new \App\Models\VocabLearningPathReadings([
+                $readingItem = new \App\Models\KanjiLearningPathReadings([
                     'vocab_learning_path_item_id' => $item->id,
                     'reading' => $vocabulary['reading']
                 ]);
@@ -82,7 +82,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
         foreach($radical as $levelCount => $level){
             foreach($level as $rad){
 
-                $item = new \App\Models\VocabLearningPath([
+                $item = new \App\Models\KanjiLearningPath([
                     'level' => $levelCount + 1,
                     'word' => $rad,
                     'word_type_id' => \App\Models\WordType::radical()->id
@@ -94,7 +94,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
 
 
         # Convert kanji reading from katakana to hiragana
-        $kanjis = \App\Models\VocabLearningPath::query()->where('word_type_id', \App\Models\WordType::kanji()->id)->get();
+        $kanjis = \App\Models\KanjiLearningPath::query()->where('word_type_id', \App\Models\WordType::kanji()->id)->get();
         foreach ($kanjis as $kanji){
             $readings = $kanji->readings;
             foreach($readings as $reading){
@@ -117,7 +117,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
         }
 
         # Separate meanings containing ';'
-        $items = \App\Models\VocabLearningPath::query()
+        $items = \App\Models\KanjiLearningPath::query()
             ->where('word_type_id', '!=', \App\Models\WordType::radical()->id)->get();
 
         foreach ($items as $item){
@@ -125,7 +125,7 @@ class VocabLearningPathSeeder extends \Illuminate\Database\Seeder
             foreach ($meanings as $meaning){
                 $sub_meanings = explode(';', $meaning->meaning);
                 foreach($sub_meanings as $sub_meaning){
-                    $item->meanings()->save(new \App\Models\VocabLearningPathMeanings([
+                    $item->meanings()->save(new \App\Models\KanjiLearningPathMeanings([
                         'meaning' => $sub_meaning
                     ]));
                 }
