@@ -34,8 +34,10 @@
     }
 
     .other-article img{
-        max-width: 228px;
         min-width: 228px;
+        width: 80%;
+        margin: auto;
+        display: block;
     }
 
     .other-articles-container a{
