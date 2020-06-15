@@ -19,7 +19,14 @@ class Vocabulary extends Model
 
     public function searchableAs()
     {
-        return 'vocabularies';
+        if(env('APP_ENV') == 'local'){
+            return 'vocabularies';
+        }elseif(env('APP_ENV') == 'dev'){
+            return 'vocab-dev';
+        }else{
+            return 'vocab-prod';
+        }
+
     }
 
     public function toSearchableArray()
