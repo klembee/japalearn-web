@@ -91,15 +91,19 @@ class PaymentController extends Controller
             ]);
         }
 
-        return redirect()->route('thank_you');
+        return response()->json([
+            'success' => true,
+            'redirect' => route('thank_you')
+        ]);
     }
 
     public function unsubscribe(Request $request){
         $user = $request->user();
 
-        if($request->has('reason')){
+        if($request->has('reason') && $request->input('reason') != ""){
             $reason = $request->input('reason');
-            if($request->has('specify')){
+            $specify = "";
+            if($request->has('specify') && $request->input('specify') != ""){
                 $specify = $request->input('specify');
             }
 

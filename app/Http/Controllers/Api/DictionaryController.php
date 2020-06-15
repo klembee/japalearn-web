@@ -41,7 +41,7 @@ class DictionaryController extends Controller
             $searchQuery = $hiraganaSearchQuery;
         }
 
-        $response = Vocabulary::search($searchQuery)->paginate(10)->load(['writings', 'meanings', 'pos']);
+        $response = Vocabulary::search($searchQuery)->paginate(10)->load(['readings', 'meanings']);
 
         return response()->json([
             'query' => $searchQuery,

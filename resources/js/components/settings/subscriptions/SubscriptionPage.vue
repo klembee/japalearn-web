@@ -167,10 +167,9 @@
                 axios.post(this.subscribeEndpoint, payload)
                     .then(function(response){
                         if(response.data.success){
-                            toastr.success(response.data.message);
                             ga('send', 'event', 'subscription', 'subscribed', 'subscribed', self.selectedPlan.amount / 100, {
                                 hitCallback: function(){
-                                    window.location.href = self.redirectUrl;
+                                    window.location.href = response.data.redirect;
                                 }
                             });
 

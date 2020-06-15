@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>We are sorry to see you go</p>
-        <p>By ending your subscription, you will loose access to the advantages.</p>
+        <p>By ending your subscription, you will loose access to all the advantages at the end of the current period.</p>
 
         <md-field>
             <label for="reason">Can we know the reason why you are leaving us ?</label>

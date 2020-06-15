@@ -32,15 +32,12 @@
             <md-table class="mt-2">
                 <md-table-row v-for="result in results" :key="result.id">
                     <md-table-cell>
-                        <p class="dictionary-word"><ruby>{{result.word}}<rt>{{result.writings[0].writing}}</rt></rt></ruby></p>
+                        <p class="dictionary-word"><ruby>{{result.word}}<rt>{{result.readings[0].writing}}</rt></ruby></p>
                     </md-table-cell>
                     <md-table-cell>
                         <div class="md-list-item-text">
                             <!-- Meanings -->
                             <p><b>{{result.meanings.map(meaning => meaning.meaning).slice(0, 4).join(", ")}}</b></p>
-
-                            <!-- Part of speech -->
-                            <p>{{result.pos.map(pos => pos.pos).join(", ")}}</p>
                         </div>
                     </md-table-cell>
                     <md-table-cell v-if="isStudent">
@@ -123,6 +120,8 @@
                 let self = this;
                 axios.post(this.queryApiEndpoint, data)
                     .then(function(response){
+                        console.log(response);
+
                         self.currentPage = response.data.current_page;
                         self.firstPageUrl = response.data.first_page_url;
                         self.lastPageUrl = response.data.last_page_url;
