@@ -32,7 +32,7 @@
             <md-table class="mt-2">
                 <md-table-row v-for="result in results" :key="result.id">
                     <md-table-cell>
-                        <p class="dictionary-word"><ruby>{{result.word}}<rt>{{result.readings[0].writing}}</rt></ruby></p>
+                        <p class="dictionary-word"><ruby>{{result.word}}<rt v-if="result.readings">{{result.readings[0].writing}}</rt></ruby></p>
                     </md-table-cell>
                     <md-table-cell>
                         <div class="md-list-item-text">
