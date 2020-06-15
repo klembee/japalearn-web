@@ -42,6 +42,8 @@ Route::name('frontpage.')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
+    Route::get('thank-you', 'DashboardController@thankyou')->name('thank_you');
+
     Route::post('resend-verifications', 'AccountController@resendConfirmation')->name('resend_confirmation');
 
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

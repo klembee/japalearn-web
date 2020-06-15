@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Aws\recursive_dir_iterator;
 
 class PaymentController extends Controller
 {
@@ -90,10 +91,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => "Thank you for subscribing !"
-        ]);
+        return redirect()->route('thank_you');
     }
 
     public function unsubscribe(Request $request){

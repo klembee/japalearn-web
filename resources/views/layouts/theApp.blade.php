@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>JapaLearn</title>
-
     @include('layouts.header')
     @yield('scripts')
+
+    @yield('seo')
 
     @if(env('APP_ENV') == "production")
         @include('layouts.parts.mailchimp')

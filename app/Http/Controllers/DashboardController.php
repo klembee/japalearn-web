@@ -66,4 +66,8 @@ class DashboardController extends Controller
 
         return view("app.dashboard_student", compact('user', 'doneBasicKanas', 'nextAppointments'));
     }
+
+    public function thankYou(Request $request){
+        return view('app.thankyou');
+    }
 }
