@@ -40,7 +40,7 @@ class KanjiAdminController extends Controller
      */
     public function index(Request $request){
 
-        $itemsByLevel = KanjiLearningPath::query()->with('vocab')->get()->groupBy('level');
+        $itemsByLevel = KanjiLearningPath::query()->get()->groupBy('level');
 
         return view('app.admin.kanji_learning_path.index', compact('itemsByLevel'));
     }
