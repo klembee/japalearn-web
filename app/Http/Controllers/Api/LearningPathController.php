@@ -277,12 +277,14 @@ class LearningPathController extends Controller
                 ->where('learning_path_item_id', $wrong['id'])
                 ->where('student_info_id', $user->info->id);
 
+            error_log($stat->exists());
+
             if($stat->exists()) {
                 $stat = $stat->firstOrFail();
                 $stat->last_study_date = now();
                 $stat->nb_tries += 1;
 
-                if($stat->nb_right > 0){
+                if($stat->nb_right > 1){
                     $stat->nb_right -= 1;
                 }
 

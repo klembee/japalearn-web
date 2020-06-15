@@ -8,6 +8,7 @@ use App\Helpers\SRSHelper;
 use App\Helpers\SubscriptionHelper;
 use App\Models\KanjiLearningPath;
 use App\Models\WordType;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,7 +88,10 @@ class KanjiStudyController extends Controller
     public function vocabularyReview(Request $request){
         $user = $request->user();
 
-        $vocabUser = $user->info->kanjiLearningPathStats;
+        $vocabUser = $user->info->kanjiLearningPathStats()->with(['kanjiLearningPathItem.vocab' => function($query){
+            return $query->where('is_primary', 1)->with('meanings', 'readings');
+        }])->get();
+
         $allVocabItems = KanjiLearningPath::query()
             ->where('level', $user->info->kanji_level)
             ->whereNotIn('id', $vocabUser->pluck('learning_path_item_id'))

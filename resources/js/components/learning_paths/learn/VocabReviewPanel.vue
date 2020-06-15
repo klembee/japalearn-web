@@ -278,48 +278,31 @@
         },
         mounted() {
             this.itemsToReview.forEach(item => {
-                if(item.type === "radical"){
-                    this.items.push({
-                        question: item.word,
-                        answers: item.answers,
-                        answer_type: 'meaning',
-                        type: item.type,
-                        meanings: item.meanings,
-                        meaning_mnemonic: item.meaning_mnemonic,
-                        reading_mnemonic: item.reading_mnemonic,
-                        readings: item.readings,
-                        word_type_id: item.word_type_id,
-                        id: item.id,
-                    })
-                }else{
-                    this.items.push({
-                        question: item.word,
-                        answers: item.answers.meanings,
-                        answer_type: 'meaning',
-                        type: item.type,
-                        meanings: item.meanings,
-                        meaning_mnemonic: item.meaning_mnemonic,
-                        reading_mnemonic: item.reading_mnemonic,
-                        on_readings: item.on_readings,
-                        kun_readings: item.kun_readings,
-                        word_type_id: item.word_type_id,
-                        id: item.id,
-                    });
+                this.items.push({
+                    question: item.word,
+                    answers: item.answers.meanings,
+                    answer_type: 'meaning',
+                    type: item.type,
+                    meanings: item.meanings,
+                    mnemonic: item.mnemonic,
+                    on_readings: item.on_readings,
+                    kun_readings: item.kun_readings,
+                    vocab: item.vocab,
+                    id: item.id,
+                });
 
-                    this.items.push({
-                        question: item.word,
-                        answers: item.answers.readings,
-                        answer_type: 'reading',
-                        type: item.type,
-                        meanings: item.meanings,
-                        meaning_mnemonic: item.meaning_mnemonic,
-                        reading_mnemonic: item.reading_mnemonic,
-                        on_readings: item.on_readings,
-                        kun_readings: item.kun_readings,
-                        word_type_id: item.word_type_id,
-                        id: item.id,
-                    });
-                }
+                this.items.push({
+                    question: item.word,
+                    answers: item.answers.readings,
+                    answer_type: 'reading',
+                    type: item.type,
+                    meanings: item.meanings,
+                    mnemonic: item.mnemonic,
+                    on_readings: item.on_readings,
+                    kun_readings: item.kun_readings,
+                    vocab: item.vocab,
+                    id: item.id,
+                });
             });
 
             this.items = _.shuffle(this.items);
