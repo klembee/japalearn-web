@@ -40,7 +40,7 @@ class ImportVocab extends Command
     public function handle()
     {
         $vocabs = json_decode(file_get_contents('storage/scripts/common_words.json'), true);
-
+        
         foreach ($vocabs as $vocab){
             // Create a new vocab
             $vocabObj = new Vocabulary([

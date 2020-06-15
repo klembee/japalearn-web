@@ -42,7 +42,7 @@
                 <div class="col-md-9 col-12 mnemonic">
                     <div class="mnemonic-content">
                         <h3>Tip for remembering</h3>
-                        <div v-html="meaningMnemonic">
+                        <div v-html="mnemonic">
 
                         </div>
                     </div>
@@ -97,9 +97,9 @@
                     return 1;
                 });
             },
-            meaningMnemonic(){
-                if(this.item.meaning_mnemonic) {
-                    return marked(this.item.meaning_mnemonic);
+            mnemonic(){
+                if(this.item.mnemonic) {
+                    return marked(this.item.mnemonic);
                 }else{
                     return "";
                 }
