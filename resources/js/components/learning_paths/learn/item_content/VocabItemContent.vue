@@ -54,7 +54,19 @@
         </b-tab>
 
         <b-tab id="tab-examples" title="Examples">
-            <p>Examples</p>
+            <h2>Words containing this kanji</h2>
+
+            <div class="row m-0">
+                <div v-for="vocab in item.vocab.splice(0, 3)" :key="vocab.id" class="col-md-4 col-12">
+                    <md-card class="example-card m-0 mb-4">
+                        <h3 class="example-word">{{vocab.word}}</h3>
+                        <p><b>Meanings:</b> {{vocab.meanings.map(meaning => meaning.meaning).splice(0, 3).join(', ')}}</p>
+                        <p><b>Readings:</b> {{vocab.readings.map(reading => reading.writing).splice(0, 3).join(', ')}}</p>
+                    </md-card>
+                </div>
+
+            </div>
+
         </b-tab>
     </b-tabs>
 </template>
@@ -152,5 +164,16 @@
     .isMain{
         color: #D93636;
         font-size:1.3em;
+    }
+
+    .example-card{
+        width:100%;
+        display:inline-block;
+        padding: 10px;
+    }
+
+    .example-word{
+        font-size:2.6em;
+        text-align: center;
     }
 </style>

@@ -174,6 +174,15 @@
         margin-left:20px;
     }
 
+    @media screen and (max-width: 600px){
+        .prev-button{
+            margin-right:0;
+        }
+        .next-button{
+            margin-left:0;
+        }
+    }
+
     .tabs{
         flex-grow: 1;
     }

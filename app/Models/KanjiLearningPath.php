@@ -33,6 +33,13 @@ class KanjiLearningPath extends Model
         return $this->hasMany(KanjiAlternativeMeaning::class, 'kanji_id');
     }
 
+    /**
+     * Get the vocabulary that uses this kanji
+     */
+    public function vocab(){
+        return $this->belongsToMany(Vocabulary::class, 'kanji_vocabulary', 'kanji_id', 'vocabulary_id');
+    }
+
     public function getStudentLeveLAttribute(){
         if(!Auth::user() or !Auth::user()->isStudent()){
             return 0;

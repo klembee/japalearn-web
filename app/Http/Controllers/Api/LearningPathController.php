@@ -346,6 +346,7 @@ class LearningPathController extends Controller
 
     public function getLevelOverview(Request $request){
         $user = $request->user();
+
         $kanjis = KanjiLearningPath::query()
             ->where('level', $user->info->kanji_level)->get()->sortByDesc('student_level')->toArray();
 

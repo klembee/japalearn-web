@@ -13,6 +13,10 @@ class Vocabulary extends Model
 
     protected $table = "vocabularies";
 
+    protected $fillable = [
+        'word',
+    ];
+
     public function searchableAs()
     {
         return 'vocabularies';
@@ -22,13 +26,18 @@ class Vocabulary extends Model
     {
         return [
             'word' => $this->word,
-            'commonity' => $this->commonity,
             // Remove words in parentisis
             'meanings' => $this->meanings->pluck(['meaning'])->toArray(),
-            'writings' => $this->writings->pluck('writing')->toArray(),
-            'pos' => $this->pos()->pluck('pos')->toArray(),
+            'writings' => $this->readings->pluck('writing')->toArray(),
             'number_of_save' => $this->usersThatSaved()->count()
             ];//$this->newQuery()->with('meanings', 'writings')->get()->toArray();
+    }
+
+    /**
+     * Get the kanjis that makes this vocab
+     */
+    public function kanjis(){
+        return $this->belongsToMany(KanjiLearningPath::class, 'kanji_vocabulary', 'vocabulary_id', 'kanji_id');
     }
 
     public function usersThatSaved(){
@@ -51,15 +60,7 @@ class Vocabulary extends Model
      * Get the writings of this word
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function writings(){
-        return $this->hasMany(VocabularyWriting::class, 'vocabulary_id');
-    }
-
-    /**
-     * Get the part of speech of this words. Can have more than one !
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function pos(){
-        return $this->belongsToMany(VocabularyPOS::class, 'vocabulary_pos', 'vocabulary_id', 'pos_id');
+    public function readings(){
+        return $this->hasMany(VocabularyReading::class, 'vocabulary_id');
     }
 }

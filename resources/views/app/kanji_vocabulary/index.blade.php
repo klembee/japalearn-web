@@ -1,6 +1,6 @@
 @extends('layouts.theApp')
 @section('title')
-    {{__('Kanji and vocabulary')}}
+    {{__('Learn the kanjis')}}
 @endsection
 
 @if(!$userLearnedKanas)
