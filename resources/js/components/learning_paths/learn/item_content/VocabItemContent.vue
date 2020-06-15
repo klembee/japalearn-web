@@ -53,15 +53,15 @@
 
         </b-tab>
 
-        <b-tab id="tab-examples" title="Examples">
+        <b-tab v-if="item.vocab.length > 0" id="tab-examples" title="Examples">
             <h2>Words containing this kanji</h2>
 
             <div class="row m-0">
-                <div v-for="vocab in item.vocab.splice(0, 3)" :key="vocab.id" class="col-md-4 col-12">
+                <div v-for="vocab in item.vocab.slice(0, 3)" :key="vocab.id" class="col-md-4 col-12">
                     <md-card class="example-card m-0 mb-4">
                         <h3 class="example-word">{{vocab.word}}</h3>
-                        <p><b>Meanings:</b> {{vocab.meanings.map(meaning => meaning.meaning).splice(0, 3).join(', ')}}</p>
-                        <p><b>Readings:</b> {{vocab.readings.map(reading => reading.writing).splice(0, 3).join(', ')}}</p>
+                        <p><b>Meanings:</b> {{vocab.meanings.map(meaning => meaning.meaning).slice(0, 3).join(', ')}}</p>
+                        <p><b>Readings:</b> {{vocab.readings.map(reading => reading.writing).slice(0, 3).join(', ')}}</p>
                     </md-card>
                 </div>
 

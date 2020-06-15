@@ -54,7 +54,9 @@ class KanjiStudyController extends Controller
             $allVocabItems = $allVocabItems->where('level', '<', 4);
         }
 
-        $allVocabItems = $allVocabItems->with('vocab', 'vocab.meanings', 'vocab.readings')->limit(30)->with(['onReadings', 'kunReadings'])->get()->toArray();
+        $allVocabItems = $allVocabItems->with(['vocab' => function($query){
+            return $query->where('is_primary', true)->take(3)->with('meanings', 'readings');
+        }])->limit(30)->with(['onReadings', 'kunReadings'])->get()->toArray();
 
 
         $helper = new SRSHelper($allVocabItems, $vocabUser->toArray());

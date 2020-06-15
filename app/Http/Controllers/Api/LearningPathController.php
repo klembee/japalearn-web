@@ -43,7 +43,6 @@ class LearningPathController extends Controller
         $this->validate($request, [
             "word" => "required",
             "level" => "required|numeric|min:1",
-            "type" => "required",
             "meanings" => "required|array",
             "readings" => "present|array",
         ]);
@@ -51,15 +50,13 @@ class LearningPathController extends Controller
         //todo: Verify that the user is an admin
 
         $word = $request->input('word');
-        $wordType = $request->input('type');
         $level = $request->input('level');
         $meanings = $request->input('meanings');
         $readings = $request->input('readings');
 
         $vocabLearningPathItem = new KanjiLearningPath([
             'word' => $word,
-            'level' => $level,
-            'word_type_id' => WordType::query()->where('name', $wordType)->firstOrFail()->id,
+            'level' => $level
         ]);
 
 
@@ -104,13 +101,11 @@ class LearningPathController extends Controller
 
         $this->validate($request, [
             'word' => "required",
-            'word_type_id' => "required",
         ]);
 
         $word = $request->input('word');
-        $wordTypeId = $request->input('word_type_id');
-        $mnemonic = $request->input('meaning_mnemonic');
-        $examples = $request->input('examples');
+        $mnemonic = $request->input('mnemonic');
+        $vocab = $request->input('vocab');
         $meanings = $request->input('meanings');
         $onReadings = $request->input('onReadings');
         $kunReadings = $request->input('kunReadings');
@@ -118,21 +113,13 @@ class LearningPathController extends Controller
 
 
         try {
-            DB::transaction(function() use(&$item, $word, $wordTypeId, $mnemonic, $meanings, $onReadings, $kunReadings, $examples, $level){
+            DB::transaction(function() use(&$item, $word, $mnemonic, $meanings, $onReadings, $kunReadings, $vocab, $level){
                 $item->word = $word;
-                $item->word_type_id = $wordTypeId;
-                $item->meaning_mnemonic = $mnemonic;
+                $item->mnemonic = $mnemonic;
                 $item->level = $level;
 
-                $item->examples()->delete();
-                foreach($examples as $example){
-//                    $exampleModel = new VocabLearningPathExample();
-//
-//                    $exampleModel->vocab_learning_path_item_id = $item->id;
-//                    $exampleModel->example = $example['example'];
-//                    $exampleModel->translation = $example['translation'];
-//                    $exampleModel->type = $example['type'];
-//                    $exampleModel->save();
+                foreach($vocab as $voc){
+                    $item->vocab()->updateExistingPivot($voc['id'], ['is_primary' => $voc['pivot']['is_primary']], false);
                 }
 
                 $item->meanings()->delete();
@@ -160,12 +147,6 @@ class LearningPathController extends Controller
                     ]);
                 }
 
-//                $item->readings()->delete();
-//                foreach($readings as $reading){
-//                    $item->readings()->create([
-//                        'reading' => $reading['reading']
-//                    ]);
-//                }
 
                 $item->save();
             });

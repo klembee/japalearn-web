@@ -28,15 +28,6 @@
                     <md-input v-model="update.word"></md-input>
                 </md-field>
 
-                <md-field>
-                    <label for="word_type">Type</label>
-                    <md-select v-model="update.wordTypeId" name="word_type" id="word_type">
-                        <md-option value="1">Radical</md-option>
-                        <md-option value="2">Kanji</md-option>
-                        <md-option value="3">Vocabulary</md-option>
-                    </md-select>
-                </md-field>
-
                 <div class="mb-3">
                     <p>Meanings: </p>
 
@@ -158,17 +149,6 @@
                             </tbody>
                         </table>
 
-<!--                        <Multiselect-->
-<!--                            v-model="update.kunReadings"-->
-<!--                            :options="[]"-->
-<!--                            :allow-empty="true"-->
-<!--                            tag-placeholder="Add reading"-->
-<!--                            placeholder="Add reading"-->
-<!--                            :taggable="true"-->
-<!--                            :multiple="true"-->
-<!--                            @tag="addKunReading"-->
-<!--                        >-->
-<!--                        </Multiselect>-->
                     </div>
                 </div>
 
@@ -176,74 +156,38 @@
 
                 <!-- Mnemonic -->
                 <md-field>
-                    <label>Meaning mnemonic</label>
-                    <md-textarea v-model="update.meaning_mnemonic">
-
-                    </md-textarea>
-                </md-field>
-                <md-field>
-                    <label>Reading mnemonic</label>
-                    <md-textarea v-model="update.reading_mnemonic">
+                    <label>Mnemonic</label>
+                    <md-textarea v-model="update.mnemonic">
 
                     </md-textarea>
                 </md-field>
 
-                <p>Examples:</p>
                 <div>
-                    <md-table>
-                        <b-thead>
+                    <table>
+                        <thead>
                             <tr>
-                                <th>Example</th>
-                                <th>Translation</th>
-                                <th>Type</th>
-                                <th></th>
+                                <th>Word</th>
+                                <th>Readings</th>
+                                <th>Meanings</th>
+                                <th>Primary</th>
                             </tr>
-                        </b-thead>
-                        <b-tbody>
-                            <tr v-for="example in update.examples" :key="example.example">
+                        </thead>
+                        <tbody>
+                            <tr v-for="vocab in update.vocab" :key="vocab.pivot.id">
+                                <td>{{vocab.word}}</td>
                                 <td>
-                                    {{example.example}}
+                                    {{vocab.readings.map(reading => reading.writing).splice(0, 3).join(", ")}}
                                 </td>
                                 <td>
-                                    {{example.translation}}
+                                    {{vocab.meanings.map(meaning => meaning.meaning).splice(0, 3).join(", ")}}
                                 </td>
                                 <td>
-                                    {{example.type}}
+                                    <input type="checkbox" v-model="vocab.pivot.is_primary"/>
                                 </td>
-                            </tr>
 
-                        </b-tbody>
-
-                        <b-tfoot>
-                            <!-- Add form -->
-                            <tr>
-                                <td>
-                                    <md-field>
-                                        <label>Example</label>
-                                        <md-input v-model="newExample.example"/>
-                                    </md-field>
-                                </td>
-                                <td>
-                                    <md-field>
-                                        <label>Translation</label>
-                                        <md-input v-model="newExample.translation"/>
-                                    </md-field>
-                                </td>
-                                <td>
-                                    <md-field>
-                                        <label>Type</label>
-                                        <md-select v-model="newExample.type">
-                                            <md-option value="phrase">Phrase</md-option>
-                                            <md-option value="vocabulary">Vocabulary</md-option>
-                                        </md-select>
-                                    </md-field>
-                                </td>
-                                <td>
-                                    <md-button @click="addExample()">Add</md-button>
-                                </td>
                             </tr>
-                        </b-tfoot>
-                    </md-table>
+                        </tbody>
+                    </table>
                 </div>
 
             </md-dialog-content>
@@ -289,9 +233,8 @@
                     meanings: [],
                     onReadings: [],
                     kunReadings: [],
-                    meaning_mnemonic: "",
-                    reading_mnemonic: "",
-                    examples: [],
+                    mnemonic: "",
+                    vocab: [],
                 },
                 newExample: {
                     example: "",
@@ -328,10 +271,8 @@
             save(){
                 let payload = {
                     word: this.update.word,
-                    word_type_id: this.update.wordTypeId,
-                    meaning_mnemonic: this.update.meaning_mnemonic,
-                    reading_mnemonic: this.update.reading_mnemonic,
-                    examples: this.update.examples,
+                    mnemonic: this.update.mnemonic,
+                    vocab: this.update.vocab,
                     meanings: this.update.meanings,
                     onReadings: this.update.onReadings,
                     kunReadings: this.update.kunReadings,
@@ -404,13 +345,11 @@
 
             // Copy the item to the update object
             this.update.word = this.item.word;
-            this.update.wordTypeId = this.item.word_type_id;
             this.update.meanings = this.item.meanings;
             this.update.kunReadings = this.item.kun_readings;
             this.update.onReadings = this.item.on_readings;
-            this.update.meaning_mnemonic = this.item.meaning_mnemonic;
-            this.update.reading_mnemonic = this.item.reading_mnemonic;
-            this.update.examples = this.item.examples;
+            this.update.mnemonic = this.item.mnemonic;
+            this.update.vocab = this.item.vocab;
             this.update.level = this.item.level;
         }
     }

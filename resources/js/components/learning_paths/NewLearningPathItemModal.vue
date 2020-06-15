@@ -13,15 +13,6 @@
                 <md-input v-model="level" type="number" min="1" step="1" name="level" id="level" />
             </md-field>
 
-            <md-field>
-                <label for="word_type">Type</label>
-                <md-select v-model="wordType" name="word_type" id="word_type">
-                    <md-option value="radical">Radical</md-option>
-                    <md-option value="kanji">Kanji</md-option>
-                    <md-option value="vocabulary">Vocabulary</md-option>
-                </md-select>
-            </md-field>
-
             <div class="mb-3">
                 <p>Meanings: </p>
                 <Multiselect

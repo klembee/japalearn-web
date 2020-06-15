@@ -40,7 +40,7 @@ class KanjiAdminController extends Controller
      */
     public function index(Request $request){
 
-        $itemsByLevel = KanjiLearningPath::query()->with('vocabulary')->get()->groupBy('level');
+        $itemsByLevel = KanjiLearningPath::query()->with('vocab')->get()->groupBy('level');
 
         return view('app.admin.kanji_learning_path.index', compact('itemsByLevel'));
     }
@@ -110,21 +110,10 @@ class KanjiAdminController extends Controller
      */
     public function viewLevel(Request $request, int $level){
 
-        $radicals = KanjiLearningPath::query()
-            ->where('word_type_id', WordType::radical()->id)
-            ->where('level', $level)
-            ->with('meanings', 'readings', 'examples')->get();
-
         $kanjis = KanjiLearningPath::query()
-            ->where('word_type_id', WordType::kanji()->id)
             ->where('level', $level)
-            ->with('meanings', 'onReadings', 'kunReadings', 'examples')->get()->toArray();
+            ->with('meanings', 'onReadings', 'kunReadings', 'vocab')->get()->toArray();
 
-        $vocabulary = KanjiLearningPath::query()
-            ->where('word_type_id', WordType::vocabulary()->id)
-            ->where('level', $level)
-            ->with('meanings', 'readings', 'examples')->orderBy('word')->get();
-
-        return view('app.admin.kanji_learning_path.edit_level', compact('radicals', 'kanjis', 'vocabulary'));
+        return view('app.admin.kanji_learning_path.edit_level', compact('kanjis'));
     }
 }

@@ -37,7 +37,9 @@ class KanjiLearningPath extends Model
      * Get the vocabulary that uses this kanji
      */
     public function vocab(){
-        return $this->belongsToMany(Vocabulary::class, 'kanji_vocabulary', 'kanji_id', 'vocabulary_id');
+        return $this->belongsToMany(Vocabulary::class, 'kanji_vocabulary', 'kanji_id', 'vocabulary_id')
+            ->with('meanings', 'readings')
+            ->withPivot(['is_primary', 'id']);
     }
 
     public function getStudentLeveLAttribute(){
