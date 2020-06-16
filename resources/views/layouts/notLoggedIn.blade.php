@@ -14,6 +14,19 @@
         @include('layouts.parts.pixel')
     @endif
 
+    <script>
+        function fireContactEvent() {
+            ga('send', 'event', 'contact', 'button_click', 'contact_us', 1, {
+                hitCallback: function(){
+                    var form = document.getElementById("contact-form");
+                    if(form.reportValidity()) {
+                        form.submit();
+                    }
+                }
+            });
+        }
+    </script>
+
 </head>
 <body>
     <div id="app" class="page-container md-layout-column">
@@ -116,19 +129,6 @@
                 <div class="col-12 col-lg-4">
                     <h3 class="h2">Contact us</h3>
                     <md-card>
-
-                        <script>
-                            function fireContactEvent() {
-                                ga('send', 'event', 'contact', 'button_click', 'contact_us', 1, {
-                                    hitCallback: function(){
-                                        var form = document.getElementById("contact-form");
-                                        if(form.reportValidity()) {
-                                            form.submit();
-                                        }
-                                    }
-                                });
-                            }
-                        </script>
 
                         <form method="POST" action="{{route('api.frontpage.contactus')}}" class="contact-form" id="contact-form">
                             @csrf

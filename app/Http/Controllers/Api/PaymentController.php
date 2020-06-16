@@ -82,6 +82,7 @@ class PaymentController extends Controller
         $planId = $request->input('plan_id');
         $cardId = $request->input('card_id');
 
+
         if(!$user->subscribed('default')) {
             $user->newSubscription('default', $planId)->create($cardId);
         }else{
