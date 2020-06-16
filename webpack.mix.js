@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .copy('resources/js/scripts/mailchimp-form.js', 'public/js/scripts')
     .sass('resources/sass/dark_app.scss', 'public/css')
    .sass('resources/sass/app.scss', 'public/css');
 

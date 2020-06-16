@@ -19,3 +19,4 @@ yarn-error.log
 /public/js/app.js
 /public/robots.txt
 /public/css/dark_app.css
+/public/js/scripts/mailchimp-form.js

@@ -45,25 +45,32 @@
 
                 <hr />
 
-                <div class="under-post">
-                    <h3>Comments</h3>
-                    <div v-for="comment in comments" :key="comment.id" class="comment-container">
-                        <div class="comment-header">
-                            <p><span class="comment_author_name">{{comment.author_name}}</span> <span>wrote:</span></p>
-                            <p>{{comment.parsed_date}}</p>
+                <div class="under-post row m-0">
+                    <div class="col-12 col-md-7 mb-3">
+                        <h3>Comments</h3>
+                        <div v-for="comment in comments" :key="comment.id" class="comment-container">
+                            <div class="comment-header">
+                                <p><span class="comment_author_name">{{comment.author_name}}</span> <span>wrote:</span></p>
+                                <p>{{comment.parsed_date}}</p>
+                            </div>
+
+                            <p>{{comment.comment}}</p>
                         </div>
+                        <p v-if="comments.length === 0">No comments yet. Why not write one ?</p>
 
-                        <p>{{comment.comment}}</p>
+                        <hr />
+
+                        <leave-comment
+                            :leave-comment-endpoint="leaveCommentEndpoint"
+                        >
+
+                        </leave-comment>
                     </div>
-                    <p v-if="comments.length === 0">No comments yet. Why not write one ?</p>
 
-                    <hr />
+                    <div class="col-12 col-md-5">
+                        <slot name="mailchimp"></slot>
+                    </div>
 
-                    <leave-comment
-                        :leave-comment-endpoint="leaveCommentEndpoint"
-                    >
-
-                    </leave-comment>
                 </div>
 
             </div>
@@ -178,7 +185,6 @@
     }
 
     .under-post{
-        width:60%;
         margin:auto;
     }
 
@@ -201,10 +207,6 @@
         }
 
         /deep/ .article-text img {
-            width:100%;
-        }
-
-        .under-post {
             width:100%;
         }
 

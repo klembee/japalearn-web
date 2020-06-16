@@ -12,7 +12,10 @@
         @include('layouts.parts.analytics')
         <script src="https://www.google.com/recaptcha/api.js?render=6LcmAwAVAAAAAAnM-_UF8eg6L_YMNCj67S_2FHKu"></script>
         @include('layouts.parts.pixel')
+
     @endif
+
+{{--    @include('layouts.parts.cookieConsent')--}}
 
     <script>
         function fireContactEvent() {
@@ -160,5 +163,8 @@
             </div>
         </footer>
     </div>
+
+    @yield('scripts_end')
+    <!--End mc_embed_signup-->
 </body>
 </html>

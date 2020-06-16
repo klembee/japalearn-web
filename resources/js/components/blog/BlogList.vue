@@ -1,29 +1,27 @@
 <template>
-    <div class="row w-100 m-0">
-        <div class="post col-12 col-md-8 col-lg-6">
-            <md-card class="post-card" v-for="post in paginatedPosts.data" :key="post.id">
-                <md-card-header>
-                    <div class="image-container">
-                        <img class="post_image" v-if="post.image_url" :src="post.image_url"/>
-                    </div>
+    <div class="post">
+        <md-card class="post-card" v-for="post in paginatedPosts.data" :key="post.id">
+            <md-card-header>
+                <div class="image-container">
+                    <img class="post_image" v-if="post.image_url" :src="post.image_url"/>
+                </div>
 
-                    <div class="post-header">
-                        <h2>{{post.title}}</h2>
-                        <p>Published on {{parseDate(post.created_at)}}</p>
-                    </div>
+                <div class="post-header">
+                    <h2>{{post.title}}</h2>
+                    <p>Published on {{parseDate(post.created_at)}}</p>
+                </div>
 
-                </md-card-header>
+            </md-card-header>
 
-                <md-card-content>
-                    <p v-html="parse(post.content)"></p>
-                </md-card-content>
+            <md-card-content>
+                <p v-html="parse(post.content)"></p>
+            </md-card-content>
 
-                <md-card-actions>
-                    <md-button v-if="editPostUrl" :href="editPostUrl.replace(':id', post.slug)" class="md-raised md-accent">Edit</md-button>
-                    <md-button :href="viewPostUrl.replace(':id', post.slug)" class="md-raised md-accent">Read more</md-button>
-                </md-card-actions>
-            </md-card>
-        </div>
+            <md-card-actions>
+                <md-button v-if="editPostUrl" :href="editPostUrl.replace(':id', post.slug)" class="md-raised md-accent">Edit</md-button>
+                <md-button :href="viewPostUrl.replace(':id', post.slug)" class="md-raised md-accent">Read more</md-button>
+            </md-card-actions>
+        </md-card>
     </div>
 
 </template>
