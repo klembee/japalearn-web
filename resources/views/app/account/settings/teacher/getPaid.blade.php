@@ -3,6 +3,10 @@
     {{__('Get paid')}}
 @endsection
 
+@section('seo')
+    <title>Settings - Get paid</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 

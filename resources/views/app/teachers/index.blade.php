@@ -3,6 +3,10 @@
     {{__('Your teachers')}}
 @endsection
 
+@section('seo')
+    <title>Your teachers</title>
+@endsection
+
 @section('content')
     @foreach($teachers as $teacher)
         <teacher-card

@@ -3,6 +3,10 @@
     {{__('Video lessons')}}
 @endsection
 
+@section('seo')
+    <title>Video lessons</title>
+@endsection
+
 @section('toolbar_right')
 
 @endsection

@@ -3,6 +3,10 @@
     {{__('Learn the kanjis')}}
 @endsection
 
+@section('seo')
+    <title>Learn the kanjis</title>
+@endsection
+
 @if(!$userLearnedKanas)
     @section('alert')
         <div class="alert alert-danger m-sm-0 m-2 mb-md-4" role="alert">

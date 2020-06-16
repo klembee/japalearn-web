@@ -3,6 +3,10 @@
     {{__('Grammar review')}}
 @endsection
 
+@section('seo')
+    <title>Grammar exercises</title>
+@endsection
+
 @section('toolbar_right')
     <md-button href="{{route('grammar.learn', $grammarlesson)}}">{{__('Exit')}}</md-button>
 @endsection

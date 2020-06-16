@@ -3,6 +3,10 @@
     {{__('Your Dashboard')}}
 @endsection
 
+@section('seo')
+    <title>JapaLearn - Dashboard</title>
+@endsection
+
 @section('content')
     <div class="row w-100">
 

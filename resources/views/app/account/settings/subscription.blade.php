@@ -3,6 +3,10 @@
     {{__('Subscription')}}
 @endsection
 
+@section('seo')
+    <title>Settings - subscription</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 

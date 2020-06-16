@@ -3,6 +3,10 @@
     {{__('Schedule a lesson with')}} {{$teacher->name}}
 @endsection
 
+@section('seo')
+    <title>Schedule a lesson</title>
+@endsection
+
 @section('toolbar_right')
 
 @endsection

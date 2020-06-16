@@ -3,6 +3,10 @@
     {{__('Dictionary')}}
 @endsection
 
+@section('seo')
+    <title>JapaLearn - dictionary</title>
+@endsection
+
 @section('content')
     <dictionary
         query-api-endpoint="{{route('api.dictionary.query')}}"

@@ -3,6 +3,10 @@
     {{__('Vocabulary review')}}
 @endsection
 
+@section('seo')
+    <title>Vocab review</title>
+@endsection
+
 @section('toolbar_right')
     <md-button href="{{route('dashboard')}}">{{__('Exit')}}</md-button>
 @endsection

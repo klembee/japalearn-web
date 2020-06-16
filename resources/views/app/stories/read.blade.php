@@ -3,6 +3,10 @@
     {{$story->title}}
 @endsection
 
+@section('seo')
+    <title>Japanese story: {{$story->title}}</title>
+@endsection
+
 @section('content')
     <div>
         <story-reader

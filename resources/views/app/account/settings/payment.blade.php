@@ -3,6 +3,10 @@
     {{__('Payment processing')}}
 @endsection
 
+@section('seo')
+    <title>Settings - payment</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 

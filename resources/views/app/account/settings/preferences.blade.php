@@ -3,6 +3,10 @@
     {{__('Preferences')}}
 @endsection
 
+@section('seo')
+    <title>Settings - preferences</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 

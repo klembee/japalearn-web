@@ -3,6 +3,10 @@
     {{__('Your students')}}
 @endsection
 
+@section('seo')
+    <title>Student list</title>
+@endsection
+
 @section('toolbar_right')
     <student-invitation-dialog
         code-generation-endpoint="{{route('api.teachers.generate_invite_code')}}"

@@ -3,6 +3,10 @@
     {{__('Conference')}}
 @endsection
 
+@section('seo')
+    <title>Japalearn - Conference room</title>
+@endsection
+
 @section('content')
     <conference-room
         dashboard-url="{{route('dashboard')}}"

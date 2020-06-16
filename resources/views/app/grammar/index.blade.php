@@ -3,6 +3,10 @@
     {{__('Learn grammar')}}
 @endsection
 
+@section('seo')
+    <title>Learn grammar</title>
+@endsection
+
 @section('content')
     <div>
         <div class="row">

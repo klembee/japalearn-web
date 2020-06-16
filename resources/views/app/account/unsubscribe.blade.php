@@ -3,6 +3,10 @@
     {{__('Unsubscribing')}}
 @endsection
 
+@section('seo')
+    <title>Unsubscribe</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 

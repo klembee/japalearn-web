@@ -3,6 +3,10 @@
     {{__('Users')}}
 @endsection
 
+@section('seo')
+    <title>User list</title>
+@endsection
+
 @section('toolbar_right')
     <md-button href="{{route('users.create')}}">{{__('Create User')}}</md-button>
 @endsection

@@ -3,6 +3,10 @@
     {{__('Your profile')}}
 @endsection
 
+@section('seo')
+    <title>Settings - profile</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 

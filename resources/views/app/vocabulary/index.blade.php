@@ -3,6 +3,9 @@
     {{__('Your vocabulary')}}
 @endsection
 
+@section('seo')
+    <title>Saved vocabulary</title>
+@endsection
 
 @section('content')
     <md-table>

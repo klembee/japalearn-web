@@ -3,6 +3,10 @@
     {{__('Kana review')}}
 @endsection
 
+@section('seo')
+    <title>Kana review</title>
+@endsection
+
 @section('toolbar_right')
     <md-button href="{{route('kanas.index')}}">{{__('Exit')}}</md-button>
 @endsection

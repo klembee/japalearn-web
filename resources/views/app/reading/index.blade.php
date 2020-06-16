@@ -3,6 +3,10 @@
     {{__('Learn reading Japanese')}}
 @endsection
 
+@section('seo')
+    <title>Reading Japanese</title>
+@endsection
+
 @section('content')
     <div>
         @foreach($stories as $story)

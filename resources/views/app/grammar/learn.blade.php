@@ -3,6 +3,10 @@
     {{__($item->title)}}
 @endsection
 
+@section('seo')
+    <title>Grammar study</title>
+@endsection
+
 @section('content')
     <div>
 {{--        <div class="grammar-item-content">--}}

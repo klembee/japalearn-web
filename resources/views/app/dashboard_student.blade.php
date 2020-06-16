@@ -3,6 +3,10 @@
     {{__('Your Dashboard')}}
 @endsection
 
+@section('seo')
+    <title>JapaLearn - Dashboard</title>
+@endsection
+
 @section('content')
     <div>
         @if(Auth::user()->email_verified_at == null)

@@ -3,6 +3,10 @@
     {{__('Learn hiragana and katakana')}}
 @endsection
 
+@section('seo')
+    <title>Learn the kanas</title>
+@endsection
+
 {{--@section('toolbar_right')--}}
 {{--    <md-button href="{{route('study.kana.lesson')}}">{{__('Start learning !')}}</md-button>--}}
 {{--@endsection--}}

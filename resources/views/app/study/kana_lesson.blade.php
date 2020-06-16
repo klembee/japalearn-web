@@ -1,6 +1,10 @@
 @extends('layouts.studying')
 @section('title')
-    {{__('Kana review')}}
+    {{__('Kana lesson')}}
+@endsection
+
+@section('seo')
+    <title>Kana lesson</title>
 @endsection
 
 @section('toolbar_right')

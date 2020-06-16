@@ -3,6 +3,10 @@
     {{__('Learning experience')}}
 @endsection
 
+@section('seo')
+    <title>Settings - learning</title>
+@endsection
+
 @section('toolbar_right')
 @endsection
 
