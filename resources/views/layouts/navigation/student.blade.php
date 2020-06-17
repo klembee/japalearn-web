@@ -23,15 +23,15 @@
         <span class="md-list-item-text">{{__('Reading')}}</span>
     </md-list-item>
 
-    <md-list-item href="{{route('listening.index')}}" exact>
-        <md-icon>theaters</md-icon>
-        <span class="md-list-item-text">{{__('Listening')}}</span>
-    </md-list-item>
+{{--    <md-list-item href="{{route('listening.index')}}" exact>--}}
+{{--        <md-icon>theaters</md-icon>--}}
+{{--        <span class="md-list-item-text">{{__('Listening')}}</span>--}}
+{{--    </md-list-item>--}}
 
-    <md-list-item href="{{route('teachers.index')}}" exact>
-        <md-icon>people</md-icon>
-        <span class="md-list-item-text">{{__('Teachers')}}</span>
-    </md-list-item>
+{{--    <md-list-item href="{{route('teachers.index')}}" exact>--}}
+{{--        <md-icon>people</md-icon>--}}
+{{--        <span class="md-list-item-text">{{__('Teachers')}}</span>--}}
+{{--    </md-list-item>--}}
 
     <md-divider></md-divider>
     <md-subheader>{{__('Utils')}}</md-subheader>
