@@ -20,7 +20,7 @@
         <div class="row m-0">
             <div class="col-11 col-sm-10 col-md-8 col-lg-5 mx-auto">
                 @if(Auth::user())
-                    <p>Get access to more stories in your <a href="{{route('dashboard')}}">dashboard</a></p>
+                    <p>Get access to more stories in your <a href="{{route('reading.index')}}">dashboard</a></p>
                 @else
                     <p><a href="{{route('login')}}">Login</a> or <a href="{{route('register')}}">Register</a> to get access to more Japanese short stories !</p>
                 @endif

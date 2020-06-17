@@ -167,11 +167,15 @@
                 axios.post(this.subscribeEndpoint, payload)
                     .then(function(response){
                         if(response.data.success){
-                            ga('send', 'event', 'subscription', 'subscribed', 'subscribed', self.selectedPlan.amount / 100, {
-                                hitCallback: function(){
-                                    window.location.href = response.data.redirect;
-                                }
-                            });
+                            if(ga) {
+                                ga('send', 'event', 'subscription', 'subscribed', 'subscribed', self.selectedPlan.amount / 100, {
+                                    hitCallback: function () {
+                                        window.location.href = response.data.redirect;
+                                    }
+                                });
+                            }else{
+                                window.location.href = response.data.redirect;
+                            }
 
                         }else{
                             toastr.error("Error while subscribing: " + response.data.message);
