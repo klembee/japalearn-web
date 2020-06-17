@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id',
+        'name', 'email', 'password', 'role_id', 'country'
     ];
 
     /**
@@ -35,7 +35,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'modified_at',
         'card_brand',
         'card_last_four',
-
     ];
 
     /**
@@ -86,6 +85,18 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isModerator(){
         return $this->role_id === Role::moderator()->id;
+    }
+
+    public function taxRates()
+    {
+        if(strtoupper($this->country) === "CA") {
+            $tax1 = env('STRIPE_TAX_1_ID');
+            $tax2 = env('STRIPE_TAX_2_ID');
+
+            return [$tax1, $tax2];
+        }else{
+            return [];
+        }
     }
 
     public function getFirstnameAttribute(){

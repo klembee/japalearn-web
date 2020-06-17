@@ -114,6 +114,8 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
+
+                            @include('part.countryInput')
                         </div>
 
                         <!-- TODO: Ne pas afficher si selectionné prof -->

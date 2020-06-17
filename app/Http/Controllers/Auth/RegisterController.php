@@ -63,7 +63,8 @@ class RegisterController extends Controller
 //            'account_type' => ['required','in:student,teacher'],
             'experience_kana' => ['nullable','in:no_knowlege,full_knowledge,katakana_knowledge,hiragana_knowledge'],
             'concentration' => ['nullable','in:everything,kanjis,speaking,reading'],
-            'experience_other_platform' => ['nullable','in:no,yes']
+            'experience_other_platform' => ['nullable','in:no,yes'],
+            'country' => 'required'
         ]);
     }
 
@@ -80,7 +81,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
 //            'role_id' => $data['account_type'] == 'teacher' ? Role::teacher()->id : Role::student()->id
-            'role_id' => Role::student()->id
+            'role_id' => Role::student()->id,
+            'country' => $data['country']
         ]);
 
         if($user->isStudent()){
