@@ -43,7 +43,7 @@
 
         <!-- New Payment Method form -->
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <h3>New payment method</h3>
                 <new-payment-method-form
                     user-email="{{Auth::user()->email}}"

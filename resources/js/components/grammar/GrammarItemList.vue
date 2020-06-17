@@ -4,17 +4,17 @@
         <div class="col-lg-8 order-last order-lg-first">
             <div>
                 <div class="grammar-items">
-                    <md-card class="grammar-card" v-for="item in items.data" :key="item.id">
-                        <md-card-header>
+                    <div class="grammar-card" v-for="item in items.data" :key="item.id">
+                        <div>
                             <h2>{{item.title}}</h2>
-                        </md-card-header>
-                        <md-card-content>
+                        </div>
+                        <div>
                             <p>{{item.abstract}}</p>
-                        </md-card-content>
-                        <md-card-actions>
+                        </div>
+                        <div>
                             <md-button :href="viewUrl.replace(':id', item.slug)" class="md-raised md-accent">Learn</md-button>
-                        </md-card-actions>
-                    </md-card>
+                        </div>
+                    </div>
 
                     <slot></slot>
 
@@ -89,6 +89,10 @@
 
     .grammar-card{
         margin-bottom:20px;
+        width:100%;
+        padding: 10px;
+        background: #f9f9f9;
+        box-shadow: -2px 2px 5px #adadad;
     }
 
     .category-list{

@@ -22,11 +22,17 @@
         <div class="row m-0">
             <div class="col-12 col-md-8">
                 @if($nextItem)
-                    <div>
-                        <h3>{{__('Continue where you left')}}: <b>{{$nextItem->title}}</b></h3>
-                        <p>{{substr($nextItem->content, 0, 20)}}...</p>
-                        <md-button href="{{route('grammar.learn', $nextItem)}}" class="md-primary md-raised">Continue learning</md-button>
-                    </div>
+                    <view-grammar-item
+                        :item="{{json_encode($nextItem)}}"
+                        mark-as-done-url="{{route('api.learning_path.grammar.update-level')}}"
+                        :logged-in="{{Auth::user() != null ? 'true' : 'false'}}"
+                    ></view-grammar-item>
+
+{{--                    <div>--}}
+{{--                        <h3>{{__('Continue where you left')}}: <b>{{$nextItem->title}}</b></h3>--}}
+{{--                        <p>{{substr($nextItem->content, 0, 20)}}...</p>--}}
+{{--                        <md-button href="{{route('grammar.learn', $nextItem)}}" class="md-primary md-raised">Continue learning</md-button>--}}
+{{--                    </div>--}}
                 @endif
             </div>
             <div class="col-12 col-md-4 order-first order-md-last">

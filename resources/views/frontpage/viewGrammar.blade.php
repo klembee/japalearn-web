@@ -17,9 +17,9 @@
         <div>
             <div class="row w-100 m-0">
                 <div class="col-lg-7 col-md-9 col-12 m-auto">
+                    <md-button href="{{route('frontpage.grammar')}}" class="md-raised md-accent back-button">Back to lesson list</md-button>
                     <view-grammar-item
                         :item="{{json_encode($item)}}"
-                        back-url="{{route('frontpage.grammar')}}"
                     ></view-grammar-item>
                 </div>
             </div>

@@ -24,6 +24,10 @@ class GrammarController extends Controller
         $categories = GrammarLearningPathCategory::query()->orderBy('order')->get();
         $nextItem = GrammarHelper::getNextItem();
 
+        if($nextItem){
+            $nextItem = $nextItem->load('vocab', 'questions');
+        }
+
         $currentCategory = Auth::user()->info->current_grammar_category;
 
         return view('app.grammar.index', compact('categories', 'nextItem', 'currentCategory'));

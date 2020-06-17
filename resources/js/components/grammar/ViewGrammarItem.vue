@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div class="content">
-
-            <md-button @click="goBack" class="md-raised md-accent back-button">Back to lesson list</md-button>
+        <div class="">
             <md-card class="grammar-card">
                 <md-card-content>
                     <h1 class="title">{{item.title}}</h1>
@@ -38,8 +36,8 @@
                         </div>
                         <div class="col-md-4 col-12">
                             <h3>Practice this lesson</h3>
-                            <div v-if="practiceUrl">
-                                <div v-if="item.questions && item.questions.length > 0">
+                            <div v-if="loggedIn">
+                                <div v-if="item.questions && item.questions.length > 0 && practiceUrl">
                                     <md-button :href="practiceUrl" class="md-primary md-raised">Practice</md-button>
                                 </div>
                                 <div v-else>
@@ -47,7 +45,7 @@
                                     <md-button @click="markAsDone" class="md-raised md-accent">Mark as done</md-button>
                                 </div>
                             </div>
-                            <div v-else>
+                            <div v-if="!loggedIn">
                                 <p>Login to practice this grammar lesson !</p>
                             </div>
                         </div>
@@ -74,13 +72,13 @@
             markAsDoneUrl: {
                 type: String
             },
-            backUrl: {
-                type: String,
-                required: true
-            },
             practiceUrl: {
                 type: String,
                 default: null
+            },
+            loggedIn: {
+                type: Boolean,
+                default: false
             }
         },
         data: function(){
@@ -89,9 +87,6 @@
             }
         },
         methods: {
-            goBack(){
-                window.location.href = this.backUrl;
-            },
             markAsDone(){
                 if(this.markAsDoneUrl){
                     let payload = {
@@ -102,13 +97,13 @@
                     axios.post(this.markAsDoneUrl, payload)
                         .then(function(response){
                             if(response.data.success){
-                                self.goBack();
+                                toastr.success('Grammar lesson marked as done.')
                             }else{
-                                Toastr.error("Error while marking as done")
+                                toastr.error("Error while marking as done")
                             }
                         })
                         .catch(function(error){
-                            Toastr.error("Error while marking as done")
+                            toastr.error("Error while marking as done")
                         })
                 }
             }

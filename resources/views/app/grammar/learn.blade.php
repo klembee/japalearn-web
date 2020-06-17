@@ -18,10 +18,10 @@
 {{--            @endif--}}
 {{--        </div>--}}
 
+        <md-button href="{{route('grammar.index')}}" class="md-raised md-accent back-button">Back to lesson list</md-button>
         <view-grammar-item
             mark-as-done-url="{{route('api.learning_path.grammar.update-level')}}"
             :item="{{json_encode($item)}}"
-            back-url="{{route('grammar.index')}}"
             practice-url="{{route('study.grammar.review', $item)}}"
         ></view-grammar-item>
 
