@@ -89,7 +89,27 @@
                 </credit-card-chooser>
 
                 <div v-if="selectedCard">
-                    <p>You will be charged ${{selectedPlan.amount / 100}} CAD when you proceed with the payment.</p>
+
+                    <table class="table">
+                        <tr>
+                            <td><span v-if="hasTaxes">Before taxes</span><span v-else>Total</span></td>
+                            <td>${{(selectedPlan.amount / 100).toFixed(2)}}</td>
+                        </tr>
+                        <tr v-if="hasTaxes">
+                            <td>TPS (9.975%)</td>
+                            <td>${{((selectedPlan.amount / 100) * 0.09975).toFixed(2)}}</td>
+                        </tr>
+                        <tr v-if="hasTaxes">
+                            <td>TVQ (5%)</td>
+                            <td>${{((selectedPlan.amount / 100) * 0.05).toFixed(2)}}</td>
+                        </tr>
+                        <tr v-if="hasTaxes">
+                            <td>Total</td>
+                            <td>${{total.toFixed(2)}}</td>
+                        </tr>
+                    </table>
+
+                    <p>You will be charged ${{total.toFixed(2)}} CAD when you proceed with the payment.</p>
                     <md-button @click="pay" :disabled="isSubscribing"  class="md-raised md-primary">Proceed to payment</md-button>
                 </div>
             </div>
@@ -142,6 +162,10 @@
             clientSecret: {
                 type: String,
                 required: true
+            },
+            hasTaxes: {
+                type: Boolean,
+                default: true
             }
         },
         data: function(){
@@ -198,6 +222,16 @@
             selectYear(){
                 this.selectedPlan = this.year;
                 ga('send', 'event', 'subscription', 'selected', 'selected', 10);
+            }
+        },
+        computed: {
+            total(){
+                if(this.hasTaxes){
+                    return (this.selectedPlan.amount / 100) * 1.149975;
+                }else{
+                    return (this.selectedPlan.amount / 100);
+                }
+
             }
         }
     }

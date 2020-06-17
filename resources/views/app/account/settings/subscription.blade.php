@@ -61,6 +61,7 @@
             save-method-endpoint="{{route('api.payment.add-payment-method')}}"
             stripe-key="{{env('STRIPE_KEY')}}"
             client-secret="{{$stripeIntent}}"
+            :has-taxes="false"
         >
 
         </subscription-page>

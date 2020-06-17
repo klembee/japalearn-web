@@ -93,7 +93,9 @@ class User extends Authenticatable implements MustVerifyEmail
             $tax1 = env('STRIPE_TAX_1_ID');
             $tax2 = env('STRIPE_TAX_2_ID');
 
-            return [$tax1, $tax2];
+//            return [$tax1, $tax2];
+            //todo: Change when setup taxes id
+            return [];
         }else{
             return [];
         }

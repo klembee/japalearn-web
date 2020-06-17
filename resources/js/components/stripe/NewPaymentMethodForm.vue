@@ -31,7 +31,7 @@
             </md-field>
         </div>
 
-        <md-button class="md-raised md-accent" @click="addMethod" id="card-button">
+        <md-button :disabled="loading" class="md-raised md-accent" @click="addMethod" id="card-button">
             Add Payment Method
         </md-button>
     </div>
@@ -64,6 +64,7 @@
         },
         data: function(){
               return {
+                  loading: false,
                   stripe: {},
                   elements: {},
                   cardElement: {},
@@ -97,6 +98,8 @@
             addMethod(){
                 let self = this;
 
+                this.loading = true;
+
                 this.stripe.confirmCardSetup(
                     this.clientSecret, {
                         payment_method: {
@@ -129,17 +132,20 @@
                                         location.reload();
                                     }else{
                                         // Send payment information to parent
+                                        self.loading = false;
                                         self.$emit('payment-method-added', paymentMethod);
                                     }
                                 }else{
+                                    self.loading = false;
                                     toastr.error("Error while saving payment method");
                                 }
                             })
                             .catch(function(error){
-                                console.log(error);
+                                self.loading = false;
                                 toastr.error("Error while saving payment method.");
                             })
                     }else{
+                        self.loading = false;
                         toastr.error("You need to fill your address information !");
                     }
 
