@@ -61,7 +61,7 @@
                             <md-button href="{{route('login')}}">Login</md-button>
                             <md-button href="{{route('register')}}">Register</md-button>
                         @else
-                            <md-button href="{{route('dashboard')}}">Dashboard<md-icon>arrow_forward_ios</md-icon></md-button>
+                            <md-button class="dashboard-btn" href="{{route('dashboard')}}">Dashboard<md-icon>arrow_forward_ios</md-icon></md-button>
                         @endif
                     @endif
                 </template>
