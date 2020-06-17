@@ -29,38 +29,40 @@
                     <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
 
-                        <p>{{__('Do you want to learn japanese or teach it ?')}}</p>
-                        <div class="row text-center mb-4">
-                            <div class="col-6 p-0">
-                                <md-card >
-                                    <md-card-content>
+{{--                        <p>{{__('Do you want to learn japanese or teach it ?')}}</p>--}}
+{{--                        <div class="row text-center mb-4">--}}
+{{--                            <div class="col-6 p-0">--}}
+{{--                                <md-card >--}}
+{{--                                    <md-card-content>--}}
 
-                                        <div>
-                                            <label for="student">
-                                                <md-icon class="md-size-4x">sentiment_satisfied_alt</md-icon>
-                                                <h2>Student</h2>
-                                            </label>
-                                        </div>
+{{--                                        <div>--}}
+{{--                                            <label for="student">--}}
+{{--                                                <md-icon class="md-size-4x">sentiment_satisfied_alt</md-icon>--}}
+{{--                                                <h2>Student</h2>--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
 
-                                        <input id="student" type="radio" name="account_type" value="student" checked/>
-                                    </md-card-content>
-                                </md-card>
-                            </div>
-                            <div class="col-6 p-0">
-                                <md-card>
-                                    <md-card-content>
-                                        <div>
-                                            <label for="teacher">
-                                                <md-icon class="md-size-4x">supervisor_account</md-icon>
-                                                <h2>Teacher</h2>
-                                            </label>
-                                        </div>
+{{--                                        <input id="student" type="radio" name="account_type" value="student" checked/>--}}
+{{--                                    </md-card-content>--}}
+{{--                                </md-card>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-6 p-0">--}}
+{{--                                <md-card>--}}
+{{--                                    <md-card-content>--}}
+{{--                                        <div>--}}
+{{--                                            <label for="teacher">--}}
+{{--                                                <md-icon class="md-size-4x">supervisor_account</md-icon>--}}
+{{--                                                <h2>Teacher</h2>--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
 
-                                        <input id="teacher" type="radio" name="account_type" value="teacher"/>
-                                    </md-card-content>
-                                </md-card>
-                            </div>
-                        </div>
+{{--                                        <input id="teacher" type="radio" name="account_type" value="teacher"/>--}}
+{{--                                    </md-card-content>--}}
+{{--                                </md-card>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
+                        <p>We need some information to setup your free account !</p>
 
                         <div class="mb-5">
                             <div class="form-group row">

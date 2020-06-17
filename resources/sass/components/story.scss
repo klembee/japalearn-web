@@ -21,6 +21,11 @@
 blockquote {
     padding-left:15px;
 }
+
+ul blockquote {
+    padding-left:0;
+}
+
 blockquote > p {
     font-style:italic;
 }

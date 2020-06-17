@@ -65,8 +65,6 @@ Route::middleware('auth')->group(function(){
 // Dictionary
     Route::get('dictionary', 'DictionaryController@index')->name('dictionary.index');
 
-// Vocabulary
-    Route::get('vocabulary', 'VocabularyController@index')->name('vocabulary.index');
 
     Route::prefix('blog_admin/')->name('blog.')->middleware('isRole:admin')->group(function(){
         Route::get('/', 'BlogController@index')->name('index');

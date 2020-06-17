@@ -24,6 +24,8 @@ class DictionaryController extends Controller
         $vocabularies = $request->user()->vocabulary;
         $isStudent = $request->user()->isStudent();
 
-        return view('app.dictionary.index', compact('vocabularies', 'isStudent'));
+        $paginatedVocab = $request->user()->vocabulary()->paginate(10);
+
+        return view('app.dictionary.index', compact('vocabularies', 'isStudent', 'paginatedVocab'));
     }
 }

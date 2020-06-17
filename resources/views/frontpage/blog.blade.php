@@ -21,7 +21,10 @@
                     view-post-url="{{route('frontpage.blog.view', ['post' => ":id"])}}"
                 >
                 </blog-list>
-                {{$posts->links()}}
+                <div class="mb-3">
+                    {{$posts->links()}}
+                </div>
+
             </div>
             <div class="col-12 col-md-4 col-lg-3">
                 @include('part.newsletterSubscriptionForm')

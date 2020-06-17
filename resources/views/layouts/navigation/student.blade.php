@@ -4,12 +4,12 @@
     <md-subheader>{{__('Learn')}}</md-subheader>
 
     <md-list-item href="{{route('kanas.index')}}">
-        <md-icon>translate</md-icon>
+        <md-icon>あ</md-icon>
         <span class="md-list-item-text">{{__('Kanas')}}</span>
     </md-list-item>
 
     <md-list-item href="{{route('kanji_vocabulary.index')}}">
-        <md-icon>translate</md-icon>
+        <md-icon>東</md-icon>
         <span class="md-list-item-text">{{__('Kanji')}}</span>
     </md-list-item>
 
@@ -39,10 +39,6 @@
     <md-list-item href="{{route('dictionary.index')}}" exact>
         <md-icon>menu_book</md-icon>
         <span class="md-list-item-text">{{__('Dictionary')}}</span>
-    </md-list-item>
-    <md-list-item href="{{route('vocabulary.index')}}" exact>
-        <md-icon>bookmarks</md-icon>
-        <span class="md-list-item-text">{{__('Vocabulary')}}</span>
     </md-list-item>
 @endsection
 
