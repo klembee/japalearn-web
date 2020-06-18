@@ -19,6 +19,9 @@
                 <div v-if="item.mnemonic">
                     <div v-html="parsedMnemonic"></div>
                 </div>
+                <div v-else>
+                    <p>This item does not have a mnemonic yet.</p>
+                </div>
             </div>
         </div>
     </div>

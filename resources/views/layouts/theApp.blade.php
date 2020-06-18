@@ -61,6 +61,10 @@
             </template>
         </dashboard>
 
+        <contact-fab
+            post-url="{{route('api.frontpage.contactus')}}"
+        ></contact-fab>
+
 {{--        <chat--}}
 {{--            conversation-endpoint="{{route('api.chat.get_conversations')}}"--}}
 {{--            send-message-endpoint="{{route('api.chat.send')}}"--}}

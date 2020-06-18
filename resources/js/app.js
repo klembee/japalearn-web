@@ -122,6 +122,7 @@ Vue.component('KanjiCurrentLevelOverview', require('./components/kanji_vocabular
 Vue.component('LessonsToConfirmTable', require('./components/video_lesson/teacher/LessonsToConfirmTable.vue').default);
 Vue.component('StarRating', require('./components/StarRating.vue').default);
 Vue.component('TeacherCard', require('./components/teachers/TeacherCard').default);
+Vue.component('ContactFab', require('./components/ContactFab').default);
 
 
 import { BootstrapVue } from 'bootstrap-vue'
