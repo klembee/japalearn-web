@@ -110,13 +110,17 @@ class StudentInfo extends Model
 
     public function didFirstKanaReview(){
         return $this->whereHas('kanaLearningPathStats', function($query){
-            return $query->where('nb_tries', '>', 1);
+            return $query
+                ->where('nb_tries', '>', 1)
+                ->where('student_info_id', $this->id);
         })->count() > 0;
     }
 
     public function didFirstKanjiReviews(){
         return $this->whereHas('kanjiLearningPathStats', function($query){
-                return $query->where('nb_tries', '>', 1);
+                return $query
+                    ->where('nb_tries', '>', 1)
+                    ->where('student_info_id', $this->id);
             })->count() > 0;
     }
 
