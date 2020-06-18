@@ -4,12 +4,15 @@
 namespace App\Http\Controllers;
 
 
+use App\Mail\SendGift;
 use App\Models\BlogPost;
+use App\Models\Gift;
 use App\Models\GrammarLearningPathCategory;
 use App\Models\GrammarLearningPathItem;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Mail;
 
 class FrontPageController extends Controller
 {
@@ -102,5 +105,55 @@ class FrontPageController extends Controller
         $parsedContent = str_replace('<img', '<amp-img width="300" height="200" layout="responsive" ', $markdownParser->text($post->content));
 
         return view('frontpage.amp.viewArticle', compact('post', 'otherArticles', 'parsedContent'));
+    }
+
+    public function takeGift(Request $request, Gift $gift){
+        $gift = $gift->load('documents');
+
+        return view('frontpage.takeGift', compact('gift'));
+    }
+
+    public function sendGift(Request $request, Gift $gift){
+        $this->validate($request, [
+            'email' => 'required'
+        ]);
+
+        $email = $request->input('email');
+        $name = $request->input('name');
+        $subscribe = $request->has('subscribe');
+
+        Mail::to($email)->send(new SendGift($gift, $name));
+
+        if($subscribe){
+            // Add user to newsletter
+            $key = env('MAIL_CHIMP_KEY');
+            $list_id = env('MAIL_CHIMP_LIST_ID');
+            $url = "https://us10.api.mailchimp.com/3.0/lists/$list_id/members/";
+
+            error_log("KEY: " . $key);
+
+            $httpHeader = array(
+                'Authorization: apikey '. $key,
+                'Content-Type: application/json'
+            );
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+                "email_address" => $email,
+                "status" => "subscribed",
+                "merge_fields" => [
+                    'FNAME' => $name
+                ]
+            ]));
+
+            $responseContent = curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        return redirect()->route('frontpage.home');
     }
 }

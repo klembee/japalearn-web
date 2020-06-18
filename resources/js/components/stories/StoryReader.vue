@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div translate="no">
         <div class="story-image">
             <img v-if="story.front_image_url" :src="'/storage/' + story.front_image_url"/>
         </div>

@@ -27,7 +27,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "pusher/pusher-php-server": "^4.1",
-        "ramsey/uuid": "^4.0"
+        "ramsey/uuid": "^4.0",
+      "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -35,6 +35,12 @@
         <md-icon>map</md-icon>
         <span class="md-list-item-text">{{__('Stories')}}</span>
     </md-list-item>
+
+    <!-- Gifts -->
+    <md-list-item href="{{route('admin.gifts.index')}}" exact>
+        <md-icon>map</md-icon>
+        <span class="md-list-item-text">{{__('Gifts')}}</span>
+    </md-list-item>
 @endsection
 @section('bottom')
 

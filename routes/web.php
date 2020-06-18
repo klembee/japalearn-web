@@ -33,6 +33,9 @@ Route::name('frontpage.')->group(function(){
     Route::get('/blog/{post}', 'FrontPageController@viewArticle')->name('blog.view');
     Route::get('/blog/amp/{post}', 'FrontPageController@viewArticleAMP')->name('blog.view.amp');
 
+    Route::get('/gifts/{gift}', 'FrontPageController@takeGift')->name('takeGift');
+    Route::post('/gifts/{gift}', 'FrontPageController@sendGift')->name('sendGift');
+
     Route::get('/privacy-policy', 'FrontPageController@privacyPolicy')->name('privacyPolicy');
     Route::get('/terms-and-conditions', 'FrontPageController@termsConditions')->name('termsAndConditions');
 
@@ -64,6 +67,14 @@ Route::middleware('auth')->group(function(){
 
 // Dictionary
     Route::get('dictionary', 'DictionaryController@index')->name('dictionary.index');
+
+    Route::prefix('admin')->name('admin.')->middleware('isRole:admin')->group(function(){
+        Route::get('gifts', 'GiftController@index')->name('gifts.index');
+        Route::get('gifts/create', 'GiftController@create')->name('gifts.create');
+        Route::post('gifts/create', 'GiftController@store')->name('gifts.store');
+        Route::get('gifts/{gift}', 'GiftController@edit')->name('gifts.edit');
+        Route::post('gifts/{gift}', 'GiftController@update')->name('gifts.update');
+    });
 
 
     Route::prefix('blog_admin/')->name('blog.')->middleware('isRole:admin')->group(function(){
