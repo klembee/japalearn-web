@@ -53,16 +53,14 @@
                     <md-button href="{{route('frontpage.stories')}}">Japanese stories</md-button>
                     <md-button href="{{route('frontpage.blog')}}">Blog</md-button>
 
-                    @if(env('APP_ENV') != 'production')
 
                         {{--                            <div class="nav-separator d-none d-lg-block"></div>--}}
 
-                        @if(Auth::guest())
-                            <md-button href="{{route('login')}}">Login</md-button>
-                            <md-button href="{{route('register')}}">Register</md-button>
-                        @else
-                            <md-button class="dashboard-btn" href="{{route('dashboard')}}">Dashboard<md-icon>arrow_forward_ios</md-icon></md-button>
-                        @endif
+                    @if(Auth::guest())
+                        <md-button href="{{route('login')}}">Login</md-button>
+                        <md-button href="{{route('register')}}">Register</md-button>
+                    @else
+                        <md-button class="dashboard-btn" href="{{route('dashboard')}}">Dashboard<md-icon>arrow_forward_ios</md-icon></md-button>
                     @endif
                 </template>
                 <template v-slot:mobile_menu>
@@ -83,24 +81,22 @@
                         <span class="md-list-item-text">{{__('Blog')}}</span>
                     </md-list-item>
 
-                    @if(env('APP_ENV') != 'production')
                         <md-divider></md-divider>
 
-                        @if(Auth::guest())
-                            <md-list-item href="{{route('login')}}" exact>
-                                <md-icon>forward</md-icon>
-                                <span class="md-list-item-text">{{__('Login')}}</span>
-                            </md-list-item>
-                            <md-list-item href="{{route('register')}}" exact>
-                                <md-icon>trip_origin</md-icon>
-                                <span class="md-list-item-text">{{__('Create account')}}</span>
-                            </md-list-item>
-                        @else
-                            <md-list-item href="{{route('dashboard')}}" exact>
-                                <md-icon>dashboard</md-icon>
-                                <span class="md-list-item-text">{{__('Dashboard')}}</span>
-                            </md-list-item>
-                        @endif
+                    @if(Auth::guest())
+                        <md-list-item href="{{route('login')}}" exact>
+                            <md-icon>forward</md-icon>
+                            <span class="md-list-item-text">{{__('Login')}}</span>
+                        </md-list-item>
+                        <md-list-item href="{{route('register')}}" exact>
+                            <md-icon>trip_origin</md-icon>
+                            <span class="md-list-item-text">{{__('Create account')}}</span>
+                        </md-list-item>
+                    @else
+                        <md-list-item href="{{route('dashboard')}}" exact>
+                            <md-icon>dashboard</md-icon>
+                            <span class="md-list-item-text">{{__('Dashboard')}}</span>
+                        </md-list-item>
                     @endif
 
                 </template>

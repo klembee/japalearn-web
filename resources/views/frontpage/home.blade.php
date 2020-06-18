@@ -14,7 +14,7 @@
                 <div class="header-content">
                     <h1>JapaLearn</h1>
                     <p>Planning a trip to <b>Japan</b> or just interested in the <b>Japanese language</b>?</p>
-                    <md-button class="md-primary md-raised">Start learning</md-button>
+                    <md-button href="{{route('register')}}" class="md-primary md-raised md-large start-learning-button">Start learning</md-button>
                 </div>
 
             </div>

@@ -18,14 +18,15 @@
 </script>
 
 @section('content')
-<div class="container">
+<div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
 {{--                <div class="card-header">{{ __('Register') }}</div>--}}
 
                 <div class="card-body">
-
+                    <h1>Create your free account today</h1>
+                    <p>Already have an account ? <a href="{{route('login')}}">Login</a></p>
                     <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
 
