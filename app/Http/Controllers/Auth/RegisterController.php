@@ -85,8 +85,6 @@ class RegisterController extends Controller
             'country' => $data['country']
         ]);
 
-        $user->save();
-
         if(true || $user->isStudent()){
             // Create the student info if user is student
 
