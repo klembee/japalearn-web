@@ -28,7 +28,8 @@ class StudentInfo extends Model
     }
 
     public function grammarItemsDone(){
-        return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'student_info_id','grammar_item_id');
+        return $this->belongsToMany(GrammarLearningPathItem::class, 'grammar_lesson_student',  'student_info_id','grammar_item_id')
+            ->withPivot('date_done');
     }
 
     public function activity(){

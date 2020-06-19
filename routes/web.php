@@ -52,10 +52,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     // Users
-    Route::prefix('users/')->group(function(){
+    Route::prefix('users/')->middleware('isRole:admin')->group(function(){
         Route::get('/', 'UsersController@index')->name('users.index');
         Route::get('/create', 'UsersController@create')->name('users.create');
         Route::post('/create', 'UsersController@store')->name('users.store');
+        Route::get('/{user}', 'UsersController@view')->name('users.view');
     });
 
 // Students

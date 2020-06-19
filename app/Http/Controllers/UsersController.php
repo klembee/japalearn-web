@@ -41,6 +41,46 @@ class UsersController extends Controller
         return view('app.users.index', compact('users'));
     }
 
+    public function view(Request $request, User $user){
+
+        if($user->isStudent()) {
+            $kanjiLevel = $user->info->kanji_level;
+            if($user->info->kanjiLearningPathStats->count() > 0){
+                $lastKanjiReviewDate = $user->info->kanjiLearningPathStats()->orderBy('last_study_date', 'desc')->first()->last_study_date->format('Y-m-d H:i');
+            }else{
+                $lastKanjiReviewDate = "NIL";
+            }
+
+            if($user->info->kanaLearningPathStats->count() > 0){
+                $lastKanaReviewDate = $user->info->kanaLearningPathStats()->orderBy('last_review', 'desc')->first()->last_review->format('Y-m-d H:i');
+                $nbKanaLevel5 = $user->info->kanaLearningPathStats()->where('number_right', '>=', 5)->count();
+            }else{
+                $lastKanaReviewDate = "NIL";
+                $nbKanaLevel5 = 0;
+            }
+
+            if($user->info->grammarItemsDone->count() > 0){
+                $nbGrammarItemCompleted = $user->info->grammarItemsDone()->count();
+                $grammarLastCompletedDate = $user->info->grammarItemsDone()->orderBy('pivot_date_done', 'desc')->first()->toArray()['pivot']['date_done'];
+            }else{
+                $nbGrammarItemCompleted = 0;
+                $grammarLastCompletedDate = "NIL";
+            }
+
+
+        }
+
+        return view('app.users.view', compact(
+            'user',
+            'kanjiLevel',
+            'lastKanjiReviewDate',
+            'lastKanaReviewDate',
+            'nbKanaLevel5',
+            'nbGrammarItemCompleted',
+            'grammarLastCompletedDate'
+        ));
+    }
+
     /**
      * Allows an admin to create a new user
      *
