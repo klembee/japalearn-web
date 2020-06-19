@@ -27,6 +27,37 @@
                 <div class="card-body">
                     <h1>Create your free account today</h1>
                     <p>Already have an account ? <a href="{{route('login')}}">Login</a></p>
+
+                    <div class="mb-2">
+                        <h2>How will JapaLearn help you ?</h2>
+                        <div class="row m-0 ">
+                            <div class="col-12 col-md-4">
+                                <div class="how-help-card">
+                                    <p class="how-help-number">92</p>
+                                    <p class="how-help-text">Japanese kanas</p>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="how-help-card">
+                                    <p class="how-help-number">2500</p>
+                                    <p class="how-help-text">Most used kanjis</p>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="how-help-card">
+                                    <p class="how-help-number">Many</p>
+                                    <p class="how-help-text">Grammar lesson</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <p>With JapaLearn, you will learn all the Japanese kanas and the most used kanjis through a spaced repetition system. This system will allow you to maximize your memorization potential by making you review the items at the right moment.</p>
+                    </div>
+                    <hr />
+
+
                     <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
 
