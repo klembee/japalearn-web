@@ -21,12 +21,16 @@
         <div class="row">
             <div class="col-md-7 mb-3">
                 <div class="row">
-                    <md-card class="nb-lessons-reviews-box col-lg-3 col-md-4 col-12 mb-3 mb-md-0 ml-0 ml-md-4" >
+                    <md-card class="nb-lessons-reviews-box col-md-4 col-12 mb-3 mb-md-0 ml-0 ml-md-4" >
                         <md-card-header>
                             <h3>{{__('Lessons')}}</h3>
                         </md-card-header>
                         <md-card-content>
-                            <p class="h3">{{count($itemsToLearn)}}</p>
+                            @if(count($itemsToLearn) > 0)
+                                <p class="h3">{{count($itemsToLearn)}}</p>
+                            @else
+                                <p class="h4">New items available when you successfuly review a kanji 5 times</p>
+                            @endif
                         </md-card-content>
                         <md-card-actions>
                             @if(count($itemsToLearn) > 0)
@@ -37,12 +41,20 @@
                         </md-card-actions>
                     </md-card>
 
-                    <md-card class="nb-lessons-reviews-box col-lg-3 col-md-4 col-12 ml-0">
+                    <md-card class="nb-lessons-reviews-box col-md-4 col-12 ml-0">
                         <md-card-header>
                             <h3>{{__('Reviews')}}</h3>
                         </md-card-header>
                         <md-card-content>
-                            <p class="h3">{{count($itemsToReview)}}</p>
+                            @if(count($itemsToReview) > 0)
+                                <p class="h3">{{count($itemsToReview)}}</p>
+                            @else
+                                @if($nextReviewIn)
+                                    <p class="h4">Next review in <br/>{{$nextReviewIn}}</p>
+                                @else
+                                    <p class="h3">0</p>
+                                @endif
+                            @endif
                         </md-card-content>
                         <md-card-actions>
                             @if(count($itemsToReview))

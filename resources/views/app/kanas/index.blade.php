@@ -19,7 +19,11 @@
                 <h1>{{__('Items to learn')}}</h1>
             </md-card-header>
             <md-card-content>
-                <p class="h3">{{count($itemsToLearn)}}</p>
+                @if(count($itemsToLearn))
+                    <p class="h3">{{count($itemsToLearn)}}</p>
+                @else
+                    <p class="h4">New items available when you a kana gets to level 5</p>
+                @endif
             </md-card-content>
             <md-card-actions>
                 @if(count($itemsToLearn) > 0)
@@ -34,7 +38,15 @@
                 <h1>{{__('Items to review')}}</h1>
             </md-card-header>
             <md-card-content>
-                <p class="h3">{{count($itemsToReview)}}</p>
+                @if(count($itemsToReview) > 0)
+                    <p class="h3">{{count($itemsToReview)}}</p>
+                @else
+                    @if($nextReviewIn)
+                        <p class="h4">Next review in <br/>{{$nextReviewIn}}</p>
+                    @else
+                        <p class="h3">0</p>
+                    @endif
+                @endif
             </md-card-content>
             <md-card-actions>
                 @if(count($itemsToReview) > 0)

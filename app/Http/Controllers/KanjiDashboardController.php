@@ -57,6 +57,7 @@ class KanjiDashboardController extends Controller
         $itemsToReview = $helper->reviewsAvailable();
 
         $nextWeekVocabReview = $user->info->getNextWeekVocabReviews();
+        $nextReviewIn = $user->info->next_kanji_review_in;
 
         return view('app.kanji_vocabulary.index', compact(
             'user',
@@ -64,7 +65,9 @@ class KanjiDashboardController extends Controller
             'itemsToLearn',
             'itemsToReview',
             'vocabUser',
-            'nextWeekVocabReview'));
+            'nextWeekVocabReview',
+            'nextReviewIn'
+            ));
     }
 
 }

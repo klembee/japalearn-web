@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentInfo extends Model
@@ -12,7 +13,9 @@ class StudentInfo extends Model
     protected $table = "student_info";
     protected $appends = [
         'current_grammar_category',
-        'did_all_first_steps'
+        'did_all_first_steps',
+        'next_kana_review_in',
+        'next_kanji_review_in'
     ];
 
     public function user(){
@@ -93,6 +96,45 @@ class StudentInfo extends Model
         });
 
         return $kanaNextWeekTimes->countBy()->all();
+    }
+
+    /**
+     * Get the time the user have to wait before having a new kana review
+     * @return mixed
+     */
+    public function getNextKanaReviewInAttribute(){
+        $now = Carbon::now();
+
+        $kanas = $this->kanaLearningPathStats()
+            ->where('number_right', '<', '5')->get()->filter(function($obj, $key) use($now){
+            return $obj->next_review->gte($now) ;
+        })->sortBy('next_review')->pluck('next_review');
+
+        if(count($kanas) > 0){
+            return $kanas[0]->diff($now)->format("%h hours, %i minutes");
+        }
+        return null;
+
+    }
+
+    /**
+     * Get the time the user have to wait before having a new kanji review
+     * @return mixed
+     */
+    public function getNextKanjiReviewInAttribute(){
+        $now = Carbon::now();
+
+        $kanjis = $this->kanjiLearningPathStats()
+            ->where('nb_right', '<', '5')->get()->filter(function($obj, $key) use($now){
+                return $obj->next_review->gte($now) ;
+            })->sortBy('next_review')->pluck('next_review');;
+
+        if(count($kanjis) > 0){
+            return $kanjis[0]->diff($now)->format("%h hours, %i minutes");
+        }else{
+            return null;
+        }
+
     }
 
     public function tookFirstGrammarLesson(){

@@ -23,12 +23,15 @@ class KanaController extends Controller
 
         $nextWeekKanaReview = $user->info->getNextWeekKanaReviews();
 
+        $nextReviewIn = $user->info->next_kana_review_in;
+
         return view('app.kanas.index', compact(
             'itemsToLearn',
             'itemsToReview',
             'allKanas',
             'kanaUser',
-            'nextWeekKanaReview'
+            'nextWeekKanaReview',
+            'nextReviewIn'
         ));
     }
 }
