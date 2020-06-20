@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div v-if="!loggedIn">
-                                <p>Login to practice this grammar lesson !</p>
+                                <p><a href="/login">Login</a> to practice this grammar lesson !</p>
                             </div>
                         </div>
                     </div>

@@ -151,7 +151,18 @@
             changeToHiraganaIfNeeded(){
                 if(isKana(this.question.answers[0])){
                     //Transform answer to kana
-                    this.answer = toKana(this.answer);
+                    // this.answer = toKana(this.answer);
+                    if(this.answer[this.answer.length - 1] !== 'n') {
+                        if(this.answer[this.answer.length - 1] !== 'y') {
+                            this.answer = toKana(this.answer)
+                        }
+                    }else{
+                        if(this.answer[this.answer.length - 2] === 'n'){
+                            // Last two characters are n. Remove the last one and switch to ん
+                            this.answer = this.answer.slice(0, this.answer.length - 1);
+                            this.answer = toKana(this.answer)
+                        }
+                    }
                 }
             },
             updateLevel(){
