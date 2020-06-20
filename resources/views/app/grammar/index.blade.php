@@ -25,6 +25,7 @@
                     <view-grammar-item
                         :item="{{json_encode($nextItem)}}"
                         mark-as-done-url="{{route('api.learning_path.grammar.update-level')}}"
+                        practice-url="{{route('study.grammar.review', $nextItem)}}"
                         :logged-in="{{Auth::user() != null ? 'true' : 'false'}}"
                     ></view-grammar-item>
 
