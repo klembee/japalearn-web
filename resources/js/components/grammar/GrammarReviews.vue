@@ -112,17 +112,19 @@
 
                 if(this.isValid) {
                     this.showInvalid = false;
-                    if (this.hasNextQuestion) {
-                        if (this.isGoodAnswer) {
+
+                    if (this.isGoodAnswer) {
+                        if (this.hasNextQuestion) {
                             this.nextQuestion();
                         } else {
-                            this.gotWrongAnswer = true;
-                            this.showErrorSnackbar = true;
-                            this.showWrongAnswer = true;
+                            this.updateLevel();
+                            this.lessonFinished = true;
                         }
+
                     } else {
-                        this.updateLevel();
-                        this.lessonFinished = true;
+                        this.gotWrongAnswer = true;
+                        this.showErrorSnackbar = true;
+                        this.showWrongAnswer = true;
                     }
                 }else{
                     this.showInvalid = true
