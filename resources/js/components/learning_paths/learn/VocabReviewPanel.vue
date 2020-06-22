@@ -247,7 +247,8 @@
                     this.answer,
                     this.answer.replace(' ', ''),
                     this.answer.replace('-', ''),
-                    this.answer.replace('-', '').replace(' ', '')
+                    this.answer.replace('-', '').replace(' ', ''),
+                    this.answer.split('-')[0]
                 ];
 
                 if(isKana(this.answer)){
